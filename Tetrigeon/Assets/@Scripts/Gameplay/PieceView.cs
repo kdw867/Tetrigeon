@@ -35,11 +35,12 @@ public class PieceView : MonoBehaviour
         {
             GameObject block = new GameObject("Block");
             block.transform.SetParent(transform);
-            block.transform.localScale = Vector3.one * 0.9f;
+            block.transform.localScale = Vector3.one * (GridManager.CellSize * 0.9f);
 
             SpriteRenderer spriteRenderer = block.AddComponent<SpriteRenderer>();
             spriteRenderer.sprite = blockSprite;
             spriteRenderer.color = TypeColors[(int)piece.Type];
+            spriteRenderer.sortingOrder = 10;
 
             blocks[i] = block.transform;
         }
@@ -51,7 +52,7 @@ public class PieceView : MonoBehaviour
         for (int i = 0; i < blocks.Length; i++)
         {
             Vector2Int boardCell = piece.BoardPosition + cells[i];
-            blocks[i].position = new Vector3(boardCell.x, boardCell.y, 0f);
+            blocks[i].position = GridManager.CellToWorld(boardCell);
         }
     }
 

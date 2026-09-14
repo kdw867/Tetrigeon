@@ -7,6 +7,29 @@ public class GridManager : MonoBehaviour
     public const int Width = 10;
     public const int Height = 20;
 
+    // Visual mapping only — grid logic stays on integer cells.
+    public const float CellSize = 0.29f;
+
+    // Board panel's own transform (dragged in the Scene view) is the source of truth for
+    // where the board sits — its position is the panel's center, so BoardOrigin (cell (0,0)'s
+    // center) is offset back by half the board size.
+    [SerializeField] private Transform boardAnchor;
+
+    public static Vector3 BoardOrigin
+    {
+        get
+        {
+            float halfWidth = Width * CellSize / 2f - CellSize / 2f;
+            float halfHeight = Height * CellSize / 2f - CellSize / 2f;
+            return Instance.boardAnchor.position - new Vector3(halfWidth, halfHeight, 0f);
+        }
+    }
+
+    public static Vector3 CellToWorld(Vector2Int cell)
+    {
+        return BoardOrigin + new Vector3(cell.x * CellSize, cell.y * CellSize, 0f);
+    }
+
     private bool[,] cells = new bool[Width, Height];
 
     private void Awake()

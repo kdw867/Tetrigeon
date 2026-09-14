@@ -2,6 +2,13 @@ using UnityEngine;
 
 public class Piece : MonoBehaviour
 {
+    [SerializeField] private float moveRepeatDelay = 0.3f;
+    [SerializeField] private float moveRepeatInterval = 0.05f;
+
+    private float leftTimer;
+    private float rightTimer;
+    private float downTimer;
+
     public TetrominoType Type { get; private set; }
     public int RotationState { get; private set; }
     public Vector2Int BoardPosition { get; private set; }
@@ -22,11 +29,33 @@ public class Piece : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow)) TryMove(Vector2Int.left);
-        if (Input.GetKeyDown(KeyCode.RightArrow)) TryMove(Vector2Int.right);
-        if (Input.GetKeyDown(KeyCode.DownArrow)) TryMove(Vector2Int.down);
+        HandleHeldMove(KeyCode.LeftArrow, Vector2Int.left, ref leftTimer);
+        HandleHeldMove(KeyCode.RightArrow, Vector2Int.right, ref rightTimer);
+        HandleHeldMove(KeyCode.DownArrow, Vector2Int.down, ref downTimer);
+
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.X)) TryRotate(1);
         if (Input.GetKeyDown(KeyCode.Z)) TryRotate(-1);
+    }
+
+    // First press moves immediately; holding repeats after moveRepeatDelay, then every moveRepeatInterval.
+    private void HandleHeldMove(KeyCode key, Vector2Int direction, ref float timer)
+    {
+        if (Input.GetKeyDown(key))
+        {
+            TryMove(direction);
+            timer = moveRepeatDelay;
+            return;
+        }
+
+        if (Input.GetKey(key))
+        {
+            timer -= Time.deltaTime;
+            if (timer <= 0f)
+            {
+                TryMove(direction);
+                timer = moveRepeatInterval;
+            }
+        }
     }
 
     public bool TryMove(Vector2Int delta)
