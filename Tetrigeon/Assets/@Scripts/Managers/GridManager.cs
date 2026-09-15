@@ -8,7 +8,7 @@ public class GridManager : MonoBehaviour
     public const int Height = 20;
 
     // Visual mapping only — grid logic stays on integer cells.
-    public const float CellSize = 0.29f;
+    public const float CellSize = 0.315f;
 
     // Board panel's own transform (dragged in the Scene view) is the source of truth for
     // where the board sits — its position is the panel's center, so BoardOrigin (cell (0,0)'s

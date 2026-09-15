@@ -70,6 +70,10 @@ Before starting work, ask up to 3 clarifying questions if you need more informat
 - If an object in the Hierarchy needs management, give it a Manager and register it as that Manager's child.
 - For dynamically instantiated objects, don't leave a prefab instance in the Hierarchy — spawn from the original prefab at runtime.
 
+## 8. Inline Comments
+- Add a short comment next to each line explaining what action it performs, not just the non-obvious ones. This overrides the "no comments" default in the general guidelines above for this project.
+- Write these comments in Korean.
+
 ---
 
 **These guidelines are working if:** fewer unnecessary diff changes, fewer overcomplication-driven rewrites, and clarifying questions come before implementation rather than after mistakes.
