@@ -29,15 +29,13 @@ public class HoldView : MonoBehaviour
         {
             GameObject block = new GameObject("Block");
             block.transform.SetParent(transform);
-            block.transform.localScale = Vector3.one * (GridManager.CellSize * 0.9f);
             block.transform.localPosition = new Vector3(
                 (cells[i].x - boundsCenter.x) * GridManager.CellSize,
                 (cells[i].y - boundsCenter.y) * GridManager.CellSize,
                 0f);
 
             SpriteRenderer spriteRenderer = block.AddComponent<SpriteRenderer>();
-            spriteRenderer.sprite = PieceVisuals.GetSquareSprite();
-            spriteRenderer.color = PieceVisuals.TypeColors[(int)type.Value];
+            PieceVisuals.ApplyMinoArt(spriteRenderer, type.Value, i); // 칸별 원본 아트와 방향 적용
             spriteRenderer.sortingOrder = 10;
 
             blocks[i] = block.transform;

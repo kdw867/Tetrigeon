@@ -1,6 +1,6 @@
 using UnityEngine;
 
-// Temporary placeholder visual: colored squares generated in code, no art asset needed yet.
+// 네 칸의 바위·마법 스프라이트를 조각 위치에 맞춰 표시
 [RequireComponent(typeof(Piece))]
 public class PieceView : MonoBehaviour
 {
@@ -21,11 +21,9 @@ public class PieceView : MonoBehaviour
         {
             GameObject block = new GameObject("Block");
             block.transform.SetParent(transform);
-            block.transform.localScale = Vector3.one * (GridManager.CellSize * 0.9f);
 
             SpriteRenderer spriteRenderer = block.AddComponent<SpriteRenderer>();
-            spriteRenderer.sprite = PieceVisuals.GetSquareSprite();
-            spriteRenderer.color = PieceVisuals.TypeColors[(int)piece.Type];
+            PieceVisuals.ApplyMinoArt(spriteRenderer, piece.Type, i); // 원본의 각 칸과 연결되는 균열 적용
             spriteRenderer.sortingOrder = 10;
 
             blocks[i] = block.transform;
@@ -39,6 +37,7 @@ public class PieceView : MonoBehaviour
         {
             Vector2Int boardCell = piece.BoardPosition + cells[i];
             blocks[i].position = GridManager.CellToWorld(boardCell);
+            blocks[i].rotation = PieceVisuals.GetArtRotation(piece.Type, piece.RotationState); // 칸 위치와 함께 균열 방향도 회전
         }
     }
 }

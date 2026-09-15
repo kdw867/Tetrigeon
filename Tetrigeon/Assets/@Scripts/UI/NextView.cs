@@ -35,19 +35,18 @@ public class NextView : MonoBehaviour
 
             Vector2Int[] cells = TetrominoData.GetCells(types[slot], 0); // 스폰 모양 그대로 표시
             Vector2 boundsCenter = TetrominoData.GetSpawnBoundsCenter(types[slot]); // 모양 중심 (박스 정중앙 정렬용)
-            foreach (Vector2Int cell in cells)
+            for (int i = 0; i < cells.Length; i++) // 원본 칸 순서를 유지하며 미리보기 생성
             {
+                Vector2Int cell = cells[i]; // 현재 칸 좌표
                 GameObject block = new GameObject("Block");
                 block.transform.SetParent(container.transform);
-                block.transform.localScale = Vector3.one * (GridManager.CellSize * 0.9f);
                 block.transform.localPosition = new Vector3(
                     (cell.x - boundsCenter.x) * GridManager.CellSize,
                     (cell.y - boundsCenter.y) * GridManager.CellSize,
                     0f);
 
                 SpriteRenderer spriteRenderer = block.AddComponent<SpriteRenderer>();
-                spriteRenderer.sprite = PieceVisuals.GetSquareSprite();
-                spriteRenderer.color = PieceVisuals.TypeColors[(int)types[slot]];
+                PieceVisuals.ApplyMinoArt(spriteRenderer, types[slot], i); // 칸별 원본 아트와 방향 적용
                 spriteRenderer.sortingOrder = 10;
             }
 

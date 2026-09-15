@@ -140,6 +140,7 @@ public class PieceSpawner : MonoBehaviour
             Vector2Int boardCell = currentPiece.BoardPosition + cellOffsets[i]; // 실제 보드 좌표
             blocks[i].SetParent(GridManager.Instance.transform); // 조각에서 분리, 개별 오브젝트로 독립
             blocks[i].position = GridManager.CellToWorld(boardCell); // PieceView가 갱신 안 한 마지막 프레임 위치 보정
+            blocks[i].rotation = PieceVisuals.GetArtRotation(currentPiece.Type, currentPiece.RotationState); // 고정 직전 회전도 균열 방향에 반영
             GridManager.Instance.SetCell(boardCell, blocks[i]); // 그리드에 칸 단위로 등록
         }
 
