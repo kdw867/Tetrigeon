@@ -4,21 +4,10 @@ using UnityEngine;
 [RequireComponent(typeof(Piece))]
 public class PieceView : MonoBehaviour
 {
-    private static Sprite blockSprite;
-
-    private static readonly Color[] TypeColors =
-    {
-        new Color(0f, 1f, 1f),      // I - cyan
-        new Color(0f, 0f, 1f),      // J - blue
-        new Color(1f, 0.5f, 0f),    // L - orange
-        new Color(1f, 1f, 0f),      // O - yellow
-        new Color(0f, 1f, 0f),      // S - green
-        new Color(0.6f, 0f, 0.8f),  // T - purple
-        new Color(1f, 0f, 0f),      // Z - red
-    };
-
     private Piece piece;
     private Transform[] blocks;
+
+    public Transform[] Blocks => blocks; // 고정(Lock) 시 블록을 개별 오브젝트로 넘기기 위해 외부 노출
 
     private void Awake()
     {
@@ -27,9 +16,6 @@ public class PieceView : MonoBehaviour
 
     private void Start()
     {
-        if (blockSprite == null)
-            blockSprite = CreateSquareSprite();
-
         blocks = new Transform[4];
         for (int i = 0; i < blocks.Length; i++)
         {
@@ -38,8 +24,8 @@ public class PieceView : MonoBehaviour
             block.transform.localScale = Vector3.one * (GridManager.CellSize * 0.9f);
 
             SpriteRenderer spriteRenderer = block.AddComponent<SpriteRenderer>();
-            spriteRenderer.sprite = blockSprite;
-            spriteRenderer.color = TypeColors[(int)piece.Type];
+            spriteRenderer.sprite = PieceVisuals.GetSquareSprite();
+            spriteRenderer.color = PieceVisuals.TypeColors[(int)piece.Type];
             spriteRenderer.sortingOrder = 10;
 
             blocks[i] = block.transform;
@@ -54,13 +40,5 @@ public class PieceView : MonoBehaviour
             Vector2Int boardCell = piece.BoardPosition + cells[i];
             blocks[i].position = GridManager.CellToWorld(boardCell);
         }
-    }
-
-    private static Sprite CreateSquareSprite()
-    {
-        Texture2D texture = new Texture2D(1, 1);
-        texture.SetPixel(0, 0, Color.white);
-        texture.Apply();
-        return Sprite.Create(texture, new Rect(0, 0, 1, 1), new Vector2(0.5f, 0.5f), 1f);
     }
 }

@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BagManager : MonoBehaviour
 {
     public static BagManager Instance { get; private set; }
+
+    public static event Action<TetrominoType[]> OnQueueChanged; // 다음 조각 미리보기 바뀔 때 알림 (NEXT UI용)
 
     // NEXT preview count.
     private const int PreviewCount = 5;
@@ -34,6 +37,7 @@ public class BagManager : MonoBehaviour
         TetrominoType next = queue.Dequeue();
         while (queue.Count < PreviewCount + 1)
             FillBag();
+        OnQueueChanged?.Invoke(PeekNext()); // 큐 바뀔 때마다 최신 미리보기 알림
         return next;
     }
 
@@ -55,7 +59,7 @@ public class BagManager : MonoBehaviour
         List<TetrominoType> bag = new List<TetrominoType>(AllTypes);
         for (int i = bag.Count - 1; i > 0; i--)
         {
-            int j = Random.Range(0, i + 1);
+            int j = UnityEngine.Random.Range(0, i + 1);
             (bag[i], bag[j]) = (bag[j], bag[i]);
         }
         foreach (TetrominoType type in bag)

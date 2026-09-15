@@ -9,7 +9,7 @@ public static class TetrominoData
     private static readonly Dictionary<TetrominoType, Vector2Int[]> SpawnCells = new()
     {
         { TetrominoType.I, new[] { new Vector2Int(0, 2), new Vector2Int(1, 2), new Vector2Int(2, 2), new Vector2Int(3, 2) } },
-        { TetrominoType.O, new[] { new Vector2Int(0, 0), new Vector2Int(1, 0), new Vector2Int(0, 1), new Vector2Int(1, 1) } },
+        { TetrominoType.O, new[] { new Vector2Int(0, 1), new Vector2Int(1, 1), new Vector2Int(0, 2), new Vector2Int(1, 2) } }, // 다른 조각처럼 로컬 2번째 줄까지 닿게 (스폰 시 천장에 붙도록)
         { TetrominoType.T, new[] { new Vector2Int(1, 2), new Vector2Int(0, 1), new Vector2Int(1, 1), new Vector2Int(2, 1) } },
         { TetrominoType.S, new[] { new Vector2Int(1, 2), new Vector2Int(2, 2), new Vector2Int(0, 1), new Vector2Int(1, 1) } },
         { TetrominoType.Z, new[] { new Vector2Int(0, 2), new Vector2Int(1, 2), new Vector2Int(1, 1), new Vector2Int(2, 1) } },
@@ -21,7 +21,7 @@ public static class TetrominoData
     private static readonly Dictionary<TetrominoType, Vector2> Pivot = new()
     {
         { TetrominoType.I, new Vector2(1.5f, 1.5f) },
-        { TetrominoType.O, new Vector2(0.5f, 0.5f) },
+        { TetrominoType.O, new Vector2(0.5f, 1.5f) }, // 위로 옮긴 스폰 좌표에 맞춰 중심축도 같이 이동
         { TetrominoType.T, new Vector2(1f, 1f) },
         { TetrominoType.S, new Vector2(1f, 1f) },
         { TetrominoType.Z, new Vector2(1f, 1f) },
@@ -50,5 +50,20 @@ public static class TetrominoData
         }
 
         return result;
+    }
+
+    // 미리보기 UI에서 조각을 박스 중앙에 맞추기 위한, 모양 바운딩 박스의 중심.
+    public static Vector2 GetSpawnBoundsCenter(TetrominoType type)
+    {
+        Vector2Int[] cells = SpawnCells[type];
+        int minX = cells[0].x, maxX = cells[0].x, minY = cells[0].y, maxY = cells[0].y;
+        foreach (Vector2Int cell in cells)
+        {
+            minX = Mathf.Min(minX, cell.x);
+            maxX = Mathf.Max(maxX, cell.x);
+            minY = Mathf.Min(minY, cell.y);
+            maxY = Mathf.Max(maxY, cell.y);
+        }
+        return new Vector2((minX + maxX) / 2f, (minY + maxY) / 2f);
     }
 }
