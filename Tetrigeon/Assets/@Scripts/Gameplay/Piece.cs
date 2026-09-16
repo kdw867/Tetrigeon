@@ -116,6 +116,15 @@ public class Piece : MonoBehaviour
         return !CanPlace(RotationState, BoardPosition + Vector2Int.down);
     }
 
+    // 실제로 이동시키지 않고, 하드드랍했을 때 멈추는 위치만 계산 (고스트 미리보기용)
+    public Vector2Int GetGhostPosition()
+    {
+        Vector2Int position = BoardPosition; // 현재 위치에서 시작
+        while (CanPlace(RotationState, position + Vector2Int.down)) // 더 내려갈 수 있는 동안 반복
+            position += Vector2Int.down;
+        return position; // 멈추는 위치 반환
+    }
+
     private bool CanPlace(int rotationState, Vector2Int position)
     {
         return CanPlaceType(Type, rotationState, position);

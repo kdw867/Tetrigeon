@@ -8,7 +8,7 @@ public class GridManager : MonoBehaviour
     public const int Height = 22; // 보드 세로 칸 수
 
     // Visual mapping only — grid logic stays on integer cells.
-    public const float CellSize = 0.315f; // 칸 하나의 월드 유닛 크기 (시각용, 로직은 정수 좌표 그대로)
+    public const float CellSize = 30f / 108f; // FHD·카메라 크기 5 기준 한 칸을 정확히 30픽셀로 표시
 
     // Board panel's own transform (dragged in the Scene view) is the source of truth for
     // where the board sits — its position is the panel's center, so BoardOrigin (cell (0,0)'s

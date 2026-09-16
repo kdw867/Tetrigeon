@@ -26,13 +26,25 @@ public static class PieceVisuals
         return Quaternion.Euler(0f, 0f, (type == TetrominoType.L ? 90f : 0f) - 90f * rotationState); // 세로 L 원본을 스폰 방향으로 정렬
     }
 
-    public static void ApplyMinoArt(SpriteRenderer renderer, TetrominoType type, int cellIndex) // 게임과 미리보기의 공용 설정
+    private const float CellFill = 28f / 30f; // FHD 30픽셀 칸에서 양쪽 1픽셀씩 동일한 간격 확보
+
+    public static void ApplyMinoArt(SpriteRenderer renderer, TetrominoType type, int cellIndex, float opacity = 1f, int sortingOrder = 10) // 실체와 고스트의 투명도·표시 순서를 함께 설정
     {
         renderer.sprite = GetMinoSprite(type, cellIndex); // 칸마다 다른 원본 그림 적용
-        renderer.color = Color.white; // 원본 돌과 마법 색 보존
-        Vector2 size = renderer.sprite.bounds.size; // 원본 분할 영역의 크기 확인
-        renderer.transform.localScale = new Vector3(GridManager.CellSize / size.x, GridManager.CellSize / size.y, 1f); // 빈 간격 없이 한 칸을 채움
+        renderer.color = new Color(1f, 1f, 1f, opacity); // 원본 색을 유지하며 지정한 투명도 적용
+        renderer.sortingOrder = sortingOrder; // 바탕과 함께 표시 순서 결정
+        Vector2 size = renderer.sprite.rect.size / renderer.sprite.pixelsPerUnit; // 원본 분할 영역의 크기 확인 (타이트 메시 트림 오차 없는 슬라이스 원본 크기)
+        renderer.transform.localScale = new Vector3(GridManager.CellSize / size.x * CellFill, GridManager.CellSize / size.y * CellFill, 1f); // 모든 타입의 표시 영역을 28픽셀 정사각형으로 통일
         renderer.transform.localRotation = GetArtRotation(type, 0); // 원본의 초기 방향 정렬
+        GameObject backing = new GameObject("CellBacking"); // 불규칙한 투명 여백을 메울 공통 바탕
+        backing.layer = renderer.gameObject.layer; // 카메라 표시 레이어를 블록과 일치
+        backing.transform.SetParent(renderer.transform, false); // Lock과 줄 삭제 시 블록과 함께 이동 및 제거
+        backing.transform.localScale = new Vector3(size.x, size.y, 1f); // 원본 사각 영역과 같은 크기로 배치
+        SpriteRenderer backingRenderer = backing.AddComponent<SpriteRenderer>(); // 바탕 렌더러 생성
+        backingRenderer.sprite = GetSquareSprite(); // 기존 공용 사각형 재사용
+        backingRenderer.color = new Color(24f / 255f, 31f / 255f, 43f / 255f, opacity); // 바탕도 같은 투명도로 표시
+        backingRenderer.sortingLayerID = renderer.sortingLayerID; // 원본과 같은 정렬 레이어 사용
+        backingRenderer.sortingOrder = sortingOrder - 1; // 고스트를 포함해 항상 해당 아트 뒤에 표시
     }
 
     public static readonly Color[] TypeColors =
