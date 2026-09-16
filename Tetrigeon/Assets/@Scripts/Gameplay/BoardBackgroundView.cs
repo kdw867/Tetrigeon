@@ -36,6 +36,8 @@ public class BoardBackgroundView : MonoBehaviour
         transform.localScale = Vector3.one; // 스프라이트 자체의 월드 크기 사용
         if (stoneFrame == null || stoneFrame.sprite == null) return; // 프레임 연결 전에도 격자는 표시
         Rect opening = new Rect(230, 170, 572, 1148); // 원본 이미지의 내부 영역, 좌하단 기준
+        Vector2 importRatio = stoneFrame.sprite.rect.size / new Vector2(1070f, 1470f); // 임포트 해상도에 맞춘 좌표 비율
+        opening = new Rect(Vector2.Scale(opening.position, importRatio), Vector2.Scale(opening.size, importRatio)); // 해상도를 낮춰도 격자와 프레임 정렬 유지
         float scaleX = GridManager.Width * GridManager.CellSize / opening.width; // 내부 가로를 10칸에 맞춤
         float scaleY = GridManager.Height * GridManager.CellSize / opening.height; // 내부 세로를 22칸에 맞춤
         Vector2 offset = stoneFrame.sprite.pivot - opening.center; // 원본 중심과 플레이 영역 중심 차이
