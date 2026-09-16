@@ -1,0 +1,806 @@
+fileFormatVersion: 2
+guid: 343bd16457f8fb548b0508192c7e4272
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3877612945238651320
+    second: HoldBoard_0
+  - first:
+      213: 1153713931294187178
+    second: HoldBoard_1
+  - first:
+      213: 5868422886703025409
+    second: HoldBoard_2
+  - first:
+      213: -4783711564934676959
+    second: HoldBoard_3
+  - first:
+      213: -679037226063504875
+    second: HoldBoard_4
+  - first:
+      213: -7982480948521732381
+    second: HoldBoard_5
+  - first:
+      213: 606490743384442292
+    second: HoldBoard_6
+  - first:
+      213: -5435443111852557570
+    second: HoldBoard_7
+  - first:
+      213: -5323165177832117746
+    second: HoldBoard_8
+  - first:
+      213: -6385113882335458046
+    second: HoldBoard_9
+  - first:
+      213: -5151557447595597697
+    second: HoldBoard_10
+  - first:
+      213: 1399325026052837255
+    second: HoldBoard_11
+  - first:
+      213: 5481334385458173304
+    second: HoldBoard_12
+  - first:
+      213: 4944516882038485284
+    second: HoldBoard_13
+  - first:
+      213: -8010833529146848963
+    second: HoldBoard_14
+  - first:
+      213: -8673544695657390073
+    second: HoldBoard_15
+  - first:
+      213: 1794648187116101745
+    second: HoldBoard_16
+  - first:
+      213: 2890248718576275812
+    second: HoldBoard_17
+  - first:
+      213: -8275785877831547027
+    second: HoldBoard_18
+  - first:
+      213: -4285824562734734541
+    second: HoldBoard_19
+  - first:
+      213: 3486611453938689830
+    second: HoldBoard_20
+  - first:
+      213: -6903629299192315325
+    second: HoldBoard_21
+  - first:
+      213: 5473978662209545176
+    second: HoldBoard_22
+  - first:
+      213: -654514406560832747
+    second: HoldBoard_23
+  - first:
+      213: 2126264481288516665
+    second: HoldBoard_24
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: HoldBoard_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 864
+        height: 884
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b1f761ed6c00d530800000000000000
+      internalID: 3877612945238651320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoldBoard_1
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 0
+        width: 854
+        height: 855
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aae953735b0d20010800000000000000
+      internalID: 1153713931294187178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoldBoard_2
+      rect:
+        serializedVersion: 2
+        x: 879
+        y: 846
+        width: 31
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10dc4b1f583d07150800000000000000
+      internalID: 5868422886703025409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoldBoard_3
+      rect:
+        serializedVersion: 2
+        x: 879
+        y: 795
+        width: 27
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12ef3284da7dc9db0800000000000000
+      internalID: -4783711564934676959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoldBoard_4
+      rect:
+        serializedVersion: 2
+        x: 887
+        y: 757
+        width: 17
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51ad7379d339396f0800000000000000
+      internalID: -679037226063504875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoldBoard_5
+      rect:
+        serializedVersion: 2
+        x: 869
+        y: 198
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e6f90dced7883190800000000000000
+      internalID: -7982480948521732381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoldBoard_6
+      rect:
+        serializedVersion: 2
+        x: 878
+        y: 200
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b50ef62e10ba6800800000000000000
+      internalID: 606490743384442292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoldBoard_7
+      rect:
+        serializedVersion: 2
+        x: 912
+        y: 167
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: efa3f29b94d6194b0800000000000000
+      internalID: -5435443111852557570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoldBoard_8
+      rect:
+        serializedVersion: 2
+        x: 893
+        y: 144
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0a669e59715026b0800000000000000
+      internalID: -5323165177832117746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoldBoard_9
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 142
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20dcaf8f0c48367a0800000000000000
+      internalID: -6385113882335458046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoldBoard_10
+      rect:
+        serializedVersion: 2
+        x: 865
+        y: 114
+        width: 25
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f70eb08abcdf188b0800000000000000
+      internalID: -5151557447595597697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoldBoard_11
+      rect:
+        serializedVersion: 2
+        x: 855
+        y: 57
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78f813f72b66b6310800000000000000
+      internalID: 1399325026052837255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoldBoard_12
+      rect:
+        serializedVersion: 2
+        x: 869
+        y: 61
+        width: 33
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8755e5c059c911c40800000000000000
+      internalID: 5481334385458173304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoldBoard_13
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 47
+        width: 22
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42173d338e37e9440800000000000000
+      internalID: 4944516882038485284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoldBoard_14
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 39
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d39c964395dc3d090800000000000000
+      internalID: -8010833529146848963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoldBoard_15
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 33
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7002edfbd0161a780800000000000000
+      internalID: -8673544695657390073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoldBoard_16
+      rect:
+        serializedVersion: 2
+        x: 653
+        y: 31
+        width: 25
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 170aad9840fd7e810800000000000000
+      internalID: 1794648187116101745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoldBoard_17
+      rect:
+        serializedVersion: 2
+        x: 1072
+        y: 41
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 461544775e93c1820800000000000000
+      internalID: 2890248718576275812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoldBoard_18
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 15
+        width: 47
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6708a25790862d80800000000000000
+      internalID: -8275785877831547027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoldBoard_19
+      rect:
+        serializedVersion: 2
+        x: 1542
+        y: 33
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3336d887441b584c0800000000000000
+      internalID: -4285824562734734541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoldBoard_20
+      rect:
+        serializedVersion: 2
+        x: 1740
+        y: 37
+        width: 15
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 627e2ddf4aee26030800000000000000
+      internalID: 3486611453938689830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoldBoard_21
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 17
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 342c9a8bab16130a0800000000000000
+      internalID: -6903629299192315325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoldBoard_22
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 13
+        width: 40
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d36115479a77fb40800000000000000
+      internalID: 5473978662209545176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoldBoard_23
+      rect:
+        serializedVersion: 2
+        x: 949
+        y: 17
+        width: 20
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 513e0907d92bae6f0800000000000000
+      internalID: -654514406560832747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoldBoard_24
+      rect:
+        serializedVersion: 2
+        x: 1137
+        y: 23
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9347bb1c742028d10800000000000000
+      internalID: 2126264481288516665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      HoldBoard_0: 3877612945238651320
+      HoldBoard_1: 1153713931294187178
+      HoldBoard_10: -5151557447595597697
+      HoldBoard_11: 1399325026052837255
+      HoldBoard_12: 5481334385458173304
+      HoldBoard_13: 4944516882038485284
+      HoldBoard_14: -8010833529146848963
+      HoldBoard_15: -8673544695657390073
+      HoldBoard_16: 1794648187116101745
+      HoldBoard_17: 2890248718576275812
+      HoldBoard_18: -8275785877831547027
+      HoldBoard_19: -4285824562734734541
+      HoldBoard_2: 5868422886703025409
+      HoldBoard_20: 3486611453938689830
+      HoldBoard_21: -6903629299192315325
+      HoldBoard_22: 5473978662209545176
+      HoldBoard_23: -654514406560832747
+      HoldBoard_24: 2126264481288516665
+      HoldBoard_3: -4783711564934676959
+      HoldBoard_4: -679037226063504875
+      HoldBoard_5: -7982480948521732381
+      HoldBoard_6: 606490743384442292
+      HoldBoard_7: -5435443111852557570
+      HoldBoard_8: -5323165177832117746
+      HoldBoard_9: -6385113882335458046
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
