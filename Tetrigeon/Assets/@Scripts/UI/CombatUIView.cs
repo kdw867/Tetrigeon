@@ -10,7 +10,11 @@ public class CombatUIView : MonoBehaviour
     private void OnEnable()
     {
         CombatManager.OnStateChanged += UpdateDisplay; // 전투 상태 바뀔 때마다 갱신
-        UpdateDisplay(); // 시작 상태 한 번 표시
+    }
+
+    private void Start()
+    {
+        UpdateDisplay(); // 매니저들의 Awake가 모두 끝난 뒤 첫 상태를 표시
     }
 
     private void OnDisable()

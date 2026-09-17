@@ -88,14 +88,28 @@ candidates, separate from the basic attack rules.
 After each bag the enemy acts. Confirmed (2026-09-17): Garbage does NOT arrive
 every turn. The enemy's basic attack only reduces player HP; Garbage Lines are
 a skill the enemy uses once every N turns (N is tunable, initial value 3).
-The turn the skill fires, the enemy deals HP damage and adds Garbage together.
+HP damage and Garbage are mutually exclusive: on a skill turn the enemy adds
+Garbage Lines and deals NO HP damage that turn. Other turns are HP damage only.
 This gives the player quiet turns to clean up the board and makes the skill
 turn something to plan around rather than constant background pressure.
 The remaining turn count until the skill fires must be visible to the player.
 Garbage occupies space and pushes existing blocks upward, requiring attack
 planning and board cleanup before the skill lands.
-Vary HP damage, skill interval, and Garbage amounts to distinguish enemies.
-Exact damage, line counts, and hole-placement rules: TBD.
+
+Garbage line count per enemy tier (2026-09-17):
+| Enemy tier | Garbage lines per skill turn |
+| --- | --- |
+| Normal | 1 |
+| Epic | 2-3, random |
+| Boss | 2-4, random |
+
+Hole placement (2026-09-17): each Garbage line has one empty column. When a
+skill turn adds several lines at once, they all share the SAME empty column,
+so the gap forms a vertical channel the player can drop a piece through. The
+column is rolled once per skill activation, not per line.
+
+Vary HP damage and skill interval to further distinguish enemies within a tier.
+Exact damage values: TBD.
 
 ## 8. TOP OUT AND DEFEAT
 Treat a conventional Tetris game-over state as Top Out, e.g. blocks reaching

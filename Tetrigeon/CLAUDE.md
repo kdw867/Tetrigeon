@@ -69,6 +69,9 @@ Before starting work, ask up to 3 clarifying questions if you need more informat
 ## 7. Object Hierarchy & Instantiation
 - If an object in the Hierarchy needs management, give it a Manager and register it as that Manager's child.
 - For dynamically instantiated objects, don't leave a prefab instance in the Hierarchy — spawn from the original prefab at runtime.
+- The scene is grouped under top-level empty parents: `Managers`, `Background`, `Player`, `Enemies`, `UI`. Put every new scene object under the group it belongs to; create a new top-level group only when none of them fits. Never leave new objects loose at the scene root.
+- Group parents must stay at position (0,0,0), identity rotation, scale 1, so child world transforms are unaffected. When reparenting, preserve world position (`SetParent(parent, true)`) and afterward verify both transforms and Inspector references.
+- Never parent anything under `GridManager` — `ClearAllBlocks()` destroys all of its children, so only locked blocks belong there.
 
 ## 8. Inline Comments
 - Add a short comment next to each line explaining what action it performs, not just the non-obvious ones. This overrides the "no comments" default in the general guidelines above for this project.

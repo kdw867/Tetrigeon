@@ -12,7 +12,7 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private int playerMaxHp = 100; // 플레이어 최대 체력
     [SerializeField] private int enemyMaxHp = 60; // 적 최대 체력
     [SerializeField] private int enemyAttackDamage = 8; // 적 턴마다 플레이어가 받는 피해
-    [SerializeField] private int enemyGarbageLines = 2; // 능력 사용 턴에 보드 아래 쌓이는 방해 줄 수
+    [SerializeField] private EnemyTier enemyTier = EnemyTier.Normal; // 적 등급 (능력 턴의 방해 줄 수를 결정)
     [SerializeField] private int enemySkillInterval = 3; // 적이 방해 줄 능력을 쓰는 주기 (턴)
     [SerializeField] private float topOutHpPenaltyRatio = 0.3f; // Top Out 시 최대 체력 대비 잃는 비율
     [SerializeField] private int piecesPerBag = 7; // 한 턴에 배치하는 조각 수
@@ -86,13 +86,15 @@ public class CombatManager : MonoBehaviour
 
     private void EnemyTurn()
     {
-        PlayerHp -= enemyAttackDamage; // 적 기본 공격: 매 턴 체력 피해
-
         turnsSinceSkill++;
         if (turnsSinceSkill >= enemySkillInterval) // 주기가 되면 방해 줄 능력 사용
         {
             turnsSinceSkill = 0;
-            GridManager.Instance.AddGarbageLines(enemyGarbageLines);
+            GridManager.Instance.AddGarbageLines(RollGarbageLines()); // 능력 턴에는 방해 줄만 주고 체력 피해는 없음
+        }
+        else
+        {
+            PlayerHp -= enemyAttackDamage; // 평소 턴에는 체력 피해만
         }
 
         if (PlayerHp <= 0)
@@ -103,6 +105,17 @@ public class CombatManager : MonoBehaviour
         }
 
         OnStateChanged?.Invoke();
+    }
+
+    // 등급별 방해 줄 수: 일반 1줄, 에픽 2~3줄, 보스 2~4줄
+    private int RollGarbageLines()
+    {
+        switch (enemyTier)
+        {
+            case EnemyTier.Epic: return UnityEngine.Random.Range(2, 4); // 2 또는 3
+            case EnemyTier.Boss: return UnityEngine.Random.Range(2, 5); // 2~4
+            default: return 1; // 일반 몬스터는 1줄 고정
+        }
     }
 
     private void HandleTopOut()

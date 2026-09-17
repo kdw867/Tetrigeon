@@ -154,6 +154,8 @@ public class GridManager : MonoBehaviour
     // 적 턴: 아래에 구멍 하나 뚫린 방해 줄을 추가하고 기존 블록을 위로 밀어올림
     public void AddGarbageLines(int count)
     {
+        int hole = UnityEngine.Random.Range(0, Width); // 한 번에 추가되는 줄들은 모두 같은 칸을 비워 둠
+
         for (int i = 0; i < count; i++)
         {
             for (int x = 0; x < Width; x++) // 맨 윗줄 블록은 밀려나며 사라짐
@@ -172,7 +174,6 @@ public class GridManager : MonoBehaviour
                         cells[x, y + 1].position = CellToWorld(new Vector2Int(x, y + 1)); // 블록 실제 위치도 이동
                 }
 
-            int hole = UnityEngine.Random.Range(0, Width); // 이 줄에서 비워둘 칸
             for (int x = 0; x < Width; x++)
             {
                 if (x == hole) continue; // 구멍은 블록 없이 둠
