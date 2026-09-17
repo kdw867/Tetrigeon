@@ -8,7 +8,7 @@ public class GridManager : MonoBehaviour
     public const int Height = 22; // 보드 세로 칸 수
 
     // Visual mapping only — grid logic stays on integer cells.
-    public const float CellSize = 30f / 108f; // FHD·카메라 크기 5 기준 한 칸을 정확히 30픽셀로 표시
+    public const float CellSize = 27f / 108f; // FHD에서 한 칸 27픽셀로 표시하여 배경 안쪽 여백 확보
 
     // Board panel's own transform (dragged in the Scene view) is the source of truth for
     // where the board sits — its position is the panel's center, so BoardOrigin (cell (0,0)'s
@@ -130,5 +130,69 @@ public class GridManager : MonoBehaviour
         for (int x = 0; x < Width; x++)
             if (cells[x, y] != null) return false; // 블록 하나라도 있으면 빈 줄 아님
         return true;
+    }
+
+    // Top Out 마무리용: 배열에 등록되지 않은 잔여 블록까지 포함해 보드를 완전히 비움
+    public void ClearAllBlocks()
+    {
+        for (int y = 0; y < Height; y++)
+            for (int x = 0; x < Width; x++)
+                cells[x, y] = null; // 칸 정보 초기화
+
+        for (int i = transform.childCount - 1; i >= 0; i--)
+            Destroy(transform.GetChild(i).gameObject); // 그리드에 붙은 블록 오브젝트 전부 제거
+    }
+
+    // 보드에 블록이 하나도 없는지 (퍼펙트 클리어 판정용)
+    public bool IsBoardEmpty()
+    {
+        for (int y = 0; y < Height; y++)
+            if (!IsRowEmpty(y)) return false; // 블록 있는 줄 하나라도 있으면 아님
+        return true;
+    }
+
+    // 적 턴: 아래에 구멍 하나 뚫린 방해 줄을 추가하고 기존 블록을 위로 밀어올림
+    public void AddGarbageLines(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            for (int x = 0; x < Width; x++) // 맨 윗줄 블록은 밀려나며 사라짐
+            {
+                if (cells[x, Height - 1] != null)
+                    Destroy(cells[x, Height - 1].gameObject);
+                cells[x, Height - 1] = null;
+            }
+
+            for (int y = Height - 2; y >= 0; y--) // 위에서부터 한 칸씩 위로 이동
+                for (int x = 0; x < Width; x++)
+                {
+                    cells[x, y + 1] = cells[x, y];
+                    cells[x, y] = null;
+                    if (cells[x, y + 1] != null)
+                        cells[x, y + 1].position = CellToWorld(new Vector2Int(x, y + 1)); // 블록 실제 위치도 이동
+                }
+
+            int hole = UnityEngine.Random.Range(0, Width); // 이 줄에서 비워둘 칸
+            for (int x = 0; x < Width; x++)
+            {
+                if (x == hole) continue; // 구멍은 블록 없이 둠
+                cells[x, 0] = CreateGarbageBlock(new Vector2Int(x, 0)); // 맨 아랫줄에 방해 블록 생성
+            }
+        }
+    }
+
+    private Transform CreateGarbageBlock(Vector2Int cell)
+    {
+        GameObject block = new GameObject("GarbageBlock");
+        block.transform.SetParent(transform); // 그리드가 관리하도록 자식으로 등록
+        block.transform.position = CellToWorld(cell);
+        block.transform.localScale = Vector3.one * CellSize; // 한 칸 크기로 맞춤
+
+        SpriteRenderer spriteRenderer = block.AddComponent<SpriteRenderer>();
+        spriteRenderer.sprite = PieceVisuals.GetSquareSprite(); // ponytail: 전용 아트 나오면 교체
+        spriteRenderer.color = new Color(0.35f, 0.35f, 0.38f); // 미노와 구분되는 회색
+        spriteRenderer.sortingOrder = 10; // 고정된 블록과 같은 순서
+
+        return block.transform;
     }
 }

@@ -41,6 +41,15 @@ public class BagManager : MonoBehaviour
         return next;
     }
 
+    // Top Out 시 남은 조각을 버리고 새 가방으로 다시 시작
+    public void ResetBag()
+    {
+        queue.Clear(); // 현재 가방의 남은 조각 전부 폐기
+        while (queue.Count < PreviewCount + 1)
+            FillBag(); // 새 가방으로 큐 다시 채움
+        OnQueueChanged?.Invoke(PeekNext()); // NEXT 미리보기 갱신
+    }
+
     public TetrominoType[] PeekNext()
     {
         TetrominoType[] preview = new TetrominoType[PreviewCount];

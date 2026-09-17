@@ -33,8 +33,9 @@ small; defer complex branches and events.
 
 ## 4. SEVEN-BAG TURNS
 Standard pieces: I, J, L, O, S, T, Z. Each bag contains one of each, shuffled.
-One player turn uses all seven pieces: turn starts -> place seven -> enemy turn
--> next bag. Enemies act after a bag, not after each piece.
+One player turn uses all seven pieces: turn starts -> place seven -> resolve
+player damage from the lines cleared during that bag -> enemy turn -> next bag.
+Enemies act after a bag, not after each piece.
 Bag completion does not reset the board; remaining blocks support later attacks
 and cleanup. Relics that add/remove pieces from bags are expansion ideas only:
 adopting them requires separate bag-size and turn-end rules.
@@ -47,35 +48,73 @@ TBD: NEXT count (3 or 4) and exact enemy-intent presentation.
 
 ## 6. PLAYER ACTIONS AND ATTACKS
 Move, rotate, and place pieces; complete horizontal rows to clear lines and attack.
-Evaluate: simultaneous 1/2/3/4-line clears, combos, T-Spins, and Back-to-Back.
-Line-clear attacks are intended; damage values, bonus inclusion, and formulas: TBD.
-Attack timing alternatives: A) damage immediately on each clear;
-B) aggregate results and apply damage at bag end (prior recommendation).
-If B is adopted: place seven -> resolve attack results -> enemy acts.
+Confirmed (2026-09-17): accumulate the player's line-clear results during one
+bag and apply damage based on those cleared lines when the bag ends. Do not
+apply combat damage immediately on each clear. Resolve player damage first,
+then pass the turn to the enemy.
+
+Confirmed base rule: each fully filled horizontal row cleared normally deals
+1 base damage. Blocks/rows removed by a Top Out reset do not count as line clears.
+Provisional bonuses (2026-09-17): initial playtest values, subject to feedback.
+T-Spin Single, Double, and Triple must be recorded and evaluated separately.
+
+| Clear result | Lines | Base damage | Bonus | Total damage |
+| --- | ---: | ---: | ---: | ---: |
+| Single | 1 | 1 | 0 | 1 |
+| Double | 2 | 2 | 0 | 2 |
+| Triple | 3 | 3 | 0 | 3 |
+| Tetris (four lines at once) | 4 | 4 | +2 | 6 |
+| T-Spin Single | 1 | 1 | +2 | 3 |
+| T-Spin Double | 2 | 2 | +3 | 5 |
+| T-Spin Triple | 3 | 3 | +4 | 7 |
+| Perfect Clear after a normal line clear | - | Already counted | +5 | Clear total + 5 |
+| Top Out board reset | - | 0 | 0 | 0 |
+
+Per-clear damage = cleared rows + applicable Tetris/T-Spin bonus + Perfect
+Clear bonus, if applicable. Sum these results across the bag, then apply once
+at bag end. Evaluate bonuses per clear, not from the bag's total line count:
+four separate Singles deal 4; one Tetris deals 6.
+Perfect Clear stacks with the clear's bonus (e.g. Tetris + Perfect Clear = 11).
+Only an empty board resulting from a normal line clear earns Perfect Clear;
+an empty initial board or Top Out reset earns no Perfect Clear bonus.
+For this first balance pass, a T-Spin without a line clear deals 0; Mini
+T-Spins use base line damage only, with no bonus. Mini bonuses remain TBD.
+Combo implementation and its damage bonus are deferred from the first battle.
+Back-to-Back bonuses are also deferred from this initial damage table.
 Defense, healing, status effects, and special-piece effects are expansion
 candidates, separate from the basic attack rules.
 
 ## 7. ENEMY TURN AND GARBAGE
-After each bag, the enemy's basic attack both reduces player HP and adds Garbage
-Lines. Garbage occupies space and pushes existing blocks upward, requiring
-attack planning and board cleanup in the next bag.
-Vary HP damage versus Garbage amounts to distinguish enemies.
-Damage, line counts, and hole-placement rules: TBD.
-Recommended expansion: bag-count-based preparation/heavy-attack/rest patterns.
+After each bag the enemy acts. Confirmed (2026-09-17): Garbage does NOT arrive
+every turn. The enemy's basic attack only reduces player HP; Garbage Lines are
+a skill the enemy uses once every N turns (N is tunable, initial value 3).
+The turn the skill fires, the enemy deals HP damage and adds Garbage together.
+This gives the player quiet turns to clean up the board and makes the skill
+turn something to plan around rather than constant background pressure.
+The remaining turn count until the skill fires must be visible to the player.
+Garbage occupies space and pushes existing blocks upward, requiring attack
+planning and board cleanup before the skill lands.
+Vary HP damage, skill interval, and Garbage amounts to distinguish enemies.
+Exact damage, line counts, and hole-placement rules: TBD.
 
 ## 8. TOP OUT AND DEFEAT
 Treat a conventional Tetris game-over state as Top Out, e.g. blocks reaching
 the top and preventing normal spawning or placement. Define exact detection
 before implementation.
-On Top Out: delete all board blocks, including Garbage -> apply HP penalty
--> continue if HP > 0; otherwise defeat. Top Out alone does not end the run.
-A board reset is distinct from an attacking line clear; whether it grants an
-attack reward is a separate decision.
+Confirmed Top Out sequence (2026-09-17):
+1. Delete all board blocks, including Garbage.
+2. Apply the HP penalty. Defeat if HP reaches 0; otherwise the run continues.
+3. End the player's turn immediately and pass to the enemy turn. Line-clear
+   damage accumulated earlier in that bag still resolves; the Top Out removal
+   itself contributes none. Enemy Garbage lands on the freshly emptied board.
+4. Reset the bag: discard the current bag's remaining pieces, generate a new
+   seven-bag, and empty the Hold slot. The next turn starts from that state.
+A board reset is distinct from an attacking line clear: Top Out removal grants
+no base damage, technique bonus, or Perfect Clear bonus.
 Unconfirmed penalty alternatives (not simultaneous):
 - Fixed proportion: lose 25-35% of maximum HP.
 - Escalating within one combat: first 20%, second 30%, third 40%; percentage
   basis is not specified for this alternative in the source.
-TBD: retain the current bag's remaining pieces or advance to the next bag.
 
 ## 9. EXAMPLE ENEMY ARCHETYPES (NOT A CONFIRMED ROSTER)
 - Attacker: high HP damage, little Garbage; pressures remaining HP.
@@ -115,8 +154,11 @@ If yes, produce content. If no, improve core combat before expanding relics,
 maps, or events.
 
 ## 12. DECISIONS BEFORE IMPLEMENTATION
-- Immediate line-clear damage versus aggregated bag-end damage.
-- Base damage per cleared-line count; combo/T-Spin/Back-to-Back inclusion/formulas.
+- Attack timing confirmed: aggregated bag-end damage, then the enemy turn.
+- Exact bag-end counting with Hold (including a piece carried between bags).
+- Base damage confirmed: 1 per normally cleared row; Top Out removal excluded.
+- Playtest the provisional Tetris, T-Spin Single/Double/Triple, and Perfect Clear
+  bonuses in section 6. Combo, Back-to-Back, and Mini bonuses are deferred.
 - Player/enemy HP, enemy damage, and Garbage line counts.
 - Top Out detection, HP penalty, and subsequent bag/turn handling.
 - Automatic gravity, time limits, and Hold availability.

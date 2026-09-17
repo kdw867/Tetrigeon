@@ -7,7 +7,7 @@ public class PieceSpawner : MonoBehaviour
     public static PieceSpawner Instance { get; private set; }
 
     public static event Action<TSpinType, int> OnPieceLocked; // T스핀 결과 + 지워진 줄 수 (데미지 계산용)
-    public static event Action OnTopOut; // Top Out으로 맨 윗줄이 지워질 때마다 알림 (데미지에는 안 들어감)
+    public static event Action OnTopOut; // Top Out 발생 시 1회 알림 (지워진 줄은 데미지에 안 들어감)
     public static event Action<TetrominoType?> OnHoldChanged; // Hold 슬롯 내용 바뀔 때 알림 (UI 연결용)
 
     [SerializeField] private Piece piecePrefab;
@@ -22,6 +22,7 @@ public class PieceSpawner : MonoBehaviour
 
     private TetrominoType? heldType; // 현재 Hold에 들어있는 조각 (없으면 null)
     private bool holdUsed; // 이번 조각에서 이미 Hold를 썼는지
+    private bool combatEnded; // 전투가 끝나 더 이상 조각을 내보내지 않는 상태인지
 
     private void Awake()
     {
@@ -31,6 +32,23 @@ public class PieceSpawner : MonoBehaviour
             return;
         }
         Instance = this;
+
+        CombatManager.OnCombatEnded += HandleCombatEnded; // 전투 끝나면 조작을 막기 위해 구독
+    }
+
+    private void OnDestroy()
+    {
+        CombatManager.OnCombatEnded -= HandleCombatEnded; // 이벤트 구독 해제
+    }
+
+    // 전투가 끝나면 시간 정지와 별개로 입력 자체를 막음 (Update는 timeScale 0에서도 계속 돌기 때문)
+    private void HandleCombatEnded(bool playerWon)
+    {
+        combatEnded = true; // 이후 새 조각이 나오지 않게 표시
+        enabled = false; // 하드드랍·홀드·락 딜레이 처리 중단
+        StopAllCoroutines(); // 진행 중이던 Top Out 처리 중단
+        if (currentPiece != null)
+            currentPiece.enabled = false; // 낙하 중인 조각의 이동·회전 입력 중단 (블록은 화면에 그대로 유지)
     }
 
     private void Start()
@@ -74,6 +92,8 @@ public class PieceSpawner : MonoBehaviour
 
     private void SpawnNext()
     {
+        if (combatEnded) return; // 전투가 끝났으면 새 조각을 내보내지 않음
+
         holdUsed = false; // 새 조각이니 Hold 다시 사용 가능
 
         TetrominoType type = BagManager.Instance.Dequeue(); // 다음 조각 종류 뽑기
@@ -84,22 +104,34 @@ public class PieceSpawner : MonoBehaviour
         }
         else
         {
-            StartCoroutine(ClearTopRowsThenSpawn(type)); // 막혀있으면 한 줄씩 지우면서 대기
+            StartCoroutine(TopOutSequence()); // 막혀있으면 뽑은 조각은 버리고 Top Out 처리로
         }
     }
 
-    // Top Out 시 다음 조각 스폰을 멈추고, 보드가 완전히 빌 때까지 맨 위 줄부터 한 줄씩 지움.
-    private IEnumerator ClearTopRowsThenSpawn(TetrominoType type)
+    // Top Out 처리: 보드를 한 줄씩 전부 비운 뒤 턴을 넘기고, 새 가방·빈 Hold로 다시 시작.
+    private IEnumerator TopOutSequence()
     {
         yield return new WaitForSeconds(topOutStartDelay); // 고정된 모습을 잠깐 보여준 뒤 지우기 시작
 
         while (GridManager.Instance.ClearTopRow()) // 지울 줄이 남아있는 동안 반복
-        {
-            OnTopOut?.Invoke();
             yield return new WaitForSeconds(topOutRowDelay); // 다음 줄 지우기 전 대기
-        }
 
-        SpawnPiece(type); // 보드 완전히 비워진 뒤에만 다음 조각 스폰
+        GridManager.Instance.ClearAllBlocks(); // 칸 정보에 안 잡힌 블록까지 남김없이 정리
+
+        OnTopOut?.Invoke(); // 보드를 다 비운 뒤 알림 (HP 페널티 + 턴 종료 + 적 턴의 방해 줄이 빈 보드 위에 쌓이도록)
+
+        BagManager.Instance.ResetBag(); // 남은 조각 버리고 새 가방으로
+        ClearHold(); // Hold 슬롯 비우기
+
+        SpawnNext(); // 새 가방의 첫 조각부터 다음 턴 시작
+    }
+
+    // Top Out 시 Hold에 들고 있던 조각을 버림
+    private void ClearHold()
+    {
+        heldType = null; // 보관 중인 조각 제거
+        holdUsed = false; // 다음 턴에서 Hold 다시 사용 가능
+        OnHoldChanged?.Invoke(heldType); // Hold UI 갱신
     }
 
     private void SpawnPiece(TetrominoType type)

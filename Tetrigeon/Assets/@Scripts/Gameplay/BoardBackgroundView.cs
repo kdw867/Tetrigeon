@@ -9,7 +9,7 @@ public class BoardBackgroundView : MonoBehaviour
 
     private void OnEnable()
     {
-        const int pixelsPerCell = 30; // FHD·카메라 크기 5에서 텍스처와 화면을 1:1로 표시
+        const int pixelsPerCell = 27; // 축소한 칸을 FHD 화면과 1:1로 표시
         if (gridSprite == null) // 최초 활성화 시에만 격자 생성
         {
             int width = GridManager.Width * pixelsPerCell; // 가로 열 수 반영

@@ -26,7 +26,7 @@ public static class PieceVisuals
         return Quaternion.Euler(0f, 0f, (type == TetrominoType.L ? 90f : 0f) - 90f * rotationState); // 세로 L 원본을 스폰 방향으로 정렬
     }
 
-    private const float CellFill = 28f / 30f; // FHD 30픽셀 칸에서 양쪽 1픽셀씩 동일한 간격 확보
+    private const float CellFill = 25f / 27f; // FHD 27픽셀 칸에서 양쪽 1픽셀씩 동일한 간격 확보
 
     public static void ApplyMinoArt(SpriteRenderer renderer, TetrominoType type, int cellIndex, float opacity = 1f, int sortingOrder = 10) // 실체와 고스트의 투명도·표시 순서를 함께 설정
     {
@@ -34,7 +34,7 @@ public static class PieceVisuals
         renderer.color = new Color(1f, 1f, 1f, opacity); // 원본 색을 유지하며 지정한 투명도 적용
         renderer.sortingOrder = sortingOrder; // 바탕과 함께 표시 순서 결정
         Vector2 size = renderer.sprite.rect.size / renderer.sprite.pixelsPerUnit; // 원본 분할 영역의 크기 확인 (타이트 메시 트림 오차 없는 슬라이스 원본 크기)
-        renderer.transform.localScale = new Vector3(GridManager.CellSize / size.x * CellFill, GridManager.CellSize / size.y * CellFill, 1f); // 모든 타입의 표시 영역을 28픽셀 정사각형으로 통일
+        renderer.transform.localScale = new Vector3(GridManager.CellSize / size.x * CellFill, GridManager.CellSize / size.y * CellFill, 1f); // 모든 타입의 표시 영역을 25픽셀 정사각형으로 통일
         renderer.transform.localRotation = GetArtRotation(type, 0); // 원본의 초기 방향 정렬
         GameObject backing = new GameObject("CellBacking"); // 불규칙한 투명 여백을 메울 공통 바탕
         backing.layer = renderer.gameObject.layer; // 카메라 표시 레이어를 블록과 일치
