@@ -41,6 +41,7 @@ public class Piece : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.X)) TryRotate(1);
         if (Input.GetKeyDown(KeyCode.Z)) TryRotate(-1);
+        if (Input.GetKeyDown(KeyCode.A)) TryRotate(2); // 180도 회전
 
         gravityTimer += Time.deltaTime; // 자동 낙하 타이머 누적
         if (gravityTimer >= gravityInterval)
@@ -95,7 +96,7 @@ public class Piece : MonoBehaviour
                 RotationState = ((newRotationState % 4) + 4) % 4;
                 BoardPosition = candidate;
                 LastActionWasRotation = true;
-                LastKickTestIndex = i;
+                LastKickTestIndex = direction == 2 ? -1 : i; // 5번째 킥 T스핀 특례는 90도 회전에만 적용
                 JustMoved = true; // 회전 성공 기록
                 return true;
             }

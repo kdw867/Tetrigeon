@@ -18,6 +18,12 @@ public static class SRSKickData
         { (3, 2), new[] { V(0, 0), V(-1, 0), V(-1, -1), V(0, 2), V(-1, 2) } },
         { (3, 0), new[] { V(0, 0), V(-1, 0), V(-1, -1), V(0, 2), V(-1, 2) } },
         { (0, 3), new[] { V(0, 0), V(1, 0), V(1, 1), V(0, -2), V(1, -2) } },
+
+        // 180도 회전 (SRS+ 방식). 표준 SRS에는 없어 별도로 정의한다.
+        { (0, 2), new[] { V(0, 0), V(0, 1), V(1, 1), V(-1, 1), V(1, 0), V(-1, 0) } },
+        { (2, 0), new[] { V(0, 0), V(0, -1), V(-1, -1), V(1, -1), V(-1, 0), V(1, 0) } },
+        { (1, 3), new[] { V(0, 0), V(1, 0), V(1, 2), V(1, 1), V(0, 2), V(0, 1) } },
+        { (3, 1), new[] { V(0, 0), V(-1, 0), V(-1, 2), V(-1, 1), V(0, 2), V(0, 1) } },
     };
 
     // Standard SRS wall kick table for I. Key = (fromState, toState).
@@ -31,6 +37,7 @@ public static class SRSKickData
         { (3, 2), new[] { V(0, 0), V(-2, 0), V(1, 0), V(-2, -1), V(1, 2) } },
         { (3, 0), new[] { V(0, 0), V(1, 0), V(-2, 0), V(1, -2), V(-2, 1) } },
         { (0, 3), new[] { V(0, 0), V(-1, 0), V(2, 0), V(-1, 2), V(2, -1) } },
+        // I는 180도 회전해도 모양이 같아 별도 킥 없이 제자리 회전만 시도한다.
     };
 
     // Returns the ordered list of offsets to try when rotating from one state to another.

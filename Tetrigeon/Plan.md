@@ -26,7 +26,10 @@ repeated resets as an advantageous strategy.
 ## 3. RUN LOOP
 Start run -> enter combat -> use one bag -> enemy acts -> repeat with new bags
 until victory -> choose reward -> choose route/next area -> boss -> end run.
-Player HP <= 0: defeat. Enemy HP <= 0: combat victory.
+Player HP <= 0: defeat. Enemy HP <= 0: remove that enemy from combat.
+Normal combat stages end only when all enemies are defeated. In a boss stage,
+defeating the boss completes the stage even if other enemies remain.
+Stage completion and reward processing must occur exactly once.
 Progression candidates: relics; piece addition, upgrades, or removal; shops,
 events, and treasure areas. Details are undecided. Keep MVP rewards/progression
 small; defer complex branches and events.
@@ -84,6 +87,15 @@ Back-to-Back bonuses are also deferred from this initial damage table.
 Defense, healing, status effects, and special-piece effects are expansion
 candidates, separate from the basic attack rules.
 
+### Target selection with multiple enemies (2026-09-17)
+When a stage holds several enemies the player picks which one to attack.
+- Tab cycles the target to the enemy on the right; from the rightmost enemy it
+  wraps around to the leftmost.
+- The bag's accumulated damage is applied to the targeted enemy only.
+- If the target dies, the excess damage is discarded. It never carries over to
+  another enemy or to the next stage.
+- Dead enemies are skipped when cycling targets.
+
 ## 7. ENEMY TURN AND GARBAGE
 After each bag the enemy acts. Confirmed (2026-09-17): Garbage does NOT arrive
 every turn. The enemy's basic attack only reduces player HP; Garbage Lines are
@@ -96,20 +108,68 @@ The remaining turn count until the skill fires must be visible to the player.
 Garbage occupies space and pushes existing blocks upward, requiring attack
 planning and board cleanup before the skill lands.
 
-Garbage line count per enemy tier (2026-09-17):
-| Enemy tier | Garbage lines per skill turn |
-| --- | --- |
-| Normal | 1 |
-| Epic | 2-3, random |
-| Boss | 2-4, random |
+Garbage skill schedule per enemy tier (2026-09-17):
+Each enemy runs its OWN skill counter. When several enemies reach their skill
+turn together, their Garbage lines are added together that turn.
+
+| Enemy tier | Skill interval | Garbage lines per skill turn |
+| --- | ---: | --- |
+| normal | every 3 turns | 1 |
+| epic | every 5 turns | 2-3, random |
+| boss | every 6 turns | 3-5, random |
 
 Hole placement (2026-09-17): each Garbage line has one empty column. When a
 skill turn adds several lines at once, they all share the SAME empty column,
 so the gap forms a vertical channel the player can drop a piece through. The
 column is rolled once per skill activation, not per line.
 
-Vary HP damage and skill interval to further distinguish enemies within a tier.
-Exact damage values: TBD.
+Enemy HP and basic attack damage are fixed within each tier, regardless of stage.
+Initial enemy HP and basic attack damage are listed below; final balance is TBD.
+
+### Enemy HP and attack balance (2026-09-17)
+Provisional values for longer battles across approximately 10 stages.
+Tier names: normal = regular, epic = elite, boss = final boss.
+Increase enemy count and change tier composition rather than scaling the same
+tier's HP or attack by stage. This replaces the previous stage-based stat ranges.
+
+| Enemy tier | HP per enemy | Basic attack damage |
+| --- | ---: | ---: |
+| normal | 40 | 2 |
+| epic | 80 | 3 |
+| boss | 120 | 3 |
+
+| Stage | Simultaneous enemy composition / event | Enemy count | Total enemy HP |
+| --- | --- | ---: | ---: |
+| 1-2 | normal x2 | 2 | 80 |
+| 3-4 | normal x3 | 3 | 120 |
+| 5 | epic x1 | 1 | 80 |
+| 6-7 | normal x4 | 4 | 160 |
+| 8 | epic x1 + normal x3 | 4 | 200 |
+| 9 | Mino upgrade OR player blessing (non-combat) | 0 | - |
+| 10 | boss x1 | 1 | 120 |
+
+Stage composition is a specification, not an implemented feature yet.
+Enemies appear together and surviving enemies participate in the same enemy
+turn; do not implement sequential replacement waves. An individual enemy's
+death does not reset the board or Hold while the stage continues.
+Excess damage is discarded, never transferred to another enemy or stage.
+Example: 20 damage against an enemy with 5 HP defeats it and discards 15 damage.
+This supersedes the previous sequential-enemy and damage-carryover proposal.
+
+Stage-clear rewards are a choice of mino upgrade OR player HP recovery.
+If stage-clear recovery already exists, do not trigger it on individual kills.
+Do not invent recovery amounts, mino upgrade entries, or player blessing effects.
+Stage 9 is a separate non-combat upgrade/blessing event, not an enemy encounter.
+Before implementing mino upgrades, HP recovery amounts, or the stage map,
+explain existing behavior and a brief recommendation, then obtain user decisions.
+Confirmed combat and stage-composition work may proceed independently.
+Player attack targeting/distribution and multi-enemy skill scheduling are not
+defined by this table: inspect existing behavior and clarify missing rules
+before implementing dependent behavior; do not invent new Garbage rules.
+
+Basic attack damage applies only on HP-attack turns. Existing Garbage amounts,
+skill intervals, hole placement, and the no-HP-damage rule on skill turns remain
+unchanged. These are planning values for playtesting, not runtime changes.
 
 ## 8. TOP OUT AND DEFEAT
 Treat a conventional Tetris game-over state as Top Out, e.g. blocks reaching
@@ -131,6 +191,8 @@ Unconfirmed penalty alternatives (not simultaneous):
   basis is not specified for this alternative in the source.
 
 ## 9. EXAMPLE ENEMY ARCHETYPES (NOT A CONFIRMED ROSTER)
+These are future concept candidates. They do not override the fixed tier stats
+or existing Garbage rules used by the current balance plan in section 7.
 - Attacker: high HP damage, little Garbage; pressures remaining HP.
 - Disruptor: low HP damage, much Garbage; rapidly increases Top Out risk.
 - Balanced: medium damage and Garbage; standard enemy for learning combat.
@@ -142,7 +204,8 @@ Unconfirmed penalty alternatives (not simultaneous):
 ## 10. RECOMMENDED ONE-MONTH MVP (NOT PRODUCTION COMMITMENTS)
 Standard pieces: 7 types. Special pieces: none or 2-3.
 Regular enemies: 4 types. Bosses: 1. Relics: 8-10.
-Stages: 1 chapter. Battles per run: 6-8. Shops: 1 very simple type.
+Stages: 1 chapter with approximately 10 stages; simultaneous enemy counts are
+listed in section 7. Shops: 1 very simple type.
 Playable characters: 1. Meta-progression: excluded.
 Saving: only consider a mid-run save.
 Finish core combat first, then add content as time allows. Defer complex route
@@ -155,7 +218,7 @@ Movement, rotation, collision, hard drop, locking; seven-bag generation and
 consumption; NEXT, line clears, Top Out detection; decide whether to allow Hold.
 Week 2 / Priority 2 — One complete battle:
 Player/enemy HP and line-clear damage; bag-end/enemy-turn transition;
-enemy attacks applying HP damage and Garbage together; Top Out reset/penalty;
+enemy turns respecting mutually exclusive HP attacks and Garbage skills; Top Out reset/penalty;
 win/loss detection and basic combat UI.
 Week 3 / Priority 3 — Short run:
 Add regular enemies and boss; rewards/relics and simple progression;
@@ -173,7 +236,12 @@ maps, or events.
 - Base damage confirmed: 1 per normally cleared row; Top Out removal excluded.
 - Playtest the provisional Tetris, T-Spin Single/Double/Triple, and Perfect Clear
   bonuses in section 6. Combo, Back-to-Back, and Mini bonuses are deferred.
-- Player/enemy HP, enemy damage, and Garbage line counts.
+- Player HP and healing balance; playtest fixed enemy tier stats and stage
+  counts from section 7. Garbage rules remain as specified in section 7.
+- Player attack targeting/distribution and multi-enemy skill scheduling where
+  existing behavior is undefined; preserve all established Garbage rules.
+- User confirmation required before implementing mino upgrades, HP recovery
+  amounts, and the stage map. Stage 9 blessing effects also remain undefined.
 - Top Out detection, HP penalty, and subsequent bag/turn handling.
 - Automatic gravity, time limits, and Hold availability.
 - NEXT: 3 or 4 pieces.
@@ -181,3 +249,21 @@ maps, or events.
 - Reward types, relic effects, and route-selection scope.
 First complete unit: one battle that repeats "place seven -> line-clear attack
 -> enemy attacks HP and board -> next bag" until victory or defeat.
+
+## 13. IMPLEMENTATION AND VERIFICATION FOR STAGES
+Read CLAUDE.md and this plan, then trace existing combat, damage resolution,
+enemy spawning, and completion/reward flows before editing. Reuse existing
+systems and follow prefab/hierarchy rules. Add short Korean action comments
+to every added or modified code line as required by CLAUDE.md.
+Verify and report:
+- Fixed tier stats at every stage and correct simultaneous roster counts.
+- Surviving enemies act; defeated enemies cannot act.
+- Individual kills preserve board/Hold and do not end an unfinished stage.
+- Excess damage is discarded, including a hit exceeding the target's HP.
+- All-enemies-dead completion in ordinary stages; boss-dead completion in
+  boss stages even with surviving non-boss enemies.
+- Completion/reward handling occurs once; no per-kill stage-clear healing.
+- Existing bag-end damage, T-Spin categories, Top Out, and Garbage behavior
+  remain intact, including no HP attack on Garbage skill turns.
+- Stage 9 is not spawned as combat; unapproved reward/map content is not invented.
+Report changed files, compilation/test results, and anything not verified.
