@@ -63,6 +63,7 @@ public class CombatManager : MonoBehaviour
     private void Update()
     {
         if (combatEnded || stageCleared) return; // 전투가 끝났으면 타겟 변경도 막음
+        if (PauseMenu.IsGamePaused) return; // 일시정지 중에는 타겟 변경도 막음
         if (Input.GetKeyDown(KeyCode.Tab)) CycleTarget(); // Tab으로 오른쪽 적에게 타겟 이동
     }
 

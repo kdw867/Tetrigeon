@@ -41,6 +41,16 @@ public class PieceSpawner : MonoBehaviour
         CombatManager.OnCombatEnded -= HandleCombatEnded; // 이벤트 구독 해제
     }
 
+    // 일시정지용 입력 차단/해제 (Update는 timeScale 0에서도 계속 돌기 때문에 따로 막아야 함)
+    public void SetInputEnabled(bool value)
+    {
+        if (combatEnded) return; // 전투가 끝난 뒤에는 다시 켜지 않음
+
+        enabled = value; // 하드드랍·홀드·락 딜레이 처리
+        if (currentPiece != null)
+            currentPiece.enabled = value; // 낙하 중인 조각의 이동·회전
+    }
+
     // 전투가 끝나면 시간 정지와 별개로 입력 자체를 막음 (Update는 timeScale 0에서도 계속 돌기 때문)
     private void HandleCombatEnded(bool playerWon)
     {
