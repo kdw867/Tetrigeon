@@ -150,6 +150,26 @@ public class PieceSpawner : MonoBehaviour
         SpawnNext(); // 새 가방의 첫 조각부터 다음 턴 시작
     }
 
+    // 새 스테이지 진입: 가방·홀드·홀드 충전을 초기 상태로 되돌리고 첫 조각을 내보냄 (보드는 CombatManager가 비움)
+    public void StartNewStage()
+    {
+        holdCharges = maxHoldCharges; // 실제 새 스테이지 진입이므로 충전을 가득 채움
+        rechargeProgress = 0; // 진행도도 초기화
+        OnHoldChargesChanged?.Invoke(holdCharges, rechargeProgress); // 룬·진행도 표시 갱신
+
+        if (currentPiece != null)
+        {
+            Destroy(currentPiece.gameObject); // 이전 스테이지에서 낙하 중이던 조각 제거
+            currentPiece = null;
+        }
+
+        BagManager.Instance.ResetBag(); // 남은 조각 버리고 새 가방으로
+        ClearHold(); // Hold 슬롯 비우기
+
+        enabled = true; // 보상 화면 동안 막아둔 입력 재개
+        SpawnNext(); // 새 가방의 첫 조각부터 시작
+    }
+
     // Top Out 시 Hold에 들고 있던 조각을 버림
     private void ClearHold()
     {

@@ -175,25 +175,29 @@ Initial enemy HP and basic attack damage are listed below; final balance is TBD.
 
 ### Enemy HP and attack balance (2026-09-17)
 Provisional values for longer battles across approximately 10 stages.
+Adjusted on 2026-09-18 after playtest: the original 40/80/120 made stage 10 too
+far away, and halving cut too deep. Now 25/50/75, which is 62.5% of the original,
+keeps the 1:2:3 tier ratio, and stays on clean multiples of 5.
+Basic attack damage was not changed.
 Tier names: normal = regular, epic = elite, boss = final boss.
 Increase enemy count and change tier composition rather than scaling the same
 tier's HP or attack by stage. This replaces the previous stage-based stat ranges.
 
 | Enemy tier | HP per enemy | Basic attack damage |
 | --- | ---: | ---: |
-| normal | 40 | 2 |
-| epic | 80 | 3 |
-| boss | 120 | 3 |
+| normal | 25 | 2 |
+| epic | 50 | 3 |
+| boss | 75 | 3 |
 
 | Stage | Simultaneous enemy composition / event | Enemy count | Total enemy HP |
 | --- | --- | ---: | ---: |
-| 1-2 | normal x2 | 2 | 80 |
-| 3-4 | normal x3 | 3 | 120 |
-| 5 | epic x1 | 1 | 80 |
-| 6-7 | normal x4 | 4 | 160 |
-| 8 | epic x1 + normal x3 | 4 | 200 |
+| 1-2 | normal x2 | 2 | 50 |
+| 3-4 | normal x3 | 3 | 75 |
+| 5 | epic x1 | 1 | 50 |
+| 6-7 | normal x4 | 4 | 100 |
+| 8 | epic x1 + normal x3 | 4 | 125 |
 | 9 | Mino upgrade OR player blessing (non-combat) | 0 | - |
-| 10 | boss x1 | 1 | 120 |
+| 10 | boss x1 | 1 | 75 |
 
 Stage composition is a specification, not an implemented feature yet.
 Enemies appear together and surviving enemies participate in the same enemy
@@ -217,6 +221,42 @@ before implementing dependent behavior; do not invent new Garbage rules.
 Basic attack damage applies only on HP-attack turns. Existing Garbage amounts,
 skill intervals, hole placement, and the no-HP-damage rule on skill turns remain
 unchanged. These are planning values for playtesting, not runtime changes.
+
+### Stage progression and rewards (2026-09-18)
+Confirmed run structure: clear a stage -> reward screen -> take the rewards ->
+enter the next stage. Stages 1 to 10 run in a straight line for this pass.
+Branching routes are a later addition if time allows, not part of this work.
+
+Changed 2026-09-18 after playtest: clearing a stage grants BOTH rewards, because
+choosing only one left the run unwinnable.
+- HP recovery: restore 20 player HP, applied automatically with no choice.
+- Mino upgrade: three upgrades are drawn at random from the per-mino concept
+  list, and the player picks one of those three.
+
+Per-mino upgrade concepts are NOT defined yet. Mentioned only as direction,
+not as commitments: I = piercing, T = poison damage over several turns.
+The actual entries, effects, numbers, and stacking rules remain undecided.
+Do not invent them. Implement the reward flow and HP recovery first and leave
+the mino upgrade entry list empty until the user confirms it.
+
+Mino upgrade trigger rules (2026-09-18, confirmed):
+1. The upgrade fires when a line is cleared by locking that upgraded mino.
+2. If an upgraded mino's blocks merely sit in a cleared row, but the clear was
+   not caused by locking that upgraded mino, the ability does NOT fire.
+   The trigger is the locked piece's type, exactly like the existing T-Spin
+   check, not the board contents of the cleared rows.
+3. The ability scales further with the number of lines cleared by that lock.
+   Scaling details are undecided and will be added later.
+Still undecided, do not invent: the per-mino ability list and numbers, stacking
+when the same mino is upgraded twice, interaction with T-Spin and Perfect Clear
+bonuses, and whether a lock that clears no line can ever fire an ability
+(rule 1 implies it cannot).
+Note: a piercing-style ability would contradict the confirmed "excess damage is
+discarded" rule in this section; resolve that conflict when abilities are defined.
+Upgraded minos need a visual distinction from normal minos; art is pending.
+
+Stage 9 remains the non-combat upgrade/blessing event; its blessing effect is
+still undefined.
 
 ## 8. TOP OUT AND DEFEAT
 Treat a conventional Tetris game-over state as Top Out, e.g. blocks reaching

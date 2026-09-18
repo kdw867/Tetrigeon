@@ -44,6 +44,7 @@ public class CombatManager : MonoBehaviour
         Instance = this;
 
         PlayerHp = playerMaxHp; // 체력 초기화
+        MinoUpgrades.ResetRun(); // 새 런이므로 미노 강화 기록을 비움
         SpawnStageEnemies(); // 스테이지 구성대로 적 생성
     }
 
@@ -165,16 +166,65 @@ public class CombatManager : MonoBehaviour
         return true;
     }
 
-    // 스테이지 완료 처리 (보상은 미정이라 알림만 보내고 지급은 하지 않음)
+    // 스테이지 완료 처리: 게임을 멈추고 보상 화면에 알림 (전투 종료가 아니라 다음 스테이지로 이어짐)
     private void CompleteStage()
     {
         if (stageCleared) return; // 중복 실행 방지
 
         stageCleared = true;
+        Time.timeScale = 0f; // 보상을 고르는 동안 시간 정지
+
+        if (PieceSpawner.Instance != null)
+            PieceSpawner.Instance.SetInputEnabled(false); // timeScale 0에서도 도는 입력을 직접 차단
+
         OnStateChanged?.Invoke();
-        OnStageCleared?.Invoke(stageNumber); // ponytail: 보상(미노 강화/회복) 확정되면 구독해서 처리
-        OnCombatEnded?.Invoke(true);
-        Time.timeScale = 0f; // ponytail: 보상 화면 붙이면 그때 교체
+        OnStageCleared?.Invoke(stageNumber); // 보상 화면이 구독해서 처리
+    }
+
+    // 보상 화면에서 회복을 고르면 호출 (최대 체력을 넘지 않음)
+    public void Heal(int amount)
+    {
+        PlayerHp = Mathf.Min(PlayerHp + amount, playerMaxHp); // 최대 체력까지만 회복
+        OnStateChanged?.Invoke();
+    }
+
+    // 보상을 고른 뒤 다음 스테이지로 진입. 마지막 스테이지였으면 런 종료.
+    public void AdvanceToNextStage()
+    {
+        if (!stageCleared) return; // 클리어 상태에서만 진행
+
+        if (stageNumber >= StageData.LastStage) // 마지막 스테이지를 깼으면 런 클리어
+        {
+            EndCombat(true);
+            return;
+        }
+
+        stageNumber++; // 다음 스테이지 번호로
+        StartStage();
+    }
+
+    // 다음 스테이지 시작: 적·보드·가방·홀드를 새로 하고 시간을 다시 흐르게 한다 (체력과 강화는 유지)
+    private void StartStage()
+    {
+        foreach (Enemy enemy in enemies)
+            if (enemy != null) Destroy(enemy.gameObject); // 이전 스테이지의 적 오브젝트 제거
+        enemies.Clear();
+
+        targetIndex = 0; // 타겟 초기화
+        piecesPlaced = 0; // 가방 진행도 초기화
+        PendingDamage = 0; // 이월된 누적 피해 없음
+        stageCleared = false; // 새 스테이지는 아직 클리어 전
+
+        SpawnStageEnemies(); // 새 스테이지 구성대로 적 생성
+
+        GridManager.Instance.ClearAllBlocks(); // 보드를 비우고 새 스테이지 시작
+
+        Time.timeScale = 1f; // 시간 재개
+
+        if (PieceSpawner.Instance != null)
+            PieceSpawner.Instance.StartNewStage(); // 가방·홀드·홀드 충전을 새 스테이지 상태로
+
+        OnStateChanged?.Invoke();
     }
 
     private void EnemyTurn()

@@ -23,8 +23,7 @@ public class RestartPrompt : MonoBehaviour
 
     private void HandleCombatEnded(bool playerWon)
     {
-        if (playerWon) return; // 체력이 0이 된 패배일 때만 재시작 창 표시
-        restartRoot.SetActive(true); // 게임이 멈춘 즉시 창을 띄움
+        restartRoot.SetActive(true); // 패배와 마지막 스테이지 클리어 모두 여기서 끝나므로 창을 띄움
     }
 
     // 재시작 버튼의 OnClick에 연결해서 사용
