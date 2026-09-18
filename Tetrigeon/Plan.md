@@ -43,6 +43,53 @@ Bag completion does not reset the board; remaining blocks support later attacks
 and cleanup. Relics that add/remove pieces from bags are expansion ideas only:
 adopting them requires separate bag-size and turn-end rules.
 
+### Hold rune charges (2026-09-18)
+Confirmed initial balance: apply from the first stage to all combat, including
+boss fights. This replaces the earlier boss-only Hold restriction idea.
+
+| Rule | Value |
+| --- | --- |
+| Maximum charges | 4, represented by the core's four runes |
+| Stage start | 4 charges, recharge progress 0 |
+| Successful Hold | Consume 1 charge, for both empty-slot storage and swapping |
+| Recharge | 1 charge per 3 actual piece Locks while below capacity |
+| Zero charges | Reject Hold; retain the stored piece |
+| Bag end / individual enemy death | Preserve charges and recharge progress |
+| At maximum charges | Progress is 0; do not bank additional recharge progress |
+
+Count actual piece fixation, not drop-button presses, falling distance, cleared
+lines, or Hold actions. Hard drop and natural/soft-drop fixation each count once.
+On the third qualifying Lock, add one charge and reset progress to 0. Spending
+a charge does not erase existing partial progress. Failed or blocked Hold inputs
+consume nothing and change neither the active piece nor the stored piece.
+Keep the existing rule: after a successful Hold, another Hold is unavailable
+until a piece Locks, even if charges remain. Other existing turn/input gates remain.
+Do not reset charges at ordinary bag start or enemy-turn transitions. Trigger
+the full refill only on genuine stage entry, not on UI enable/rebinding.
+
+UI: lit rune count equals remaining charges (0-4). Central glow independently
+indicates whether Hold contains a piece. Confirmed (2026-09-18): do not display
+recharge text, numbers, or a progress gauge; players infer recharge timing from
+Locks. Keep internal progress and the 3-Lock recharge rule. Reuse the current
+core design, placement, and pixel-art density;
+do not replace it with a redesigned core. The golem's small chest core retains
+its existing occupancy ON/OFF behavior; no new miniature rune UI is required.
+Use shared gameplay state and event-driven UI updates, not separate UI counters.
+
+Confirmed (2026-09-18): Top Out empties the stored Hold piece but preserves both
+remaining charges and partial recharge progress. It is not a new stage and
+grants no free refill. The reset itself consumes no charge and adds no recharge
+progress. Example: 2 charges and progress 2/3 remain 2 and 2/3 after the reset;
+the next qualifying Lock restores one charge. Central occupancy glow turns OFF
+while rune count and internal recharge progress retain their current values.
+Keep recharge threshold easy to tune from 3 to 2 for later balance tests, using
+the project's existing settings pattern. No enemy or Garbage balance changes.
+Verify 4-charge start, successful/failed Hold costs, zero-charge blocking,
+one-Hold-per-Lock, all Lock paths counting once, 3-Lock recharge, no overfill or
+banking at capacity, progress preservation across bags, stage-entry reset, and
+independent rune/occupancy visuals. Report any art or scene wiring left for Codex
+to finish; do not claim untested Unity behavior is verified.
+
 ## 5. NEXT AND COMBAT UI
 Intended: Preview the next 3-4 pieces to plan placements and clears within a bag.
 Recommended UI: board and active piece; NEXT; remaining pieces in current bag;
@@ -182,7 +229,8 @@ Confirmed Top Out sequence (2026-09-17):
    damage accumulated earlier in that bag still resolves; the Top Out removal
    itself contributes none. Enemy Garbage lands on the freshly emptied board.
 4. Reset the bag: discard the current bag's remaining pieces, generate a new
-   seven-bag, and empty the Hold slot. The next turn starts from that state.
+   seven-bag, and empty the Hold slot. Preserve Hold charges and partial recharge
+   progress (confirmed 2026-09-18). The next turn starts from that state.
 A board reset is distinct from an attacking line clear: Top Out removal grants
 no base damage, technique bonus, or Perfect Clear bonus.
 Unconfirmed penalty alternatives (not simultaneous):
@@ -215,7 +263,7 @@ Special pieces and saving must not take priority over core combat.
 ## 11. PRIORITIES AND FOUR-WEEK PLAN
 Week 1 / Priority 1 — Tetris core:
 Movement, rotation, collision, hard drop, locking; seven-bag generation and
-consumption; NEXT, line clears, Top Out detection; decide whether to allow Hold.
+consumption; NEXT, line clears, Top Out detection; Hold rune charges per section 4.
 Week 2 / Priority 2 — One complete battle:
 Player/enemy HP and line-clear damage; bag-end/enemy-turn transition;
 enemy turns respecting mutually exclusive HP attacks and Garbage skills; Top Out reset/penalty;
@@ -243,7 +291,8 @@ maps, or events.
 - User confirmation required before implementing mino upgrades, HP recovery
   amounts, and the stage map. Stage 9 blessing effects also remain undefined.
 - Top Out detection, HP penalty, and subsequent bag/turn handling.
-- Automatic gravity, time limits, and Hold availability.
+- Automatic gravity and time limits; Hold availability is defined in section 4.
+- Top Out Hold rule confirmed: empty the slot; preserve charges and recharge progress.
 - NEXT: 3 or 4 pieces.
 - Which HP and board state persists or resets between battles.
 - Reward types, relic effects, and route-selection scope.

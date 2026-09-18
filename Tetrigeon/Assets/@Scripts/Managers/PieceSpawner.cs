@@ -9,11 +9,14 @@ public class PieceSpawner : MonoBehaviour
     public static event Action<TSpinType, int> OnPieceLocked; // T스핀 결과 + 지워진 줄 수 (데미지 계산용)
     public static event Action OnTopOut; // Top Out 발생 시 1회 알림 (지워진 줄은 데미지에 안 들어감)
     public static event Action<TetrominoType?> OnHoldChanged; // Hold 슬롯 내용 바뀔 때 알림 (UI 연결용)
+    public static event Action<int, int> OnHoldChargesChanged; // 남은 충전량, 충전 진행도 바뀔 때 알림 (코어 UI용)
 
     [SerializeField] private Piece piecePrefab;
     [SerializeField] private float lockDelay = 0.5f; // 착지 후 고정까지 유예 시간
     [SerializeField] private float topOutRowDelay = 0.15f; // Top Out 한 줄 지울 때마다 딜레이 (눈에 보이게)
     [SerializeField] private float topOutStartDelay = 0.4f; // 맨 위 줄에 고정된 걸 눈으로 확인할 시간 (줄 지우기 시작 전)
+    [SerializeField] private int maxHoldCharges = 4; // 코어 룬 4개에 대응하는 최대 홀드 충전량
+    [SerializeField] private int locksPerCharge = 3; // 충전 1개에 필요한 실제 Lock 횟수 (밸런스 테스트 시 2로 변경)
 
     private static readonly Vector2Int SpawnPosition = new Vector2Int(3, GridManager.Height - 3);
 
@@ -23,6 +26,14 @@ public class PieceSpawner : MonoBehaviour
     private TetrominoType? heldType; // 현재 Hold에 들어있는 조각 (없으면 null)
     private bool holdUsed; // 이번 조각에서 이미 Hold를 썼는지
     private bool combatEnded; // 전투가 끝나 더 이상 조각을 내보내지 않는 상태인지
+    private int holdCharges; // 남은 홀드 충전량 (룬 점등 개수)
+    private int rechargeProgress; // 다음 충전까지 쌓인 Lock 횟수
+
+    public int HoldCharges => holdCharges; // UI가 읽을 남은 충전량
+    public int RechargeProgress => rechargeProgress; // UI가 읽을 충전 진행도
+    public int MaxHoldCharges => maxHoldCharges; // UI가 읽을 최대 충전량
+    public int LocksPerCharge => locksPerCharge; // UI가 읽을 충전 기준 Lock 횟수
+    public TetrominoType? HeldType => heldType; // 재연결된 UI가 현재 보관 상태를 읽음
 
     private void Awake()
     {
@@ -32,6 +43,9 @@ public class PieceSpawner : MonoBehaviour
             return;
         }
         Instance = this;
+
+        holdCharges = maxHoldCharges; // 스테이지 진입 시 충전량을 가득 채움
+        rechargeProgress = 0; // 스테이지 진입 시 진행도는 0
 
         CombatManager.OnCombatEnded += HandleCombatEnded; // 전투 끝나면 조작을 막기 위해 구독
     }
@@ -76,8 +90,8 @@ public class PieceSpawner : MonoBehaviour
             return;
         }
 
-        if (!holdUsed && (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.LeftShift)))
-            SwapHold();
+        if (!holdUsed && holdCharges > 0 && (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.LeftShift)))
+            SwapHold(); // 충전이 남아있을 때만 홀드 (0개면 보관 미노도 현재 미노도 건드리지 않음)
     }
 
     private void LateUpdate()
@@ -153,6 +167,7 @@ public class PieceSpawner : MonoBehaviour
 
     private void SwapHold()
     {
+        if (!isActiveAndEnabled || combatEnded || currentPiece == null || holdUsed || holdCharges <= 0) return; // 모든 호출 경로에서 실패한 홀드는 상태를 바꾸지 않음
         TetrominoType current = currentPiece.Type; // 지금 조각 종류 기억
         Destroy(currentPiece.gameObject); // 지금 조각은 그리드에 등록 없이 바로 제거 (고정 아님)
 
@@ -162,7 +177,25 @@ public class PieceSpawner : MonoBehaviour
 
         SpawnPiece(nextType);
 
+        holdCharges--; // 홀드에 실제로 성공했으므로 충전 1개 소모 (진행도는 그대로 유지)
+        OnHoldChargesChanged?.Invoke(holdCharges, rechargeProgress); // 룬 표시 갱신
+
         OnHoldChanged?.Invoke(heldType);
+    }
+
+    // 실제 Lock 1회를 충전 진행도에 반영 (가득 찬 상태에서는 진행도를 쌓지 않음)
+    private void AddRechargeProgress()
+    {
+        if (holdCharges >= maxHoldCharges) return; // 최대치면 초과 충전도 진행도 비축도 없음
+
+        rechargeProgress++; // 이번 Lock을 진행도에 더함
+        if (rechargeProgress >= locksPerCharge) // 기준 횟수에 도달하면
+        {
+            rechargeProgress = 0; // 진행도를 0으로 되돌리고
+            holdCharges++; // 충전 1개 회복
+        }
+
+        OnHoldChargesChanged?.Invoke(holdCharges, rechargeProgress); // 룬·진행도 표시 갱신
     }
 
     private void HardDrop()
@@ -188,6 +221,8 @@ public class PieceSpawner : MonoBehaviour
 
         Destroy(currentPiece.gameObject); // 빈 껍데기가 된 조각 오브젝트 제거 (블록은 이미 분리됨)
         currentPiece = null;
+
+        AddRechargeProgress(); // 미노가 실제로 고정된 시점에만 충전 진행 (하드드랍·자연 낙하 모두 이 경로 하나를 지남)
 
         int clearedLines = GridManager.Instance.ClearLines(); // 꽉 찬 줄 정리
 
