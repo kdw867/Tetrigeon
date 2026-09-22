@@ -14,9 +14,9 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private Slider dasSlider; // DAS: 자동 반복이 시작되기까지의 지연
     [SerializeField] private Slider dcdSlider; // DCD: 회전·낙하 후 자동 이동을 멈추는 시간
     [SerializeField] private Slider sdfSlider; // SDF: 소프트 드롭의 중력 배수
-    [SerializeField] private Text arrValueText; // ARR 현재값 표시
-    [SerializeField] private Text dasValueText; // DAS 현재값 표시
-    [SerializeField] private Text dcdValueText; // DCD 현재값 표시
+    [SerializeField] private InputField arrMsInput, arrFramesInput; // ARR의 MS와 F 직접 입력
+    [SerializeField] private InputField dasMsInput, dasFramesInput; // DAS의 MS와 F 직접 입력
+    [SerializeField] private InputField dcdMsInput, dcdFramesInput; // DCD의 MS와 F 직접 입력
     [SerializeField] private Text sdfValueText; // SDF 현재값 표시
     [SerializeField] private Slider musicVolumeSlider; // 배경음악 음량
     [SerializeField] private Slider sfxVolumeSlider; // 효과음 음량
@@ -47,6 +47,9 @@ public class PauseMenu : MonoBehaviour
         musicVolumeSlider.onValueChanged.AddListener(OnMusicVolumeChanged);
         sfxVolumeSlider.onValueChanged.AddListener(OnSfxVolumeChanged);
 
+        BindTimingInputs(arrMsInput, arrFramesInput, OnArrChanged); // ARR 입력 확정 연결
+        BindTimingInputs(dasMsInput, dasFramesInput, OnDasChanged); // DAS 입력 확정 연결
+        BindTimingInputs(dcdMsInput, dcdFramesInput, OnDcdChanged); // DCD 입력 확정 연결
         RefreshSensitivityTexts(); // 현재값 문구 표시
 
         AudioListener.volume = GameSettings.MusicVolume; // 저장된 음량을 실제 출력에 적용
@@ -138,10 +141,30 @@ public class PauseMenu : MonoBehaviour
     // 슬라이더 옆에 현재값을 밀리초/프레임(또는 배수)으로 표시
     private void RefreshSensitivityTexts()
     {
-        arrValueText.text = GameSettings.FormatFrames(GameSettings.Arr);
-        dasValueText.text = GameSettings.FormatFrames(GameSettings.Das);
-        dcdValueText.text = GameSettings.FormatFrames(GameSettings.Dcd);
+        RefreshTimingInputs(arrMsInput, arrFramesInput, GameSettings.Arr); // ARR 단위 표시 동기화
+        RefreshTimingInputs(dasMsInput, dasFramesInput, GameSettings.Das); // DAS 단위 표시 동기화
+        RefreshTimingInputs(dcdMsInput, dcdFramesInput, GameSettings.Dcd); // DCD 단위 표시 동기화
         sdfValueText.text = GameSettings.FormatSdf(GameSettings.Sdf);
+    }
+
+    private void BindTimingInputs(InputField ms, InputField frames, UnityEngine.Events.UnityAction<float> apply) // 입력 확정 이벤트 연결
+    {
+        ms.onEndEdit.AddListener(text => CommitTimingInput(ms, text, true, apply)); // MS 입력을 프레임으로 환산
+        frames.onEndEdit.AddListener(text => CommitTimingInput(frames, text, false, apply)); // F 입력을 그대로 사용
+    }
+
+    private void CommitTimingInput(InputField input, string text, bool milliseconds, UnityEngine.Events.UnityAction<float> apply) // 유효한 숫자만 저장
+    {
+        float value; // 입력 숫자 보관
+        if (!input.wasCanceled && float.TryParse(text, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out value) && !float.IsNaN(value) && !float.IsInfinity(value)) // 빈칸·문자·비정상 값과 취소 제외
+            apply(milliseconds ? value / (GameSettings.SecondsPerFrame * 1000f) : value); // 기존 범위와 스냅 처리 재사용
+        RefreshSensitivityTexts(); // 잘못된 입력도 저장된 값으로 복원
+    }
+
+    private void RefreshTimingInputs(InputField ms, InputField frames, float value) // 재입력 이벤트 없이 표시 갱신
+    {
+        ms.SetTextWithoutNotify((value * GameSettings.SecondsPerFrame * 1000f).ToString("0.##", System.Globalization.CultureInfo.InvariantCulture)); // 밀리초 표시
+        frames.SetTextWithoutNotify(value.ToString("F1", System.Globalization.CultureInfo.InvariantCulture)); // 프레임 표시
     }
 
     private void OnMusicVolumeChanged(float value) { GameSettings.MusicVolume = value; AudioListener.volume = value; } // 배경음악 음량 저장 및 적용
