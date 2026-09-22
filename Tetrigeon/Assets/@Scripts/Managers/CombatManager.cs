@@ -20,7 +20,19 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private Vector3 enemyLineCenter = new Vector3(5.9f, 3.1f, 0f); // 적들이 늘어서는 줄의 중심
     [SerializeField] private float enemySpacing = 1.6f; // 적 사이 가로 간격
 
+    private const int PoisonTurns = 2; // 강화 T 미노의 독 지속 턴
+    private const int FreezeTurns = 1; // 강화 L 미노의 빙결 지속 턴
+    private const int ShieldTurns = 2; // 강화 O 미노의 보호막 지속 턴
+    private const int BossFreezeMinDamage = 2; // 보스를 얼리려면 필요한 최소 기존 피해
+    private const float PoisonRatio = 0.7f; // 독 턴당 피해 배율
+    private const float ExplosionRatio = 0.7f; // 폭발 추가 피해 배율
+    private const float FreezeBreakRatio = 0.5f; // 빙결 파괴 피해 배율
+    private const int CriticalMultiplier = 2; // 치명타 배율
+    private const int ShieldMultiplier = 2; // 보호막 배율
+    private const int HealMultiplier = 3; // 회복 배율
+
     public int PlayerHp { get; private set; } // 현재 플레이어 체력
+    public int PlayerShield { get; private set; } // 남아있는 보호막 (체력보다 먼저 깎임)
     public int PlayerMaxHp => playerMaxHp;
     public int StageNumber => stageNumber;
     public int PendingDamage { get; private set; } // 이번 가방에서 누적된 피해 (아직 미적용)
@@ -33,6 +45,16 @@ public class CombatManager : MonoBehaviour
     private int piecesPlaced; // 이번 가방에서 배치한 조각 수
     private bool combatEnded; // 승패가 이미 결정됐는지
     private bool stageCleared; // 스테이지 완료 처리가 이미 실행됐는지 (중복 방지)
+
+    // 강화 미노 능력으로 이번 가방에 쌓인 효과들 (기존 피해와 같이 가방 끝에 한 번에 정산)
+    private int pendingPierceDamage; // I: 살아있는 적 전체에게 줄 피해
+    private int pendingShield; // O: 플레이어에게 줄 보호막
+    private int pendingHeal; // S: 플레이어가 회복할 양
+    private int pendingExplosionDamage; // Z: 인접한 다른 적에게 줄 피해
+    private int pendingFreezeDamage; // L: 보스 빙결 조건 판정에 쓰는 기존 피해
+    private int pendingFreezeBreakDamage; // L: 빙결이 끝날 때 줄 피해
+    private readonly List<int> pendingPoisons = new List<int>(); // T: 타겟에게 걸 독들의 턴당 피해
+    private int shieldTurnsLeft; // 보호막 남은 턴
 
     private void Awake()
     {
@@ -118,17 +140,120 @@ public class CombatManager : MonoBehaviour
         }
     }
 
-    private void HandlePieceLocked(TSpinType tSpin, int clearedLines)
+    private void HandlePieceLocked(TetrominoType lockedType, TSpinType tSpin, int clearedLines)
     {
         if (combatEnded || stageCleared) return; // 전투 끝났으면 무시
 
         // 줄을 지워서 보드가 비워진 경우만 퍼펙트 클리어 (Top Out 리셋은 해당 없음)
         bool perfectClear = clearedLines > 0 && GridManager.Instance.IsBoardEmpty();
-        PendingDamage += CombatDamage.Calculate(tSpin, clearedLines, perfectClear); // 이번 가방 피해에 합산
+        int damage = CombatDamage.Calculate(tSpin, clearedLines, perfectClear); // 기존 방식 그대로 계산한 피해
+
+        // 강화 능력은 방금 고정한 조각이 강화돼 있고, 그 고정으로 줄이 지워졌을 때만 1회 발동
+        // (보드에 이미 쌓여 있는 블록은 지워진 줄에 포함돼도 능력을 발동시키지 않음)
+        if (clearedLines > 0 && MinoUpgrades.GetLevel(lockedType) > 0)
+            ApplyUpgradedAbility(lockedType, damage);
+        else
+            PendingDamage += damage; // 강화가 아니면 기존대로 타겟 피해에만 합산
 
         piecesPlaced++;
         if (piecesPlaced >= piecesPerBag) EndPlayerTurn(); // 조각 7개 다 놓으면 턴 종료
         else OnStateChanged?.Invoke();
+    }
+
+    // 강화 미노 능력 발동. 능력 세기는 줄 수로 다시 계산하지 않고 이미 계산된 피해를 그대로 쓴다.
+    private void ApplyUpgradedAbility(TetrominoType lockedType, int damage)
+    {
+        switch (lockedType)
+        {
+            case TetrominoType.I: // 관통: 타겟 대신 살아있는 적 전체가 같은 피해를 받음
+                pendingPierceDamage += damage;
+                break;
+
+            case TetrominoType.J: // 치명타: 항상 2배 피해
+                PendingDamage += damage * CriticalMultiplier;
+                break;
+
+            case TetrominoType.O: // 방어막: 기본 피해에 더해 2배만큼 보호막을 쌓음
+                PendingDamage += damage;
+                pendingShield += damage * ShieldMultiplier;
+                break;
+
+            case TetrominoType.T: // 독: 기본 피해 후 0.7배 피해를 2턴 동안 (중첩)
+                PendingDamage += damage;
+                pendingPoisons.Add(Mathf.RoundToInt(damage * PoisonRatio));
+                break;
+
+            case TetrominoType.S: // 회복: 기본 피해에 더해 3배만큼 회복
+                PendingDamage += damage;
+                pendingHeal += damage * HealMultiplier;
+                break;
+
+            case TetrominoType.Z: // 폭발: 기본 피해 후 인접한 다른 적 1명에게 0.7배 피해
+                PendingDamage += damage;
+                pendingExplosionDamage += Mathf.RoundToInt(damage * ExplosionRatio);
+                break;
+
+            case TetrominoType.L: // 빙결: 기본 피해 후 1턴 빙결, 끝날 때 0.5배 추가 피해
+                PendingDamage += damage;
+                pendingFreezeDamage = Mathf.Max(pendingFreezeDamage, damage); // 보스 조건은 가장 큰 피해로 판정
+                pendingFreezeBreakDamage += Mathf.RoundToInt(damage * FreezeBreakRatio);
+                break;
+        }
+    }
+
+    // 폭발이 튈 적: 타겟에서 좌우로 가장 가까운 살아있는 적 (없으면 추가 피해 없음)
+    private Enemy FindExplosionNeighbour()
+    {
+        for (int distance = 1; distance < enemies.Count; distance++)
+        {
+            int right = targetIndex + distance; // 오른쪽 먼저 확인
+            if (right < enemies.Count && enemies[right].IsAlive) return enemies[right];
+
+            int left = targetIndex - distance; // 그다음 왼쪽
+            if (left >= 0 && enemies[left].IsAlive) return enemies[left];
+        }
+        return null;
+    }
+
+    // 이번 가방에 쌓인 강화 능력 효과를 한 번에 적용
+    private void ResolveUpgradedAbilities(Enemy target)
+    {
+        if (target != null && target.IsAlive)
+        {
+            foreach (int poisonDamage in pendingPoisons)
+                target.AddPoison(poisonDamage, PoisonTurns); // 독은 타겟에게 중첩해서 부여
+
+            // 보스는 기존 피해가 2 이상일 때만 얼릴 수 있다
+            bool canFreeze = target.Tier != EnemyTier.Boss || pendingFreezeDamage >= BossFreezeMinDamage;
+            if (pendingFreezeDamage > 0 && canFreeze)
+                target.ApplyFreeze(pendingFreezeBreakDamage, FreezeTurns);
+        }
+
+        if (pendingExplosionDamage > 0)
+        {
+            Enemy neighbour = FindExplosionNeighbour(); // 근처에 다른 적이 있을 때만 폭발
+            if (neighbour != null) neighbour.TakeDamage(pendingExplosionDamage);
+        }
+
+        if (pendingPierceDamage > 0)
+            foreach (Enemy enemy in enemies)
+                if (enemy.IsAlive) enemy.TakeDamage(pendingPierceDamage); // 관통은 살아있는 적 전체
+
+        if (pendingHeal > 0) Heal(pendingHeal); // 회복은 최대 체력을 넘지 않음
+
+        if (pendingShield > 0)
+        {
+            PlayerShield += pendingShield; // 보호막은 가방이 끝날 때 부여
+            shieldTurnsLeft = ShieldTurns;
+        }
+
+        pendingPierceDamage = 0; // 다음 가방을 위해 초기화
+        pendingShield = 0;
+        pendingHeal = 0;
+        pendingExplosionDamage = 0;
+        pendingFreezeDamage = 0;
+        pendingFreezeBreakDamage = 0;
+        pendingPoisons.Clear();
     }
 
     private void EndPlayerTurn()
@@ -136,6 +261,8 @@ public class CombatManager : MonoBehaviour
         Enemy target = Target;
         if (target != null && target.IsAlive)
             target.TakeDamage(PendingDamage); // 누적 피해는 타겟 한 마리에게만, 초과분은 소멸
+
+        ResolveUpgradedAbilities(target); // 강화 능력 효과도 같은 시점에 정산
 
         PendingDamage = 0;
         piecesPlaced = 0;
@@ -215,6 +342,16 @@ public class CombatManager : MonoBehaviour
         PendingDamage = 0; // 이월된 누적 피해 없음
         stageCleared = false; // 새 스테이지는 아직 클리어 전
 
+        pendingPierceDamage = 0; // 쌓다 만 강화 능력 효과도 이월하지 않음
+        pendingShield = 0;
+        pendingHeal = 0;
+        pendingExplosionDamage = 0;
+        pendingFreezeDamage = 0;
+        pendingFreezeBreakDamage = 0;
+        pendingPoisons.Clear();
+        PlayerShield = 0; // 보호막은 스테이지를 넘기지 않음
+        shieldTurnsLeft = 0;
+
         SpawnStageEnemies(); // 새 스테이지 구성대로 적 생성
 
         GridManager.Instance.ClearAllBlocks(); // 보드를 비우고 새 스테이지 시작
@@ -236,6 +373,16 @@ public class CombatManager : MonoBehaviour
         {
             if (!enemy.IsAlive) continue; // 죽은 적은 행동하지 않음
 
+            enemy.TakeDamage(enemy.TickPoison()); // 독은 행동 전에 먼저 적용
+            if (!enemy.IsAlive) continue; // 독으로 죽었으면 행동하지 않음
+
+            bool wasFrozen = enemy.IsFrozen; // 이번 턴에 얼어 있었는지
+            int breakDamage = enemy.TickFreeze(); // 빙결 턴을 줄이고, 끝났으면 파괴 피해를 받음
+            if (breakDamage > 0) enemy.TakeDamage(breakDamage);
+
+            if (wasFrozen) continue; // 얼어 있던 적은 이번 턴에 행동하지 않음
+            if (!enemy.IsAlive) continue; // 파괴 피해로 죽었으면 행동하지 않음
+
             if (enemy.AdvanceTurnAndCheckSkill())
                 garbageLines += enemy.RollGarbageLines(); // 능력 턴인 적은 방해 줄만 추가
             else
@@ -243,7 +390,10 @@ public class CombatManager : MonoBehaviour
         }
 
         if (garbageLines > 0) GridManager.Instance.AddGarbageLines(garbageLines); // 방해 줄은 한 번에 쌓음
-        PlayerHp -= hpDamage; // 체력 공격 합계 적용
+
+        hpDamage = AbsorbWithShield(hpDamage); // 보호막이 있으면 먼저 막아줌
+        PlayerHp -= hpDamage; // 남은 피해만 체력에 적용
+        TickShield(); // 보호막 지속 턴 감소
 
         if (PlayerHp <= 0)
         {
@@ -252,7 +402,34 @@ public class CombatManager : MonoBehaviour
             return;
         }
 
+        MoveTargetToLivingEnemy(); // 독·빙결 피해로 타겟이 죽었을 수 있음
+
+        if (IsStageComplete())
+        {
+            CompleteStage(); // 독·빙결 피해로 전멸한 경우도 스테이지 완료 처리
+            return;
+        }
+
         OnStateChanged?.Invoke();
+    }
+
+    // 보호막이 피해를 먼저 흡수하고, 흡수한 만큼 줄어든다
+    private int AbsorbWithShield(int damage)
+    {
+        if (PlayerShield <= 0 || damage <= 0) return damage;
+
+        int absorbed = Mathf.Min(PlayerShield, damage); // 보호막이 감당할 수 있는 만큼만
+        PlayerShield -= absorbed;
+        return damage - absorbed;
+    }
+
+    // 보호막 지속 턴을 줄이고, 다 되면 남은 양과 상관없이 사라짐
+    private void TickShield()
+    {
+        if (shieldTurnsLeft <= 0) return;
+
+        shieldTurnsLeft--;
+        if (shieldTurnsLeft <= 0) PlayerShield = 0;
     }
 
     private void HandleTopOut()

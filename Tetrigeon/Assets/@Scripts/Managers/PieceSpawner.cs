@@ -6,7 +6,7 @@ public class PieceSpawner : MonoBehaviour
 {
     public static PieceSpawner Instance { get; private set; }
 
-    public static event Action<TSpinType, int> OnPieceLocked; // T스핀 결과 + 지워진 줄 수 (데미지 계산용)
+    public static event Action<TetrominoType, TSpinType, int> OnPieceLocked; // 고정한 조각 종류 + T스핀 결과 + 지워진 줄 수 (데미지·강화 능력 계산용)
     public static event Action OnTopOut; // Top Out 발생 시 1회 알림 (지워진 줄은 데미지에 안 들어감)
     public static event Action<TetrominoType?> OnHoldChanged; // Hold 슬롯 내용 바뀔 때 알림 (UI 연결용)
     public static event Action<int, int> OnHoldChargesChanged; // 남은 충전량, 충전 진행도 바뀔 때 알림 (코어 UI용)
@@ -26,6 +26,7 @@ public class PieceSpawner : MonoBehaviour
     private TetrominoType? heldType; // 현재 Hold에 들어있는 조각 (없으면 null)
     private bool holdUsed; // 이번 조각에서 이미 Hold를 썼는지
     private bool combatEnded; // 전투가 끝나 더 이상 조각을 내보내지 않는 상태인지
+    private bool inputEnabled = true; // 보상 화면·일시정지로 조작이 막혀 있는지
     private int holdCharges; // 남은 홀드 충전량 (룬 점등 개수)
     private int rechargeProgress; // 다음 충전까지 쌓인 Lock 횟수
 
@@ -60,6 +61,7 @@ public class PieceSpawner : MonoBehaviour
     {
         if (combatEnded) return; // 전투가 끝난 뒤에는 다시 켜지 않음
 
+        inputEnabled = value; // 막혀 있는 동안에는 새 조각도 내보내지 않음
         enabled = value; // 하드드랍·홀드·락 딜레이 처리
         if (currentPiece != null)
             currentPiece.enabled = value; // 낙하 중인 조각의 이동·회전
@@ -116,7 +118,7 @@ public class PieceSpawner : MonoBehaviour
 
     private void SpawnNext()
     {
-        if (combatEnded) return; // 전투가 끝났으면 새 조각을 내보내지 않음
+        if (combatEnded || !inputEnabled) return; // 전투 종료·보상 화면 중에는 새 조각을 내보내지 않음
 
         holdUsed = false; // 새 조각이니 Hold 다시 사용 가능
 
@@ -166,7 +168,8 @@ public class PieceSpawner : MonoBehaviour
         BagManager.Instance.ResetBag(); // 남은 조각 버리고 새 가방으로
         ClearHold(); // Hold 슬롯 비우기
 
-        enabled = true; // 보상 화면 동안 막아둔 입력 재개
+        inputEnabled = true; // 보상 화면 동안 막아둔 조작 재개
+        enabled = true;
         SpawnNext(); // 새 가방의 첫 조각부터 시작
     }
 
@@ -227,6 +230,7 @@ public class PieceSpawner : MonoBehaviour
     private void Lock()
     {
         TSpinType tSpin = EvaluateTSpin(currentPiece); // 줄 지우기 전, 고정 시점 보드 상태로 T스핀 판정
+        TetrominoType lockedType = currentPiece.Type; // 조각이 사라지기 전에 종류를 기억 (강화 능력은 방금 고정한 조각 기준)
 
         Vector2Int[] cellOffsets = TetrominoData.GetCells(currentPiece.Type, currentPiece.RotationState); // 조각의 4칸 오프셋
         Transform[] blocks = currentPiece.GetComponent<PieceView>().Blocks; // 같은 순서의 시각적 블록 4개
@@ -246,7 +250,7 @@ public class PieceSpawner : MonoBehaviour
 
         int clearedLines = GridManager.Instance.ClearLines(); // 꽉 찬 줄 정리
 
-        OnPieceLocked?.Invoke(tSpin, clearedLines);
+        OnPieceLocked?.Invoke(lockedType, tSpin, clearedLines);
 
         SpawnNext();
     }

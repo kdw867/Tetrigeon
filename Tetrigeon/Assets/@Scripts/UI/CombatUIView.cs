@@ -27,7 +27,8 @@ public class CombatUIView : MonoBehaviour
         CombatManager combat = CombatManager.Instance;
         if (combat == null) return; // 전투 매니저 없으면 표시할 것 없음
 
-        playerHpText.text = $"PLAYER  {combat.PlayerHp} / {combat.PlayerMaxHp}"; // 플레이어 체력
+        string shield = combat.PlayerShield > 0 ? $"  [보호막 {combat.PlayerShield}]" : ""; // 보호막이 있을 때만 표시
+        playerHpText.text = $"PLAYER  {combat.PlayerHp} / {combat.PlayerMaxHp}{shield}"; // 플레이어 체력
 
         int alive = 0;
         foreach (Enemy enemy in combat.Enemies)

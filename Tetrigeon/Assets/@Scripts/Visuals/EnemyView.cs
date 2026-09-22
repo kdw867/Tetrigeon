@@ -1,13 +1,14 @@
 using UnityEngine;
 
-// 적의 임시 외형과 체력 표시. 실제 아트가 나오면 스프라이트만 교체하면 된다.
+// 적의 외형과 체력 표시. 등급별 아트를 프리팹에 연결해서 쓴다.
 [RequireComponent(typeof(Enemy))]
 [RequireComponent(typeof(SpriteRenderer))]
 public class EnemyView : MonoBehaviour
 {
-    private static readonly Color NormalColor = new Color(0.75f, 0.25f, 0.25f); // 일반 등급 색
-    private static readonly Color EpicColor = new Color(0.62f, 0.30f, 0.78f); // 에픽 등급 색
-    private static readonly Color BossColor = new Color(0.85f, 0.55f, 0.15f); // 보스 등급 색
+    [SerializeField] private Sprite normalSprite; // 일반: Crystal Larva
+    [SerializeField] private Sprite epicSprite; // 에픽: Amethyst Guardian
+    [SerializeField] private Sprite bossSprite; // 보스: Crystal Queen
+    [SerializeField] private float labelMargin = 0.2f; // 몸통과 텍스트 사이 간격
 
     private Enemy enemy; // 표시할 적
     private SpriteRenderer body; // 몸통 스프라이트
@@ -19,7 +20,6 @@ public class EnemyView : MonoBehaviour
         enemy = GetComponent<Enemy>();
 
         body = GetComponent<SpriteRenderer>(); // 프리팹에 붙어있는 렌더러 재사용 (중복 추가 방지)
-        body.sprite = PieceVisuals.GetSquareSprite(); // ponytail: 전용 아트 나오면 교체
         body.sortingOrder = 5; // 배경보다 앞, 블록보다 뒤
 
         hpText = CreateLabel("HpText", new Vector3(0f, -0.75f, 0f), 0.05f, Color.white); // 몸통 아래 체력
@@ -50,10 +50,33 @@ public class EnemyView : MonoBehaviour
     // 체력·타겟 표시 갱신 (전투 상태가 바뀔 때 CombatManager가 호출)
     public void UpdateDisplay(bool isTarget)
     {
-        body.color = enemy.Tier == EnemyTier.Boss ? BossColor : enemy.Tier == EnemyTier.Epic ? EpicColor : NormalColor; // 등급별 색
+        body.sprite = GetTierSprite(); // 등급별 아트 적용
         body.enabled = enemy.IsAlive; // 죽은 적은 몸통을 숨김
 
-        hpText.text = enemy.IsAlive ? $"{enemy.Hp}/{enemy.MaxHp}  SKILL {enemy.TurnsUntilSkill}" : "DEAD"; // 체력과 능력까지 남은 턴
+        PlaceLabels(); // 아트 크기에 맞춰 체력·타겟 표시 위치를 잡음
+
+        string status = enemy.IsFrozen ? "  [빙결]" : ""; // 빙결 표시
+        if (enemy.PoisonCount > 0) status += $"  [독 x{enemy.PoisonCount}]"; // 걸려 있는 독 개수 표시
+        hpText.text = enemy.IsAlive ? $"{enemy.Hp}/{enemy.MaxHp}  SKILL {enemy.TurnsUntilSkill}{status}" : "DEAD"; // 체력과 능력까지 남은 턴
         targetMarker.gameObject.SetActive(isTarget && enemy.IsAlive); // 살아있는 타겟에만 화살표 표시
+    }
+
+    // 등급에 맞는 아트 선택
+    private Sprite GetTierSprite()
+    {
+        switch (enemy.Tier)
+        {
+            case EnemyTier.Epic: return epicSprite;
+            case EnemyTier.Boss: return bossSprite;
+            default: return normalSprite;
+        }
+    }
+
+    // 몸통 크기가 등급마다 달라서, 아트의 위아래 끝에 맞춰 텍스트를 배치한다
+    private void PlaceLabels()
+    {
+        float halfHeight = body.sprite != null ? body.sprite.bounds.extents.y : 0.5f; // 아트 절반 높이
+        hpText.transform.localPosition = new Vector3(0f, -halfHeight - labelMargin, 0f); // 몸통 아래
+        targetMarker.transform.localPosition = new Vector3(0f, halfHeight + labelMargin, 0f); // 몸통 위
     }
 }

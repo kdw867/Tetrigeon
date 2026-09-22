@@ -233,26 +233,42 @@ choosing only one left the run unwinnable.
 - Mino upgrade: three upgrades are drawn at random from the per-mino concept
   list, and the player picks one of those three.
 
-Per-mino upgrade concepts are NOT defined yet. Mentioned only as direction,
-not as commitments: I = piercing, T = poison damage over several turns.
-The actual entries, effects, numbers, and stacking rules remain undecided.
-Do not invent them. Implement the reward flow and HP recovery first and leave
-the mino upgrade entry list empty until the user confirms it.
-
 Mino upgrade trigger rules (2026-09-18, confirmed):
 1. The upgrade fires when a line is cleared by locking that upgraded mino.
 2. If an upgraded mino's blocks merely sit in a cleared row, but the clear was
    not caused by locking that upgraded mino, the ability does NOT fire.
    The trigger is the locked piece's type, exactly like the existing T-Spin
    check, not the board contents of the cleared rows.
-3. The ability scales further with the number of lines cleared by that lock.
-   Scaling details are undecided and will be added later.
-Still undecided, do not invent: the per-mino ability list and numbers, stacking
-when the same mino is upgraded twice, interaction with T-Spin and Perfect Clear
-bonuses, and whether a lock that clears no line can ever fire an ability
-(rule 1 implies it cannot).
-Note: a piercing-style ability would contradict the confirmed "excess damage is
-discarded" rule in this section; resolve that conflict when abilities are defined.
+3. The ability scales with the damage of that clear, so clearing more lines makes
+   it stronger without a separate line-count formula.
+A lock that clears no line fires nothing. Clearing several lines at once still
+fires the ability only once.
+Still undecided, do not invent: what a second upgrade of the same mino should do
+(the level is recorded but currently changes nothing) and how abilities should
+read against T-Spin and Perfect Clear bonuses beyond using the damage they produce.
+Per-mino abilities (2026-09-22, confirmed and implemented):
+"Damage" below always means the damage this project already computes for that
+one clear (CombatDamage.Calculate); ability strength is never recomputed from
+the line count. Multiplied values are rounded to the nearest integer.
+
+| Mino | Ability | Effect |
+| --- | --- | --- |
+| I | Pierce | Damage to every living monster instead of the target only |
+| J | Critical | Damage x2 to the target, always, no random roll |
+| O | Shield | Damage x2 as player shield, stacking, granted at bag end, lasts 2 turns |
+| T | Poison | Damage x0.7 per turn for 2 turns, stacking, each instance tracked separately |
+| S | Heal | Damage x3 to the player, capped at max HP, no overheal |
+| Z | Explosion | Damage x0.7 to the nearest other living monster; nothing if alone |
+| L | Freeze | Freeze the target 1 turn, then Damage x0.5 when it breaks |
+
+L against a boss only freezes when Damage >= 2; below that the boss takes the
+normal damage with no freeze. A frozen monster does not act on its frozen turn.
+Every ability except Pierce also applies the normal Damage to the target.
+Ability effects settle at bag end together with the existing accumulated damage,
+so mid-bag locks never damage a monster early.
+Rewards draw 3 of the 7 minos at random, without duplicates, and the player
+picks one.
+
 Upgraded minos need a visual distinction from normal minos; art is pending.
 
 Stage 9 remains the non-combat upgrade/blessing event; its blessing effect is

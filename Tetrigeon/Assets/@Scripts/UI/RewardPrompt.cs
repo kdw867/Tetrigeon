@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 // 스테이지 클리어 보상 화면. 회복은 자동으로 들어가고, 미노 강화는 후보 3개 중 하나를 고른다.
@@ -47,6 +48,9 @@ public class RewardPrompt : MonoBehaviour
             titleText.text = $"STAGE {stageNumber} CLEAR    HP +{healAmount}"; // 스테이지 번호와 받은 회복량
 
         upgradeRoot.SetActive(true); // 강화 선택 창 표시
+
+        if (EventSystem.current != null)
+            EventSystem.current.SetSelectedGameObject(null); // 이전에 누른 버튼이 선택된 채 남아 Space로 다시 눌리는 것을 막음
     }
 
     // 강화 후보 버튼의 OnClick에 인덱스(0/1/2)를 넣어 연결
