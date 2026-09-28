@@ -12,10 +12,13 @@ public static class MinoUpgrades
 
     private static readonly Dictionary<TetrominoType, int> levels = new Dictionary<TetrominoType, int>(); // 미노별 강화 단계
 
+    public static event System.Action OnChanged; // 강화 상태가 바뀔 때 알림 (UI 갱신용)
+
     // 새 런을 시작할 때 강화 기록을 전부 지움 (씬을 다시 로드해도 정적 값이 남지 않게)
     public static void ResetRun()
     {
         levels.Clear();
+        OnChanged?.Invoke(); // 목록을 빈 상태로 되돌리도록 알림
     }
 
     // 해당 미노의 현재 강화 단계 (강화된 적 없으면 0)
@@ -29,6 +32,7 @@ public static class MinoUpgrades
     public static void Upgrade(TetrominoType type)
     {
         levels[type] = GetLevel(type) + 1;
+        OnChanged?.Invoke(); // 강화가 실제로 적용된 직후에만 알림
     }
 
     // 보상 화면에 제시할 강화 후보를 중복 없이 뽑음

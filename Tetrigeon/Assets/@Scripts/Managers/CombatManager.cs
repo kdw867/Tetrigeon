@@ -100,7 +100,7 @@ public class CombatManager : MonoBehaviour
         for (int i = 0; i < composition.Length; i++)
         {
             Enemy enemy = Instantiate(enemyPrefab, enemyRoot); // 프리팹에서 생성해 Enemies 그룹 아래 배치
-            enemy.name = $"Enemy_{i}_{composition[i]}";
+            enemy.name = $"Enemy_{i}_{EnemyStats.GetName(composition[i])}"; // Hierarchy에 몬스터 이름으로 표시
             enemy.transform.position = enemyLineCenter + new Vector3(-lineWidth / 2f + i * enemySpacing, 0f, 0f); // 왼쪽부터 순서대로
             enemy.Init(composition[i]); // 등급별 능력치 적용
             enemies.Add(enemy);

@@ -3,6 +3,17 @@ using UnityEngine;
 // 등급별 고정 능력치. 스테이지가 올라가도 같은 등급이면 수치는 동일하다.
 public static class EnemyStats
 {
+    // 등급별 몬스터 이름 (Hierarchy 표시와 UI에 사용)
+    public static string GetName(EnemyTier tier)
+    {
+        switch (tier)
+        {
+            case EnemyTier.Epic: return "AmethystSentinel"; // 에픽
+            case EnemyTier.Boss: return "CrystalQueen"; // 보스
+            default: return "CrystalLarva"; // 일반
+        }
+    }
+
     // 등급별 최대 체력
     public static int GetMaxHp(EnemyTier tier)
     {
