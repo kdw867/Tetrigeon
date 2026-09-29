@@ -41,7 +41,7 @@ public class CombatManager : MonoBehaviour
     public int PendingDamage { get; private set; } // 이번 가방에서 누적된 피해 (아직 미적용)
     public int PiecesLeftInBag => piecesPerBag - piecesPlaced; // 이번 턴에 남은 조각 수
     public IReadOnlyList<Enemy> Enemies => enemies; // UI가 읽을 적 목록
-    public Enemy Target => targetIndex >= 0 && targetIndex < enemies.Count ? enemies[targetIndex] : null; // 현재 타겟
+    public Enemy Target => targetIndex >= 0 && targetIndex < enemies.Count && enemies[targetIndex].IsAlive ? enemies[targetIndex] : null; // 현재 타겟 (죽은 적은 타겟이 되지 않음)
 
     private readonly List<Enemy> enemies = new List<Enemy>(); // 이번 스테이지의 적들 (왼쪽부터 순서대로)
     private int targetIndex; // 현재 타겟의 인덱스
@@ -131,7 +131,7 @@ public class CombatManager : MonoBehaviour
     // 타겟이 죽었을 때 살아있는 적으로 타겟을 옮김
     private void MoveTargetToLivingEnemy()
     {
-        if (Target != null && Target.IsAlive) return; // 아직 살아있으면 그대로 유지
+        if (Target != null) return; // 살아있는 타겟이 있으면 그대로 유지 (Target은 죽은 적을 반환하지 않음)
 
         for (int step = 1; step <= enemies.Count; step++)
         {

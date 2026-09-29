@@ -11,6 +11,9 @@ public class EnemyView : MonoBehaviour
     [SerializeField] private SpriteRenderer normalIdleBody; // 일반 몬스터의 Idle 애니메이션 렌더러
     [SerializeField] private SpriteRenderer epicIdleBody; // 에픽 몬스터의 Idle 애니메이션 렌더러
     [SerializeField] private SpriteRenderer bossIdleBody; // 보스 몬스터의 Idle 애니메이션 렌더러
+    [SerializeField] private SpriteRenderer normalDeathBody; // 일반 몬스터의 사망 정지 이미지
+    [SerializeField] private SpriteRenderer epicDeathBody; // 에픽 몬스터의 사망 정지 이미지
+    [SerializeField] private SpriteRenderer bossDeathBody; // 보스 몬스터의 사망 정지 이미지
     [SerializeField] private float labelMargin = 0.2f; // 몸통과 텍스트 사이 간격
 
     private Enemy enemy; // 표시할 적
@@ -63,7 +66,17 @@ public class EnemyView : MonoBehaviour
         if (epicIdleBody != null) epicIdleBody.gameObject.SetActive(useEpicIdle && enemy.IsAlive); // 에픽도 같은 규칙으로 숨김
         if (bossIdleBody != null) bossIdleBody.gameObject.SetActive(useBossIdle && enemy.IsAlive); // 보스도 같은 규칙으로 숨김
 
+        // 사망 이미지는 등급별로 따로 두어 Idle 애니메이터가 스프라이트를 덮어쓸 수 없게 한다
+        bool dead = !enemy.IsAlive; // 체력이 0 이하면 사망 표시로 전환
+        if (normalDeathBody != null) normalDeathBody.gameObject.SetActive(dead && enemy.Tier == EnemyTier.Normal);
+        if (epicDeathBody != null) epicDeathBody.gameObject.SetActive(dead && enemy.Tier == EnemyTier.Epic);
+        if (bossDeathBody != null) bossDeathBody.gameObject.SetActive(dead && enemy.Tier == EnemyTier.Boss);
+
         PlaceLabels(); // 아트 크기에 맞춰 체력·타겟 표시 위치를 잡음
+
+        hpText.gameObject.SetActive(!dead); // 죽으면 체력·스킬·상태이상 표시를 모두 감춤 (DEAD 문구도 쓰지 않음)
+        targetMarker.gameObject.SetActive(isTarget && !dead); // 살아있는 타겟에만 화살표 표시
+        if (dead) return; // 사망한 적은 사망 이미지 외에 갱신할 표시가 없음
 
         // 적이 붙어 있어도 옆 적과 겹치지 않게 줄을 나눠 표시한다
         string status = damageReductionPercent > 0 ? $"피해 -{damageReductionPercent}% " : ""; // 호위가 살아있어 피해가 줄어드는 중
@@ -71,8 +84,7 @@ public class EnemyView : MonoBehaviour
         if (enemy.PoisonCount > 0) status += $"독 x{enemy.PoisonCount}"; // 걸려 있는 독 개수 표시
         if (status.Length > 0) status = "\n" + status; // 상태이상은 따로 한 줄 더
 
-        hpText.text = enemy.IsAlive ? $"{enemy.Hp}/{enemy.MaxHp}\nSKILL {enemy.TurnsUntilSkill}{status}" : "DEAD"; // 체력과 능력까지 남은 턴
-        targetMarker.gameObject.SetActive(isTarget && enemy.IsAlive); // 살아있는 타겟에만 화살표 표시
+        hpText.text = $"{enemy.Hp}/{enemy.MaxHp}\nSKILL {enemy.TurnsUntilSkill}{status}"; // 체력과 능력까지 남은 턴
     }
 
     // 등급에 맞는 아트 선택
