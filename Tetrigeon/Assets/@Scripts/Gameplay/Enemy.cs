@@ -88,6 +88,12 @@ public class Enemy : MonoBehaviour
         return damage;
     }
 
+    // 보스 소환 시 빈자리가 없을 때의 보강. 상태이상과 스킬 카운터는 그대로 두고 체력만 최대로 되돌린다.
+    public void RestoreHp()
+    {
+        Hp = MaxHp;
+    }
+
     // 피해 적용. 남은 체력보다 큰 피해는 그대로 버려진다 (다른 적에게 넘기지 않음)
     public void TakeDamage(int amount)
     {

@@ -10,6 +10,8 @@ public static class MinoUpgrades
         TetrominoType.S, TetrominoType.T, TetrominoType.Z
     };
 
+    public const int MaxLevel = 5; // 미노 하나가 도달할 수 있는 최대 강화 단계 (도달하면 보상 후보에서 빠짐)
+
     private static readonly Dictionary<TetrominoType, int> levels = new Dictionary<TetrominoType, int>(); // 미노별 강화 단계
 
     public static event System.Action OnChanged; // 강화 상태가 바뀔 때 알림 (UI 갱신용)
@@ -35,10 +37,19 @@ public static class MinoUpgrades
         OnChanged?.Invoke(); // 강화가 실제로 적용된 직후에만 알림
     }
 
-    // 보상 화면에 제시할 강화 후보를 중복 없이 뽑음
+    // 해당 미노가 더 강화할 수 없는 상태인지
+    public static bool IsMaxed(TetrominoType type)
+    {
+        return GetLevel(type) >= MaxLevel;
+    }
+
+    // 보상 화면에 제시할 강화 후보를 중복 없이 뽑음 (최대 단계에 도달한 미노는 제외)
     public static TetrominoType[] DrawChoices(int count)
     {
-        List<TetrominoType> pool = new List<TetrominoType>(AllTypes); // 7종을 후보 풀로 복사
+        List<TetrominoType> pool = new List<TetrominoType>(); // 아직 더 강화할 수 있는 미노만 후보 풀에 담음
+        foreach (TetrominoType type in AllTypes)
+            if (!IsMaxed(type)) pool.Add(type);
+
         for (int i = pool.Count - 1; i > 0; i--) // 피셔-예이츠 셔플 (BagManager와 같은 방식)
         {
             int j = Random.Range(0, i + 1);

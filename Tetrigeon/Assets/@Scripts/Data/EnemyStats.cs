@@ -19,9 +19,9 @@ public static class EnemyStats
     {
         switch (tier)
         {
-            case EnemyTier.Epic: return 50; // 에픽
-            case EnemyTier.Boss: return 75; // 보스
-            default: return 25; // 일반
+            case EnemyTier.Epic: return 40; // 에픽
+            case EnemyTier.Boss: return 70; // 보스
+            default: return 20; // 일반
         }
     }
 

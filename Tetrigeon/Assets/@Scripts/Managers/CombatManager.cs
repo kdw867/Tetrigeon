@@ -18,18 +18,21 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private Enemy enemyPrefab; // 적 프리팹 (등급은 생성 시 주입)
     [SerializeField] private Transform enemyRoot; // 생성된 적을 담을 부모 (Hierarchy의 Enemies 그룹)
     [SerializeField] private Vector3 enemyLineCenter = new Vector3(5.9f, 3.1f, 0f); // 적들이 늘어서는 줄의 중심
-    [SerializeField] private float enemySpacing = 1.6f; // 적 사이 가로 간격
+    [SerializeField] private float enemySpacing = 1.8f; // 적 사이 가로 간격 (보스 폭이 넓어 겹치지 않도록 확보)
 
     private const int PoisonTurns = 2; // 강화 T 미노의 독 지속 턴
     private const int FreezeTurns = 1; // 강화 L 미노의 빙결 지속 턴
     private const int ShieldTurns = 2; // 강화 O 미노의 보호막 지속 턴
     private const int BossFreezeMinDamage = 2; // 보스를 얼리려면 필요한 최소 기존 피해
-    private const float PoisonRatio = 0.7f; // 독 턴당 피해 배율
-    private const float ExplosionRatio = 0.7f; // 폭발 추가 피해 배율
-    private const float FreezeBreakRatio = 0.5f; // 빙결 파괴 피해 배율
-    private const int CriticalMultiplier = 2; // 치명타 배율
-    private const int ShieldMultiplier = 2; // 보호막 배율
-    private const int HealMultiplier = 3; // 회복 배율
+    private const float BossProtectedRatio = 0.5f; // 호위가 살아있는 동안 보스가 받는 피해 비율
+    private const float PoisonRatio = 0.7f; // 독 턴당 피해 배율 (레벨당)
+    private const float ExplosionRatio = 0.7f; // 폭발 추가 피해 배율 (레벨당)
+    private const float FreezeBreakRatio = 0.5f; // 빙결 파괴 피해 배율 (레벨당)
+    private const float PierceBaseRatio = 0.5f; // 관통 기본 배율 (적 수만큼 곱해지므로 기울기를 절반으로 낮춤)
+    private const float PierceRatioPerLevel = 0.5f; // 관통 레벨당 피해 배율 (Lv.1 = 1.0배)
+    private const int CriticalBonusPerLevel = 1; // 치명타 레벨당 추가 피해 배수 (Lv.1 = 2배)
+    private const int ShieldMultiplier = 2; // 보호막 배율 (레벨당)
+    private const int HealMultiplier = 3; // 회복 배율 (레벨당)
 
     public int PlayerHp { get; private set; } // 현재 플레이어 체력
     public int PlayerShield { get; private set; } // 남아있는 보호막 (체력보다 먼저 깎임)
@@ -94,7 +97,7 @@ public class CombatManager : MonoBehaviour
     private void SpawnStageEnemies()
     {
         EnemyTier[] composition = StageData.GetComposition(stageNumber);
-        if (composition.Length == 0) return; // 9스테이지처럼 적이 없는 스테이지
+        if (composition.Length == 0) return; // 정의되지 않은 스테이지 번호 방어 (현재 1~10은 모두 전투)
 
         float lineWidth = (composition.Length - 1) * enemySpacing; // 전체 줄 길이
         for (int i = 0; i < composition.Length; i++)
@@ -150,8 +153,9 @@ public class CombatManager : MonoBehaviour
 
         // 강화 능력은 방금 고정한 조각이 강화돼 있고, 그 고정으로 줄이 지워졌을 때만 1회 발동
         // (보드에 이미 쌓여 있는 블록은 지워진 줄에 포함돼도 능력을 발동시키지 않음)
-        if (clearedLines > 0 && MinoUpgrades.GetLevel(lockedType) > 0)
-            ApplyUpgradedAbility(lockedType, damage);
+        int upgradeLevel = MinoUpgrades.GetLevel(lockedType); // 0이면 미강화
+        if (clearedLines > 0 && upgradeLevel > 0)
+            ApplyUpgradedAbility(lockedType, damage, upgradeLevel);
         else
             PendingDamage += damage; // 강화가 아니면 기존대로 타겟 피해에만 합산
 
@@ -160,45 +164,91 @@ public class CombatManager : MonoBehaviour
         else OnStateChanged?.Invoke();
     }
 
-    // 강화 미노 능력 발동. 능력 세기는 줄 수로 다시 계산하지 않고 이미 계산된 피해를 그대로 쓴다.
-    private void ApplyUpgradedAbility(TetrominoType lockedType, int damage)
+    // 강화 미노 능력 발동. 능력 세기는 줄 수로 다시 계산하지 않고, 이미 계산된 피해에 강화 레벨을 곱해서 쓴다.
+    // 지속 턴(독·빙결·보호막)은 레벨로 올리지 않는다. 특히 빙결은 2턴이 되면 적이 영영 행동하지 못한다.
+    private void ApplyUpgradedAbility(TetrominoType lockedType, int damage, int level)
     {
         switch (lockedType)
         {
-            case TetrominoType.I: // 관통: 타겟 대신 살아있는 적 전체가 같은 피해를 받음
-                pendingPierceDamage += damage;
+            case TetrominoType.I: // 관통: 살아있는 적 전체가 피해를 받음 (적 수만큼 곱해지므로 레벨 기울기는 절반)
+                pendingPierceDamage += Mathf.RoundToInt(damage * (PierceBaseRatio + PierceRatioPerLevel * level));
                 break;
 
-            case TetrominoType.J: // 치명타: 항상 2배 피해
-                PendingDamage += damage * CriticalMultiplier;
+            case TetrominoType.J: // 치명타: 기본 피해에 레벨당 1배씩 더함 (Lv.1 = 2배, Lv.2 = 3배)
+                PendingDamage += damage * (1 + CriticalBonusPerLevel * level);
                 break;
 
-            case TetrominoType.O: // 방어막: 기본 피해에 더해 2배만큼 보호막을 쌓음
+            case TetrominoType.O: // 방어막: 기본 피해에 더해 레벨당 2배만큼 보호막을 쌓음
                 PendingDamage += damage;
-                pendingShield += damage * ShieldMultiplier;
+                pendingShield += damage * ShieldMultiplier * level;
                 break;
 
-            case TetrominoType.T: // 독: 기본 피해 후 0.7배 피해를 2턴 동안 (중첩)
+            case TetrominoType.T: // 독: 기본 피해 후 레벨당 0.7배 피해를 2턴 동안 (중첩)
                 PendingDamage += damage;
-                pendingPoisons.Add(Mathf.RoundToInt(damage * PoisonRatio));
+                pendingPoisons.Add(Mathf.RoundToInt(damage * PoisonRatio * level));
                 break;
 
-            case TetrominoType.S: // 회복: 기본 피해에 더해 3배만큼 회복
+            case TetrominoType.S: // 회복: 기본 피해에 더해 레벨당 3배만큼 회복 (최대 체력에서 잘리므로 초과분은 버려짐)
                 PendingDamage += damage;
-                pendingHeal += damage * HealMultiplier;
+                pendingHeal += damage * HealMultiplier * level;
                 break;
 
-            case TetrominoType.Z: // 폭발: 기본 피해 후 인접한 다른 적 1명에게 0.7배 피해
+            case TetrominoType.Z: // 폭발: 기본 피해 후 인접한 다른 적 1명에게 레벨당 0.7배 피해
                 PendingDamage += damage;
-                pendingExplosionDamage += Mathf.RoundToInt(damage * ExplosionRatio);
+                pendingExplosionDamage += Mathf.RoundToInt(damage * ExplosionRatio * level);
                 break;
 
-            case TetrominoType.L: // 빙결: 기본 피해 후 1턴 빙결, 끝날 때 0.5배 추가 피해
+            case TetrominoType.L: // 빙결: 기본 피해 후 1턴 빙결, 끝날 때 레벨당 0.5배 추가 피해
                 PendingDamage += damage;
-                pendingFreezeDamage = Mathf.Max(pendingFreezeDamage, damage); // 보스 조건은 가장 큰 피해로 판정
-                pendingFreezeBreakDamage += Mathf.RoundToInt(damage * FreezeBreakRatio);
+                pendingFreezeDamage = Mathf.Max(pendingFreezeDamage, damage); // 보스 빙결 조건은 강화 전 피해로 판정 (레벨 무관)
+                pendingFreezeBreakDamage += Mathf.RoundToInt(damage * FreezeBreakRatio * level);
                 break;
         }
+    }
+
+    // 보스의 능력 턴 소환. 죽은 자리를 일반 몹으로 다시 채우고, 빈자리가 없으면 살아있는 일반 몹을 체력 최대로 되돌린다.
+    // 줄을 늘리지 않으므로 적 배치와 타겟 인덱스는 그대로 유지된다.
+    private void SummonNormal()
+    {
+        foreach (Enemy enemy in enemies)
+        {
+            if (enemy.IsAlive || enemy.Tier == EnemyTier.Boss) continue; // 살아있는 적과 보스 자리는 대상이 아님
+            enemy.Init(EnemyTier.Normal); // 죽은 자리를 일반 몹으로 되살림 (체력·상태이상·스킬 카운터 초기화)
+            return;
+        }
+
+        foreach (Enemy enemy in enemies)
+        {
+            if (!enemy.IsAlive || enemy.Tier != EnemyTier.Normal) continue; // 빈자리가 없으면 살아있는 일반 몹을 보강
+            enemy.RestoreHp(); // 상태이상은 유지한 채 체력만 최대로
+            return;
+        }
+    }
+
+    // 모든 피해가 지나는 관문. 보스는 호위가 살아있는 동안 피해가 줄어든다.
+    private void DealDamage(Enemy enemy, int amount)
+    {
+        if (enemy == null || amount <= 0) return; // 줄 피해가 없으면 아무 일도 하지 않음
+
+        if (enemy.Tier == EnemyTier.Boss && HasLivingEscort())
+            amount = Mathf.Max(1, Mathf.RoundToInt(amount * BossProtectedRatio)); // 감소해도 최소 1은 들어감
+
+        enemy.TakeDamage(amount);
+    }
+
+    // 보스 말고 살아있는 적이 남아있는지 (보스 피해 감소 조건)
+    private bool HasLivingEscort()
+    {
+        foreach (Enemy enemy in enemies)
+            if (enemy.IsAlive && enemy.Tier != EnemyTier.Boss) return true;
+        return false;
+    }
+
+    // 이 적이 지금 받는 피해 감소율(%). UI가 읽어서 표시한다.
+    public int GetDamageReductionPercent(Enemy enemy)
+    {
+        if (enemy.Tier != EnemyTier.Boss || !HasLivingEscort()) return 0; // 호위가 없으면 감소 없음
+        return Mathf.RoundToInt((1f - BossProtectedRatio) * 100f);
     }
 
     // 폭발이 튈 적: 타겟에서 좌우로 가장 가까운 살아있는 적 (없으면 추가 피해 없음)
@@ -232,12 +282,12 @@ public class CombatManager : MonoBehaviour
         if (pendingExplosionDamage > 0)
         {
             Enemy neighbour = FindExplosionNeighbour(); // 근처에 다른 적이 있을 때만 폭발
-            if (neighbour != null) neighbour.TakeDamage(pendingExplosionDamage);
+            if (neighbour != null) DealDamage(neighbour, pendingExplosionDamage);
         }
 
         if (pendingPierceDamage > 0)
             foreach (Enemy enemy in enemies)
-                if (enemy.IsAlive) enemy.TakeDamage(pendingPierceDamage); // 관통은 살아있는 적 전체
+                if (enemy.IsAlive) DealDamage(enemy, pendingPierceDamage); // 관통은 살아있는 적 전체
 
         if (pendingHeal > 0) Heal(pendingHeal); // 회복은 최대 체력을 넘지 않음
 
@@ -260,7 +310,7 @@ public class CombatManager : MonoBehaviour
     {
         Enemy target = Target;
         if (target != null && target.IsAlive)
-            target.TakeDamage(PendingDamage); // 누적 피해는 타겟 한 마리에게만, 초과분은 소멸
+            DealDamage(target, PendingDamage); // 누적 피해는 타겟 한 마리에게만, 초과분은 소멸
 
         ResolveUpgradedAbilities(target); // 강화 능력 효과도 같은 시점에 정산
 
@@ -369,25 +419,32 @@ public class CombatManager : MonoBehaviour
         int garbageLines = 0; // 이번 턴에 능력을 쓴 적들의 방해 줄 합계
         int hpDamage = 0; // 이번 턴에 체력 공격을 한 적들의 피해 합계
 
+        bool bossSummons = false; // 이번 턴에 보스가 능력을 썼는지 (소환은 루프가 끝난 뒤 처리)
+
         foreach (Enemy enemy in enemies)
         {
             if (!enemy.IsAlive) continue; // 죽은 적은 행동하지 않음
 
-            enemy.TakeDamage(enemy.TickPoison()); // 독은 행동 전에 먼저 적용
+            DealDamage(enemy, enemy.TickPoison()); // 독은 행동 전에 먼저 적용
             if (!enemy.IsAlive) continue; // 독으로 죽었으면 행동하지 않음
 
             bool wasFrozen = enemy.IsFrozen; // 이번 턴에 얼어 있었는지
             int breakDamage = enemy.TickFreeze(); // 빙결 턴을 줄이고, 끝났으면 파괴 피해를 받음
-            if (breakDamage > 0) enemy.TakeDamage(breakDamage);
+            if (breakDamage > 0) DealDamage(enemy, breakDamage);
 
             if (wasFrozen) continue; // 얼어 있던 적은 이번 턴에 행동하지 않음
             if (!enemy.IsAlive) continue; // 파괴 피해로 죽었으면 행동하지 않음
 
             if (enemy.AdvanceTurnAndCheckSkill())
+            {
                 garbageLines += enemy.RollGarbageLines(); // 능력 턴인 적은 방해 줄만 추가
+                if (enemy.Tier == EnemyTier.Boss) bossSummons = true; // 보스는 가비지와 함께 일반 몹도 소환
+            }
             else
                 hpDamage += enemy.AttackDamage; // 나머지 적은 체력 공격만
         }
+
+        if (bossSummons) SummonNormal(); // 소환된 적이 같은 턴에 바로 행동하지 않도록 루프 종료 후 처리
 
         if (garbageLines > 0) GridManager.Instance.AddGarbageLines(garbageLines); // 방해 줄은 한 번에 쌓음
 

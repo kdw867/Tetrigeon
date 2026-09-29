@@ -34,6 +34,6 @@ public class MinoUpgradeRow : MonoBehaviour
     // 현재 강화 레벨만 글자로 표시 (종류는 그림으로 구분하므로 영문 표기는 쓰지 않음)
     public void SetLevel(int level)
     {
-        label.text = $"Lv.{level}";
+        label.text = level >= MinoUpgrades.MaxLevel ? "Lv.MAX" : $"Lv.{level}"; // 최대 단계는 숫자 대신 MAX
     }
 }

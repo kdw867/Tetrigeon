@@ -40,7 +40,7 @@ public class CombatUIView : MonoBehaviour
         foreach (Enemy enemy in combat.Enemies)
         {
             EnemyView view = enemy.GetComponent<EnemyView>();
-            if (view != null) view.UpdateDisplay(enemy == combat.Target); // 각 적이 자기 체력과 타겟 표시를 갱신
+            if (view != null) view.UpdateDisplay(enemy == combat.Target, combat.GetDamageReductionPercent(enemy)); // 각 적이 자기 체력·타겟·피해 감소 표시를 갱신
         }
     }
 }

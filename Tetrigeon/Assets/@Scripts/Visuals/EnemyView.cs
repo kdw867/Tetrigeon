@@ -52,7 +52,7 @@ public class EnemyView : MonoBehaviour
     }
 
     // 체력·타겟 표시 갱신 (전투 상태가 바뀔 때 CombatManager가 호출)
-    public void UpdateDisplay(bool isTarget)
+    public void UpdateDisplay(bool isTarget, int damageReductionPercent)
     {
         body.sprite = GetTierSprite(); // 등급별 아트 적용
         bool useNormalIdle = enemy.Tier == EnemyTier.Normal && normalIdleBody != null; // 일반 등급에만 Idle 사용
@@ -66,7 +66,8 @@ public class EnemyView : MonoBehaviour
         PlaceLabels(); // 아트 크기에 맞춰 체력·타겟 표시 위치를 잡음
 
         // 적이 붙어 있어도 옆 적과 겹치지 않게 줄을 나눠 표시한다
-        string status = enemy.IsFrozen ? "빙결 " : ""; // 빙결 표시
+        string status = damageReductionPercent > 0 ? $"피해 -{damageReductionPercent}% " : ""; // 호위가 살아있어 피해가 줄어드는 중
+        if (enemy.IsFrozen) status += "빙결 "; // 빙결 표시
         if (enemy.PoisonCount > 0) status += $"독 x{enemy.PoisonCount}"; // 걸려 있는 독 개수 표시
         if (status.Length > 0) status = "\n" + status; // 상태이상은 따로 한 줄 더
 
