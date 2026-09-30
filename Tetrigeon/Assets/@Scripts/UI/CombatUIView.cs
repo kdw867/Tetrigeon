@@ -1,11 +1,14 @@
 using UnityEngine;
 
-// 전투 상태(체력, 이번 턴 누적 피해, 남은 조각 수, 스테이지/타겟)를 월드 좌표 텍스트로 표시
+// 전투 상태(체력, 이번 턴 누적 피해, 스테이지/타겟)를 월드 좌표 텍스트로, 남은 조각 수는 룬 계기판으로 표시
 public class CombatUIView : MonoBehaviour
 {
     [SerializeField] private TextMesh playerHpText; // 플레이어 체력 표시
     [SerializeField] private TextMesh enemyHpText; // 스테이지와 남은 적 수 표시
-    [SerializeField] private TextMesh turnText; // 남은 조각 수와 누적 피해 표시
+    [SerializeField] private TextMesh turnText; // 이번 턴 누적 피해 표시
+    [SerializeField] private SpriteRenderer[] runeRenderers; // 남은 조각 수를 보여줄 룬 7개 (화면 왼쪽부터 01~07)
+    [SerializeField] private Sprite[] runeOnSprites; // 룬별 켜진 이미지 (runeRenderers와 같은 순서)
+    [SerializeField] private Sprite[] runeOffSprites; // 룬별 꺼진 이미지 (runeRenderers와 같은 순서)
 
     private void OnEnable()
     {
@@ -35,7 +38,11 @@ public class CombatUIView : MonoBehaviour
             if (enemy.IsAlive) alive++; // 살아있는 적 수 집계
 
         enemyHpText.text = $"STAGE {combat.StageNumber}\nENEMIES {alive} / {combat.Enemies.Count}\n[TAB] TARGET"; // 스테이지와 남은 적
-        turnText.text = $"PIECES {combat.PiecesLeftInBag}   DMG {combat.PendingDamage}"; // 이번 턴 진행 상황
+        turnText.text = $"DMG {combat.PendingDamage}"; // 이번 턴 누적 피해
+
+        int remaining = Mathf.Clamp(combat.PiecesLeftInBag, 0, runeRenderers.Length); // 남은 조각 수를 0~7로 제한
+        for (int i = 0; i < runeRenderers.Length; i++)
+            runeRenderers[i].sprite = i < remaining ? runeOnSprites[i] : runeOffSprites[i]; // 왼쪽부터 남은 수만큼 켜고 나머지는 꺼진 이미지로 교체
 
         foreach (Enemy enemy in combat.Enemies)
         {
