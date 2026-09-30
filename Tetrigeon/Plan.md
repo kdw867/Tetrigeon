@@ -254,18 +254,46 @@ the line count. Multiplied values are rounded to the nearest integer.
 | Mino | Ability | Effect |
 | --- | --- | --- |
 | I | Pierce | Damage to every living monster instead of the target only |
-| J | Critical | Damage x2 to the target, always, no random roll |
+| J | Freeze | Clear 1/2/3 lines to block 1/2/3 enemy actions; existing break damage on release |
 | O | Shield | Damage x2 as player shield, stacking, granted at bag end, lasts 2 turns |
-| T | Poison | Damage x0.7 per turn for 2 turns, stacking, each instance tracked separately |
+| T | Poison | Damage x0.7 per hit for 2 hits, stacking, each instance tracked separately (timing below) |
 | S | Heal | Damage x3 to the player, capped at max HP, no overheal |
 | Z | Explosion | Damage x0.7 to the nearest other living monster; nothing if alone |
-| L | Freeze | Freeze the target 1 turn, then Damage x0.5 when it breaks |
+| L | Critical | Damage x2 to the target, always, no random roll |
 
-L against a boss only freezes when Damage >= 2; below that the boss takes the
+J and L abilities were swapped on 2026-09-30 (blue J = Freeze, orange L =
+Critical). Values and rules moved unchanged; upgrade levels stay with each mino.
+J against a boss only freezes when Damage >= 2; below that the boss takes the
 normal damage with no freeze. A frozen monster does not act on its frozen turn.
 Every ability except Pierce also applies the normal Damage to the target.
 Ability effects settle at bag end together with the existing accumulated damage,
 so mid-bag locks never damage a monster early.
+
+Status timing (2026-09-30, confirmed and implemented):
+Bag-end order: accumulated damage to the target -> release freezes applied at
+the previous bag end -> this bag's abilities (new poison, new freeze, explosion,
+pierce, heal, shield) -> stage completion check -> enemy turn.
+- Poison: a stack applied at bag end skips the enemy turn right after it (no
+  damage, no count used). It hits on each of the next two enemy turns, then is
+  removed. Other stacks keep ticking on their own; a new stack never pauses or
+  refreshes them. UI: longest remaining hits x stack count ("2 x1" right after
+  application, "1 x1" after the first hit, hidden when gone).
+- Freeze (updated 2026-09-30): blue J remains Freeze; orange L remains Critical.
+  Clearing 1/2/3 lines blocks 1/2/3 enemy actions, independent of damage bonuses
+  and upgrade level. Within a bag use the longest duration, not their sum.
+  Apply at bag end to the selected target. Each blocked enemy turn consumes one
+  action and does not advance the skill counter. After the last block, retain
+  the snowflake until the next settlement, then release and apply break damage
+  once before enemy actions. Existing boss eligibility and damage reduction remain.
+- Re-freeze before expiry keeps the longer of remaining and newly granted actions;
+  break damage accumulates for the final release. When already due to release,
+  resolve old break damage first and apply the new freeze only if the target survives.
+- TurnLabel: normal/pierce/critical damage uses `n DMG`, explosion uses
+  `EXPLOSION n DMG`, freeze uses `FREEZE nT`, poison uses `2T × n DMG`
+  (combined per-turn damage of this bag's new stacks), heal/shield use `HEAL +n`
+  and `SHIELD +n`. Monster status icon presentation is unchanged.
+- Both are tracked per monster: switching targets does not move or cancel them.
+  Summon Init clears them; RestoreHp keeps them.
 Rewards draw 3 of the 7 minos at random, without duplicates, and the player
 picks one.
 

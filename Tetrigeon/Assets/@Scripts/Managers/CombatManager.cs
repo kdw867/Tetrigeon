@@ -21,7 +21,6 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private float enemySpacing = 1.8f; // 적 사이 가로 간격 (보스 폭이 넓어 겹치지 않도록 확보)
 
     private const int PoisonTurns = 2; // 강화 T 미노의 독 지속 턴
-    private const int FreezeTurns = 1; // 강화 L 미노의 빙결 지속 턴
     private const int ShieldTurns = 2; // 강화 O 미노의 보호막 지속 턴
     private const int BossFreezeMinDamage = 2; // 보스를 얼리려면 필요한 최소 기존 피해
     private const float BossProtectedRatio = 0.5f; // 호위가 살아있는 동안 보스가 받는 피해 비율
@@ -54,9 +53,38 @@ public class CombatManager : MonoBehaviour
     private int pendingShield; // O: 플레이어에게 줄 보호막
     private int pendingHeal; // S: 플레이어가 회복할 양
     private int pendingExplosionDamage; // Z: 인접한 다른 적에게 줄 피해
-    private int pendingFreezeDamage; // L: 보스 빙결 조건 판정에 쓰는 기존 피해
-    private int pendingFreezeBreakDamage; // L: 빙결이 끝날 때 줄 피해
+    public int PendingFreezeTurns { get; private set; } // 이번 가방의 최대 삭제 줄 수로 정한 빙결 턴
+    private int pendingFreezeDamage; // J: 보스 빙결 조건 판정에 쓰는 기존 피해
+    private int pendingFreezeBreakDamage; // J: 빙결이 끝날 때 줄 피해
     private readonly List<int> pendingPoisons = new List<int>(); // T: 타겟에게 걸 독들의 턴당 피해
+    private readonly int[] effectCounts = new int[7]; // 이번 가방의 강화 종류별 발동 횟수
+    private readonly int[] effectTotals = new int[7]; // 종류별 정산 예정 효과량 합계
+    private readonly int[] effectFirst = new int[7]; // 첫 발동의 효과량
+    private readonly bool[] effectMixed = new bool[7]; // 발동마다 수치가 달랐는지
+    public int NormalAttackDamage => PendingDamage - effectTotals[(int)TetrominoType.L]; // 치명타 전체 피해와 일반 공격을 중복 없이 분리
+    public int GetEffectCount(TetrominoType type) => effectCounts[(int)type]; // UI용 발동 횟수
+    public int GetEffectTotal(TetrominoType type) => effectTotals[(int)type]; // UI용 합계
+    public int GetEffectFirst(TetrominoType type) => effectFirst[(int)type]; // 동일 수치의 곱셈 표시용
+    public bool HasMixedEffect(TetrominoType type) => effectMixed[(int)type]; // 합계 표시 필요 여부
+
+    private int RecordEffect(TetrominoType type, int amount) // 기존 계산 결과를 변경하지 않고 표시용 기록만 추가
+    {
+        int index = (int)type; // 종류 인덱스
+        if (effectCounts[index] == 0) effectFirst[index] = amount; // 첫 수치 저장
+        else if (effectFirst[index] != amount) effectMixed[index] = true; // 서로 다른 수치 확인
+        effectCounts[index]++; // 발동 횟수 증가
+        effectTotals[index] += amount; // 효과량 합산
+        return amount; // 기존 전투 계산에 같은 값 전달
+    }
+
+    private void ClearEffectDisplay() // 가방 정산과 스테이지 전환 시 표시 초기화
+    {
+        Array.Clear(effectCounts, 0, 7); // 횟수 초기화
+        Array.Clear(effectTotals, 0, 7); // 합계 초기화
+        Array.Clear(effectFirst, 0, 7); // 첫 수치 초기화
+        Array.Clear(effectMixed, 0, 7); // 혼합 여부 초기화
+    }
+
     private int shieldTurnsLeft; // 보호막 남은 턴
 
     private void Awake()
@@ -155,7 +183,7 @@ public class CombatManager : MonoBehaviour
         // (보드에 이미 쌓여 있는 블록은 지워진 줄에 포함돼도 능력을 발동시키지 않음)
         int upgradeLevel = MinoUpgrades.GetLevel(lockedType); // 0이면 미강화
         if (clearedLines > 0 && upgradeLevel > 0)
-            ApplyUpgradedAbility(lockedType, damage, upgradeLevel);
+            ApplyUpgradedAbility(lockedType, damage, upgradeLevel, clearedLines); // 빙결 지속시간에는 실제 삭제 줄 수 전달
         else
             PendingDamage += damage; // 강화가 아니면 기존대로 타겟 피해에만 합산
 
@@ -165,43 +193,44 @@ public class CombatManager : MonoBehaviour
     }
 
     // 강화 미노 능력 발동. 능력 세기는 줄 수로 다시 계산하지 않고, 이미 계산된 피해에 강화 레벨을 곱해서 쓴다.
-    // 지속 턴(독·빙결·보호막)은 레벨로 올리지 않는다. 특히 빙결은 2턴이 되면 적이 영영 행동하지 못한다.
-    private void ApplyUpgradedAbility(TetrominoType lockedType, int damage, int level)
+    // 빙결은 삭제 줄 수로 1~3턴, 독과 보호막은 기존 지속시간을 사용한다.
+    private void ApplyUpgradedAbility(TetrominoType lockedType, int damage, int level, int clearedLines) // 빙결은 줄 수로 지속시간 계산
     {
         switch (lockedType)
         {
             case TetrominoType.I: // 관통: 살아있는 적 전체가 피해를 받음 (적 수만큼 곱해지므로 레벨 기울기는 절반)
-                pendingPierceDamage += Mathf.RoundToInt(damage * (PierceBaseRatio + PierceRatioPerLevel * level));
+                pendingPierceDamage += RecordEffect(lockedType, Mathf.RoundToInt(damage * (PierceBaseRatio + PierceRatioPerLevel * level))); // 관통 피해와 표시를 같은 값으로 기록
                 break;
 
-            case TetrominoType.J: // 치명타: 기본 피해에 레벨당 1배씩 더함 (Lv.1 = 2배, Lv.2 = 3배)
-                PendingDamage += damage * (1 + CriticalBonusPerLevel * level);
+            case TetrominoType.L: // 치명타 (주황 L, 2026-09-30 J와 교환): 기본 피해에 레벨당 1배씩 더함 (Lv.1 = 2배, Lv.2 = 3배)
+                PendingDamage += RecordEffect(lockedType, damage * (1 + CriticalBonusPerLevel * level)); // 치명타 전체 피해 기록
                 break;
 
             case TetrominoType.O: // 방어막: 기본 피해에 더해 레벨당 2배만큼 보호막을 쌓음
                 PendingDamage += damage;
-                pendingShield += damage * ShieldMultiplier * level;
+                pendingShield += RecordEffect(lockedType, damage * ShieldMultiplier * level); // 보호막량 기록
                 break;
 
             case TetrominoType.T: // 독: 기본 피해 후 레벨당 0.7배 피해를 2턴 동안 (중첩)
                 PendingDamage += damage;
-                pendingPoisons.Add(Mathf.RoundToInt(damage * PoisonRatio * level));
+                pendingPoisons.Add(RecordEffect(lockedType, Mathf.RoundToInt(damage * PoisonRatio * level))); // 독 턴당 피해 기록
                 break;
 
             case TetrominoType.S: // 회복: 기본 피해에 더해 레벨당 3배만큼 회복 (최대 체력에서 잘리므로 초과분은 버려짐)
                 PendingDamage += damage;
-                pendingHeal += damage * HealMultiplier * level;
+                pendingHeal += RecordEffect(lockedType, damage * HealMultiplier * level); // 회복 예정량 기록
                 break;
 
             case TetrominoType.Z: // 폭발: 기본 피해 후 인접한 다른 적 1명에게 레벨당 0.7배 피해
                 PendingDamage += damage;
-                pendingExplosionDamage += Mathf.RoundToInt(damage * ExplosionRatio * level);
+                pendingExplosionDamage += RecordEffect(lockedType, Mathf.RoundToInt(damage * ExplosionRatio * level)); // 폭발 피해 기록
                 break;
 
-            case TetrominoType.L: // 빙결: 기본 피해 후 1턴 빙결, 끝날 때 레벨당 0.5배 추가 피해
+            case TetrominoType.J: // 파란 J: 삭제한 줄 수만큼 행동 차단, 해제 시 기존 추가 피해
                 PendingDamage += damage;
+                PendingFreezeTurns = Mathf.Max(PendingFreezeTurns, Mathf.Clamp(clearedLines, 1, 3)); // 같은 가방에서는 가장 긴 지속시간 사용
                 pendingFreezeDamage = Mathf.Max(pendingFreezeDamage, damage); // 보스 빙결 조건은 강화 전 피해로 판정 (레벨 무관)
-                pendingFreezeBreakDamage += Mathf.RoundToInt(damage * FreezeBreakRatio * level);
+                pendingFreezeBreakDamage += RecordEffect(lockedType, Mathf.RoundToInt(damage * FreezeBreakRatio * level)); // 빙결 해제 피해 기록
                 break;
         }
     }
@@ -276,7 +305,7 @@ public class CombatManager : MonoBehaviour
             // 보스는 기존 피해가 2 이상일 때만 얼릴 수 있다
             bool canFreeze = target.Tier != EnemyTier.Boss || pendingFreezeDamage >= BossFreezeMinDamage;
             if (pendingFreezeDamage > 0 && canFreeze)
-                target.ApplyFreeze(pendingFreezeBreakDamage, FreezeTurns);
+                target.ApplyFreeze(pendingFreezeBreakDamage, PendingFreezeTurns); // 줄 수만큼 행동 차단 예약
         }
 
         if (pendingExplosionDamage > 0)
@@ -301,6 +330,7 @@ public class CombatManager : MonoBehaviour
         pendingShield = 0;
         pendingHeal = 0;
         pendingExplosionDamage = 0;
+        PendingFreezeTurns = 0; // 다음 가방과 스테이지에 빙결 턴 이월 방지
         pendingFreezeDamage = 0;
         pendingFreezeBreakDamage = 0;
         pendingPoisons.Clear();
@@ -312,8 +342,10 @@ public class CombatManager : MonoBehaviour
         if (target != null && target.IsAlive)
             DealDamage(target, PendingDamage); // 누적 피해는 타겟 한 마리에게만, 초과분은 소멸
 
+        ReleaseFreezes(); // 지난 정산에서 건 빙결을 해제하고 파괴 피해 적용 (이번 정산의 새 빙결보다 먼저)
         ResolveUpgradedAbilities(target); // 강화 능력 효과도 같은 시점에 정산
 
+        ClearEffectDisplay(); // 정산된 가방의 효과 표시 제거
         PendingDamage = 0;
         piecesPlaced = 0;
 
@@ -326,6 +358,17 @@ public class CombatManager : MonoBehaviour
         }
 
         EnemyTurn();
+    }
+
+    // 빙결 해제: 예정된 행동을 모두 차단한 적만 해제하고 파괴 피해를 한 번 준다.
+    // 적 턴 전에 처리하므로 이 피해로 죽은 적은 행동하지 않고, 보스가 죽으면 적 턴 없이 스테이지가 끝난다.
+    private void ReleaseFreezes()
+    {
+        foreach (Enemy enemy in enemies)
+        {
+            if (!enemy.IsAlive) continue; // 죽은 적은 해제 피해를 받지 않음
+            DealDamage(enemy, enemy.ReleaseFreeze()); // 빙결이 없던 적은 0이라 아무 일도 없음 (보스 피해 감소는 DealDamage가 적용)
+        }
     }
 
     // 스테이지 완료 조건: 보스전은 보스 사망, 그 외에는 전멸
@@ -389,6 +432,7 @@ public class CombatManager : MonoBehaviour
 
         targetIndex = 0; // 타겟 초기화
         piecesPlaced = 0; // 가방 진행도 초기화
+        ClearEffectDisplay(); // 정산된 가방의 효과 표시 제거
         PendingDamage = 0; // 이월된 누적 피해 없음
         stageCleared = false; // 새 스테이지는 아직 클리어 전
 
@@ -396,6 +440,7 @@ public class CombatManager : MonoBehaviour
         pendingShield = 0;
         pendingHeal = 0;
         pendingExplosionDamage = 0;
+        PendingFreezeTurns = 0; // 다음 가방과 스테이지에 빙결 턴 이월 방지
         pendingFreezeDamage = 0;
         pendingFreezeBreakDamage = 0;
         pendingPoisons.Clear();
@@ -425,15 +470,10 @@ public class CombatManager : MonoBehaviour
         {
             if (!enemy.IsAlive) continue; // 죽은 적은 행동하지 않음
 
-            DealDamage(enemy, enemy.TickPoison()); // 독은 행동 전에 먼저 적용
+            DealDamage(enemy, enemy.TickPoison()); // 독은 행동 전에 먼저 적용 (이번 정산에 새로 걸린 독은 건너뜀)
             if (!enemy.IsAlive) continue; // 독으로 죽었으면 행동하지 않음
 
-            bool wasFrozen = enemy.IsFrozen; // 이번 턴에 얼어 있었는지
-            int breakDamage = enemy.TickFreeze(); // 빙결 턴을 줄이고, 끝났으면 파괴 피해를 받음
-            if (breakDamage > 0) DealDamage(enemy, breakDamage);
-
-            if (wasFrozen) continue; // 얼어 있던 적은 이번 턴에 행동하지 않음
-            if (!enemy.IsAlive) continue; // 파괴 피해로 죽었으면 행동하지 않음
+            if (enemy.ConsumeFreezeBlock()) continue; // 빙결 횟수가 남은 적은 이번 행동을 쉼 (스킬 카운터도 그대로)
 
             if (enemy.AdvanceTurnAndCheckSkill())
             {
