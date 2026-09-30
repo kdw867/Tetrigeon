@@ -11,7 +11,6 @@ public class MinoUpgradeListView : MonoBehaviour
 
     [SerializeField] private MinoUpgradeRow rowPrefab; // 한 줄 프리팹
     [SerializeField] private Transform rowRoot; // 줄들이 붙을 부모
-    [SerializeField] private TextMesh emptyText; // 강화가 없을 때 보여줄 안내 문구
     [SerializeField] private float rowSpacing = 0.7f; // 줄 간격
     [SerializeField] private float firstRowY = 0f; // 첫 줄의 세로 위치
 
@@ -65,7 +64,5 @@ public class MinoUpgradeListView : MonoBehaviour
             rows[i].SetLevel(level); // 같은 종류는 이 줄의 레벨만 갱신
             shown++;
         }
-
-        if (emptyText != null) emptyText.gameObject.SetActive(shown == 0); // 하나라도 있으면 안내 문구 숨김
     }
 }
