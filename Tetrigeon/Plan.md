@@ -1,5 +1,5 @@
 # TETRIGEON — TURN-BASED TETRIS ROGUELIKE
-Design notes | 2026-09-14
+Design notes | 2026-09-14 (synced with the implemented code on 2026-10-01)
 
 Status: Core rules describe the intended direction. Recommendations, examples,
 and undecided details are not commitments. Based on prior discussion and the
@@ -39,6 +39,9 @@ Standard pieces: I, J, L, O, S, T, Z. Each bag contains one of each, shuffled.
 One player turn uses all seven pieces: turn starts -> place seven -> resolve
 player damage from the lines cleared during that bag -> enemy turn -> next bag.
 Enemies act after a bag, not after each piece.
+Implemented turn counting (2026-10-01): a player turn ends after 7 actual Locks.
+Hold swaps are not Locks, so a held piece can carry over and the turn boundary
+can drift from the 7-bag boundary; the piece queue itself never resets mid-stage.
 Bag completion does not reset the board; remaining blocks support later attacks
 and cleanup. Relics that add/remove pieces from bags are expansion ideas only:
 adopting them requires separate bag-size and turn-end rules.
@@ -84,6 +87,7 @@ the next qualifying Lock restores one charge. Central occupancy glow turns OFF
 while rune count and internal recharge progress retain their current values.
 Keep recharge threshold easy to tune from 3 to 2 for later balance tests, using
 the project's existing settings pattern. No enemy or Garbage balance changes.
+Implemented: PieceSpawner Inspector values maxHoldCharges 4, locksPerCharge 3.
 Verify 4-charge start, successful/failed Hold costs, zero-charge blocking,
 one-Hold-per-Lock, all Lock paths counting once, 3-Lock recharge, no overfill or
 banking at capacity, progress preservation across bags, stage-entry reset, and
@@ -94,7 +98,18 @@ to finish; do not claim untested Unity behavior is verified.
 Intended: Preview the next 3-4 pieces to plan placements and clears within a bag.
 Recommended UI: board and active piece; NEXT; remaining pieces in current bag;
 player/enemy HP; next enemy action with expected HP damage and Garbage amount.
-TBD: NEXT count (3 or 4) and exact enemy-intent presentation.
+Implemented UI (2026-10-01), replacing the earlier "NEXT 3 or 4" TBD:
+- NEXT ("FATE" panel) previews 5 pieces.
+- Remaining pieces in the turn: 7-rune gauge under Lemy's Core; lit runes = Locks left.
+- Accumulated damage: damage icon + `n DMG` (normal attack total, Critical shown
+  separately), then one row per ability fired this bag (formats in section 7).
+- Player: `PLAYER hp / max`, plus `[보호막 n]` while a shield exists.
+- Each enemy: `hp/max`, `SKILL n` (turns until its Garbage skill), boss
+  `피해 -50%` while escorts live, and status icons for poison and freeze.
+- Stage panel: `STAGE n`, `ENEMIES alive / total`, `[TAB] TARGET`.
+- Left panel lists upgraded minos with `Lv.n` (`Lv.MAX` at level 5).
+- Not implemented: each enemy's expected HP damage or Garbage amount for its
+  next action; only the skill countdown is shown.
 
 ## 6. PLAYER ACTIONS AND ATTACKS
 Move, rotate, and place pieces; complete horizontal rows to clear lines and attack.
@@ -133,6 +148,8 @@ Combo implementation and its damage bonus are deferred from the first battle.
 Back-to-Back bonuses are also deferred from this initial damage table.
 Defense, healing, status effects, and special-piece effects are expansion
 candidates, separate from the basic attack rules.
+Implemented (2026-10-01): shield, healing, poison, and freeze exist only as mino
+upgrade abilities (section 7). Special pieces are not implemented.
 
 ### Target selection with multiple enemies (2026-09-17)
 When a stage holds several enemies the player picks which one to attack.
@@ -142,6 +159,9 @@ When a stage holds several enemies the player picks which one to attack.
 - If the target dies, the excess damage is discarded. It never carries over to
   another enemy or to the next stage.
 - Dead enemies are skipped when cycling targets.
+- Implemented (2026-10-01): the first target of a stage is the leftmost enemy.
+  When the target dies, the target moves automatically to the next living enemy
+  to the right (wrapping). A dead enemy is never the target.
 
 ## 7. ENEMY TURN AND GARBAGE
 After each bag the enemy acts. Confirmed (2026-09-17): Garbage does NOT arrive
@@ -169,6 +189,8 @@ Hole placement (2026-09-17): each Garbage line has one empty column. When a
 skill turn adds several lines at once, they all share the SAME empty column,
 so the gap forms a vertical channel the player can drop a piece through. The
 column is rolled once per skill activation, not per line.
+Implemented (2026-10-01): blocks pushed above the top row by Garbage are deleted;
+this does not trigger Top Out.
 
 Enemy HP and basic attack damage are fixed within each tier, regardless of stage.
 Initial enemy HP and basic attack damage are listed below; final balance is TBD.
@@ -179,27 +201,49 @@ Adjusted on 2026-09-18 after playtest: the original 40/80/120 made stage 10 too
 far away, and halving cut too deep. Now 25/50/75, which is 62.5% of the original,
 keeps the 1:2:3 tier ratio, and stays on clean multiples of 5.
 Basic attack damage was not changed.
+Current implemented values (2026-10-01, EnemyStats): normal 20 / epic 40 /
+boss 70, adopted together with the 10-stage lineup below. They replace 25/50/75.
 Tier names: normal = regular, epic = elite, boss = final boss.
 Increase enemy count and change tier composition rather than scaling the same
 tier's HP or attack by stage. This replaces the previous stage-based stat ranges.
 
 | Enemy tier | HP per enemy | Basic attack damage |
 | --- | ---: | ---: |
-| normal | 25 | 2 |
-| epic | 50 | 3 |
-| boss | 75 | 3 |
+| normal | 20 | 2 |
+| epic | 40 | 3 |
+| boss | 70 | 3 |
 
-| Stage | Simultaneous enemy composition / event | Enemy count | Total enemy HP |
+Implemented stage lineup (2026-10-01, StageData; listed left to right on screen).
+The previous lineup (normal x2/x3/x4, stage 9 non-combat, stage 10 boss x1) was
+replaced; stage 9 is now combat and the non-combat blessing stage was removed.
+
+| Stage | Composition (left -> right) | Enemy count | Total enemy HP |
 | --- | --- | ---: | ---: |
-| 1-2 | normal x2 | 2 | 50 |
-| 3-4 | normal x3 | 3 | 75 |
-| 5 | epic x1 | 1 | 50 |
-| 6-7 | normal x4 | 4 | 100 |
-| 8 | epic x1 + normal x3 | 4 | 125 |
-| 9 | Mino upgrade OR player blessing (non-combat) | 0 | - |
-| 10 | boss x1 | 1 | 75 |
+| 1 | normal | 1 | 20 |
+| 2 | normal, normal | 2 | 40 |
+| 3 | normal, normal, normal | 3 | 60 |
+| 4 | epic | 1 | 40 |
+| 5 | normal, epic | 2 | 60 |
+| 6 | normal, normal, epic | 3 | 80 |
+| 7 | epic, epic | 2 | 80 |
+| 8 | normal, epic, epic | 3 | 100 |
+| 9 | epic, epic, epic | 3 | 120 |
+| 10 | normal, epic, boss | 3 (+summons) | 130 |
 
-Stage composition is a specification, not an implemented feature yet.
+Enemies stand in one row centered at x 5.9, 1.8 units apart, boss on the right.
+
+Stage 10 boss rules (implemented):
+- Escort protection: while any non-boss enemy is alive, every hit on the boss
+  (bag damage, pierce, explosion, poison, freeze break) is halved, rounded, minimum 1.
+  The boss shows `피해 -50%` during that time.
+- Summon: on the boss's Garbage skill turn it also summons, after all enemies have
+  acted (the summon does not act that turn). The leftmost dead non-boss slot is
+  revived as a full-HP normal with cleared statuses and skill counter. If no slot
+  is dead, the first living normal is restored to max HP (statuses kept). If
+  neither exists, nothing happens. The row never grows.
+- Defeating the boss clears the stage even if escorts remain.
+
+Stage composition is implemented as listed above.
 Enemies appear together and surviving enemies participate in the same enemy
 turn; do not implement sequential replacement waves. An individual enemy's
 death does not reset the board or Hold while the stage continues.
@@ -207,12 +251,12 @@ Excess damage is discarded, never transferred to another enemy or stage.
 Example: 20 damage against an enemy with 5 HP defeats it and discards 15 damage.
 This supersedes the previous sequential-enemy and damage-carryover proposal.
 
-Stage-clear rewards are a choice of mino upgrade OR player HP recovery.
-If stage-clear recovery already exists, do not trigger it on individual kills.
-Do not invent recovery amounts, mino upgrade entries, or player blessing effects.
-Stage 9 is a separate non-combat upgrade/blessing event, not an enemy encounter.
-Before implementing mino upgrades, HP recovery amounts, or the stage map,
-explain existing behavior and a brief recommendation, then obtain user decisions.
+Stage-clear rewards were first a choice of mino upgrade OR player HP recovery;
+superseded on 2026-09-18 by "both" (see Stage progression and rewards below).
+Stage-clear recovery never triggers on individual kills.
+Do not invent player blessing effects; the blessing event no longer exists.
+Mino upgrades, the HP recovery amount, and the stage lineup are implemented
+(below and above). New reward types still need user decisions first.
 Confirmed combat and stage-composition work may proceed independently.
 Player attack targeting/distribution and multi-enemy skill scheduling are not
 defined by this table: inspect existing behavior and clarify missing rules
@@ -220,7 +264,7 @@ before implementing dependent behavior; do not invent new Garbage rules.
 
 Basic attack damage applies only on HP-attack turns. Existing Garbage amounts,
 skill intervals, hole placement, and the no-HP-damage rule on skill turns remain
-unchanged. These are planning values for playtesting, not runtime changes.
+unchanged. These values are implemented and remain subject to playtesting.
 
 ### Stage progression and rewards (2026-09-18)
 Confirmed run structure: clear a stage -> reward screen -> take the rewards ->
@@ -233,6 +277,15 @@ choosing only one left the run unwinnable.
 - Mino upgrade: three upgrades are drawn at random from the per-mino concept
   list, and the player picks one of those three.
 
+Implemented details (2026-10-01):
+- Player max HP is 100. Recovery is capped at max HP.
+- Each button reads `<mino>  Lv.n → n+1`; picking one starts the next stage.
+- Kept across stages: player HP and mino upgrade levels. Reset at stage start:
+  enemies, board, bag, Hold slot, Hold charges (refilled to 4), and shield.
+- Stage 10 also shows the reward screen; picking an upgrade there ends the run.
+  The run end (victory or defeat) shows the same restart window; restart reloads
+  the scene and resets the run, including upgrades.
+
 Mino upgrade trigger rules (2026-09-18, confirmed):
 1. The upgrade fires when a line is cleared by locking that upgraded mino.
 2. If an upgraded mino's blocks merely sit in a cleared row, but the clear was
@@ -243,35 +296,44 @@ Mino upgrade trigger rules (2026-09-18, confirmed):
    it stronger without a separate line-count formula.
 A lock that clears no line fires nothing. Clearing several lines at once still
 fires the ability only once.
-Still undecided, do not invent: what a second upgrade of the same mino should do
-(the level is recorded but currently changes nothing) and how abilities should
-read against T-Spin and Perfect Clear bonuses beyond using the damage they produce.
+Upgrade levels (implemented 2026-10-01): picking the same mino again raises its
+level. Ability strength scales with level as in the table below ("bonus x Lv");
+durations do not scale with level. The maximum is Lv.5, shown as `Lv.MAX`.
+Abilities use the full damage of the clear, including T-Spin and Perfect Clear
+bonuses; there is no other interaction with those bonuses.
 Per-mino abilities (2026-09-22, confirmed and implemented):
 "Damage" below always means the damage this project already computes for that
 one clear (CombatDamage.Calculate); ability strength is never recomputed from
 the line count. Multiplied values are rounded to the nearest integer.
 
-| Mino | Ability | Effect |
-| --- | --- | --- |
-| I | Pierce | Damage to every living monster instead of the target only |
-| J | Freeze | Clear 1/2/3 lines to block 1/2/3 enemy actions; existing break damage on release |
-| O | Shield | Damage x2 as player shield, stacking, granted at bag end, lasts 2 turns |
-| T | Poison | Damage x0.7 per hit for 2 hits, stacking, each instance tracked separately (timing below) |
-| S | Heal | Damage x3 to the player, capped at max HP, no overheal |
-| Z | Explosion | Damage x0.7 to the nearest other living monster; nothing if alone |
-| L | Critical | Damage x2 to the target, always, no random roll |
+| Mino | Ability | Effect | Value at Lv.n (implemented, D = Damage) |
+| --- | --- | --- | --- |
+| I | Pierce | Damage to every living monster instead of the target only | round(D x (0.5 + 0.5 x Lv)) each; Lv.1 = D |
+| J | Freeze | Clear 1/2/3 lines to block 1/2/3 enemy actions; existing break damage on release | break round(D x 0.5 x Lv) per clear, summed; actions = lines, longest in the bag |
+| O | Shield | Damage x2 as player shield, stacking, granted at bag end, lasts 2 turns | D x 2 x Lv |
+| T | Poison | Damage x0.7 per hit for 2 hits, stacking, each instance tracked separately (timing below) | round(D x 0.7 x Lv) per hit |
+| S | Heal | Damage x3 to the player, capped at max HP, no overheal | D x 3 x Lv |
+| Z | Explosion | Damage x0.7 to the nearest other living monster; nothing if alone | round(D x 0.7 x Lv) |
+| L | Critical | Damage x2 to the target, always, no random roll | D x (1 + Lv); Lv.1 = x2, Lv.2 = x3 |
+
+Rounding uses Unity's RoundToInt, so .5 goes to the nearest even number.
+Implemented details: Explosion picks the nearest living monster to the target,
+checking the right side first at equal distance. A new shield adds to the pool
+and resets its duration to 2 enemy turns; the enemy turn right after the grant
+is the first. The shield absorbs enemy HP attacks before HP and is cleared at
+stage start.
 
 J and L abilities were swapped on 2026-09-30 (blue J = Freeze, orange L =
 Critical). Values and rules moved unchanged; upgrade levels stay with each mino.
-J against a boss only freezes when Damage >= 2; below that the boss takes the
-normal damage with no freeze. A frozen monster does not act on its frozen turn.
+J against a boss only freezes when Damage >= 2 (the largest J clear of that
+bag); below that the boss takes the normal damage with no freeze. A frozen monster does not act on its frozen turn.
 Every ability except Pierce also applies the normal Damage to the target.
 Ability effects settle at bag end together with the existing accumulated damage,
 so mid-bag locks never damage a monster early.
 
 Status timing (2026-09-30, confirmed and implemented):
-Bag-end order: accumulated damage to the target -> release freezes applied at
-the previous bag end -> this bag's abilities (new poison, new freeze, explosion,
+Bag-end order: accumulated damage to the target -> release freezes whose blocked
+actions are all used -> this bag's abilities (new poison, new freeze, explosion,
 pierce, heal, shield) -> stage completion check -> enemy turn.
 - Poison: a stack applied at bag end skips the enemy turn right after it (no
   damage, no count used). It hits on each of the next two enemy turns, then is
@@ -292,20 +354,36 @@ pierce, heal, shield) -> stage completion check -> enemy turn.
   `EXPLOSION n DMG`, freeze uses `FREEZE nT`, poison uses `2T × n DMG`
   (combined per-turn damage of this bag's new stacks), heal/shield use `HEAL +n`
   and `SHIELD +n`. Monster status icon presentation is unchanged.
+  Rows appear only for abilities that fired this bag, each with its ability icon
+  (J uses the Freeze icon, L the Critical icon), and clear at bag end.
+- Monster freeze icon (implemented): the snowflake shows from application until
+  release. Its number is how many more enemy actions it will block; after the
+  last block it shows no number until the release.
+- Enemy-turn order (implemented): each living enemy, left to right: poison damage
+  -> skip if dead -> skip its action if a freeze block remains (skill counter
+  unchanged) -> Garbage skill or HP attack. Then boss summon, all Garbage lines at
+  once, HP damage absorbed by the shield first, shield duration tick, defeat
+  check, and stage completion check.
 - Both are tracked per monster: switching targets does not move or cancel them.
   Summon Init clears them; RestoreHp keeps them.
 Rewards draw 3 of the 7 minos at random, without duplicates, and the player
-picks one.
+picks one. Implemented: minos at Lv.5 are excluded from the draw; if fewer than
+3 remain, only that many buttons are shown.
 
-Upgraded minos need a visual distinction from normal minos; art is pending.
+Upgraded minos (Lv.1 and above) use the `MinoSprites/Upgraded` art instead of the
+normal art. The active piece, ghost, locked blocks, NEXT, Hold, and the upgrade
+list all switch when the level changes. The art is the same for every level.
 
-Stage 9 remains the non-combat upgrade/blessing event; its blessing effect is
-still undefined.
+Stage 9 is now a combat stage (epic x3); the non-combat blessing event was removed.
 
 ## 8. TOP OUT AND DEFEAT
 Treat a conventional Tetris game-over state as Top Out, e.g. blocks reaching
 the top and preventing normal spawning or placement. Define exact detection
 before implementation.
+Implemented detection (2026-10-01): Top Out happens when the next piece cannot be
+placed at its spawn position; that piece is discarded. The board is shown for
+0.4 s, then cleared row by row from the top (0.15 s per row), and the sequence
+below runs.
 Confirmed Top Out sequence (2026-09-17):
 1. Delete all board blocks, including Garbage.
 2. Apply the HP penalty. Defeat if HP reaches 0; otherwise the run continues.
@@ -317,7 +395,9 @@ Confirmed Top Out sequence (2026-09-17):
    progress (confirmed 2026-09-18). The next turn starts from that state.
 A board reset is distinct from an attacking line clear: Top Out removal grants
 no base damage, technique bonus, or Perfect Clear bonus.
-Unconfirmed penalty alternatives (not simultaneous):
+Implemented penalty (2026-10-01): a fixed 30% of maximum HP (30 HP at 100) on
+every Top Out, with no escalation (CombatManager topOutHpPenaltyRatio 0.3).
+Earlier unconfirmed alternatives, not adopted:
 - Fixed proportion: lose 25-35% of maximum HP.
 - Escalating within one combat: first 20%, second 30%, third 40%; percentage
   basis is not specified for this alternative in the source.
@@ -365,21 +445,34 @@ maps, or events.
 ## 12. DECISIONS BEFORE IMPLEMENTATION
 - Attack timing confirmed: aggregated bag-end damage, then the enemy turn.
 - Exact bag-end counting with Hold (including a piece carried between bags).
+  Implemented: a turn ends after 7 Locks; Hold swaps do not count (section 4).
 - Base damage confirmed: 1 per normally cleared row; Top Out removal excluded.
 - Playtest the provisional Tetris, T-Spin Single/Double/Triple, and Perfect Clear
   bonuses in section 6. Combo, Back-to-Back, and Mini bonuses are deferred.
 - Player HP and healing balance; playtest fixed enemy tier stats and stage
   counts from section 7. Garbage rules remain as specified in section 7.
+  Implemented: player max HP 100, stage-clear heal 20, enemy HP 20/40/70; tuning
+  after playtest is still open.
 - Player attack targeting/distribution and multi-enemy skill scheduling where
   existing behavior is undefined; preserve all established Garbage rules.
+  Implemented: single target with Tab, auto-retarget on death (section 6); each
+  enemy keeps its own skill counter and Garbage is summed (section 7).
 - User confirmation required before implementing mino upgrades, HP recovery
-  amounts, and the stage map. Stage 9 blessing effects also remain undefined.
+  amounts, and the stage map. Implemented after user decisions (section 7); the
+  stage 9 blessing event was removed.
 - Top Out detection, HP penalty, and subsequent bag/turn handling.
+  Implemented: spawn-blocked detection, fixed 30% penalty (section 8).
 - Automatic gravity and time limits; Hold availability is defined in section 4.
+  Implemented: gravity 1 row per second (soft drop speed comes from the SDF
+  option), lock delay 1.0 s that resets on every move with no move limit, and
+  no time limit.
 - Top Out Hold rule confirmed: empty the slot; preserve charges and recharge progress.
-- NEXT: 3 or 4 pieces.
+- NEXT: 3 or 4 pieces. Implemented: 5 pieces.
 - Which HP and board state persists or resets between battles.
+  Implemented: see Stage progression and rewards in section 7.
 - Reward types, relic effects, and route-selection scope.
+  Implemented: HP recovery + mino upgrade only; relics, shops, and routes are
+  not implemented (stages 1-10 are linear).
 First complete unit: one battle that repeats "place seven -> line-clear attack
 -> enemy attacks HP and board -> next bag" until victory or defeat.
 
@@ -398,5 +491,6 @@ Verify and report:
 - Completion/reward handling occurs once; no per-kill stage-clear healing.
 - Existing bag-end damage, T-Spin categories, Top Out, and Garbage behavior
   remain intact, including no HP attack on Garbage skill turns.
-- Stage 9 is not spawned as combat; unapproved reward/map content is not invented.
+- Every stage 1-10 spawns the lineup in section 7 (stage 9 is now combat);
+  unapproved reward/map content is not invented.
 Report changed files, compilation/test results, and anything not verified.

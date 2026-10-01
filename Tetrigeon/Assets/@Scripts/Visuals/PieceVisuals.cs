@@ -63,17 +63,6 @@ public static class PieceVisuals
         backingRenderer.sortingOrder = sortingOrder - 1; // 고스트를 포함해 항상 해당 아트 뒤에 표시
     }
 
-    public static readonly Color[] TypeColors =
-    {
-        new Color(0f, 1f, 1f),      // I - cyan
-        new Color(0f, 0f, 1f),      // J - blue
-        new Color(1f, 0.5f, 0f),    // L - orange
-        new Color(1f, 1f, 0f),      // O - yellow
-        new Color(0f, 1f, 0f),      // S - green
-        new Color(0.6f, 0f, 0.8f),  // T - purple
-        new Color(1f, 0f, 0f),      // Z - red
-    };
-
     public static Sprite GetSquareSprite()
     {
         if (squareSprite == null) // 처음 호출될 때만 생성, 이후 재사용

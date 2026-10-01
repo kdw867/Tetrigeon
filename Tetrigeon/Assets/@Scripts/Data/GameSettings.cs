@@ -72,12 +72,6 @@ public static class GameSettings
         return Mathf.Clamp(snapped, min, max);
     }
 
-    // 설정값을 화면에 표시할 문구로 변환 (예: "33MS   2.0F")
-    public static string FormatFrames(float frames)
-    {
-        return Mathf.RoundToInt(frames * SecondsPerFrame * 1000f) + "MS   " + frames.ToString("F1") + "F";
-    }
-
     public static string FormatSdf(int sdf)
     {
         return sdf >= InfiniteSdf ? "∞ X" : sdf + " X";

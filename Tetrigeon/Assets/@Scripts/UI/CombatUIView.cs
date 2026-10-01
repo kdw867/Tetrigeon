@@ -5,7 +5,7 @@ public class CombatUIView : MonoBehaviour
 {
     [SerializeField] private TextMesh playerHpText; // 플레이어 체력 표시
     [SerializeField] private TextMesh enemyHpText; // 스테이지와 남은 적 수 표시
-    [SerializeField] private TextMesh turnText; // 이번 턴 누적 피해 숫자 (피해 아이콘 오른쪽)
+    [SerializeField] private TextMesh turnText; // 이번 턴 일반 공격 피해 "n DMG" (피해 아이콘 오른쪽)
     [SerializeField] private SpriteRenderer damageIcon; // 누적 피해 숫자 앞에 붙는 기본 피해 아이콘
     [SerializeField] private SpriteRenderer[] runeRenderers; // 남은 조각 수를 보여줄 룬 7개 (화면 왼쪽부터 01~07)
     [SerializeField] private Sprite[] runeOnSprites; // 룬별 켜진 이미지 (runeRenderers와 같은 순서)

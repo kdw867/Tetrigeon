@@ -32,8 +32,6 @@ public class PieceSpawner : MonoBehaviour
 
     public int HoldCharges => holdCharges; // UI가 읽을 남은 충전량
     public int RechargeProgress => rechargeProgress; // UI가 읽을 충전 진행도
-    public int MaxHoldCharges => maxHoldCharges; // UI가 읽을 최대 충전량
-    public int LocksPerCharge => locksPerCharge; // UI가 읽을 충전 기준 Lock 횟수
     public TetrominoType? HeldType => heldType; // 재연결된 UI가 현재 보관 상태를 읽음
 
     private void Awake()

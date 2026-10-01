@@ -59,19 +59,13 @@ public class CombatManager : MonoBehaviour
     private readonly List<int> pendingPoisons = new List<int>(); // T: 타겟에게 걸 독들의 턴당 피해
     private readonly int[] effectCounts = new int[7]; // 이번 가방의 강화 종류별 발동 횟수
     private readonly int[] effectTotals = new int[7]; // 종류별 정산 예정 효과량 합계
-    private readonly int[] effectFirst = new int[7]; // 첫 발동의 효과량
-    private readonly bool[] effectMixed = new bool[7]; // 발동마다 수치가 달랐는지
     public int NormalAttackDamage => PendingDamage - effectTotals[(int)TetrominoType.L]; // 치명타 전체 피해와 일반 공격을 중복 없이 분리
     public int GetEffectCount(TetrominoType type) => effectCounts[(int)type]; // UI용 발동 횟수
     public int GetEffectTotal(TetrominoType type) => effectTotals[(int)type]; // UI용 합계
-    public int GetEffectFirst(TetrominoType type) => effectFirst[(int)type]; // 동일 수치의 곱셈 표시용
-    public bool HasMixedEffect(TetrominoType type) => effectMixed[(int)type]; // 합계 표시 필요 여부
 
     private int RecordEffect(TetrominoType type, int amount) // 기존 계산 결과를 변경하지 않고 표시용 기록만 추가
     {
         int index = (int)type; // 종류 인덱스
-        if (effectCounts[index] == 0) effectFirst[index] = amount; // 첫 수치 저장
-        else if (effectFirst[index] != amount) effectMixed[index] = true; // 서로 다른 수치 확인
         effectCounts[index]++; // 발동 횟수 증가
         effectTotals[index] += amount; // 효과량 합산
         return amount; // 기존 전투 계산에 같은 값 전달
@@ -81,8 +75,6 @@ public class CombatManager : MonoBehaviour
     {
         Array.Clear(effectCounts, 0, 7); // 횟수 초기화
         Array.Clear(effectTotals, 0, 7); // 합계 초기화
-        Array.Clear(effectFirst, 0, 7); // 첫 수치 초기화
-        Array.Clear(effectMixed, 0, 7); // 혼합 여부 초기화
     }
 
     private int shieldTurnsLeft; // 보호막 남은 턴
@@ -121,7 +113,7 @@ public class CombatManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Tab)) CycleTarget(); // Tab으로 오른쪽 적에게 타겟 이동
     }
 
-    // 스테이지 구성대로 적을 한 줄로 생성 (비전투 스테이지는 아무것도 만들지 않음)
+    // 스테이지 구성대로 적을 한 줄로 생성
     private void SpawnStageEnemies()
     {
         EnemyTier[] composition = StageData.GetComposition(stageNumber);
@@ -401,7 +393,7 @@ public class CombatManager : MonoBehaviour
         OnStageCleared?.Invoke(stageNumber); // 보상 화면이 구독해서 처리
     }
 
-    // 보상 화면에서 회복을 고르면 호출 (최대 체력을 넘지 않음)
+    // 플레이어 체력 회복 (최대 체력을 넘지 않음)
     public void Heal(int amount)
     {
         PlayerHp = Mathf.Min(PlayerHp + amount, playerMaxHp); // 최대 체력까지만 회복

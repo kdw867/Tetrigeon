@@ -19,7 +19,7 @@ public class EnemyView : MonoBehaviour
     [SerializeField] private SpriteRenderer poisonIcon; // 독 아이콘 (자식으로 숫자 텍스트를 가짐)
     [SerializeField] private TextMesh poisonTurnsText; // 독 아이콘 오른쪽 숫자
     [SerializeField] private SpriteRenderer freezeIcon; // 빙결 아이콘 (자식으로 숫자 텍스트를 가짐)
-    [SerializeField] private TextMesh freezeTurnsText; // 빙결 남은 턴 숫자
+    [SerializeField] private TextMesh freezeTurnsText; // 빙결로 앞으로 더 막을 행동 수
 
     private const float StatusIconGap = 0.04f; // 상태이상 아이콘과 숫자 사이 간격 (월드 단위)
     private const float StatusSpacing = 0.1f; // 독 묶음과 빙결 묶음 사이 간격 (월드 단위)
@@ -113,7 +113,7 @@ public class EnemyView : MonoBehaviour
         poisonIcon.gameObject.SetActive(poisoned); // 독이 없거나 만료되면 아이콘과 숫자를 함께 숨김
         freezeIcon.gameObject.SetActive(frozen); // 빙결이 없거나 끝나면 아이콘과 숫자를 함께 숨김
         if (poisoned) poisonTurnsText.text = $"{enemy.PoisonTurnsLeft} x{enemy.PoisonCount}"; // 가장 긴 남은 턴과 독 스택 수 (턴은 합산하지 않음)
-        if (frozen) freezeTurnsText.text = enemy.IsActionBlocked ? "1" : ""; // 막을 행동이 남아 있을 때만 1, 이미 막았으면 눈송이만
+        if (frozen) freezeTurnsText.text = enemy.FreezeActionsLeft > 0 ? enemy.FreezeActionsLeft.ToString() : ""; // 더 막을 행동 수, 다 막았으면 해제 전까지 눈송이만
 
         float poisonWidth = poisoned ? StatusWidth(poisonIcon, poisonTurnsRenderer) : 0f; // 독 묶음 폭 (없으면 0)
         float freezeWidth = frozen ? StatusWidth(freezeIcon, freezeTurnsRenderer) : 0f; // 빙결 묶음 폭 (없으면 0)

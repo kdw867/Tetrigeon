@@ -138,12 +138,6 @@ public class Piece : MonoBehaviour
         return false;
     }
 
-    // 스폰 위치가 이미 막혀있는지 (Top Out 판정용)
-    public bool IsSpawnBlocked()
-    {
-        return !CanPlace(RotationState, BoardPosition);
-    }
-
     // 한 칸 아래로 못 내려가면 바닥/블록에 닿아있는 상태 (Lock Delay 판정용)
     public bool IsGrounded()
     {

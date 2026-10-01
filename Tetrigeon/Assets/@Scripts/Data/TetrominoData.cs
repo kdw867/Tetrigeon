@@ -9,7 +9,7 @@ public static class TetrominoData
     private static readonly Dictionary<TetrominoType, Vector2Int[]> SpawnCells = new()
     {
         { TetrominoType.I, new[] { new Vector2Int(0, 2), new Vector2Int(1, 2), new Vector2Int(2, 2), new Vector2Int(3, 2) } },
-        { TetrominoType.O, new[] { new Vector2Int(0, 1), new Vector2Int(1, 1), new Vector2Int(0, 2), new Vector2Int(1, 2) } }, // 다른 조각처럼 로컬 2번째 줄까지 닿게 (스폰 시 천장에 붙도록)
+        { TetrominoType.O, new[] { new Vector2Int(1, 1), new Vector2Int(2, 1), new Vector2Int(1, 2), new Vector2Int(2, 2) } }, // SRS처럼 4칸 상자의 가운데 두 열(스폰 시 보드 4~5열 중앙), 로컬 2번째 줄까지 닿게
         { TetrominoType.T, new[] { new Vector2Int(1, 2), new Vector2Int(0, 1), new Vector2Int(1, 1), new Vector2Int(2, 1) } },
         { TetrominoType.S, new[] { new Vector2Int(1, 2), new Vector2Int(2, 2), new Vector2Int(0, 1), new Vector2Int(1, 1) } },
         { TetrominoType.Z, new[] { new Vector2Int(0, 2), new Vector2Int(1, 2), new Vector2Int(1, 1), new Vector2Int(2, 1) } },
@@ -21,7 +21,7 @@ public static class TetrominoData
     private static readonly Dictionary<TetrominoType, Vector2> Pivot = new()
     {
         { TetrominoType.I, new Vector2(1.5f, 1.5f) },
-        { TetrominoType.O, new Vector2(0.5f, 1.5f) }, // 위로 옮긴 스폰 좌표에 맞춰 중심축도 같이 이동
+        { TetrominoType.O, new Vector2(1.5f, 1.5f) }, // 오른쪽으로 한 칸 옮긴 O 칸들의 정중앙 (회전해도 제자리)
         { TetrominoType.T, new Vector2(1f, 1f) },
         { TetrominoType.S, new Vector2(1f, 1f) },
         { TetrominoType.Z, new Vector2(1f, 1f) },

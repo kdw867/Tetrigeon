@@ -28,7 +28,7 @@ public class Enemy : MonoBehaviour
     private int freezeBreakDamage; // 빙결이 끝날 때 줄 추가 피해
 
     public bool IsFrozen => freezeReleasePending; // 눈송이 표시 기준: 빙결이 걸려 있고 아직 해제되지 않음
-    public bool IsActionBlocked => freezeActionsLeft > 0; // 빙결로 막을 행동이 아직 남아 있는지 (UI는 이때만 숫자 1 표시)
+    public int FreezeActionsLeft => freezeActionsLeft; // 빙결로 앞으로 더 막을 적 행동 수 (UI 표시용)
     public int PoisonCount => poisons.Count; // UI 표시용 독 개수
 
     // UI 표시용: 독마다 따로 관리되는 남은 턴 중 가장 긴 값 (합산하지 않음, 독이 완전히 끝나기까지 남은 턴)
@@ -108,7 +108,7 @@ public class Enemy : MonoBehaviour
     // 가방 정산에서 호출: 걸려 있던 빙결을 해제하고 파괴 피해를 한 번만 돌려준다
     public int ReleaseFreeze()
     {
-        if (!freezeReleasePending || freezeActionsLeft > 0) return 0; // 빙결 상태가 아니면 아무 일 없음
+        if (!freezeReleasePending || freezeActionsLeft > 0) return 0; // 빙결이 없거나 아직 막을 행동이 남았으면 해제하지 않음
 
         freezeReleasePending = false; // 빙결 해제 (눈송이 숨김)
         freezeActionsLeft = 0; // 해제 뒤에는 막을 행동도 남기지 않음

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// 런 동안 유지되는 미노 강화 단계. 효과는 아직 미정이라 어떤 미노가 몇 단계인지만 기록한다.
+// 런 동안 유지되는 미노 강화 단계.
 public static class MinoUpgrades
 {
     private static readonly TetrominoType[] AllTypes = // 강화 후보가 되는 미노 7종

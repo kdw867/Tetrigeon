@@ -3,7 +3,7 @@ public static class StageData
 {
     public const int LastStage = 10; // 현재 챕터의 마지막 스테이지
 
-    // 해당 스테이지에 등장하는 적 등급 목록 (비전투 스테이지는 빈 배열)
+    // 해당 스테이지에 등장하는 적 등급 목록
     public static EnemyTier[] GetComposition(int stage)
     {
         switch (stage)
@@ -17,13 +17,13 @@ public static class StageData
             case 4:
                 return new[] { EnemyTier.Epic }; // 에픽을 처음 단독으로 소개
             case 5:
-                return new[] { EnemyTier.Epic, EnemyTier.Normal }; // 에픽 1 + 일반 1
+                return new[] { EnemyTier.Normal, EnemyTier.Epic }; // 일반 1 + 에픽 1 (일반 왼쪽, 에픽 오른쪽)
             case 6:
-                return new[] { EnemyTier.Epic, EnemyTier.Normal, EnemyTier.Normal }; // 에픽 1 + 일반 2
+                return new[] { EnemyTier.Normal, EnemyTier.Normal, EnemyTier.Epic }; // 일반 2 + 에픽 1 (일반 왼쪽, 에픽 오른쪽)
             case 7:
                 return new[] { EnemyTier.Epic, EnemyTier.Epic }; // 에픽 2마리
             case 8:
-                return new[] { EnemyTier.Epic, EnemyTier.Epic, EnemyTier.Normal }; // 에픽 2 + 일반 1
+                return new[] { EnemyTier.Normal, EnemyTier.Epic, EnemyTier.Epic }; // 일반 1 + 에픽 2 (일반을 왼쪽에 배치)
             case 9:
                 return new[] { EnemyTier.Epic, EnemyTier.Epic, EnemyTier.Epic }; // 에픽 3마리
             case 10:
@@ -39,11 +39,5 @@ public static class StageData
         foreach (EnemyTier tier in GetComposition(stage))
             if (tier == EnemyTier.Boss) return true;
         return false;
-    }
-
-    // 적이 없는 비전투 스테이지인지 (강화/축복 이벤트)
-    public static bool IsNonCombatStage(int stage)
-    {
-        return GetComposition(stage).Length == 0;
     }
 }

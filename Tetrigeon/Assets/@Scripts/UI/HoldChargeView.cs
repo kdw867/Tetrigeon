@@ -4,7 +4,7 @@ using UnityEngine;
 // UI 중앙 빛을 독립적으로 제어하며 골렘 가슴 코어의 기존 동작은 유지한다.
 public class HoldChargeView : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer[] runeRenderers; // 룬 4개 (왼쪽부터 1번). 분리된 룬 아트가 나오면 연결
+    [SerializeField] private SpriteRenderer[] runeRenderers; // 룬 4개 (왼쪽부터 1번)
     [SerializeField] private SpriteRenderer occupancyRenderer; // 보관 미노가 있을 때 켜지는 중앙 테두리
 
     private void OnEnable()
