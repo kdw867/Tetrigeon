@@ -1,5 +1,5 @@
 # TETRIGEON — TURN-BASED TETRIS ROGUELIKE
-Design notes | 2026-09-14 (synced with the implemented code on 2026-10-01)
+Design notes | 2026-09-14 (code sync: 2026-10-01; crystal-cell design update: 2026-10-02)
 
 Status: Core rules describe the intended direction. Recommendations, examples,
 and undecided details are not commitments. Based on prior discussion and the
@@ -286,16 +286,71 @@ Implemented details (2026-10-01):
   The run end (victory or defeat) shows the same restart window; restart reloads
   the scene and resets the run, including upgrades.
 
-Mino upgrade trigger rules (2026-09-18, confirmed):
-1. The upgrade fires when a line is cleared by locking that upgraded mino.
-2. If an upgraded mino's blocks merely sit in a cleared row, but the clear was
-   not caused by locking that upgraded mino, the ability does NOT fire.
-   The trigger is the locked piece's type, exactly like the existing T-Spin
-   check, not the board contents of the cleared rows.
-3. The ability scales with the damage of that clear, so clearing more lines makes
-   it stronger without a separate line-count formula.
-A lock that clears no line fires nothing. Clearing several lines at once still
-fires the ability only once.
+Mino upgrade trigger rules (updated 2026-10-02, confirmed design):
+The existing locked-piece trigger remains unchanged. Crystal-cell triggers are
+an ADDITION, not a replacement. Crystal cells are planned, not implemented yet.
+1. Locking an upgraded mino (Lv.1+) and clearing lines triggers its existing
+   ability once. Clearing several lines with that Lock still counts once;
+   a Lock with no line clear does not trigger it.
+2. Ordinary upgraded blocks merely present in a cleared row do not trigger an
+   ability. Starting at Lv.2, designated crystal cells are the exception below.
+3. The existing locked-piece ability continues to scale with the damage of that
+   clear and the upgrade level, using the existing table and bag-end settlement.
+
+### Crystal cells (2026-10-02, confirmed; implementation pending)
+Updated 2026-10-02: the crystal count now grows with the level. This replaces
+the earlier "exactly one crystal at Lv.2-5, rerolled at piece creation" rule.
+- Applies to all seven mino types: I, J, L, O, S, T, Z.
+- Crystal count by level: Lv.0 and Lv.1 none, Lv.2 one, Lv.3 two, Lv.4 three,
+  Lv.5 all four cells.
+- Selection happens at upgrade time, not at piece creation. Reaching Lv.2
+  chooses one of the four cells uniformly (25% each). Each later level-up chooses
+  one more cell uniformly among the cells that are not crystal yet (Lv.3: 1 of 3,
+  Lv.4: 1 of 2, Lv.5: the last cell). Earlier crystal cells never change.
+- The choice is per mino type and refers to the piece's own cell order. Every
+  piece of that type spawned afterwards has its crystals on the same cells until
+  the next level-up. Moving or rotating the piece keeps the crystals attached to
+  those cells, not to board positions.
+- Hold storage and retrieval preserve the crystal cells; Hold never rerolls them.
+- Crystal color: each crystal uses its source mino's color (I cyan, J blue,
+  L orange, O yellow, S green, T purple, Z red).
+- After Lock, the crystal retains its source mino type on the board and moves
+  with its block when rows collapse or Garbage shifts blocks upward.
+- Normally clearing a row containing the crystal triggers its source mino's
+  ability once, even if a different or unupgraded mino caused the line clear.
+  Clearing only the source piece's ordinary cells grants no crystal activation.
+- Existing locked-piece activation and crystal activation count independently:
+  clearing with an upgraded mino AND clearing its own crystal gives TWO ability
+  activations (one existing activation + one crystal activation).
+- Each removed crystal triggers once. If several crystals are cleared together,
+  each adds an activation of its own source ability. Do not merge them into one
+  activation or trigger the same crystal again after row movement.
+- Example: an upgraded L clears a row containing an old T crystal and a J
+  crystal: existing L Critical + additional T Poison + additional J Freeze.
+- Crystal effects are accumulated for the existing bag-end settlement, not
+  applied immediately on line removal. Existing status stacking/duration rules
+  remain; additional Freeze activations do not imply additive freeze duration.
+- Top Out resets, stage cleanup, and deletion of blocks pushed above the board
+  are not normal line clears and grant no crystal activation.
+- Visuals must distinguish crystal cells from ordinary cells; non-crystal cells
+  keep the existing Lv.1+ upgraded appearance. A crystal cell becomes a whole
+  crystal block in its mino's color, keeping the same cell size, dark outline,
+  and colored connection seams as the upgraded cell it replaces.
+
+Not yet decided: the damage input D and level used for a crystal activation,
+whether it also contributes ordinary target damage, and the line-count input
+for a J crystal cleared by another piece. Existing formulas below document the
+locked-piece implementation; do not silently assume re-running that entire
+handler defines these new crystal-specific numerical rules.
+
+Verification required when implemented: all seven types; no crystals at Lv.0/1;
+one/two/three/four crystals at Lv.2/3/4/5; earlier crystals kept on level-up;
+equal random selection among the remaining cells; the same crystal cells on every
+spawned piece of that type until the next level-up; rotation and Hold persistence;
+locked-cell metadata surviving row shifts; activation by another mino; own
+crystal plus existing activation = two; multiple crystals counted separately;
+no duplicate activations or reset-triggered effects; bag-end timing preserved.
+
 Upgrade levels (implemented 2026-10-01): picking the same mino again raises its
 level. Ability strength scales with level as in the table below ("bonus x Lv");
 durations do not scale with level. The maximum is Lv.5, shown as `Lv.MAX`.
@@ -372,7 +427,7 @@ picks one. Implemented: minos at Lv.5 are excluded from the draw; if fewer than
 
 Upgraded minos (Lv.1 and above) use the `MinoSprites/Upgraded` art instead of the
 normal art. The active piece, ghost, locked blocks, NEXT, Hold, and the upgrade
-list all switch when the level changes. The art is the same for every level.
+list all switch when the level changes. The implemented base art is the same for every level. Planned Lv.2+ crystal cells (above) swap only the crystal cells to a crystal version of that cell's art; the other cells keep this base art.
 
 Stage 9 is now a combat stage (epic x3); the non-combat blessing event was removed.
 
