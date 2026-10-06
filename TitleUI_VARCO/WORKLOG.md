@@ -104,3 +104,54 @@ T_Title_BG, T_Title_Lemy, T_Title_Sentinel, T_Title_Queen, T_Title_Mino_{I,O,T,S
 - TitleScene의 OptionMenu 인스턴스에서 OptionRoot만 localScale 1.714 (= 3 / 1.75, 도트 1칸 화면 3px) → 460×333이 화면 789×570
 - 프리팹 원본(P_OptionMenu)은 그대로 → 일시정지 메뉴 설정 창은 변화 없음. SOUND / SENSITIVITY 창은 그대로
 - 확인(Play): `preview/Unity_Title_Option_Big.png`. 오른쪽 아래 모서리가 센티넬 왼팔 위에 조금 겹침
+
+## 로고 (2026-10-06, "일반 미노, 강화 미노, 수정 미노를 사용해서 만들어줘" → "varco로 해줘", 수정은 확정본으로)
+- 코드 시안(`tools/tier_logo.js`, 게임 칸 그림으로 글자 채움)은 만들었지만 VARCO로 하라는 요청에 따라 보여 주지 않음
+- 레퍼런스 업로드 (MD5 = 서버 키 확인)
+| 파일 | 내용 | 서버 키 |
+| --- | --- | --- |
+| refs/u_NormalPieces.png | 현재 게임 일반 미노 7종 조각 그대로, 40색 (`tools/logo_refs_pieces.js`) | 638257860760b7740974f4c8080fb1d4 |
+| (MinoCrystal) u_UpgradedCells | 강화 칸 7종 | 866164c50b205cf0555a613cc3088b47 |
+| refs/u_CrystalCells.png | 확정 수정 칸 7종 ×4 (`tools/logo_refs.js`) | 61832fc3244797286e6bf49631ccea57 |
+- gpt-image-2-medium 16:9 ×2 (40cr, 타이틀 누적 약 480cr). 한 줄 TETRIGEON, 돌 약 절반 / 강화 약 1/4 / 수정 약 1/4, 어두운 외곽선 + 그림자
+| 생성 | 결과 |
+| --- | --- |
+| Logo_Gpt_01 | 사용: 철자 정확, 글자 모양·블록 크기 고름, 7색 수정 고루 |
+| Logo_Gpt_02 | 미사용: R 모양이 깨짐 |
+- 후처리 `tools/logo_build.js` → `parts/T_Title_Logo.png` 786×133 (블록 하나 = 25도트, 게임 칸과 같음), 화면 2배 = 1572×266
+  - 흰 바탕 제거: 300px 넘는 흰 영역 + 둘레 절반 이상이 어두운 외곽선인 흰 영역(O·R 구멍) + 중립색·길쭉한 100px 넘는 흰 틈(G 안쪽). 돌 하이라이트·이음선 흰 심·수정 반짝임은 보존
+  - 블록 간격 47px → 25도트로 축소, 64색
+  - 수정 블록 22개를 찾아(채도 높은 면, 채움 비율 0.6 이상, 색조는 축소 전 원본에서) 확정 수정 블록(MinoCrystal_VARCO lesswhite, 외곽선 안쪽)으로 교체. 생성본 수정은 비슷하지만 뭉개져 있어 확정본으로 바꿈
+  - 처음엔 R의 주황 균열 돌이 빨강 수정으로 오인됨(채움 비율 0.20) → 채움 비율 조건으로 해결
+- 미리보기 `preview/Title_Logo_FHD.png`: 화면 위쪽 가운데 (174, 50), 아치 꼭대기와 안 겹침
+- G 반쪽 초록 고침 (2026-10-06): 생성본 G는 오른쪽 기둥 마지막 돌(484~505, 80~102)이 아래 줄(98~120)까지 내려와 초록이 14도트로 끼어 있었음
+  - 1차(모서리 깎고 위 돌을 초록 수정으로)는 사용자 답 "없애지 말고 그냥 하나짜리로 만들어"로 폐기
+  - 최종: 그 자리에 온전한 한 칸 초록 수정(478~501, 100~122, 24×23)을 넣음. 위 기둥 돌은 세로 23→19도트로 줄이고(아래 5줄에 걸친 초록은 같은 줄 돌 픽셀로 덮은 뒤), 새 초록은 2도트 내려 왼쪽 아래 돌과 밑변을 맞춤. 블록 사이 틈은 (9,12,19), 오른쪽 외곽선 띠는 (21,28,39). `logo_build.js` 4-1 단계
+- [미적용] Unity — 승인 전 적용 안 함
+
+### 로고 다시 만들기 — 격자 맞춤 (2026-10-06, "다시 새로 만들어줘 뭔가 안맞는다 / 크기를 동일하게 배치도 삐뚤빼뚤하지 않게")
+- 위 Logo_Gpt_01 결과(`tools/logo_build.js`)는 대체됨. `parts/T_Title_Logo.png`는 아래 결과로 덮어씀
+- gpt-image-2-medium 16:9 ×2 (40cr, 타이틀 누적 약 520cr). 같은 레퍼런스 3개 + 엄격한 격자 지시(모든 글자 5칸 높이·3칸 폭(N 4칸), 같은 크기 정사각 블록만, 반쪽·어긋난 블록 금지, 글자 사이 반 칸)
+| 생성 | 결과 |
+| --- | --- |
+| Logo_Grid_01 | 사용: 5줄·블록 크기 거의 고름, 수정 7색. E 칸 폭만 좁고 N 대각선이 칸 사이 |
+| Logo_Grid_02 | 미사용: 수정 적음, O 모서리 빔 |
+- 생성만으로는 격자가 완전히 맞지 않아 코드로 강제: `tools/logo_grid.js`
+  - 블록 면 찾기(밝은 면, 3px 깎아 이음선 연결 끊기, 붙은 블록은 크기로 나눔) → 87개
+  - 블록 중심 x 사이 큰 틈으로 9글자 분리, 단어 전체 높이를 5줄로 균등 분할
+  - 글자마다 열 수 = 폭 / 줄 높이 (N은 4칸 고정 모양 X..X / XX.X / X.XX / X..X / X..X)
+  - 칸마다: 수정(채도 높은 면 55% 넘음)이면 확정 수정 25×25, 아니면 생성본 블록을 잘라 25×25로
+  - 모든 블록 25도트 칸에 반듯하게, 글자 간격 14도트, 외곽선 4도트(21,28,39) + 그림자 4도트(9,12,19)
+- 결과 `parts/T_Title_Logo.png` 764×131 → 화면 2배 1528×262, 미리보기 `preview/Title_Logo_FHD.png` (196, 50)
+  - 글자별: T 3열 7칸(청록 수정 3) / E 10칸(파랑 1) / T 7칸(주황 3) / R 11칸(빨강 1) / I 5칸(노랑 1) / G 11칸(초록 1) / E 10칸(보라 1) / O 12칸(빨강 6) / N 4열 12칸(청록 5)
+- [남은 문제] 강화 이음선 일부가 블록 가장자리에서 짧게 잘림 (생성본 블록을 잘라 쓰기 때문)
+- [미적용] Unity — 승인 전 적용 안 함
+
+## Unity 적용 — 로고 (2026-10-06, "이렇게 적용하자")
+- `Assets/@Resources/UI/Title/T_Title_Logo.png` (parts와 MD5 일치) — Sprite Single, PPU 50(2배), Point, 압축 없음, 밉맵 없음, Clamp, FullRect
+- TitleScene/UI/TitleCanvas에 `Logo` Image 추가: 순서 Background·Queen·Sentinel·Lemy → **Logo** → Menu → OptionMenu, 가운데 기준 (0, 359), SetNativeSize 1528×262, Raycast Target 끔
+- 확인(Play): `preview/Unity_Title_Logo.png` (미리보기와 같은 자리, START 마우스 올림 정상), `preview/Unity_Title_Logo_Option.png` (설정 창이 로고 아래쪽 약 60px를 덮음 — 설정 창이 로고 위에 그려짐), 콘솔 에러·경고 없음
+
+## EXIT 종료 (2026-10-06, "타이틀에서 EXIT 누르면 게임이 종료되게 해줘")
+- `TitleMenu.Quit`: 에디터에서는 `EditorApplication.isPlaying = false`(플레이 모드 종료), 빌드에서는 `Application.Quit()` (`#if UNITY_EDITOR`). 버튼 연결(Btn_EXIT → TitleMenu.Quit)은 그대로
+- 컴파일 에러 없음, 사용자가 에디터에서 종료 확인

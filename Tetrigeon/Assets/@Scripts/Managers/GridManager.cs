@@ -1,3 +1,4 @@
+using System.Collections.Generic; // 갉아먹을 후보 칸 목록
 using UnityEngine;
 
 public class GridManager : MonoBehaviour
@@ -66,8 +67,8 @@ public class GridManager : MonoBehaviour
         return !IsCellEmpty(pos);
     }
 
-    // 꽉 찬 줄을 지우고 위 블록들을 내림. 지운 줄 개수를 반환.
-    public int ClearLines()
+    // 꽉 찬 줄을 지우고 위 블록들을 내림. 지운 줄 개수를 반환하고, 지워진 수정 칸의 원본 미노 종류를 clearedCrystals에 담는다.
+    public int ClearLines(List<TetrominoType> clearedCrystals)
     {
         int clearedCount = 0; // 지운 줄 수
         int writeY = 0; // 다음에 채울 위치 (아래부터 압축)
@@ -79,7 +80,11 @@ public class GridManager : MonoBehaviour
                 for (int x = 0; x < Width; x++)
                 {
                     if (cells[x, y] != null)
+                    {
+                        MinoArtBinding binding = cells[x, y].GetComponent<MinoArtBinding>(); // 미노 블록이면 칸 정보를 가짐 (가비지는 없음)
+                        if (binding != null && binding.IsCrystal) clearedCrystals.Add(binding.SourceType); // 지워지는 수정 칸마다 원본 종류를 하나씩 기록
                         Destroy(cells[x, y].gameObject); // 꽉 찬 줄의 블록 오브젝트 삭제
+                    }
                     cells[x, y] = null; // 칸 비우기
                 }
                 clearedCount++; // 지운 줄 카운트
@@ -149,6 +154,25 @@ public class GridManager : MonoBehaviour
         for (int y = 0; y < Height; y++)
             if (!IsRowEmpty(y)) return false; // 블록 있는 줄 하나라도 있으면 아님
         return true;
+    }
+
+    // 애벌레 갉아먹기: 플레이어가 놓은 미노 블록 중 서로 다른 칸을 무작위로 지움 (가비지 제외, 위 블록은 내려오지 않고 구멍으로 남음)
+    public void RemoveRandomMinoBlocks(int count)
+    {
+        List<Vector2Int> targets = new List<Vector2Int>(); // 먹을 수 있는 칸 목록
+        for (int y = 0; y < Height; y++)
+            for (int x = 0; x < Width; x++)
+                if (cells[x, y] != null && cells[x, y].GetComponent<MinoArtBinding>() != null) // 미노 블록만 후보 (가비지 블록에는 MinoArtBinding이 없음)
+                    targets.Add(new Vector2Int(x, y)); // 후보에 추가
+
+        for (int i = 0; i < count && targets.Count > 0; i++) // 먹을 칸이 없으면 남은 애벌레는 아무것도 안 함
+        {
+            int pick = UnityEngine.Random.Range(0, targets.Count); // 남은 후보 중 하나를 무작위로 고름
+            Vector2Int cell = targets[pick]; // 고른 칸
+            targets.RemoveAt(pick); // 다른 애벌레가 같은 칸을 고르지 않게 후보에서 뺌
+            Destroy(cells[cell.x, cell.y].gameObject); // 블록 오브젝트 삭제
+            cells[cell.x, cell.y] = null; // 칸 비우기
+        }
     }
 
     // 적 턴: 아래에 구멍 하나 뚫린 방해 줄을 추가하고 기존 블록을 위로 밀어올림

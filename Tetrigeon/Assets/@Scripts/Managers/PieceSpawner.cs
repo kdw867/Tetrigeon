@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
+using System.Collections.Generic; // 지워진 수정 칸 목록
 using UnityEngine;
 
 public class PieceSpawner : MonoBehaviour
 {
     public static PieceSpawner Instance { get; private set; }
 
-    public static event Action<TetrominoType, TSpinType, int> OnPieceLocked; // 고정한 조각 종류 + T스핀 결과 + 지워진 줄 수 (데미지·강화 능력 계산용)
+    public static event Action<TetrominoType, TSpinType, int, IReadOnlyList<TetrominoType>> OnPieceLocked; // 고정한 조각 종류 + T스핀 결과 + 지워진 줄 수 + 지워진 수정 칸들의 원본 종류 (데미지·강화 능력 계산용)
     public static event Action OnTopOut; // Top Out 발생 시 1회 알림 (지워진 줄은 데미지에 안 들어감)
     public static event Action<TetrominoType?> OnHoldChanged; // Hold 슬롯 내용 바뀔 때 알림 (UI 연결용)
     public static event Action<int, int> OnHoldChargesChanged; // 남은 충전량, 충전 진행도 바뀔 때 알림 (코어 UI용)
@@ -23,7 +24,7 @@ public class PieceSpawner : MonoBehaviour
     private Piece currentPiece;
     private float lockTimer; // 착지 상태로 남은 유예 시간
 
-    private TetrominoType? heldType; // 현재 Hold에 들어있는 조각 (없으면 null)
+    private MinoState heldPiece; // 현재 Hold에 들어있는 조각 (없으면 null, 여왕 스킬로 바뀐 모양·회전 금지도 유지)
     private bool holdUsed; // 이번 조각에서 이미 Hold를 썼는지
     private bool combatEnded; // 전투가 끝나 더 이상 조각을 내보내지 않는 상태인지
     private bool inputEnabled = true; // 보상 화면·일시정지로 조작이 막혀 있는지
@@ -32,7 +33,8 @@ public class PieceSpawner : MonoBehaviour
 
     public int HoldCharges => holdCharges; // UI가 읽을 남은 충전량
     public int RechargeProgress => rechargeProgress; // UI가 읽을 충전 진행도
-    public TetrominoType? HeldType => heldType; // 재연결된 UI가 현재 보관 상태를 읽음
+    public TetrominoType? HeldType => heldPiece?.Type; // 재연결된 UI가 현재 보관 상태를 읽음
+    public MinoState HeldPiece => heldPiece; // Hold 표시가 바뀐 모양·회전 금지까지 읽음
 
     private void Awake()
     {
@@ -120,11 +122,11 @@ public class PieceSpawner : MonoBehaviour
 
         holdUsed = false; // 새 조각이니 Hold 다시 사용 가능
 
-        TetrominoType type = BagManager.Instance.Dequeue(); // 다음 조각 종류 뽑기
+        MinoState mino = BagManager.Instance.Dequeue(); // 다음 조각 뽑기 (여왕 스킬 상태 포함)
 
-        if (Piece.CanPlaceType(type, 0, SpawnPosition)) // 스폰 자리가 바로 비어있으면
+        if (Piece.CanPlaceMino(mino, 0, SpawnPosition)) // 스폰 자리가 바로 비어있으면 (증식 칸 포함)
         {
-            SpawnPiece(type);
+            SpawnPiece(mino);
         }
         else
         {
@@ -174,34 +176,34 @@ public class PieceSpawner : MonoBehaviour
     // Top Out 시 Hold에 들고 있던 조각을 버림
     private void ClearHold()
     {
-        heldType = null; // 보관 중인 조각 제거
+        heldPiece = null; // 보관 중인 조각 제거
         holdUsed = false; // 다음 턴에서 Hold 다시 사용 가능
-        OnHoldChanged?.Invoke(heldType); // Hold UI 갱신
+        OnHoldChanged?.Invoke(HeldType); // Hold UI 갱신
     }
 
-    private void SpawnPiece(TetrominoType type)
+    private void SpawnPiece(MinoState mino)
     {
         currentPiece = Instantiate(piecePrefab); // 프리팹으로 새 조각 생성
-        currentPiece.Init(type, SpawnPosition); // 스폰 위치에 배치
+        currentPiece.Init(mino, SpawnPosition); // 스폰 위치에 배치
         lockTimer = lockDelay; // 유예 시간 초기화
     }
 
     private void SwapHold()
     {
         if (!isActiveAndEnabled || combatEnded || currentPiece == null || holdUsed || holdCharges <= 0) return; // 모든 호출 경로에서 실패한 홀드는 상태를 바꾸지 않음
-        TetrominoType current = currentPiece.Type; // 지금 조각 종류 기억
+        MinoState current = currentPiece.Mino; // 지금 조각 상태 기억 (증식 칸·회전 금지 유지)
         Destroy(currentPiece.gameObject); // 지금 조각은 그리드에 등록 없이 바로 제거 (고정 아님)
 
-        TetrominoType nextType = heldType ?? BagManager.Instance.Dequeue(); // Hold 비어있으면 다음 조각으로
-        heldType = current; // 지금 조각을 Hold에 저장
+        MinoState next = heldPiece ?? BagManager.Instance.Dequeue(); // Hold 비어있으면 다음 조각으로
+        heldPiece = current; // 지금 조각을 Hold에 저장
         holdUsed = true; // 이번 조각에서 Hold 다 씀
 
-        SpawnPiece(nextType);
+        SpawnPiece(next);
 
         holdCharges--; // 홀드에 실제로 성공했으므로 충전 1개 소모 (진행도는 그대로 유지)
         OnHoldChargesChanged?.Invoke(holdCharges, rechargeProgress); // 룬 표시 갱신
 
-        OnHoldChanged?.Invoke(heldType);
+        OnHoldChanged?.Invoke(HeldType);
     }
 
     // 실제 Lock 1회를 충전 진행도에 반영 (가득 찬 상태에서는 진행도를 쌓지 않음)
@@ -230,14 +232,15 @@ public class PieceSpawner : MonoBehaviour
         TSpinType tSpin = EvaluateTSpin(currentPiece); // 줄 지우기 전, 고정 시점 보드 상태로 T스핀 판정
         TetrominoType lockedType = currentPiece.Type; // 조각이 사라지기 전에 종류를 기억 (강화 능력은 방금 고정한 조각 기준)
 
-        Vector2Int[] cellOffsets = TetrominoData.GetCells(currentPiece.Type, currentPiece.RotationState); // 조각의 4칸 오프셋
-        Transform[] blocks = currentPiece.GetComponent<PieceView>().Blocks; // 같은 순서의 시각적 블록 4개
+        Vector2Int[] cellOffsets = currentPiece.Mino.GetCells(currentPiece.RotationState); // 조각의 칸 오프셋 (증식 칸이 있으면 5칸)
+        Transform[] blocks = currentPiece.GetComponent<PieceView>().Blocks; // 같은 순서의 시각적 블록
         for (int i = 0; i < cellOffsets.Length; i++)
         {
             Vector2Int boardCell = currentPiece.BoardPosition + cellOffsets[i]; // 실제 보드 좌표
             blocks[i].SetParent(GridManager.Instance.transform); // 조각에서 분리, 개별 오브젝트로 독립
             blocks[i].position = GridManager.CellToWorld(boardCell); // PieceView가 갱신 안 한 마지막 프레임 위치 보정
-            blocks[i].rotation = PieceVisuals.GetArtRotation(currentPiece.Type, currentPiece.RotationState); // 고정 직전 회전도 균열 방향에 반영
+            blocks[i].rotation = PieceVisuals.GetArtRotation(currentPiece.Type, currentPiece.RotationState, i); // 고정 직전 회전도 균열 방향에 반영 (증식 칸은 L 보정 제외)
+            if (currentPiece.Mino.RotationLocked) blocks[i].GetComponent<SpriteRenderer>().color = Color.white; // 회전 금지는 고정과 함께 끝나므로 침식 색 해제
             GridManager.Instance.SetCell(boardCell, blocks[i]); // 그리드에 칸 단위로 등록
         }
 
@@ -246,9 +249,10 @@ public class PieceSpawner : MonoBehaviour
 
         AddRechargeProgress(); // 미노가 실제로 고정된 시점에만 충전 진행 (하드드랍·자연 낙하 모두 이 경로 하나를 지남)
 
-        int clearedLines = GridManager.Instance.ClearLines(); // 꽉 찬 줄 정리
+        List<TetrominoType> clearedCrystals = new List<TetrominoType>(); // 이번에 지워진 수정 칸의 원본 종류 (칸마다 하나)
+        int clearedLines = GridManager.Instance.ClearLines(clearedCrystals); // 꽉 찬 줄 정리
 
-        OnPieceLocked?.Invoke(lockedType, tSpin, clearedLines);
+        OnPieceLocked?.Invoke(lockedType, tSpin, clearedLines, clearedCrystals);
 
         SpawnNext();
     }

@@ -7,6 +7,8 @@ public sealed class MinoArtBinding : MonoBehaviour // 칸별 외형 연결
     private SpriteRenderer target; // 기존 렌더러 보관
     private TetrominoType type; // 미노 종류 보관
     private int cellIndex; // 원래 칸 순서 보관
+    public TetrominoType SourceType => type; // 이 칸이 속한 미노 종류 (수정 칸이 줄 삭제될 때 발동할 능력의 원본)
+    public bool IsCrystal => MinoUpgrades.IsCrystalCell(type, cellIndex); // 수정 칸인지 (강화는 보상 화면에서만 바뀌고 그때 보드가 비워지므로 고정된 뒤에도 같은 값)
     public void Initialize(TetrominoType value, int index) // 생성 시 칸 정보 설정
     {
         target = GetComponent<SpriteRenderer>(); // 같은 오브젝트의 렌더러 사용

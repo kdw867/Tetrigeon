@@ -100,6 +100,9 @@ public class EnemyView : MonoBehaviour
         // 적이 붙어 있어도 옆 적과 겹치지 않게 줄을 나눠 표시한다
         string status = damageReductionPercent > 0 ? $"피해 -{damageReductionPercent}%" : ""; // 호위가 살아있어 피해가 줄어드는 중
         if (status.Length > 0) status = "\n" + status; // 피해 감소는 따로 한 줄 더 (독·빙결은 아래 아이콘 줄로 표시)
+        if (enemy.Shield > 0) status += $"\n보호막 {enemy.Shield}"; // 수호자 보호막 남은 양
+        if (enemy.ChargeActionsLeft > 0) status += $"\n강공격 {enemy.ChargeActionsLeft}"; // 강공격까지 남은 수호자 행동 수
+        if (enemy.IsStunned) status += "\n스턴"; // 보호막이 깨져 행동을 쉼 (쉰 뒤 다음 행동 전까지 표시)
 
         hpText.text = $"{enemy.Hp}/{enemy.MaxHp}\nSKILL {enemy.TurnsUntilSkill}{status}"; // 체력과 능력까지 남은 턴
         UpdateStatusRow(); // 체력 텍스트 내용이 정해진 뒤 그 아래에 독·빙결 아이콘을 배치

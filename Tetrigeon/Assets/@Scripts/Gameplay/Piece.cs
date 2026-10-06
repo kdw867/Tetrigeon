@@ -9,7 +9,8 @@ public class Piece : MonoBehaviour
     private float gravityTimer; // 자동 낙하 타이머
     private float dasCutTimer; // DCD: 회전·낙하 직후 DAS 이동을 멈추는 남은 시간
 
-    public TetrominoType Type { get; private set; }
+    public MinoState Mino { get; private set; } // 종류와 여왕 스킬 상태 (Hold로 넘어가도 그대로 유지)
+    public TetrominoType Type => Mino.Type; // 미노 종류
     public int RotationState { get; private set; }
     public Vector2Int BoardPosition { get; private set; }
 
@@ -20,9 +21,9 @@ public class Piece : MonoBehaviour
 
     public bool JustMoved { get; private set; } // 이번 프레임에 이동/회전이 성공했는지 (Lock Delay 리셋용)
 
-    public void Init(TetrominoType type, Vector2Int spawnPosition)
+    public void Init(MinoState mino, Vector2Int spawnPosition)
     {
-        Type = type;
+        Mino = mino; // 큐·Hold에서 받은 미노 상태 그대로 사용
         RotationState = 0;
         BoardPosition = spawnPosition;
         LastActionWasRotation = false;
@@ -118,6 +119,8 @@ public class Piece : MonoBehaviour
 
     public bool TryRotate(int direction)
     {
+        if (Mino.RotationLocked) return false; // 여왕 회전 금지: 이동·드랍은 그대로 두고 회전만 막음
+
         int newRotationState = RotationState + direction;
         Vector2Int[] tests = SRSKickData.GetTests(Type, RotationState, newRotationState);
 
@@ -155,13 +158,13 @@ public class Piece : MonoBehaviour
 
     private bool CanPlace(int rotationState, Vector2Int position)
     {
-        return CanPlaceType(Type, rotationState, position);
+        return CanPlaceMino(Mino, rotationState, position);
     }
 
-    // 조각 인스턴스 없이도 특정 종류/위치가 놓일 수 있는지 검사 (스폰 전 Top Out 판정용)
-    public static bool CanPlaceType(TetrominoType type, int rotationState, Vector2Int position)
+    // 조각 인스턴스 없이도 특정 미노/위치가 놓일 수 있는지 검사 (스폰 전 Top Out 판정용, 증식 칸 포함)
+    public static bool CanPlaceMino(MinoState mino, int rotationState, Vector2Int position)
     {
-        Vector2Int[] cells = TetrominoData.GetCells(type, rotationState);
+        Vector2Int[] cells = mino.GetCells(rotationState); // 증식 칸까지 포함한 칸 좌표
         foreach (Vector2Int cell in cells)
         {
             Vector2Int boardCell = position + cell;

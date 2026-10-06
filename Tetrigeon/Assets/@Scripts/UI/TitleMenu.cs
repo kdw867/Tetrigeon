@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-// 타이틀 메뉴. START는 게임 씬, OPTION은 일시정지 메뉴와 같은 설정 창, EXIT는 게임 종료(빌드에서만 동작).
+// 타이틀 메뉴. START는 게임 씬, OPTION은 일시정지 메뉴와 같은 설정 창, EXIT는 게임 종료(에디터에서는 플레이 모드 종료).
 public class TitleMenu : MonoBehaviour
 {
     [SerializeField] private GameObject menuRoot; // START/OPTION/EXIT 버튼 묶음
@@ -27,7 +27,14 @@ public class TitleMenu : MonoBehaviour
         optionMenu.Open();
     }
 
-    public void Quit() { Application.Quit(); } // EXIT: 빌드에서 게임 종료 (에디터에서는 동작하지 않음)
+    public void Quit() // EXIT: 게임 종료
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false; // 에디터에서는 플레이 모드 종료
+#else
+        Application.Quit(); // 빌드에서는 프로그램 종료
+#endif
+    }
 
     private void ShowMenu() { menuRoot.SetActive(true); } // 설정 창을 닫으면 메뉴 다시 표시
 }

@@ -22,19 +22,20 @@ public class NextView : MonoBehaviour
         BagManager.OnQueueChanged -= UpdateDisplay; // 이벤트 구독 해제
     }
 
-    private void UpdateDisplay(TetrominoType[] types)
+    private void UpdateDisplay(MinoState[] minos)
     {
         ClearSlots(); // 기존 미리보기 지우기
-        slots = new GameObject[types.Length];
+        slots = new GameObject[minos.Length];
 
-        for (int slot = 0; slot < types.Length; slot++)
+        for (int slot = 0; slot < minos.Length; slot++)
         {
             GameObject container = new GameObject($"Slot_{slot}"); // 조각 하나를 담는 컨테이너
             container.transform.SetParent(transform);
             container.transform.localPosition = new Vector3(0f, -slot * slotSpacingInCells * GridManager.CellSize, 0f);
 
-            Vector2Int[] cells = TetrominoData.GetCells(types[slot], 0); // 스폰 모양 그대로 표시
-            Vector2 boundsCenter = TetrominoData.GetSpawnBoundsCenter(types[slot]); // 모양 중심 (박스 정중앙 정렬용)
+            MinoState mino = minos[slot]; // 이 슬롯의 미노 (여왕 스킬 상태 포함)
+            Vector2Int[] cells = mino.GetCells(0); // 스폰 모양 그대로 표시 (증식 칸 포함)
+            Vector2 boundsCenter = TetrominoData.GetSpawnBoundsCenter(mino.Type, mino.GrownCell); // 모양 중심 (박스 정중앙 정렬용)
             for (int i = 0; i < cells.Length; i++) // 원본 칸 순서를 유지하며 미리보기 생성
             {
                 Vector2Int cell = cells[i]; // 현재 칸 좌표
@@ -46,7 +47,7 @@ public class NextView : MonoBehaviour
                     0f);
 
                 SpriteRenderer spriteRenderer = block.AddComponent<SpriteRenderer>();
-                PieceVisuals.ApplyMinoArt(spriteRenderer, types[slot], i); // 칸별 원본 아트와 방향 적용
+                PieceVisuals.ApplyMinoArt(spriteRenderer, mino.Type, i, 1f, 10, mino.RotationLocked); // 칸별 원본 아트와 방향 적용 (회전 금지는 침식 색)
                 spriteRenderer.sortingOrder = 10;
             }
 

@@ -24,9 +24,10 @@ const FONT = {
 // 시트에서 칸 하나를 잘라 CELL×CELL로 최근접 샘플링 (Unity Point 필터와 같은 방식)
 const sheet = px.decode(SHEET);
 const UPGRADED = path.join(path.dirname(SHEET), 'Upgraded'); // 강화 미노 칸 아트 (종류_칸번호.png, 일반 미노와 같은 칸 순서)
-function cellTile(name, upgraded) {
+const CRYSTAL = path.join(ROOT, '../MinoCrystal_VARCO/parts/Crystal'); // 확정한 수정 칸 아트 (강화 칸과 같은 크기·이름)
+function cellTile(name, upgraded) { // upgraded: false/'N' 일반, true/'U' 강화, 'C' 수정
   let src = sheet, x, y, w, h;
-  if (upgraded) { src = px.decode(path.join(UPGRADED, name + '.png')); x = 0; y = 0; w = src.w; h = src.h; }
+  if (upgraded && upgraded !== 'N') { src = px.decode(path.join(upgraded === 'C' ? CRYSTAL : UPGRADED, name + '.png')); x = 0; y = 0; w = src.w; h = src.h; }
   else { [x, y, w, h] = rects[name]; y = sheet.h - (y + h); } // 시트 영역은 Unity 좌표(아래 0)라 위 기준으로 변환
   const o = px.blank(CELL, CELL);
   for (let Y = 0; Y < CELL; Y++) for (let X = 0; X < CELL; X++) {
@@ -42,7 +43,7 @@ function rotCCW(t) { // 화면 기준 반시계 90도
 }
 const tileCache = {};
 function tile(type, index, rotation, upgraded = false) { // GetArtRotation: (L ? 90 : 0) - 90 * rotationState (반시계 +)
-  const key = type + index + rotation + (upgraded ? 'U' : '');
+  const key = type + index + rotation + (upgraded === true ? 'U' : upgraded || ''); // 단계별로 따로 캐시
   if (tileCache[key]) return tileCache[key];
   let t = cellTile(type + '_' + index, upgraded), turns = (((type === 'L' ? 90 : 0) - 90 * rotation) % 360 + 360) % 360 / 90;
   for (let i = 0; i < turns; i++) t = rotCCW(t);
@@ -145,11 +146,12 @@ function renderWord(lines, gap = 1, lineGap = 1, upgrade = false) {
   });
   const cache = {}; // 같은 글자는 같은 배치를 써서 통일감 유지
   laid.forEach(l => (l.pieces = cache[l.ch] || (cache[l.ch] = tileLetter(l.rows))));
-  if (upgrade) pickUpgrades(laid); else laid.forEach(l => (l.upgraded = new Set()));
+  let tierOf = upgrade; // 함수면 칸마다 단계('N'/'U'/'C')를 직접 정함: (글자 번호, 글자, 조각 번호, 칸 번호)
+  if (typeof upgrade !== 'function') { if (upgrade) pickUpgrades(laid); else laid.forEach(l => (l.upgraded = new Set())); tierOf = (li, l, pi) => l.upgraded.has(pi); }
   const gridH = lines.length * H + (lines.length - 1) * lineGap, pad = 16;
   const img = px.blank(maxW * CELL + pad * 2, gridH * CELL + pad * 2);
-  for (const l of laid) l.pieces.forEach((p, pi) => p.pts.forEach(c => {
-    const t = tile(p.type, c.index, p.rot, l.upgraded.has(pi)), X = pad + (l.x + p.ox + c.x) * CELL, Y = pad + (l.y + p.oy + c.y) * CELL;
+  laid.forEach((l, li) => l.pieces.forEach((p, pi) => p.pts.forEach(c => {
+    const t = tile(p.type, c.index, p.rot, tierOf(li, l, pi, c.index)), X = pad + (l.x + p.ox + c.x) * CELL, Y = pad + (l.y + p.oy + c.y) * CELL;
     for (let y = 0; y < CELL; y++) for (let x = 0; x < CELL; x++) {
       const si = (y * CELL + x) * 4;
       if (t.d[si + 3] < 128) continue; // 이진 알파
@@ -157,7 +159,7 @@ function renderWord(lines, gap = 1, lineGap = 1, upgrade = false) {
       t.d.copy(img.d, di, si, si + 4);
       img.d[di + 3] = 255;
     }
-  }));
+  })));
   return { img, laid };
 }
 
@@ -237,7 +239,7 @@ function renderPiece(type, rot) {
   return { img, pts: s.pts };
 }
 
-module.exports = { FONT, CELL, renderWord, renderPiece, onBackground, tileLetter, ring, dropShadow, sampleColors };
+module.exports = { FONT, CELL, renderWord, renderPiece, onBackground, tileLetter, ring, dropShadow, sampleColors, tile };
 
 if (require.main === module) {
   const bg = path.join('C:/Users/MBC-501-15/.codex/worktrees/9449/Tetrigeon/output/art/T_DungeonCave_4x3_v4.png');

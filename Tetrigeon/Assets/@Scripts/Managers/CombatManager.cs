@@ -20,8 +20,8 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private Vector3 enemyLineCenter = new Vector3(5.9f, 3.1f, 0f); // 적들이 늘어서는 줄의 중심
     [SerializeField] private float enemySpacing = 1.8f; // 적 사이 가로 간격 (보스 폭이 넓어 겹치지 않도록 확보)
 
-    private const int PoisonTurns = 2; // 강화 T 미노의 독 지속 턴
-    private const int ShieldTurns = 2; // 강화 O 미노의 보호막 지속 턴
+    public const int PoisonTurns = 2; // 강화 T 미노의 독 지속 턴
+    public const int ShieldTurns = 2; // 강화 O 미노의 보호막 지속 턴
     private const int BossFreezeMinDamage = 2; // 보스를 얼리려면 필요한 최소 기존 피해
     private const float BossProtectedRatio = 0.5f; // 호위가 살아있는 동안 보스가 받는 피해 비율
     private const float PoisonRatio = 0.7f; // 독 턴당 피해 배율 (레벨당)
@@ -31,7 +31,7 @@ public class CombatManager : MonoBehaviour
     private const float PierceRatioPerLevel = 0.5f; // 관통 레벨당 피해 배율 (Lv.1 = 1.0배)
     private const int CriticalBonusPerLevel = 1; // 치명타 레벨당 추가 피해 배수 (Lv.1 = 2배)
     private const int ShieldMultiplier = 2; // 보호막 배율 (레벨당)
-    private const int HealMultiplier = 3; // 회복 배율 (레벨당)
+    private const float HealMultiplier = 1.5f; // 회복 배율을 레벨당 1.5배로 적용
 
     public int PlayerHp { get; private set; } // 현재 플레이어 체력
     public int PlayerShield { get; private set; } // 남아있는 보호막 (체력보다 먼저 깎임)
@@ -163,7 +163,7 @@ public class CombatManager : MonoBehaviour
         }
     }
 
-    private void HandlePieceLocked(TetrominoType lockedType, TSpinType tSpin, int clearedLines)
+    private void HandlePieceLocked(TetrominoType lockedType, TSpinType tSpin, int clearedLines, IReadOnlyList<TetrominoType> clearedCrystals)
     {
         if (combatEnded || stageCleared) return; // 전투 끝났으면 무시
 
@@ -179,50 +179,76 @@ public class CombatManager : MonoBehaviour
         else
             PendingDamage += damage; // 강화가 아니면 기존대로 타겟 피해에만 합산
 
+        // 지워진 수정 칸마다 원본 미노의 능력을 한 번씩 더 발동 (고정한 조각이 무엇이든, 위 발동과 별개로 칸마다 따로 센다)
+        foreach (TetrominoType crystalType in clearedCrystals)
+        {
+            int crystalLevel = MinoUpgrades.GetLevel(crystalType); // 세기는 수정이 속한 원본 미노의 현재 레벨
+            if (crystalLevel > 0) ApplyUpgradedAbility(crystalType, damage, crystalLevel, clearedLines, true); // 이 줄 삭제의 피해 기준, 능력 효과만 추가
+        }
+
         piecesPlaced++;
         if (piecesPlaced >= piecesPerBag) EndPlayerTurn(); // 조각 7개 다 놓으면 턴 종료
         else OnStateChanged?.Invoke();
     }
 
+    // 강화 능력의 효과 수치 (피해 damage, 강화 레벨 level 기준). 실제 발동과 보상 카드 표시가 같은 식을 쓰도록 한 곳에 둠
+    public static int AbilityValue(TetrominoType type, int damage, int level)
+    {
+        switch (type)
+        {
+            case TetrominoType.I: return Mathf.RoundToInt(damage * (PierceBaseRatio + PierceRatioPerLevel * level)); // 관통 피해
+            case TetrominoType.J: return Mathf.RoundToInt(damage * FreezeBreakRatio * level); // 빙결 해제 피해
+            case TetrominoType.L: return damage * (1 + CriticalBonusPerLevel * level); // 치명타 총 피해 (기본 피해 포함)
+            case TetrominoType.O: return damage * ShieldMultiplier * level; // 보호막량
+            case TetrominoType.S: return Mathf.RoundToInt(damage * HealMultiplier * level); // 실제 회복과 카드 표시를 같은 정수로 반올림
+            case TetrominoType.T: return Mathf.RoundToInt(damage * PoisonRatio * level); // 독 턴당 피해
+            case TetrominoType.Z: return Mathf.RoundToInt(damage * ExplosionRatio * level); // 폭발 피해
+        }
+        return 0; // 알 수 없는 종류는 효과 없음
+    }
+
     // 강화 미노 능력 발동. 능력 세기는 줄 수로 다시 계산하지 않고, 이미 계산된 피해에 강화 레벨을 곱해서 쓴다.
     // 빙결은 삭제 줄 수로 1~3턴, 독과 보호막은 기존 지속시간을 사용한다.
-    private void ApplyUpgradedAbility(TetrominoType lockedType, int damage, int level, int clearedLines) // 빙결은 줄 수로 지속시간 계산
+    // crystal이 true면 지워진 수정 칸의 추가 발동: 기본 피해는 이미 한 번 들어갔으므로 능력 효과만 더하고, 빙결은 1턴, 치명타는 추가분(피해 x 레벨)만 더한다.
+    private void ApplyUpgradedAbility(TetrominoType lockedType, int damage, int level, int clearedLines, bool crystal = false) // 빙결은 줄 수로 지속시간 계산
     {
+        int baseDamage = crystal ? 0 : damage; // 수정 발동은 타겟 기본 피해를 다시 더하지 않음
+
         switch (lockedType)
         {
             case TetrominoType.I: // 관통: 살아있는 적 전체가 피해를 받음 (적 수만큼 곱해지므로 레벨 기울기는 절반)
-                pendingPierceDamage += RecordEffect(lockedType, Mathf.RoundToInt(damage * (PierceBaseRatio + PierceRatioPerLevel * level))); // 관통 피해와 표시를 같은 값으로 기록
+                pendingPierceDamage += RecordEffect(lockedType, AbilityValue(lockedType, damage, level)); // 관통 피해와 표시를 같은 값으로 기록
                 break;
 
             case TetrominoType.L: // 치명타 (주황 L, 2026-09-30 J와 교환): 기본 피해에 레벨당 1배씩 더함 (Lv.1 = 2배, Lv.2 = 3배)
-                PendingDamage += RecordEffect(lockedType, damage * (1 + CriticalBonusPerLevel * level)); // 치명타 전체 피해 기록
+                PendingDamage += RecordEffect(lockedType, crystal ? damage * CriticalBonusPerLevel * level : AbilityValue(lockedType, damage, level)); // 치명타 피해 기록 (수정은 기본 피해를 뺀 추가분만)
                 break;
 
             case TetrominoType.O: // 방어막: 기본 피해에 더해 레벨당 2배만큼 보호막을 쌓음
-                PendingDamage += damage;
-                pendingShield += RecordEffect(lockedType, damage * ShieldMultiplier * level); // 보호막량 기록
+                PendingDamage += baseDamage;
+                pendingShield += RecordEffect(lockedType, AbilityValue(lockedType, damage, level)); // 보호막량 기록
                 break;
 
             case TetrominoType.T: // 독: 기본 피해 후 레벨당 0.7배 피해를 2턴 동안 (중첩)
-                PendingDamage += damage;
-                pendingPoisons.Add(RecordEffect(lockedType, Mathf.RoundToInt(damage * PoisonRatio * level))); // 독 턴당 피해 기록
+                PendingDamage += baseDamage;
+                pendingPoisons.Add(RecordEffect(lockedType, AbilityValue(lockedType, damage, level))); // 독 턴당 피해 기록
                 break;
 
-            case TetrominoType.S: // 회복: 기본 피해에 더해 레벨당 3배만큼 회복 (최대 체력에서 잘리므로 초과분은 버려짐)
-                PendingDamage += damage;
-                pendingHeal += RecordEffect(lockedType, damage * HealMultiplier * level); // 회복 예정량 기록
+            case TetrominoType.S: // 회복: 기본 피해에 더해 레벨당 1.5배를 정수 반올림하여 회복 (최대 체력에서 잘리므로 초과분은 버려짐)
+                PendingDamage += baseDamage;
+                pendingHeal += RecordEffect(lockedType, AbilityValue(lockedType, damage, level)); // 회복 예정량 기록
                 break;
 
             case TetrominoType.Z: // 폭발: 기본 피해 후 인접한 다른 적 1명에게 레벨당 0.7배 피해
-                PendingDamage += damage;
-                pendingExplosionDamage += RecordEffect(lockedType, Mathf.RoundToInt(damage * ExplosionRatio * level)); // 폭발 피해 기록
+                PendingDamage += baseDamage;
+                pendingExplosionDamage += RecordEffect(lockedType, AbilityValue(lockedType, damage, level)); // 폭발 피해 기록
                 break;
 
             case TetrominoType.J: // 파란 J: 삭제한 줄 수만큼 행동 차단, 해제 시 기존 추가 피해
-                PendingDamage += damage;
-                PendingFreezeTurns = Mathf.Max(PendingFreezeTurns, Mathf.Clamp(clearedLines, 1, 3)); // 같은 가방에서는 가장 긴 지속시간 사용
+                PendingDamage += baseDamage;
+                PendingFreezeTurns = Mathf.Max(PendingFreezeTurns, crystal ? 1 : Mathf.Clamp(clearedLines, 1, 3)); // 같은 가방에서는 가장 긴 지속시간 사용 (수정 칸은 줄 수와 상관없이 1턴)
                 pendingFreezeDamage = Mathf.Max(pendingFreezeDamage, damage); // 보스 빙결 조건은 강화 전 피해로 판정 (레벨 무관)
-                pendingFreezeBreakDamage += RecordEffect(lockedType, Mathf.RoundToInt(damage * FreezeBreakRatio * level)); // 빙결 해제 피해 기록
+                pendingFreezeBreakDamage += RecordEffect(lockedType, AbilityValue(lockedType, damage, level)); // 빙결 해제 피해 기록
                 break;
         }
     }
@@ -457,6 +483,9 @@ public class CombatManager : MonoBehaviour
         int hpDamage = 0; // 이번 턴에 체력 공격을 한 적들의 피해 합계
 
         bool bossSummons = false; // 이번 턴에 보스가 능력을 썼는지 (소환은 루프가 끝난 뒤 처리)
+        int gnawCount = 0; // 이번 턴에 능력을 쓴 애벌레 수 (한 마리당 1칸)
+        bool queenGrows = false; // 이번 턴에 여왕이 수정 증식을 쓰는지
+        bool queenLocksRotation = false; // 이번 턴에 여왕이 회전 금지를 쓰는지
 
         foreach (Enemy enemy in enemies)
         {
@@ -465,20 +494,36 @@ public class CombatManager : MonoBehaviour
             DealDamage(enemy, enemy.TickPoison()); // 독은 행동 전에 먼저 적용 (이번 정산에 새로 걸린 독은 건너뜀)
             if (!enemy.IsAlive) continue; // 독으로 죽었으면 행동하지 않음
 
-            if (enemy.ConsumeFreezeBlock()) continue; // 빙결 횟수가 남은 적은 이번 행동을 쉼 (스킬 카운터도 그대로)
+            bool frozen = enemy.ConsumeFreezeBlock(); // 빙결 횟수가 남았으면 소비
+            bool stunned = enemy.ConsumeStun(); // 스턴도 같은 행동에서 함께 소비 (겹쳐도 합산하지 않음)
+            if (frozen || stunned) continue; // 빙결·스턴인 적은 이번 행동을 쉼 (스킬 카운터와 강공격 기한도 그대로)
 
             if (enemy.AdvanceTurnAndCheckSkill())
             {
                 garbageLines += enemy.RollGarbageLines(); // 능력 턴인 적은 방해 줄만 추가
                 if (enemy.Tier == EnemyTier.Boss) bossSummons = true; // 보스는 가비지와 함께 일반 몹도 소환
+                if (enemy.Tier == EnemyTier.Normal) gnawCount++; // 애벌레는 가비지와 함께 고정 블록 1칸을 갉아먹음
+                if (enemy.Tier == EnemyTier.Epic) enemy.StartCharge(); // 수호자는 가비지와 함께 보호막 생성, 강공격 준비 시작
+                if (enemy.Tier == EnemyTier.Boss)
+                {
+                    if (enemy.TakeQueenGrowthTurn()) queenGrows = true; // 여왕: 이번 능력은 수정 증식
+                    else queenLocksRotation = true; // 여왕: 이번 능력은 회전 금지
+                }
             }
+            else if (enemy.ChargeActionsLeft > 0)
+                hpDamage += enemy.AdvanceCharge(); // 준비 중인 수호자는 일반 공격 대신 기한을 세고, 기한이 되면 강공격
             else
                 hpDamage += enemy.AttackDamage; // 나머지 적은 체력 공격만
         }
 
         if (bossSummons) SummonNormal(); // 소환된 적이 같은 턴에 바로 행동하지 않도록 루프 종료 후 처리
 
+        if (gnawCount > 0) GridManager.Instance.RemoveRandomMinoBlocks(gnawCount); // 가비지가 올라오기 전에 먼저 갉아먹음 (서로 다른 칸)
+
         if (garbageLines > 0) GridManager.Instance.AddGarbageLines(garbageLines); // 방해 줄은 한 번에 쌓음
+
+        if (queenGrows) BagManager.Instance.GrowPreview(); // NEXT에 보이는 미노 전부에 칸 1개씩
+        if (queenLocksRotation) BagManager.Instance.LockNextRotation(); // NEXT 맨 위 미노 회전 금지
 
         hpDamage = AbsorbWithShield(hpDamage); // 보호막이 있으면 먼저 막아줌
         PlayerHp -= hpDamage; // 남은 피해만 체력에 적용

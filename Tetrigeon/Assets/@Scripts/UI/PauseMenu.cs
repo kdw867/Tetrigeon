@@ -9,6 +9,8 @@ public class PauseMenu : MonoBehaviour
 
     public static bool IsGamePaused { get; private set; } // 일시정지 상태 (다른 스크립트가 입력을 막을 때 확인)
 
+    private const int TitleSceneIndex = 0; // 빌드 설정의 타이틀 씬 순서
+
     private void Awake()
     {
         IsGamePaused = false; // 씬을 다시 로드해도 정적 값이 남지 않게 초기화
@@ -65,6 +67,14 @@ public class PauseMenu : MonoBehaviour
     {
         Time.timeScale = 1f; // 멈춰둔 시간 원복 후 씬을 다시 로드
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    // Title 버튼: 타이틀 화면으로 나감 (진행 중인 런은 저장 없이 버려지고, Restart처럼 확인 창 없이 바로 이동)
+    public void GoToTitle()
+    {
+        Time.timeScale = 1f; // 멈춰둔 시간 원복 (타이틀 씬이 멈춘 채 시작하지 않게)
+        IsGamePaused = false; // 일시정지 상태 해제
+        SceneManager.LoadScene(TitleSceneIndex); // 타이틀 씬 로드
     }
 
     public void OpenOption() // Option 버튼: 일시정지 창을 숨기고 설정 창 열기

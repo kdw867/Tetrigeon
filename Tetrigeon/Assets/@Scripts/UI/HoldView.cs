@@ -21,8 +21,9 @@ public class HoldView : MonoBehaviour
 
         if (type == null) return; // Hold 비어있으면 표시할 것 없음
 
-        Vector2Int[] cells = TetrominoData.GetCells(type.Value, 0); // 스폰 모양 그대로 표시
-        Vector2 boundsCenter = TetrominoData.GetSpawnBoundsCenter(type.Value); // 모양 중심 (박스 정중앙 정렬용)
+        MinoState mino = PieceSpawner.Instance.HeldPiece; // 여왕 스킬로 바뀐 모양·회전 금지까지 포함한 보관 미노
+        Vector2Int[] cells = mino.GetCells(0); // 스폰 모양 그대로 표시 (증식 칸 포함)
+        Vector2 boundsCenter = TetrominoData.GetSpawnBoundsCenter(mino.Type, mino.GrownCell); // 모양 중심 (박스 정중앙 정렬용)
         blocks = new Transform[cells.Length];
 
         for (int i = 0; i < cells.Length; i++)
@@ -35,7 +36,7 @@ public class HoldView : MonoBehaviour
                 0f);
 
             SpriteRenderer spriteRenderer = block.AddComponent<SpriteRenderer>();
-            PieceVisuals.ApplyMinoArt(spriteRenderer, type.Value, i); // 칸별 원본 아트와 방향 적용
+            PieceVisuals.ApplyMinoArt(spriteRenderer, mino.Type, i, 1f, 10, mino.RotationLocked); // 칸별 원본 아트와 방향 적용 (회전 금지는 침식 색)
             spriteRenderer.sortingOrder = 10;
 
             blocks[i] = block.transform;

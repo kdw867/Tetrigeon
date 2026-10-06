@@ -13,6 +13,8 @@ public static class MinoUpgrades
     public const int MaxLevel = 5; // 미노 하나가 도달할 수 있는 최대 강화 단계 (도달하면 보상 후보에서 빠짐)
 
     private static readonly Dictionary<TetrominoType, int> levels = new Dictionary<TetrominoType, int>(); // 미노별 강화 단계
+    private static readonly Dictionary<TetrominoType, List<int>> crystalCells = new Dictionary<TetrominoType, List<int>>(); // 미노별 수정 칸 번호 (원래 칸 순서 기준, 한 번 정해지면 런이 끝날 때까지 유지)
+    private const int CellsPerMino = 4; // 미노 한 개의 원래 칸 수
 
     public static event System.Action OnChanged; // 강화 상태가 바뀔 때 알림 (UI 갱신용)
 
@@ -20,7 +22,15 @@ public static class MinoUpgrades
     public static void ResetRun()
     {
         levels.Clear();
+        crystalCells.Clear(); // 수정 칸도 함께 초기화
         OnChanged?.Invoke(); // 목록을 빈 상태로 되돌리도록 알림
+    }
+
+    // 이 미노의 해당 칸이 수정 칸인지 (Lv.2부터 레벨마다 한 칸씩 늘어남)
+    public static bool IsCrystalCell(TetrominoType type, int cellIndex)
+    {
+        List<int> cells;
+        return crystalCells.TryGetValue(type, out cells) && cells.Contains(cellIndex); // 아직 수정이 없으면 false
     }
 
     // 해당 미노의 현재 강화 단계 (강화된 적 없으면 0)
@@ -34,7 +44,27 @@ public static class MinoUpgrades
     public static void Upgrade(TetrominoType type)
     {
         levels[type] = GetLevel(type) + 1;
+        AddCrystalCell(type); // Lv.2부터 수정 칸을 하나 더 정함 (강화 시점에 한 번만 뽑음)
         OnChanged?.Invoke(); // 강화가 실제로 적용된 직후에만 알림
+    }
+
+    // 레벨에 맞는 개수(Lv.2는 1개 ... Lv.5는 4개)가 되도록, 아직 수정이 아닌 칸 중 하나를 균등하게 골라 수정 칸으로 추가
+    private static void AddCrystalCell(TetrominoType type)
+    {
+        List<int> cells;
+        if (!crystalCells.TryGetValue(type, out cells)) // 이 미노의 첫 수정이면 목록 생성
+        {
+            cells = new List<int>();
+            crystalCells[type] = cells;
+        }
+
+        if (cells.Count >= GetLevel(type) - 1 || cells.Count >= CellsPerMino) return; // 이미 레벨에 맞는 수정 수면 추가하지 않음 (Lv.1 포함)
+
+        List<int> candidates = new List<int>(); // 아직 수정이 아닌 칸들
+        for (int i = 0; i < CellsPerMino; i++)
+            if (!cells.Contains(i)) candidates.Add(i);
+
+        cells.Add(candidates[Random.Range(0, candidates.Count)]); // 남은 칸 중 하나를 균등하게 선택 (먼저 정해진 수정은 바뀌지 않음)
     }
 
     // 해당 미노가 더 강화할 수 없는 상태인지

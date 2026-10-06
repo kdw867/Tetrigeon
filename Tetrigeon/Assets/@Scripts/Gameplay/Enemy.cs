@@ -12,6 +12,11 @@ public class Enemy : MonoBehaviour
         public bool SkipNextTick; // 방금 걸린 독이면 바로 이어지는 적 턴 한 번은 피해도 차감도 없음
     }
 
+    private const int GuardianShield = 5; // 수호자 보호막 수치
+    private const int GuardianChargeActions = 2; // 보호막 생성 후 강공격까지 수호자 행동 수 (= 보호막을 깰 가방 정산 기회)
+    private const int GuardianStrongAttack = 9; // 강공격 피해 (기본 공격 3의 3배)
+    private const int StunActions = 1; // 보호막이 깨졌을 때 막는 수호자 행동 수
+
     public EnemyTier Tier { get; private set; } // 이 적의 등급
     public int MaxHp { get; private set; } // 등급에서 정해진 최대 체력
     public int Hp { get; private set; } // 현재 체력
@@ -26,6 +31,13 @@ public class Enemy : MonoBehaviour
     private int freezeActionsLeft; // 빙결로 막아야 할 적 행동 횟수
     private bool freezeReleasePending; // 빙결 표시 유지 여부 (모든 행동 차단 후 정산에서 해제)
     private int freezeBreakDamage; // 빙결이 끝날 때 줄 추가 피해
+
+    public int Shield { get; private set; } // 수호자 보호막 (피해를 체력보다 먼저 받음)
+    public int ChargeActionsLeft { get; private set; } // 강공격까지 남은 수호자 행동 수 (0이면 준비 중 아님)
+    public bool IsStunned => stunActionsLeft > 0 || stunnedLastAction; // 스턴 표시: 막을 행동이 남았거나 직전 행동을 스턴으로 쉼 (빙결 눈송이처럼 다음 행동 전까지 유지)
+    private int stunActionsLeft; // 스턴으로 막을 행동 수
+    private bool stunnedLastAction; // 직전 적 턴의 행동이 스턴으로 막혔는지
+    private bool queenUsedGrowth; // 수정여왕이 직전 능력 턴에 증식을 썼는지 (다음은 회전 금지)
 
     public bool IsFrozen => freezeReleasePending; // 눈송이 표시 기준: 빙결이 걸려 있고 아직 해제되지 않음
     public int FreezeActionsLeft => freezeActionsLeft; // 빙결로 앞으로 더 막을 적 행동 수 (UI 표시용)
@@ -53,6 +65,45 @@ public class Enemy : MonoBehaviour
         freezeActionsLeft = 0; // 소환으로 되살아날 때 이전 빙결이 남지 않게 함
         freezeReleasePending = false;
         freezeBreakDamage = 0;
+        Shield = 0; // 소환으로 되살아날 때 이전 보호막·강공격 준비·스턴이 남지 않게 함
+        ChargeActionsLeft = 0;
+        stunActionsLeft = 0;
+        stunnedLastAction = false;
+        queenUsedGrowth = false; // 스테이지 진입 시 여왕의 첫 능력은 증식
+    }
+
+    // 수정여왕 능력 턴마다 증식 → 회전 금지 → 증식 순서로 번갈아 쓴다. 이번이 증식이면 true
+    public bool TakeQueenGrowthTurn()
+    {
+        queenUsedGrowth = !queenUsedGrowth; // 교대
+        return queenUsedGrowth;
+    }
+
+    // 수호자 능력: 보호막을 만들고 강공격 준비 시작 (가비지와 같은 능력 턴에 발동)
+    public void StartCharge()
+    {
+        Shield = GuardianShield; // 보호막 생성
+        ChargeActionsLeft = GuardianChargeActions; // 강공격 기한
+    }
+
+    // 준비 중인 수호자의 행동: 기한을 하나 줄이고, 기한이 되면 남은 보호막을 없애고 강공격 피해를 돌려준다 (그 전에는 공격하지 않음)
+    public int AdvanceCharge()
+    {
+        ChargeActionsLeft--; // 수호자 행동 한 번마다 기한 감소
+        if (ChargeActionsLeft > 0) return 0; // 아직 준비 중이면 공격하지 않음
+
+        Shield = 0; // 강공격 후 남은 보호막 제거
+        return GuardianStrongAttack; // 강공격 피해
+    }
+
+    // 적 턴에서 호출: 스턴으로 막을 행동이 남아 있으면 소비하고 true
+    public bool ConsumeStun()
+    {
+        stunnedLastAction = stunActionsLeft > 0; // 이번 행동이 스턴으로 막히는지 기록 (다음 적 턴까지 표시)
+        if (stunActionsLeft <= 0) return false; // 스턴이 없으면 정상 행동
+
+        stunActionsLeft--; // 행동 한 번 차단
+        return true;
     }
 
     // 강화 T 미노: 독을 새로 건다 (기존 독과 별개로 쌓임)
@@ -123,9 +174,21 @@ public class Enemy : MonoBehaviour
         Hp = MaxHp;
     }
 
-    // 피해 적용. 남은 체력보다 큰 피해는 그대로 버려진다 (다른 적에게 넘기지 않음)
+    // 피해 적용. 보호막이 먼저 받고 남은 피해만 체력으로. 남은 체력보다 큰 피해는 그대로 버려진다 (다른 적에게 넘기지 않음)
     public void TakeDamage(int amount)
     {
+        if (Shield > 0)
+        {
+            int absorbed = Mathf.Min(Shield, amount); // 보호막이 막을 수 있는 만큼
+            Shield -= absorbed; // 보호막 감소
+            amount -= absorbed; // 넘친 피해는 체력으로
+            if (Shield <= 0) // 기한 안에 보호막이 깨짐 (보호막은 준비 중에만 있음)
+            {
+                ChargeActionsLeft = 0; // 강공격 취소
+                stunActionsLeft = StunActions; // 수호자 스턴
+            }
+        }
+
         Hp -= amount;
         if (Hp < 0) Hp = 0; // 초과 피해는 소멸
     }

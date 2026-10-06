@@ -67,3 +67,7 @@ nano-banana-2 ×1, gpt-image-2-medium ×1 (40cr). 이음선 없이 외곽선 있
 - 확정 파일: `parts/Crystal/{I,J,L,O,S,T,Z}_{0..3}.png` 28장 (원본 강화 칸과 같은 크기·같은 파일명)
 - Unity 적용 보류: 수정 칸 기능(Plan.md Crystal cells) 구현 때 같이 넣음
   - 넣을 때: Upgraded 폴더와 다른 폴더에 둠 (같은 폴더면 PieceVisuals의 Upgraded 로더가 같은 칸 번호로 덮어씀), 임포트는 원본 Upgraded와 같게 (PPU 128, Point, 압축 없음)
+## Unity 적용 (2026-10-06)
+- 기능 구현과 함께 28장을 `Assets/@Resources/Resources/MinoSprites/Crystal/`에 복사. 임포트는 Upgraded와 동일(PPU 128, Point, 비압축, FullRect, Clamp). 28장 모두 기존 강화 그림과 칸별 크기가 같음.
+- 강화 그림과 폴더를 분리: PieceVisuals가 폴더 이름으로 불러 같은 `T_0` 이름이 덮어쓰이지 않게 함.
+- 확인: 강화 목록·NEXT·조작 중 미노·Hold·고정 블록에 수정 칸이 표시됨. L 방향 정상.

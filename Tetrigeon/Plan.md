@@ -1,5 +1,5 @@
 # TETRIGEON — TURN-BASED TETRIS ROGUELIKE
-Design notes | 2026-09-14 (code sync: 2026-10-01; crystal-cell design update: 2026-10-02)
+Design notes | 2026-09-14 (code sync: 2026-10-01; crystal-cell design update: 2026-10-02; monster skill design update: 2026-10-06; crystal cells implemented: 2026-10-06; healing balance: 2026-10-06; exit to title: 2026-10-06; reward cards: 2026-10-06)
 
 Status: Core rules describe the intended direction. Recommendations, examples,
 and undecided details are not commitments. Based on prior discussion and the
@@ -111,6 +111,22 @@ Implemented UI (2026-10-01), replacing the earlier "NEXT 3 or 4" TBD:
 - Not implemented: each enemy's expected HP damage or Garbage amount for its
   next action; only the skill countdown is shown.
 
+### Pause menu and leaving to the title (2026-10-06, confirmed)
+- ESC opens the pause window: Resume, Option, Restart, Title (the Option window
+  is shared with the title screen). Title is the new button, placed below Restart.
+- Title returns to the title scene. The current run is NOT saved and is discarded,
+  like Restart; there is no confirmation window. Time scale and the paused state
+  are reset on the way out, and START on the title begins a fresh run.
+- The result window (defeat and final-stage clear) has Restart and Title,
+  stacked under the title plaque, reusing the pause window's stone panel and
+  button art. The title reads DEFEAT when the player loses and VICTORY when the
+  final stage is cleared (confirmed 2026-10-06; before, both showed DEFEAT).
+- Art: the pause-window Title button uses its own plaque art (T_Btn_TITLE, same
+  stone plaque style as the other buttons, label baked into the image), approved
+  and applied 2026-10-06. The result window uses the same panel and button art
+  with its own title plaques (T_Title_DEFEAT, T_Title_VICTORY, same plaque style
+  as PAUSE/OPTION), approved and applied 2026-10-06.
+
 ## 6. PLAYER ACTIONS AND ATTACKS
 Move, rotate, and place pieces; complete horizontal rows to clear lines and attack.
 Confirmed (2026-09-17): accumulate the player's line-clear results during one
@@ -195,6 +211,78 @@ this does not trigger Top Out.
 Enemy HP and basic attack damage are fixed within each tier, regardless of stage.
 Initial enemy HP and basic attack damage are listed below; final balance is TBD.
 
+### Monster skill update (2026-10-06, confirmed and implemented)
+KEEP Garbage alongside the new monster skills; new skills do not replace it.
+Each new skill fires together with that monster's Garbage on the SAME skill
+turn, using the existing skill counter (normal 3 / epic 5 / boss 6); there is no
+separate schedule or counter. Garbage amounts, the hole rule, and no HP attack
+on skill turns are unchanged. A freeze or stun blocks the whole action (Garbage
+and new skill alike) and leaves the skill counter unchanged. Existing boss
+summon and escort rules remain in place.
+Implemented within-turn order: each living enemy left to right as before
+(poison -> skip if dead -> freeze/stun -> skill or attack), then boss summon ->
+Caterpillar gnaw -> all Garbage at once -> Queen skill -> HP damage.
+
+| Monster | Skill | Outcome |
+| --- | --- | --- |
+| Crystal Caterpillar / Larva (normal) | Gnaw locked blocks | Eats locked mino blocks on the board |
+| Amethyst Guardian / Sentinel (epic) | Shield and charged attack | Breaking the shield in time cancels the strong attack and stuns the Guardian; otherwise the strong attack hits |
+| Crystal Queen (boss) | Crystal growth / rotation lock, alternating | Growth adds a cell to every mino in NEXT; rotation lock seals the top NEXT mino |
+
+#### Crystal Caterpillar: gnaw locked blocks (implemented 2026-10-06)
+- Each Caterpillar using its skill immediately removes 1 locked block, chosen
+  uniformly among player-placed mino blocks. Garbage blocks are never eaten.
+- Several Caterpillars on the same turn pick different blocks. With too few
+  eligible blocks the extra bites do nothing; Garbage still arrives.
+- Blocks above the eaten cell do not fall; the hole stays.
+- Gnawing happens before that turn's Garbage pushes the board up.
+- Queen growth cells are ordinary locked mino blocks and can be eaten.
+- A Caterpillar revived by the boss summon starts a fresh skill counter and
+  gnaws on its own skill turns like any other Caterpillar.
+- The falling and NEXT minos are never eaten. Crystal cells are ordinary locked
+  mino blocks and can be eaten (confirmed 2026-10-06); an eaten crystal triggers
+  nothing, because it is not a line clear.
+
+#### Amethyst Guardian / Sentinel: shield and charged attack (implemented 2026-10-06)
+- Skill turn: Garbage + shield 5 + charge 2 (Guardian actions until the strong
+  attack). Healing by absorbing blocks is discarded.
+- Every damage source hits the shield first (bag damage, pierce, explosion,
+  poison, freeze break); overflow goes to HP.
+- While charging, each Guardian action only counts down (no basic attack). At 0
+  it deals a strong attack of 9 (the player shield absorbs first) and any leftover
+  shield is removed. The player gets two bag settlements to break the shield;
+  breaking it at the second settlement still cancels the attack.
+- Breaking the shield cancels the strong attack and stuns the Guardian for 1
+  action. If poison breaks it at the start of the deadline turn, the attack is
+  cancelled and that same action is the stunned one.
+- Frozen or stunned actions advance neither the charge nor the skill counter.
+  Overlapping freeze and stun each lose one per blocked action (no stacking).
+- The skill counter keeps advancing during the charge (charge 2 < interval 5).
+- UI under the HP text: `보호막 n`, `강공격 n` (actions left), and `스턴`, shown
+  from the stun until the Guardian's next action, like the freeze snowflake.
+
+#### Crystal Queen: growth / rotation-lock alternation (implemented 2026-10-06)
+- Alternates on each skill turn: growth -> rotation lock -> growth ... The first
+  skill of every stage is growth (stage entry creates new enemies). A frozen or
+  stunned skill turn neither fires nor advances the alternation.
+- Growth: every mino visible in NEXT at that instant (5) gets exactly one extra
+  cell at a random empty position edge-adjacent to its cells, limited to the
+  local 4x3 spawn box so the piece always fits the spawn area. Later queue
+  entries are unaffected. The extra cell rotates with the piece, locks as an
+  ordinary block, and uses the art `MinoSprites/T_Mino_Grown` for every mino type
+  and upgrade level.
+- Rotation lock: only the top NEXT mino. It cannot rotate until it locks;
+  moving, soft drop, and hard drop still work. It is shown slightly darkened
+  (eroded tint) in NEXT, Hold, the active piece, and its ghost; the tint ends on lock.
+- Hold keeps the growth and the rotation lock. Top Out's bag reset discards
+  modified NEXT minos like any other remaining bag piece. T-Spin detection is
+  unchanged.
+- Repeat growth, or both debuffs on one piece, cannot occur in practice: NEXT is
+  consumed within one turn and the Queen's skills are 6 turns apart.
+
+Verified 2026-10-06 in play mode through direct enemy-turn and bag-settlement
+calls. A full hand-played run through stage 10 is still pending.
+
 ### Enemy HP and attack balance (2026-09-17)
 Provisional values for longer battles across approximately 10 stages.
 Adjusted on 2026-09-18 after playtest: the original 40/80/120 made stage 10 too
@@ -273,13 +361,43 @@ Branching routes are a later addition if time allows, not part of this work.
 
 Changed 2026-09-18 after playtest: clearing a stage grants BOTH rewards, because
 choosing only one left the run unwinnable.
-- HP recovery: restore 20 player HP, applied automatically with no choice.
+- HP recovery: restore 10 player HP, applied automatically with no choice.
+  Lowered from 20 on 2026-10-06 (confirmed): the player was too hard to defeat.
 - Mino upgrade: three upgrades are drawn at random from the per-mino concept
   list, and the player picks one of those three.
 
 Implemented details (2026-10-01):
 - Player max HP is 100. Recovery is capped at max HP.
-- Each button reads `<mino>  Lv.n → n+1`; picking one starts the next stage.
+- Reward cards (2026-10-06, confirmed after a concept-art review, implemented): the
+  three candidates are shown as cards, not plain buttons. Picking a card (click
+  anywhere on it; the SELECT slab is only its label) starts the next stage. The screen
+  is a full-screen dark overlay with "STAGE n CLEAR   HP +15" (the automatic
+  heal stays visible), the gold title "CHOOSE AN UPGRADE" and the line "Choose 1 mino
+  to strengthen." A footer reads "Base single-line clear • No bonus or crystal
+  triggers." A card shows, top to bottom: the name `<letter> · <ability>` (PIERCE,
+  FREEZE, CRITICAL, SHIELD, HEAL, POISON, EXPLOSION), `Lv.n → Lv.n+1`, the mino
+  drawn in its upgraded art (existing crystal cells included), and a "1 LINE CLEAR"
+  box with the effect AFTER the upgrade. Hover shows a cyan glow around the card.
+  - Values are the real effect of clearing ONE line (damage 1) at the new level, from
+    the same formula as the in-game ability (CombatManager.AbilityValue), rounded the
+    same way, so some steps look flat (confirmed): Poison per hit 1,1,2,3,4; Pierce
+    1,2,2,2,3; Freeze release 0,1,2,2,2; Critical total 2..6; Shield 2,4,6,8,10; Heal 2,3,4,6,8.
+  - Row 1 is the base damage (Critical shows its total instead). Row 2 is the ability:
+    PIERCE `n DMG` + "ALL ENEMIES", FREEZE `1T` + "RELEASE: n DMG", CRITICAL + "ALWAYS ×n",
+    SHIELD `+n` + "LASTS 2 TURNS.", HEAL `+n HP`, POISON `2T × n DMG` + "Starts 1 turn later."
+    (a new stack skips the enemy turn right after it, see Status timing), EXPLOSION
+    `n DMG` + "NEAREST ENEMY".
+  - From Lv.2 on, a line "CRYSTAL +1 (TOTAL n)" is shown under the mino. The new
+    crystal cell's POSITION is not shown; it is still chosen when the card is picked
+    (rule unchanged, confirmed 2026-10-06).
+  - Art (2026-10-06, applied after preview approval): the screen uses a 5x pixel scale
+    for card art, 4x/3x/2x for text and 3x for icons and mino previews. Card frame
+    and title lettering were generated with VARCO (nano-banana-2, 120 cr in total, the
+    generated SELECT sheet was not used); the SELECT slab, the effect box, ornaments
+    and the bitmap font (`PixelText`, 3 colours) are hand-drawn pixels. The art is
+    split into layers under `@Resources/UI/RewardScreen/Layers`: Frame, Interior,
+    LevelOrnament, EffectBox, Glow, Select slab and label, title text and ornament.
+    Card prefab: `@Resources/UI/RewardScreen/P_RewardCard.prefab`.
 - Kept across stages: player HP and mino upgrade levels. Reset at stage start:
   enemies, board, bag, Hold slot, Hold charges (refilled to 4), and shield.
 - Stage 10 also shows the reward screen; picking an upgrade there ends the run.
@@ -288,7 +406,7 @@ Implemented details (2026-10-01):
 
 Mino upgrade trigger rules (updated 2026-10-02, confirmed design):
 The existing locked-piece trigger remains unchanged. Crystal-cell triggers are
-an ADDITION, not a replacement. Crystal cells are planned, not implemented yet.
+an ADDITION, not a replacement. Crystal cells are implemented (2026-10-06, see Crystal cells below).
 1. Locking an upgraded mino (Lv.1+) and clearing lines triggers its existing
    ability once. Clearing several lines with that Lock still counts once;
    a Lock with no line clear does not trigger it.
@@ -297,7 +415,7 @@ an ADDITION, not a replacement. Crystal cells are planned, not implemented yet.
 3. The existing locked-piece ability continues to scale with the damage of that
    clear and the upgrade level, using the existing table and bag-end settlement.
 
-### Crystal cells (2026-10-02, confirmed; implementation pending)
+### Crystal cells (2026-10-02, confirmed; implemented 2026-10-06)
 Updated 2026-10-02: the crystal count now grows with the level. This replaces
 the earlier "exactly one crystal at Lv.2-5, rerolled at piece creation" rule.
 - Applies to all seven mino types: I, J, L, O, S, T, Z.
@@ -337,19 +455,37 @@ the earlier "exactly one crystal at Lv.2-5, rerolled at piece creation" rule.
   crystal block in its mino's color, keeping the same cell size, dark outline,
   and colored connection seams as the upgraded cell it replaces.
 
-Not yet decided: the damage input D and level used for a crystal activation,
-whether it also contributes ordinary target damage, and the line-count input
-for a J crystal cleared by another piece. Existing formulas below document the
-locked-piece implementation; do not silently assume re-running that entire
-handler defines these new crystal-specific numerical rules.
+Crystal activation numbers (confirmed 2026-10-06, implemented):
+- Inputs: D is the damage of the clear that removed the crystal (the same
+  CombatDamage value, T-Spin and Perfect Clear bonuses included). The level is
+  the CURRENT level of the mino the crystal belongs to (its source mino).
+- Only the ability effect is added. The clear's ordinary target damage is
+  counted once, as before; a crystal never adds a second base damage.
+- Values use the table below with those inputs. Differences: L adds only the
+  extra Critical damage D x Lv (the base part is not repeated); J freezes for
+  exactly 1 enemy action no matter how many lines were cleared, its release
+  damage is round(D x 0.5 x Lv), and a boss still needs D >= 2 to be frozen.
+- Implementation (2026-10-06): the crystal cells of each mino type are chosen
+  in MinoUpgrades.Upgrade and stored per type by cell index. A block knows
+  whether it is a crystal from its own mino type and cell index
+  (MinoArtBinding), so it follows the block through row shifts. Level-ups only
+  happen on the reward screen, after which the board is cleared, so a locked
+  block never changes between crystal and ordinary. The 28 crystal sprites live
+  in `MinoSprites/Crystal` (same import settings as Upgraded). Queen growth
+  cells are never crystal.
 
-Verification required when implemented: all seven types; no crystals at Lv.0/1;
-one/two/three/four crystals at Lv.2/3/4/5; earlier crystals kept on level-up;
-equal random selection among the remaining cells; the same crystal cells on every
-spawned piece of that type until the next level-up; rotation and Hold persistence;
-locked-cell metadata surviving row shifts; activation by another mino; own
-crystal plus existing activation = two; multiple crystals counted separately;
-no duplicate activations or reset-triggered effects; bag-end timing preserved.
+Verified 2026-10-06 (play mode, direct Lock and bag-end calls): all seven types;
+no crystals at Lv.0/1; one/two/three/four crystals at Lv.2/3/4/5; earlier
+crystals kept on level-up; equal random selection among the remaining cells
+(4000 trials); the same crystal cells for every piece of that type, through
+rotation and Hold; crystal blocks following row shifts and firing once; I, J,
+L, O, S, T, Z crystals each firing with the formulas above; activation by
+another mino; own crystal plus the existing activation = two; several crystals
+in one row counted separately; the Plan example (upgraded L + old T crystal + J
+crystal); a two-line clear with a J crystal freezing 1 action; no activation from
+Garbage push-out, Caterpillar bites, Top Out row removal, or board clears; the
+J freeze settling at bag end (target skips its attack, skill counter unchanged).
+Not verified: hand-played runs and a build.
 
 Upgrade levels (implemented 2026-10-01): picking the same mino again raises its
 level. Ability strength scales with level as in the table below ("bonus x Lv");
@@ -367,7 +503,7 @@ the line count. Multiplied values are rounded to the nearest integer.
 | J | Freeze | Clear 1/2/3 lines to block 1/2/3 enemy actions; existing break damage on release | break round(D x 0.5 x Lv) per clear, summed; actions = lines, longest in the bag |
 | O | Shield | Damage x2 as player shield, stacking, granted at bag end, lasts 2 turns | D x 2 x Lv |
 | T | Poison | Damage x0.7 per hit for 2 hits, stacking, each instance tracked separately (timing below) | round(D x 0.7 x Lv) per hit |
-| S | Heal | Damage x3 to the player, capped at max HP, no overheal | D x 3 x Lv |
+| S | Heal | Damage x1.5 to the player, capped at max HP, no overheal | round(D x 1.5 x Lv) |
 | Z | Explosion | Damage x0.7 to the nearest other living monster; nothing if alone | round(D x 0.7 x Lv) |
 | L | Critical | Damage x2 to the target, always, no random roll | D x (1 + Lv); Lv.1 = x2, Lv.2 = x3 |
 
@@ -377,6 +513,9 @@ checking the right side first at equal distance. A new shield adds to the pool
 and resets its duration to 2 enemy turns; the enemy turn right after the grant
 is the first. The shield absorbs enemy HP attacks before HP and is cleared at
 stage start.
+Healing balance (2026-10-06, confirmed after playtest: the player was too hard
+to defeat): the S Heal multiplier was lowered from 3 through 2 to 1.5 (round(D x 1.5 x Lv); crystal
+activations use the same value) and the stage-clear heal from 20 through 15 to 10.
 
 J and L abilities were swapped on 2026-09-30 (blue J = Freeze, orange L =
 Critical). Values and rules moved unchanged; upgrade levels stay with each mino.
@@ -415,9 +554,10 @@ pierce, heal, shield) -> stage completion check -> enemy turn.
   release. Its number is how many more enemy actions it will block; after the
   last block it shows no number until the release.
 - Enemy-turn order (implemented): each living enemy, left to right: poison damage
-  -> skip if dead -> skip its action if a freeze block remains (skill counter
-  unchanged) -> Garbage skill or HP attack. Then boss summon, all Garbage lines at
-  once, HP damage absorbed by the shield first, shield duration tick, defeat
+  -> skip if dead -> skip its action if a freeze block or stun remains (skill counter
+  unchanged) -> Garbage skill (+ new monster skill) or HP attack. Then boss summon,
+  Caterpillar gnaw, all Garbage lines at once, Queen skill (2026-10-06),
+  HP damage absorbed by the shield first, shield duration tick, defeat
   check, and stage completion check.
 - Both are tracked per monster: switching targets does not move or cancel them.
   Summon Init clears them; RestoreHp keeps them.
@@ -427,7 +567,7 @@ picks one. Implemented: minos at Lv.5 are excluded from the draw; if fewer than
 
 Upgraded minos (Lv.1 and above) use the `MinoSprites/Upgraded` art instead of the
 normal art. The active piece, ghost, locked blocks, NEXT, Hold, and the upgrade
-list all switch when the level changes. The implemented base art is the same for every level. Planned Lv.2+ crystal cells (above) swap only the crystal cells to a crystal version of that cell's art; the other cells keep this base art.
+list all switch when the level changes. The implemented base art is the same for every level. Lv.2+ crystal cells (above) swap only the crystal cells to a crystal version of that cell's art; the other cells keep this base art.
 
 Stage 9 is now a combat stage (epic x3); the non-combat blessing event was removed.
 
@@ -506,7 +646,7 @@ maps, or events.
   bonuses in section 6. Combo, Back-to-Back, and Mini bonuses are deferred.
 - Player HP and healing balance; playtest fixed enemy tier stats and stage
   counts from section 7. Garbage rules remain as specified in section 7.
-  Implemented: player max HP 100, stage-clear heal 20, enemy HP 20/40/70; tuning
+  Implemented: player max HP 100, stage-clear heal 10 (previously 20, then 15), enemy HP 20/40/70; tuning
   after playtest is still open.
 - Player attack targeting/distribution and multi-enemy skill scheduling where
   existing behavior is undefined; preserve all established Garbage rules.
