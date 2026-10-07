@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,6 +17,8 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private int piecesPerBag = 7; // 한 턴에 배치하는 조각 수
     [SerializeField] private Enemy enemyPrefab; // 적 프리팹 (등급은 생성 시 주입)
     [SerializeField] private Transform enemyRoot; // 생성된 적을 담을 부모 (Hierarchy의 Enemies 그룹)
+    [SerializeField] private HpBarView enemyHpBarPrefab; // 적마다 하나씩 만드는 체력 막대 프리팹
+    [SerializeField] private RectTransform enemyHpBarRoot; // 생성된 체력 막대를 담을 UI 부모
     [SerializeField] private Vector3 enemyLineCenter = new Vector3(5.9f, 3.1f, 0f); // 적들이 늘어서는 줄의 중심
     [SerializeField] private float enemySpacing = 1.8f; // 적 사이 가로 간격 (보스 폭이 넓어 겹치지 않도록 확보)
 
@@ -24,14 +26,12 @@ public class CombatManager : MonoBehaviour
     public const int ShieldTurns = 2; // 강화 O 미노의 보호막 지속 턴
     private const int BossFreezeMinDamage = 2; // 보스를 얼리려면 필요한 최소 기존 피해
     private const float BossProtectedRatio = 0.5f; // 호위가 살아있는 동안 보스가 받는 피해 비율
-    private const float PoisonRatio = 0.7f; // 독 턴당 피해 배율 (레벨당)
-    private const float ExplosionRatio = 0.7f; // 폭발 추가 피해 배율 (레벨당)
-    private const float FreezeBreakRatio = 0.5f; // 빙결 파괴 피해 배율 (레벨당)
-    private const float PierceBaseRatio = 0.5f; // 관통 기본 배율 (적 수만큼 곱해지므로 기울기를 절반으로 낮춤)
-    private const float PierceRatioPerLevel = 0.5f; // 관통 레벨당 피해 배율 (Lv.1 = 1.0배)
-    private const int CriticalBonusPerLevel = 1; // 치명타 레벨당 추가 피해 배수 (Lv.1 = 2배)
-    private const int ShieldMultiplier = 2; // 보호막 배율 (레벨당)
-    private const float HealMultiplier = 1.5f; // 회복 배율을 레벨당 1.5배로 적용
+    private const float PoisonRatio = 0.7f; // 독 턴당 피해 배율 (Lv.1 기준)
+    private const float ExplosionRatio = 0.7f; // 폭발 추가 피해 배율 (Lv.1 기준)
+    private const float FreezeBreakRatio = 0.5f; // 빙결 파괴 피해 배율 (Lv.1 기준)
+    private const int CriticalBonusPerLevel = 1; // 치명타 Lv.1 기준 추가 피해 배수 (Lv.1 = 2배)
+    private const int ShieldMultiplier = 2; // 보호막 배율 (Lv.1 기준)
+    private const int HealMultiplier = 1; // 회복 배율을 Lv.1 기준 1배로 적용
 
     public int PlayerHp { get; private set; } // 현재 플레이어 체력
     public int PlayerShield { get; private set; } // 남아있는 보호막 (체력보다 먼저 깎임)
@@ -126,6 +126,7 @@ public class CombatManager : MonoBehaviour
             enemy.name = $"Enemy_{i}_{EnemyStats.GetName(composition[i])}"; // Hierarchy에 몬스터 이름으로 표시
             enemy.transform.position = enemyLineCenter + new Vector3(-lineWidth / 2f + i * enemySpacing, 0f, 0f); // 왼쪽부터 순서대로
             enemy.Init(composition[i]); // 등급별 능력치 적용
+            enemy.GetComponent<EnemyView>().CreateHpBar(enemyHpBarPrefab, enemyHpBarRoot); // 체력 막대는 UI 캔버스에 따로 생성
             enemies.Add(enemy);
         }
 
@@ -194,22 +195,23 @@ public class CombatManager : MonoBehaviour
     // 강화 능력의 효과 수치 (피해 damage, 강화 레벨 level 기준). 실제 발동과 보상 카드 표시가 같은 식을 쓰도록 한 곳에 둠
     public static int AbilityValue(TetrominoType type, int damage, int level)
     {
+        float strength = 1f + 0.5f * (level - 1); // Lv.1~5 강화 효과 배율: 1, 1.5, 2, 2.5, 3
         switch (type)
         {
-            case TetrominoType.I: return Mathf.RoundToInt(damage * (PierceBaseRatio + PierceRatioPerLevel * level)); // 관통 피해
-            case TetrominoType.J: return Mathf.RoundToInt(damage * FreezeBreakRatio * level); // 빙결 해제 피해
-            case TetrominoType.L: return damage * (1 + CriticalBonusPerLevel * level); // 치명타 총 피해 (기본 피해 포함)
-            case TetrominoType.O: return damage * ShieldMultiplier * level; // 보호막량
-            case TetrominoType.S: return Mathf.RoundToInt(damage * HealMultiplier * level); // 실제 회복과 카드 표시를 같은 정수로 반올림
-            case TetrominoType.T: return Mathf.RoundToInt(damage * PoisonRatio * level); // 독 턴당 피해
-            case TetrominoType.Z: return Mathf.RoundToInt(damage * ExplosionRatio * level); // 폭발 피해
+            case TetrominoType.I: return Mathf.RoundToInt(damage * strength); // 관통 피해
+            case TetrominoType.J: return Mathf.RoundToInt(damage * FreezeBreakRatio * strength); // 빙결 해제 피해
+            case TetrominoType.L: return damage + Mathf.RoundToInt(damage * CriticalBonusPerLevel * strength); // 치명타 총 피해 (기본 피해 포함)
+            case TetrominoType.O: return Mathf.RoundToInt(damage * ShieldMultiplier * strength); // 보호막량
+            case TetrominoType.S: return Mathf.RoundToInt(damage * HealMultiplier * strength); // 실제 회복과 카드 표시에 동일한 정수 회복량 사용
+            case TetrominoType.T: return Mathf.RoundToInt(damage * PoisonRatio * strength); // 독 턴당 피해
+            case TetrominoType.Z: return Mathf.RoundToInt(damage * ExplosionRatio * strength); // 폭발 피해
         }
         return 0; // 알 수 없는 종류는 효과 없음
     }
 
     // 강화 미노 능력 발동. 능력 세기는 줄 수로 다시 계산하지 않고, 이미 계산된 피해에 강화 레벨을 곱해서 쓴다.
     // 빙결은 삭제 줄 수로 1~3턴, 독과 보호막은 기존 지속시간을 사용한다.
-    // crystal이 true면 지워진 수정 칸의 추가 발동: 기본 피해는 이미 한 번 들어갔으므로 능력 효과만 더하고, 빙결은 1턴, 치명타는 추가분(피해 x 레벨)만 더한다.
+    // crystal이 true면 지워진 수정 칸의 추가 발동: 기본 피해는 이미 한 번 들어갔으므로 능력 효과만 더하고, 빙결은 1턴, 치명타는 추가분(피해 x 강화 배율)만 더한다.
     private void ApplyUpgradedAbility(TetrominoType lockedType, int damage, int level, int clearedLines, bool crystal = false) // 빙결은 줄 수로 지속시간 계산
     {
         int baseDamage = crystal ? 0 : damage; // 수정 발동은 타겟 기본 피해를 다시 더하지 않음
@@ -220,26 +222,26 @@ public class CombatManager : MonoBehaviour
                 pendingPierceDamage += RecordEffect(lockedType, AbilityValue(lockedType, damage, level)); // 관통 피해와 표시를 같은 값으로 기록
                 break;
 
-            case TetrominoType.L: // 치명타 (주황 L, 2026-09-30 J와 교환): 기본 피해에 레벨당 1배씩 더함 (Lv.1 = 2배, Lv.2 = 3배)
-                PendingDamage += RecordEffect(lockedType, crystal ? damage * CriticalBonusPerLevel * level : AbilityValue(lockedType, damage, level)); // 치명타 피해 기록 (수정은 기본 피해를 뺀 추가분만)
+            case TetrominoType.L: // 치명타 (주황 L, 2026-09-30 J와 교환): 기본 피해에 Lv.1 기준 1배씩 더함 (Lv.1 = 2배, Lv.2 = 2.5배)
+                PendingDamage += RecordEffect(lockedType, AbilityValue(lockedType, damage, level) - (crystal ? damage : 0)); // 치명타 피해 기록 (수정은 기본 피해를 뺀 추가분만)
                 break;
 
-            case TetrominoType.O: // 방어막: 기본 피해에 더해 레벨당 2배만큼 보호막을 쌓음
+            case TetrominoType.O: // 방어막: 기본 피해에 더해 Lv.1 기준 2배만큼 보호막을 쌓음
                 PendingDamage += baseDamage;
                 pendingShield += RecordEffect(lockedType, AbilityValue(lockedType, damage, level)); // 보호막량 기록
                 break;
 
-            case TetrominoType.T: // 독: 기본 피해 후 레벨당 0.7배 피해를 2턴 동안 (중첩)
+            case TetrominoType.T: // 독: 기본 피해 후 Lv.1 기준 0.7배 피해를 2턴 동안 (중첩)
                 PendingDamage += baseDamage;
                 pendingPoisons.Add(RecordEffect(lockedType, AbilityValue(lockedType, damage, level))); // 독 턴당 피해 기록
                 break;
 
-            case TetrominoType.S: // 회복: 기본 피해에 더해 레벨당 1.5배를 정수 반올림하여 회복 (최대 체력에서 잘리므로 초과분은 버려짐)
+            case TetrominoType.S: // 회복: 기본 피해에 더해 Lv.1 기준 1배만큼 회복 (최대 체력에서 잘리므로 초과분은 버려짐)
                 PendingDamage += baseDamage;
                 pendingHeal += RecordEffect(lockedType, AbilityValue(lockedType, damage, level)); // 회복 예정량 기록
                 break;
 
-            case TetrominoType.Z: // 폭발: 기본 피해 후 인접한 다른 적 1명에게 레벨당 0.7배 피해
+            case TetrominoType.Z: // 폭발: 기본 피해 후 인접한 다른 적 1명에게 Lv.1 기준 0.7배 피해
                 PendingDamage += baseDamage;
                 pendingExplosionDamage += RecordEffect(lockedType, AbilityValue(lockedType, damage, level)); // 폭발 피해 기록
                 break;
@@ -416,6 +418,13 @@ public class CombatManager : MonoBehaviour
             PieceSpawner.Instance.SetInputEnabled(false); // timeScale 0에서도 도는 입력을 직접 차단
 
         OnStateChanged?.Invoke();
+
+        if (stageNumber >= StageData.LastStage) // 마지막(보스) 스테이지는 보상·강화 없이 바로 런 클리어
+        {
+            EndCombat(true);
+            return;
+        }
+
         OnStageCleared?.Invoke(stageNumber); // 보상 화면이 구독해서 처리
     }
 

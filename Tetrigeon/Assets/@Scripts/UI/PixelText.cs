@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PixelText : MonoBehaviour
 {
     [SerializeField] private PixelFontData font; // 사용할 글꼴 (색상별로 다른 에셋)
-    [SerializeField] private int scale = 3; // 원본 한 픽셀이 화면 몇 픽셀인지 (정수여야 또렷함)
+    [SerializeField] private float scale = 3f; // 원본 한 픽셀이 화면 몇 픽셀인지 (정수가 가장 또렷함, 게이지 1.5배 등도 허용)
     [SerializeField] private TextAnchor align = TextAnchor.MiddleCenter; // 가로 정렬 (왼쪽/가운데/오른쪽 열만 사용)
     [SerializeField] private string initialText; // 처음 켜질 때 보여줄 고정 글자 (바뀌는 글자는 코드에서 SetText)
 
@@ -18,11 +18,17 @@ public class PixelText : MonoBehaviour
         if (!string.IsNullOrEmpty(initialText)) SetText(initialText); // 고정 글자는 처음 켜질 때 한 번 표시
     }
 
+    // 글꼴(색)을 바꿈. 이미 그려진 글자에는 다음 SetText부터 반영됨
+    public void SetFont(PixelFontData value)
+    {
+        font = value; // 색상별 글꼴 에셋으로 교체
+    }
+
     // 글자를 바꿔서 다시 배치. scaleOverride가 0보다 크면 이번 글자만 그 배율을 씀
-    public void SetText(string text, int scaleOverride = 0)
+    public void SetText(string text, float scaleOverride = 0f)
     {
         if (rectTransform == null) rectTransform = (RectTransform)transform; // 처음 한 번만 캐싱
-        int s = scaleOverride > 0 ? scaleOverride : scale; // 실제 쓸 배율
+        float s = scaleOverride > 0f ? scaleOverride : scale; // 실제 쓸 배율
         int count = 0; // 이번에 쓴 글자 그림 수
         int cursor = 0; // 현재 가로 위치 (원본 픽셀)
         int totalAdvance = 0; // 전체 가로 길이 계산용

@@ -1,5 +1,5 @@
-# TETRIGEON — TURN-BASED TETRIS ROGUELIKE
-Design notes | 2026-09-14 (code sync: 2026-10-01; crystal-cell design update: 2026-10-02; monster skill design update: 2026-10-06; crystal cells implemented: 2026-10-06; healing balance: 2026-10-06; exit to title: 2026-10-06; reward cards: 2026-10-06)
+﻿# TETRIGEON — TURN-BASED TETRIS ROGUELIKE
+Design notes | 2026-09-14 (code sync: 2026-10-01; crystal-cell design update: 2026-10-02; monster skill design update: 2026-10-06; crystal cells implemented: 2026-10-06; healing balance: 2026-10-06; exit to title: 2026-10-06; reward cards: 2026-10-06; no reward after the boss: 2026-10-07; HP bars: 2026-10-07; skill counter: 2026-10-07; stage panel removed: 2026-10-07; stage board: 2026-10-07)
 
 Status: Core rules describe the intended direction. Recommendations, examples,
 and undecided details are not commitments. Based on prior discussion and the
@@ -103,11 +103,53 @@ Implemented UI (2026-10-01), replacing the earlier "NEXT 3 or 4" TBD:
 - Remaining pieces in the turn: 7-rune gauge under Lemy's Core; lit runes = Locks left.
 - Accumulated damage: damage icon + `n DMG` (normal attack total, Critical shown
   separately), then one row per ability fired this bag (formats in section 7).
-- Player: `PLAYER hp / max`, plus `[보호막 n]` while a shield exists.
-- Each enemy: `hp/max`, `SKILL n` (turns until its Garbage skill), boss
+- Player: HP bar with the number `hp / max` in its middle (replaces the `PLAYER hp / max` text,
+  HP bars 2026-10-07); while a shield exists a shield icon and `+n` show under the bar
+  (no shield bar, confirmed).
+- Each enemy: an HP bar with `hp / max` in its middle and, at the lower right of the bar, a
+  skill counter (rune + turns until its Garbage skill, see HP bars below), then boss
   `피해 -50%` while escorts live, and status icons for poison and freeze.
-- Stage panel: `STAGE n`, `ENEMIES alive / total`, `[TAB] TARGET`.
+- Stage panel (`STAGE n`, `ENEMIES alive / total`, `[TAB] TARGET`): removed from the combat screen on
+  request (2026-10-07) and replaced by the stage board below. The TAB key still switches the target.
+- Stage board (2026-10-07, confirmed after a mock-up review, implemented): the empty panel to the right of
+  the FATE scroll shows, top to bottom: a STAGE nameplate; `current / total` (`06 / 10`, current in cyan,
+  total in light gray, total read from StageData.LastStage); progress nodes 1-10 in two rows of five
+  (cleared = dark teal, current = bright teal outline, upcoming = dark gray; a small purple crown marks
+  stage 10; the link line runs from 5 to 6); an ENEMIES nameplate; then one row per enemy of the current
+  stage in lineup order. A row shows the monster's existing art (first Idle frame, centred in a fixed
+  display window and scaled to fit it), the tier name (NORMAL cream, EPIC teal, BOSS gold) and an HP bar
+  with `hp / max`. A defeated enemy's row is darkened and shows its existing death art and the word
+  DEFEATED instead of the bar; a slot refilled by the boss summon shows the new enemy again.
+  The row of the currently selected target (the same enemy the TAB key and the target arrow use) has its
+  border lit in teal (a bright teal rim plus a short soft glow, no animation). The glow follows TAB, moves
+  on when the target dies, and a defeated row never glows.
+  The board only reads the existing combat state (stage number, enemy list, HP) and refreshes on the same
+  state-change event as the rest of the combat UI; it adds no counter and changes no combat rule.
+  Art (shown at 1.75x like the other nameplates) is derived from the existing MINO UPGRADES nameplate
+  (text removed, same stone and teal palette); nodes, links and crown are pixel-drawn in that palette; no
+  VARCO generation. Files: `@Resources/UI/StageBoard` (Layers, `P_StageBoard`, `P_StageBoardRow`), digit
+  colours gray/dim/teal in `@Resources/UI/HpBars/Font`. Rows are drawn in a Canvas (`StageBoardCanvas`).
 - Left panel lists upgraded minos with `Lv.n` (`Lv.MAX` at level 5).
+- HP bars (2026-10-07, confirmed after a concept-art review, implemented): Lemy and every
+  enemy use the same bar size (112x20 source px shown at 1.5x = 168x30 px; Lemy's bar is
+  shrunk to the monster bar size on request, so three enemies fit side by side). All bars
+  sit BELOW the character's feet and the number is centred inside the bar, drawn from the
+  digit sprites 0-9, "/" and "+" (cream; cyan for the shield amount). Enemy text under the bar
+  (damage reduction, shield, charge, stun, poison/freeze icons) is unchanged but now sits below
+  the bar and its skill counter for every tier (Normal monsters used to stack it above their body).
+  The bar hides when the enemy dies. The target arrow stays above the monster as before.
+  Art is layered (Frame, Track, Fill; the Fill is shown with a horizontal fill amount):
+  `@Resources/UI/HpBars/Layers`, digit font `@Resources/UI/HpBars/Font`, prefabs
+  `P_HpBarLemy` and `P_HpBarMonster`. Lemy's bar has the cyan gem cap and rune cap, the
+  monster bar a plain stone frame. The boss uses the monster bar (no separate boss bar yet).
+- Skill counter (2026-10-07, confirmed after a concept-art review, implemented): replaces the
+  `SKILL n` text. It sits at the lower right under the enemy's HP bar: a blue rune and the turns
+  left in cream digits (`3`, `2`). When 1 turn is left, i.e. the skill fires on the next enemy
+  turn, the rune turns gold and the digits gold with an exclamation mark (`1 !`). The count
+  itself is unchanged (normal 3 / epic 5 / boss 6, section 7). Art: `T_SkillRune_Blue` and
+  `T_SkillRune_Gold` (9x9 dots shown at 1.5x) in `@Resources/UI/HpBars/Layers`, gold digit font
+  `HpDigits_gold` (0-9, "/", "+", "!") in `@Resources/UI/HpBars/Font`. Only the monster bar
+  prefab `P_HpBarMonster` has the counter; Lemy's bar does not.
 - Not implemented: each enemy's expected HP damage or Garbage amount for its
   next action; only the skill countdown is shown.
 
@@ -381,7 +423,7 @@ Implemented details (2026-10-01):
   - Values are the real effect of clearing ONE line (damage 1) at the new level, from
     the same formula as the in-game ability (CombatManager.AbilityValue), rounded the
     same way, so some steps look flat (confirmed): Poison per hit 1,1,2,3,4; Pierce
-    1,2,2,2,3; Freeze release 0,1,2,2,2; Critical total 2..6; Shield 2,4,6,8,10; Heal 2,3,4,6,8.
+    1,2,2,2,3; Freeze release 0,1,2,2,2; Critical total 2..6; Shield 2,4,6,8,10; Heal 1,2,3,4,5.
   - Row 1 is the base damage (Critical shows its total instead). Row 2 is the ability:
     PIERCE `n DMG` + "ALL ENEMIES", FREEZE `1T` + "RELEASE: n DMG", CRITICAL + "ALWAYS ×n",
     SHIELD `+n` + "LASTS 2 TURNS.", HEAL `+n HP`, POISON `2T × n DMG` + "Starts 1 turn later."
@@ -400,7 +442,10 @@ Implemented details (2026-10-01):
     Card prefab: `@Resources/UI/RewardScreen/P_RewardCard.prefab`.
 - Kept across stages: player HP and mino upgrade levels. Reset at stage start:
   enemies, board, bag, Hold slot, Hold charges (refilled to 4), and shield.
-- Stage 10 also shows the reward screen; picking an upgrade there ends the run.
+- Stage 10 (the boss stage) shows NO reward screen: no heal and no mino upgrade.
+  Clearing it ends the run as a victory at once (changed 2026-10-07, confirmed: the
+  upgrade could still be taken after the boss). It previously showed the reward
+  screen and ended the run after the pick.
   The run end (victory or defeat) shows the same restart window; restart reloads
   the scene and resets the run, including upgrades.
 
@@ -462,9 +507,9 @@ Crystal activation numbers (confirmed 2026-10-06, implemented):
 - Only the ability effect is added. The clear's ordinary target damage is
   counted once, as before; a crystal never adds a second base damage.
 - Values use the table below with those inputs. Differences: L adds only the
-  extra Critical damage D x Lv (the base part is not repeated); J freezes for
+  extra Critical damage D x M (the base part is not repeated); J freezes for
   exactly 1 enemy action no matter how many lines were cleared, its release
-  damage is round(D x 0.5 x Lv), and a boss still needs D >= 2 to be frozen.
+  damage is round(D x 0.5 x M), and a boss still needs D >= 2 to be frozen.
 - Implementation (2026-10-06): the crystal cells of each mino type are chosen
   in MinoUpgrades.Upgrade and stored per type by cell index. A block knows
   whether it is a crystal from its own mino type and cell index
@@ -488,7 +533,7 @@ J freeze settling at bag end (target skips its attack, skill counter unchanged).
 Not verified: hand-played runs and a build.
 
 Upgrade levels (implemented 2026-10-01): picking the same mino again raises its
-level. Ability strength scales with level as in the table below ("bonus x Lv");
+level. Ability strength scales with level as in the table below ("bonus x M");
 durations do not scale with level. The maximum is Lv.5, shown as `Lv.MAX`.
 Abilities use the full damage of the clear, including T-Spin and Perfect Clear
 bonuses; there is no other interaction with those bonuses.
@@ -497,15 +542,17 @@ Per-mino abilities (2026-09-22, confirmed and implemented):
 one clear (CombatDamage.Calculate); ability strength is never recomputed from
 the line count. Multiplied values are rounded to the nearest integer.
 
+Level scaling (2026-10-07): M = 1 + 0.5 x (Lv - 1), giving 1 / 1.5 / 2 / 2.5 / 3. Apply M to the unrounded Lv.1 ability amount, then RoundToInt. Normal damage is unchanged; L scales only its bonus. Crystal count and durations are unchanged. S healing is round(D x M).
+
 | Mino | Ability | Effect | Value at Lv.n (implemented, D = Damage) |
 | --- | --- | --- | --- |
-| I | Pierce | Damage to every living monster instead of the target only | round(D x (0.5 + 0.5 x Lv)) each; Lv.1 = D |
-| J | Freeze | Clear 1/2/3 lines to block 1/2/3 enemy actions; existing break damage on release | break round(D x 0.5 x Lv) per clear, summed; actions = lines, longest in the bag |
-| O | Shield | Damage x2 as player shield, stacking, granted at bag end, lasts 2 turns | D x 2 x Lv |
-| T | Poison | Damage x0.7 per hit for 2 hits, stacking, each instance tracked separately (timing below) | round(D x 0.7 x Lv) per hit |
-| S | Heal | Damage x1.5 to the player, capped at max HP, no overheal | round(D x 1.5 x Lv) |
-| Z | Explosion | Damage x0.7 to the nearest other living monster; nothing if alone | round(D x 0.7 x Lv) |
-| L | Critical | Damage x2 to the target, always, no random roll | D x (1 + Lv); Lv.1 = x2, Lv.2 = x3 |
+| I | Pierce | Damage to every living monster instead of the target only | round(D x M) each; Lv.1 = D |
+| J | Freeze | Clear 1/2/3 lines to block 1/2/3 enemy actions; existing break damage on release | break round(D x 0.5 x M) per clear, summed; actions = lines, longest in the bag |
+| O | Shield | Damage x2 as player shield, stacking, granted at bag end, lasts 2 turns | round(D x 2 x M) |
+| T | Poison | Damage x0.7 per hit for 2 hits, stacking, each instance tracked separately (timing below) | round(D x 0.7 x M) per hit |
+| S | Heal | Damage x1 to the player, capped at max HP, no overheal | D x M |
+| Z | Explosion | Damage x0.7 to the nearest other living monster; nothing if alone | round(D x 0.7 x M) |
+| L | Critical | Damage x2 to the target, always, no random roll | D + round(D x M); Lv.1 = x2, Lv.2 = x2.5 |
 
 Rounding uses Unity's RoundToInt, so .5 goes to the nearest even number.
 Implemented details: Explosion picks the nearest living monster to the target,
@@ -514,7 +561,7 @@ and resets its duration to 2 enemy turns; the enemy turn right after the grant
 is the first. The shield absorbs enemy HP attacks before HP and is cleared at
 stage start.
 Healing balance (2026-10-06, confirmed after playtest: the player was too hard
-to defeat): the S Heal multiplier was lowered from 3 through 2 to 1.5 (round(D x 1.5 x Lv); crystal
+to defeat): the S Heal multiplier was lowered from 3 through 2 and 1.5 to 1 (2026-10-07: D x M; crystal
 activations use the same value) and the stage-clear heal from 20 through 15 to 10.
 
 J and L abilities were swapped on 2026-09-30 (blue J = Freeze, orange L =

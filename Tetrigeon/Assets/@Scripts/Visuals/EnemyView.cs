@@ -31,6 +31,9 @@ public class EnemyView : MonoBehaviour
     private MeshRenderer poisonTurnsRenderer; // 독 숫자 폭을 재는 렌더러
     private MeshRenderer freezeTurnsRenderer; // 빙결 숫자 폭을 재는 렌더러
     private TextMesh targetMarker; // 현재 타겟임을 알리는 화살표
+    private HpBarView hpBar; // 이 적의 체력 막대 (UI 캔버스 위, 몸통 발 아래)
+
+    private const float BarGap = 0.05f; // 발과 막대, 막대와 글자 사이 간격 (월드 단위)
 
     private void Awake()
     {
@@ -43,6 +46,7 @@ public class EnemyView : MonoBehaviour
         hpText.anchor = TextAnchor.UpperCenter; // 여러 줄이라 위를 기준으로 아래로 늘어나게 함
         targetMarker = CreateLabel("TargetMarker", new Vector3(0f, 0.85f, 0f), 0.06f, new Color(1f, 0.9f, 0.4f)); // 몸통 위 타겟 표시
         targetMarker.text = "▼";
+        targetMarker.GetComponent<MeshRenderer>().sortingOrder = 100; // 타겟 화살표를 몬스터와 상태 표시보다 앞에 렌더링
 
         hpTextRenderer = hpText.GetComponent<MeshRenderer>(); // 체력 텍스트 렌더러를 한 번만 찾아 둠
         poisonTurnsRenderer = poisonTurnsText.GetComponent<MeshRenderer>(); // 독 숫자 렌더러
@@ -50,6 +54,17 @@ public class EnemyView : MonoBehaviour
         Vector3 turnsOffset = new Vector3(poisonIcon.sprite.bounds.extents.x + StatusIconGap, 0f, 0f); // 아이콘 오른쪽 끝에서 간격만큼 띄운 자리
         poisonTurnsText.transform.localPosition = turnsOffset; // 숫자는 아이콘 오른쪽에 왼쪽 기준으로 붙음
         freezeTurnsText.transform.localPosition = turnsOffset; // 두 아이콘 크기가 같아서 같은 간격 사용
+    }
+
+    // 체력 막대를 UI 부모 아래에 만든다 (CombatManager가 적 생성 직후 호출)
+    public void CreateHpBar(HpBarView prefab, RectTransform root)
+    {
+        hpBar = Instantiate(prefab, root); // 적마다 막대 하나
+    }
+
+    private void OnDestroy()
+    {
+        if (hpBar != null) Destroy(hpBar.gameObject); // 적이 사라지면 막대도 함께 제거
     }
 
     // 월드 좌표 텍스트를 자식으로 생성 (기존 라벨들과 같은 방식)
@@ -93,18 +108,20 @@ public class EnemyView : MonoBehaviour
         PlaceLabels(); // 아트 크기에 맞춰 체력·타겟 표시 위치를 잡음
 
         hpText.gameObject.SetActive(!dead); // 죽으면 체력·스킬·상태이상 표시를 모두 감춤 (DEAD 문구도 쓰지 않음)
+        hpBar.gameObject.SetActive(!dead); // 체력 막대도 함께 감춤
         statusRow.gameObject.SetActive(!dead); // 죽으면 독·빙결 아이콘과 숫자도 모두 감춤
         targetMarker.gameObject.SetActive(isTarget && !dead); // 살아있는 타겟에만 화살표 표시
         if (dead) return; // 사망한 적은 사망 이미지 외에 갱신할 표시가 없음
 
         // 적이 붙어 있어도 옆 적과 겹치지 않게 줄을 나눠 표시한다
         string status = damageReductionPercent > 0 ? $"피해 -{damageReductionPercent}%" : ""; // 호위가 살아있어 피해가 줄어드는 중
-        if (status.Length > 0) status = "\n" + status; // 피해 감소는 따로 한 줄 더 (독·빙결은 아래 아이콘 줄로 표시)
         if (enemy.Shield > 0) status += $"\n보호막 {enemy.Shield}"; // 수호자 보호막 남은 양
         if (enemy.ChargeActionsLeft > 0) status += $"\n강공격 {enemy.ChargeActionsLeft}"; // 강공격까지 남은 수호자 행동 수
         if (enemy.IsStunned) status += "\n스턴"; // 보호막이 깨져 행동을 쉼 (쉰 뒤 다음 행동 전까지 표시)
 
-        hpText.text = $"{enemy.Hp}/{enemy.MaxHp}\nSKILL {enemy.TurnsUntilSkill}{status}"; // 체력과 능력까지 남은 턴
+        hpBar.SetHp(enemy.Hp, enemy.MaxHp); // 체력은 막대와 가운데 숫자로
+        hpBar.SetSkill(enemy.TurnsUntilSkill); // 능력까지 남은 턴은 막대 오른쪽 아래 룬 + 숫자로 (1턴 남으면 금색)
+        hpText.text = status.TrimStart('\n'); // 상태 글자는 줄마다 줄바꿈으로 시작하므로 맨 앞 줄바꿈만 제거 (독·빙결은 아래 아이콘 줄로 표시)
         UpdateStatusRow(); // 체력 텍스트 내용이 정해진 뒤 그 아래에 독·빙결 아이콘을 배치
     }
 
@@ -137,21 +154,14 @@ public class EnemyView : MonoBehaviour
         return icon.sprite.bounds.size.x + StatusIconGap + turnsWidth;
     }
 
-    // 상태이상 줄을 체력 표시 바로 아래에 놓는다. 일반 몹은 체력이 몸 위로 쌓이므로 몸과 체력 사이에 줄을 끼우고 체력을 한 줄 올린다
+    // 상태이상 줄을 아래로 늘어나는 체력 글자 바로 아래에 놓는다
     private void PlaceStatusRow(bool hasStatus)
     {
         float scale = transform.lossyScale.y; // 적 루트 배율 (월드 크기를 루트 기준 로컬 위치로 환산)
         float rowHeight = poisonIcon.sprite.bounds.size.y / scale; // 아이콘 한 줄 높이 (루트 로컬)
-        Vector3 hpPosition = hpText.transform.localPosition; // PlaceLabels가 정한 체력 위치
-        if (hpText.anchor == TextAnchor.LowerCenter) // 체력이 위로 쌓이는 배치 (일반 몹)
-        {
-            statusRow.localPosition = new Vector3(0f, hpPosition.y + rowHeight / 2f, 0f); // 원래 체력 바닥 자리에 아이콘 줄
-            if (hasStatus) hpText.transform.localPosition = hpPosition + new Vector3(0f, rowHeight, 0f); // 아이콘이 있을 때만 체력을 한 줄 위로
-            return;
-        }
-
-        float hpHeight = hpTextRenderer.bounds.size.y / scale; // 체력 텍스트 여러 줄의 실제 높이 (루트 로컬)
-        statusRow.localPosition = new Vector3(0f, hpPosition.y - hpHeight - rowHeight / 2f, 0f); // 아래로 늘어나는 체력 텍스트의 바로 아래
+        Vector3 hpPosition = hpText.transform.localPosition; // PlaceLabels가 정한 글자 위치
+        float hpHeight = hpText.text.Length > 0 ? hpTextRenderer.bounds.size.y / scale : 0f; // 글자 여러 줄의 실제 높이 (루트 로컬, 글자가 없으면 0: 빈 글자의 렌더러 높이는 이전 값이 남음)
+        statusRow.localPosition = new Vector3(0f, hpPosition.y - hpHeight - rowHeight / 2f, 0f); // 글자 바로 아래
     }
 
     // 등급에 맞는 아트 선택
@@ -165,24 +175,24 @@ public class EnemyView : MonoBehaviour
         }
     }
 
-    // 몸통 크기가 등급마다 달라서, 아트의 위아래 끝에 맞춰 텍스트를 배치한다
+    // 몸통 크기가 등급마다 달라서, 아트의 위아래 끝에 맞춰 막대와 글자를 배치한다 (막대는 모두 캐릭터 발 아래, 그 밑에 스킬 카운터 줄과 상태 글자)
     private void PlaceLabels()
     {
-        if (enemy.Tier == EnemyTier.Normal && normalIdleBody != null) // 투명 셀 여백 대신 실제 몸 높이로 라벨 배치
+        hpText.anchor = TextAnchor.UpperCenter; // 모든 등급이 막대 아래로 글자가 늘어남
+
+        if (enemy.Tier == EnemyTier.Normal && normalIdleBody != null) // 투명 셀 여백 대신 실제 몸 높이로 배치
         {
             float floorY = normalIdleBody.transform.localPosition.y; // 발바닥 피벗의 고정 높이
             float height = 28f / normalIdleBody.sprite.pixelsPerUnit; // 모든 프레임을 포함하는 고정 몸 높이
-            hpText.anchor = TextAnchor.LowerCenter; // 체력 표시가 위쪽으로 쌓이도록 설정
-            hpText.transform.localPosition = new Vector3(0f, floorY + height + 0.05f, 0f); // 아래쪽 스테이지 UI와 겹치지 않게 몸 위로 배치
-            targetMarker.transform.localPosition = new Vector3(0f, floorY + height + 0.8f, 0f); // 고정 체력 표시 위에 타겟 화살표 배치
-            return; // 에픽·보스의 기존 배치는 그대로 사용
+            PlaceHpBar(floorY); // 발 아래 막대와 그 밑 글자
+            targetMarker.transform.localPosition = new Vector3(0f, floorY + height + 0.8f, 0f); // 몸 위 타겟 화살표
+            return;
         }
         if (enemy.Tier == EnemyTier.Epic && epicIdleBody != null) // 발바닥 피벗이라 정지 아트 기준 계산을 쓸 수 없음
         {
             float epicFloorY = epicIdleBody.transform.localPosition.y; // 발바닥 피벗의 고정 높이
             float epicHeight = 74f / epicIdleBody.sprite.pixelsPerUnit; // 발바닥 위로 올라오는 고정 몸 높이
-            hpText.anchor = TextAnchor.UpperCenter; // 기존 에픽처럼 체력은 몸 아래에 배치
-            hpText.transform.localPosition = new Vector3(0f, epicFloorY - 0.05f, 0f); // 발밑으로 조금 내림
+            PlaceHpBar(epicFloorY); // 발 아래 막대와 그 밑 글자
             targetMarker.transform.localPosition = new Vector3(0f, epicFloorY + epicHeight + 0.15f, 0f); // 머리 위 수정보다 위에 화살표
             return;
         }
@@ -193,16 +203,21 @@ public class EnemyView : MonoBehaviour
             float ppu = bossIdleBody.sprite.pixelsPerUnit;
             float bottomY = pivotY - 60f / ppu; // 보이는 하단 수정은 기준점보다 60픽셀 아래
             float topY = pivotY + 58f / ppu; // 가장 높은 결정은 기준점보다 58픽셀 위
-            hpText.anchor = TextAnchor.UpperCenter; // 기존 보스처럼 체력은 몸 아래에 배치
-            hpText.transform.localPosition = new Vector3(0f, bottomY - 0.05f, 0f); // 하단 수정 아래로 조금 내림
-            targetMarker.transform.localPosition = new Vector3(-0.55f, topY - 0.15f, 0f); // 높은 날개 옆에 표시해 화면 상단 잘림 방지
+            PlaceHpBar(bottomY); // 하단 수정 아래 막대와 그 밑 글자
+            targetMarker.transform.localPosition = new Vector3(bossIdleBody.transform.localPosition.x, topY - 0.15f, 0f); // 보스 기준점에 가로 정렬하고 상단 잘림 방지 높이는 유지
             return;
         }
 
-        hpText.anchor = TextAnchor.UpperCenter; // Idle 참조가 없을 때의 기존 배치 유지
-        float halfHeight = body.sprite != null ? body.sprite.bounds.extents.y : 0.5f; // 아트 절반 높이
-        hpText.transform.localPosition = new Vector3(0f, -halfHeight - labelMargin, 0f); // 몸통 아래
+        float halfHeight = body.sprite != null ? body.sprite.bounds.extents.y : 0.5f; // Idle 참조가 없을 때의 기존 배치: 아트 절반 높이
+        PlaceHpBar(-halfHeight); // 몸통 아래 막대와 그 밑 글자
         targetMarker.transform.localPosition = new Vector3(0f, halfHeight + labelMargin, 0f); // 몸통 위
     }
-}
 
+    // 막대를 발(feetLocalY, 루트 로컬) 아래에 놓고, 스킬 카운터 줄 밑에서 상태 글자가 시작하게 한다
+    private void PlaceHpBar(float feetLocalY)
+    {
+        float barHeight = hpBar.WorldHeight; // 막대 높이 (월드)
+        hpBar.PlaceAtWorld(transform.TransformPoint(new Vector3(0f, feetLocalY, 0f)) + Vector3.down * (BarGap + barHeight * 0.5f)); // 발 바로 아래 막대 가운데
+        hpText.transform.localPosition = new Vector3(0f, feetLocalY - (BarGap * 2f + barHeight + hpBar.SkillRowWorldHeight) / transform.lossyScale.y, 0f); // 막대와 스킬 카운터 줄 밑에서 글자 시작
+    }
+}

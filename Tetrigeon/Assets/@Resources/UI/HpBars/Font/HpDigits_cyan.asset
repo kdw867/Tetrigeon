@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c759d6d4c4d67134c83a2d810965d941, type: 3}
+  m_Name: HpDigits_cyan
+  m_EditorClassIdentifier: Assembly-CSharp::PixelFontData
+  chars: '0123456789/+ '
+  sprites:
+  - {fileID: 7871301120324529948, guid: d0aef3c53dfb2d24a9066a9fdd855124, type: 3}
+  - {fileID: 398891769924101834, guid: d0aef3c53dfb2d24a9066a9fdd855124, type: 3}
+  - {fileID: 4433066992255913552, guid: d0aef3c53dfb2d24a9066a9fdd855124, type: 3}
+  - {fileID: 5822982951138532807, guid: d0aef3c53dfb2d24a9066a9fdd855124, type: 3}
+  - {fileID: -5854504938899613757, guid: d0aef3c53dfb2d24a9066a9fdd855124, type: 3}
+  - {fileID: -4099630149266913068, guid: d0aef3c53dfb2d24a9066a9fdd855124, type: 3}
+  - {fileID: -1220002726656864827, guid: d0aef3c53dfb2d24a9066a9fdd855124, type: 3}
+  - {fileID: -158976399582386494, guid: d0aef3c53dfb2d24a9066a9fdd855124, type: 3}
+  - {fileID: -3802971201813088799, guid: d0aef3c53dfb2d24a9066a9fdd855124, type: 3}
+  - {fileID: -5921744690199152342, guid: d0aef3c53dfb2d24a9066a9fdd855124, type: 3}
+  - {fileID: -760584244009811529, guid: d0aef3c53dfb2d24a9066a9fdd855124, type: 3}
+  - {fileID: -6069382408568048527, guid: d0aef3c53dfb2d24a9066a9fdd855124, type: 3}
+  - {fileID: 0}
+  advances: 07000000070000000700000007000000070000000700000007000000070000000700000007000000060000000700000004000000
+  yOffsets: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  lineHeight: 11
+  outline: 1
