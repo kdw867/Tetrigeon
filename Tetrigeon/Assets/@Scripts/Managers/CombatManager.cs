@@ -10,6 +10,7 @@ public class CombatManager : MonoBehaviour
     public static event Action OnStateChanged; // HP/누적 피해/남은 조각 수 바뀔 때 알림 (UI용)
     public static event Action<bool> OnCombatEnded; // 전투 종료 알림 (true = 플레이어 승리)
     public static event Action<int> OnStageCleared; // 스테이지 클리어 알림 (보상 처리용, 스테이지 번호 전달)
+    public static event Action OnStageStarted; // 다음 스테이지가 준비된 직후, 첫 조각이 나오기 전의 알림 (시작 카운트다운용)
 
     [SerializeField] private int stageNumber = 1; // 진행할 스테이지 번호 (지도 구현 전까지 여기서 지정)
     [SerializeField] private int playerMaxHp = 100; // 플레이어 최대 체력
@@ -479,6 +480,8 @@ public class CombatManager : MonoBehaviour
         GridManager.Instance.ClearAllBlocks(); // 보드를 비우고 새 스테이지 시작
 
         Time.timeScale = 1f; // 시간 재개
+
+        OnStageStarted?.Invoke(); // 카운트다운이 첫 조각을 붙잡을 수 있도록 조각 생성 직전에 알림
 
         if (PieceSpawner.Instance != null)
             PieceSpawner.Instance.StartNewStage(); // 가방·홀드·홀드 충전을 새 스테이지 상태로

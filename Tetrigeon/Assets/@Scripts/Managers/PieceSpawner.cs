@@ -8,6 +8,7 @@ public class PieceSpawner : MonoBehaviour
     public static PieceSpawner Instance { get; private set; }
 
     public static event Action<TetrominoType, TSpinType, int, IReadOnlyList<TetrominoType>> OnPieceLocked; // 고정한 조각 종류 + T스핀 결과 + 지워진 줄 수 + 지워진 수정 칸들의 원본 종류 (데미지·강화 능력 계산용)
+    public static event Action<IReadOnlyList<Vector2Int>, IReadOnlyList<int>, IReadOnlyList<Vector2Int>, IReadOnlyList<TetrominoType>> OnLockVisual; // 연출 전용 알림: 고정된 칸들 + 지워진 줄(압축 전 행) + 지워진 수정 칸(압축 전 좌표) + 그 수정 칸의 원본 종류(좌표와 같은 순서). 목록은 다음 고정 때 재사용되므로 받은 쪽은 보관하지 않음
     public static event Action OnTopOut; // Top Out 발생 시 1회 알림 (지워진 줄은 데미지에 안 들어감)
     public static event Action<TetrominoType?> OnHoldChanged; // Hold 슬롯 내용 바뀔 때 알림 (UI 연결용)
     public static event Action<int, int> OnHoldChargesChanged; // 남은 충전량, 충전 진행도 바뀔 때 알림 (코어 UI용)
@@ -23,11 +24,15 @@ public class PieceSpawner : MonoBehaviour
 
     private Piece currentPiece;
     private float lockTimer; // 착지 상태로 남은 유예 시간
+    private readonly List<Vector2Int> lockedCells = new List<Vector2Int>(); // 이번에 고정된 칸 좌표 (연출용, 고정 때마다 재사용)
+    private readonly List<int> clearedRows = new List<int>(); // 이번에 지워진 줄의 압축 전 행 (연출용)
+    private readonly List<Vector2Int> clearedCrystalCells = new List<Vector2Int>(); // 이번에 지워진 수정 칸의 압축 전 좌표 (연출용)
 
     private MinoState heldPiece; // 현재 Hold에 들어있는 조각 (없으면 null, 여왕 스킬로 바뀐 모양·회전 금지도 유지)
     private bool holdUsed; // 이번 조각에서 이미 Hold를 썼는지
     private bool combatEnded; // 전투가 끝나 더 이상 조각을 내보내지 않는 상태인지
     private bool inputEnabled = true; // 보상 화면·일시정지로 조작이 막혀 있는지
+    private bool countdownActive; // 시작 카운트다운 중이라 첫 조각을 내보내지 않는 상태인지 (일시정지·재개와 별개로 유지됨)
     private int holdCharges; // 남은 홀드 충전량 (룬 점등 개수)
     private int rechargeProgress; // 다음 충전까지 쌓인 Lock 횟수
 
@@ -65,6 +70,15 @@ public class PieceSpawner : MonoBehaviour
         enabled = value; // 하드드랍·홀드·락 딜레이 처리
         if (currentPiece != null)
             currentPiece.enabled = value; // 낙하 중인 조각의 이동·회전
+    }
+
+    // 시작 카운트다운 동안 새 조각을 막고, 끝나면 막아둔 첫 조각을 내보냄 (조각이 없으니 이동·회전·Hold·하드드롭·낙하·LOCK이 모두 실제로 일어나지 않음)
+    public void SetCountdownActive(bool active)
+    {
+        if (countdownActive == active) return; // 같은 상태로 중복 호출되면 무시
+        countdownActive = active; // 카운트다운 상태 기록
+        if (!active && currentPiece == null)
+            SpawnNext(); // 카운트다운이 끝난 순간 첫 조각을 정확히 한 번 시작
     }
 
     // 전투가 끝나면 시간 정지와 별개로 입력 자체를 막음 (Update는 timeScale 0에서도 계속 돌기 때문)
@@ -118,7 +132,7 @@ public class PieceSpawner : MonoBehaviour
 
     private void SpawnNext()
     {
-        if (combatEnded || !inputEnabled) return; // 전투 종료·보상 화면 중에는 새 조각을 내보내지 않음
+        if (combatEnded || !inputEnabled || countdownActive) return; // 전투 종료·보상 화면·시작 카운트다운 중에는 새 조각을 내보내지 않음
 
         holdUsed = false; // 새 조각이니 Hold 다시 사용 가능
 
@@ -234,9 +248,13 @@ public class PieceSpawner : MonoBehaviour
 
         Vector2Int[] cellOffsets = currentPiece.Mino.GetCells(currentPiece.RotationState); // 조각의 칸 오프셋 (증식 칸이 있으면 5칸)
         Transform[] blocks = currentPiece.GetComponent<PieceView>().Blocks; // 같은 순서의 시각적 블록
+        lockedCells.Clear(); // 연출용 목록 비우기
+        clearedRows.Clear();
+        clearedCrystalCells.Clear();
         for (int i = 0; i < cellOffsets.Length; i++)
         {
             Vector2Int boardCell = currentPiece.BoardPosition + cellOffsets[i]; // 실제 보드 좌표
+            lockedCells.Add(boardCell); // 연출용: 여왕 증식 칸까지 실제로 고정되는 모든 칸
             blocks[i].SetParent(GridManager.Instance.transform); // 조각에서 분리, 개별 오브젝트로 독립
             blocks[i].position = GridManager.CellToWorld(boardCell); // PieceView가 갱신 안 한 마지막 프레임 위치 보정
             blocks[i].rotation = PieceVisuals.GetArtRotation(currentPiece.Type, currentPiece.RotationState, i); // 고정 직전 회전도 균열 방향에 반영 (증식 칸은 L 보정 제외)
@@ -250,9 +268,10 @@ public class PieceSpawner : MonoBehaviour
         AddRechargeProgress(); // 미노가 실제로 고정된 시점에만 충전 진행 (하드드랍·자연 낙하 모두 이 경로 하나를 지남)
 
         List<TetrominoType> clearedCrystals = new List<TetrominoType>(); // 이번에 지워진 수정 칸의 원본 종류 (칸마다 하나)
-        int clearedLines = GridManager.Instance.ClearLines(clearedCrystals); // 꽉 찬 줄 정리
+        int clearedLines = GridManager.Instance.ClearLines(clearedCrystals, clearedRows, clearedCrystalCells); // 꽉 찬 줄 정리 (연출용 줄·수정 칸 좌표도 함께 기록)
 
         OnPieceLocked?.Invoke(lockedType, tSpin, clearedLines, clearedCrystals);
+        OnLockVisual?.Invoke(lockedCells, clearedRows, clearedCrystalCells, clearedCrystals); // 규칙 처리가 끝난 뒤 연출만 알림 (여기서 아무것도 바꾸지 않음)
 
         SpawnNext();
     }

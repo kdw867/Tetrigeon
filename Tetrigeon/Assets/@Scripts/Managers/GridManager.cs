@@ -68,7 +68,8 @@ public class GridManager : MonoBehaviour
     }
 
     // 꽉 찬 줄을 지우고 위 블록들을 내림. 지운 줄 개수를 반환하고, 지워진 수정 칸의 원본 미노 종류를 clearedCrystals에 담는다.
-    public int ClearLines(List<TetrominoType> clearedCrystals)
+    // 연출용으로 지워진 줄(압축 전 행 번호)과 지워진 수정 칸(압축 전 좌표)도 넘겨받을 수 있다 (null이면 기록하지 않음, 규칙에는 영향 없음)
+    public int ClearLines(List<TetrominoType> clearedCrystals, List<int> clearedRows = null, List<Vector2Int> clearedCrystalCells = null)
     {
         int clearedCount = 0; // 지운 줄 수
         int writeY = 0; // 다음에 채울 위치 (아래부터 압축)
@@ -82,11 +83,16 @@ public class GridManager : MonoBehaviour
                     if (cells[x, y] != null)
                     {
                         MinoArtBinding binding = cells[x, y].GetComponent<MinoArtBinding>(); // 미노 블록이면 칸 정보를 가짐 (가비지는 없음)
-                        if (binding != null && binding.IsCrystal) clearedCrystals.Add(binding.SourceType); // 지워지는 수정 칸마다 원본 종류를 하나씩 기록
+                        if (binding != null && binding.IsCrystal)
+                        {
+                            clearedCrystals.Add(binding.SourceType); // 지워지는 수정 칸마다 원본 종류를 하나씩 기록
+                            clearedCrystalCells?.Add(new Vector2Int(x, y)); // 연출용: 지워지기 전(압축 전) 칸 좌표
+                        }
                         Destroy(cells[x, y].gameObject); // 꽉 찬 줄의 블록 오브젝트 삭제
                     }
                     cells[x, y] = null; // 칸 비우기
                 }
+                clearedRows?.Add(y); // 연출용: 지워진 줄의 압축 전 행 번호
                 clearedCount++; // 지운 줄 카운트
                 continue; // writeY는 그대로 두고 다음 줄로
             }

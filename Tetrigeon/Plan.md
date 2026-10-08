@@ -1,5 +1,5 @@
 ﻿# TETRIGEON — TURN-BASED TETRIS ROGUELIKE
-Design notes | 2026-09-14 (code sync: 2026-10-01; crystal-cell design update: 2026-10-02; monster skill design update: 2026-10-06; crystal cells implemented: 2026-10-06; healing balance: 2026-10-06; exit to title: 2026-10-06; reward cards: 2026-10-06; no reward after the boss: 2026-10-07; HP bars: 2026-10-07; skill counter: 2026-10-07; stage panel removed: 2026-10-07; stage board: 2026-10-07)
+Design notes | 2026-09-14 (code sync: 2026-10-01; crystal-cell design update: 2026-10-02; monster skill design update: 2026-10-06; crystal cells implemented: 2026-10-06; healing balance: 2026-10-06; exit to title: 2026-10-06; reward cards: 2026-10-06; no reward after the boss: 2026-10-07; HP bars: 2026-10-07; skill counter: 2026-10-07; stage panel removed: 2026-10-07; stage board: 2026-10-07; board effects: 2026-10-08; start countdown: 2026-10-08)
 
 Status: Core rules describe the intended direction. Recommendations, examples,
 and undecided details are not commitments. Based on prior discussion and the
@@ -150,6 +150,36 @@ Implemented UI (2026-10-01), replacing the earlier "NEXT 3 or 4" TBD:
   `T_SkillRune_Gold` (9x9 dots shown at 1.5x) in `@Resources/UI/HpBars/Layers`, gold digit font
   `HpDigits_gold` (0-9, "/", "+", "!") in `@Resources/UI/HpBars/Font`. Only the monster bar
   prefab `P_HpBarMonster` has the counter; Lemy's bar does not.
+- Board effects (2026-10-08, confirmed after a preview review, implemented): three short pixel effects
+  on the board, made in `@Resources/Effects/BoardFX` (LOCK and the crystal burst from sprite sheets, LINE CLEAR as a Particle System; prefabs `P_FX_Lock`,
+  `P_FX_ClearParticles`, `P_FX_CrystalBurst`) and played by `BoardEffectPlayer` (under Managers) from a
+  visual-only notification `PieceSpawner.OnLockVisual` (locked cells, cleared rows and cleared crystal
+  cells, with coordinates from before the rows compact). They change no rule or timing, never pause the
+  game, and play on real time so they finish even while the game is paused or a stage is cleared.
+  - LOCK (0.133 s): a thin teal rim traces the outline of the mino that just locked (edges shared by
+    cells of the same mino are skipped) for every cell that really locked, including cells added by the
+    Crystal Queen. Once per real Lock (gravity and hard drop share the same path); not for move, rotate,
+    Hold or the ghost. Cells removed by that Lock's line clear show no LOCK; surviving cells show it at
+    their position after the rows above have dropped.
+  - LINE CLEAR (about 0.1 s, changed 2026-10-08 from a long horizontal light to short particles): tiny
+    square sparks (3-5 px, white and teal) fly out of each cleared cell, once per cleared row (several
+    rows at once play together), at the row's position before compaction. One cleared row emits 2 sparks
+    per cell, two or more rows 1 per cell, 32 at most in total; a row that holds crystal cells gets half
+    the sparks and the crystal cells themselves emit none (they have their own burst). Each spark lives
+    0.08-0.14 s, travels about 0.5-1.2 cells outward and shrinks in steps. It is one Particle System
+    (`P_FX_ClearParticles`, a single instance under `BoardEffectManager`, world space, real time) that
+    `BoardEffectPlayer` fires once per clear; the old long light (`P_FX_LineClear` and its sheet) was
+    deleted. Not for Garbage, Caterpillar bites, Top Out or board resets.
+  - Crystal burst (0.267 s, changed 2026-10-08 from one purple effect to seven): one effect per cleared
+    enhanced crystal cell (the same cells that fire the crystal ability), with the look of the source
+    mino's ability, within two cells: I needle shards (Pierce), J snowflake and ice (Freeze), L eight-ray
+    star (Critical), O expanding ring with gold plates (Shield), S plus sparkles and leaves (Heal), T
+    bubble ring and droplets (Poison), Z fire and embers (Explosion). It starts 0.06 s after the sparks
+    (a visual delay only; the effect never triggers an ability). The sheet `T_FX_CrystalBurst` has one
+    row per source mino in `TetrominoType` order (I J L O S T Z), and `PieceSpawner.OnLockVisual` also
+    passes the source types of the cleared crystal cells (the same list the ability code already
+    receives, unchanged).
+  Effects sit above the blocks and are clipped to the board interior, so they never cover the board frame.
 - Not implemented: each enemy's expected HP damage or Garbage amount for its
   next action; only the skill countdown is shown.
 
@@ -442,6 +472,31 @@ Implemented details (2026-10-01):
     Card prefab: `@Resources/UI/RewardScreen/P_RewardCard.prefab`.
 - Kept across stages: player HP and mino upgrade levels. Reset at stage start:
   enemies, board, bag, Hold slot, Hold charges (refilled to 4), and shield.
+- Start countdown (2026-10-08, confirmed after a composite preview review, implemented): a
+  3 -> 2 -> 1 countdown runs right before play begins, at the start of a run (scene load: START on
+  the title, Restart from the pause menu or the result window) and at the start of every later stage
+  after the reward pick (the boss stage too). One numeral at a time is shown in the middle of the
+  board interior at a fixed position. Each numeral stays sharp for 0.15 s, then grows from 1.0x to 1.4x
+  while fading from opaque to transparent over the remaining 0.55 s (0.7 s per numeral, 2.1 s in
+  total); the next numeral appears only after the previous one has fully faded. When the "1" has fully
+  faded the countdown hides and play starts exactly once: the first mino spawns and falls and locks
+  with its normal timers.
+  - While it runs no mino exists, so move, rotate, Hold, hard drop, falling and Lock cannot happen,
+    no turn or enemy action can start, and no key press is stored for later. This does not rely on the
+    time scale. Pause (ESC) works: the countdown stops while paused and continues after Resume, and
+    Resume does not spawn the mino early. Restart, Title or any scene change cancels it, and a
+    cancelled countdown never starts play. Target switching (TAB) is not blocked.
+  - Implementation: `CountdownManager` (under Managers) drives `CountdownView` on the prefab
+    `@Resources/UI/Countdown/P_Countdown`, placed under `UI/CountdownCanvas` (sorting order 50: above
+    the board, HP bars and stage board, below the restart, reward and pause windows). It holds the
+    first mino through `PieceSpawner.SetCountdownActive`, starts when the scene starts and on the new
+    event `CombatManager.OnStageStarted` (fired after the stage is ready, before the first mino), and
+    ignores a start request while one is running. The values (0.7 s, 0.15 s, 1.4x) are serialized on the
+    manager. Combat numbers, the bag, upgrades and rewards are unchanged.
+  - Art: three transparent 80x81 px numerals (`T_Countdown_3/2/1`, one dot = 1 px), shown at 2 px per
+    dot (160x162 px, numeral 102 px tall; 143 px at 1.4x), centred at FHD (960, 693). Teal carved-stone
+    numerals with a dark outline, made with VARCO (nano-banana-2, 4 sheets = 80 credits, one used);
+    yellow was tried first and teal was chosen. Palette #0e3a47 #1d6f82 #2a8ea0 #3ec0d6 #8cecf4.
 - Stage 10 (the boss stage) shows NO reward screen: no heal and no mino upgrade.
   Clearing it ends the run as a victory at once (changed 2026-10-07, confirmed: the
   upgrade could still be taken after the boss). It previously showed the reward

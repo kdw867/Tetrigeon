@@ -1,0 +1,3548 @@
+fileFormatVersion: 2
+guid: 1e4448d5dfe9bdf41bf5a5a6e557a65f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2986026912667813181
+    second: T_FX_Lock_0
+  - first:
+      213: 3931981178088963402
+    second: T_FX_Lock_1
+  - first:
+      213: -250782348254332156
+    second: T_FX_Lock_2
+  - first:
+      213: -4592805438138069344
+    second: T_FX_Lock_3
+  - first:
+      213: 4424512312626919676
+    second: T_FX_Lock_4
+  - first:
+      213: -695210669866525029
+    second: T_FX_Lock_5
+  - first:
+      213: -4956490401504804622
+    second: T_FX_Lock_6
+  - first:
+      213: -6562097758079958661
+    second: T_FX_Lock_7
+  - first:
+      213: 2563105882605211276
+    second: T_FX_Lock_8
+  - first:
+      213: -6641817769529936607
+    second: T_FX_Lock_9
+  - first:
+      213: 1472967885939455727
+    second: T_FX_Lock_10
+  - first:
+      213: 1450996432023388032
+    second: T_FX_Lock_11
+  - first:
+      213: -5663734055612512849
+    second: T_FX_Lock_12
+  - first:
+      213: 4325861068557938459
+    second: T_FX_Lock_13
+  - first:
+      213: -7750288019356902749
+    second: T_FX_Lock_14
+  - first:
+      213: -3037221860841751285
+    second: T_FX_Lock_15
+  - first:
+      213: 485629457173746615
+    second: FX_Lock_00_0
+  - first:
+      213: -2918837854868671107
+    second: FX_Lock_00_1
+  - first:
+      213: 1417584002537766464
+    second: FX_Lock_00_2
+  - first:
+      213: 998315803336506064
+    second: FX_Lock_00_3
+  - first:
+      213: 960339938302663635
+    second: FX_Lock_00_4
+  - first:
+      213: 6378416760643515092
+    second: FX_Lock_00_5
+  - first:
+      213: 4298490300316099741
+    second: FX_Lock_00_6
+  - first:
+      213: 8323684956197384915
+    second: FX_Lock_00_7
+  - first:
+      213: -6531432452485744587
+    second: FX_Lock_01_0
+  - first:
+      213: -2982281660387827163
+    second: FX_Lock_01_1
+  - first:
+      213: 2262015129457563769
+    second: FX_Lock_01_2
+  - first:
+      213: 7078098907339912143
+    second: FX_Lock_01_3
+  - first:
+      213: 8591168887681697693
+    second: FX_Lock_01_4
+  - first:
+      213: -7836519488485136032
+    second: FX_Lock_01_5
+  - first:
+      213: -3349887629829453856
+    second: FX_Lock_01_6
+  - first:
+      213: 7605012249079004638
+    second: FX_Lock_01_7
+  - first:
+      213: -5007132618786000812
+    second: FX_Lock_02_0
+  - first:
+      213: -3659072604644286927
+    second: FX_Lock_02_1
+  - first:
+      213: 4060306037934523473
+    second: FX_Lock_02_2
+  - first:
+      213: -5579422027412383236
+    second: FX_Lock_02_3
+  - first:
+      213: 5377243333980084176
+    second: FX_Lock_02_4
+  - first:
+      213: 17842375356306319
+    second: FX_Lock_02_5
+  - first:
+      213: -5166984852815797256
+    second: FX_Lock_02_6
+  - first:
+      213: 2161073009732639432
+    second: FX_Lock_02_7
+  - first:
+      213: 1175750953814241782
+    second: FX_Lock_03_0
+  - first:
+      213: 9043096120708346834
+    second: FX_Lock_03_1
+  - first:
+      213: -4119945264216619038
+    second: FX_Lock_03_2
+  - first:
+      213: -4007939455738450493
+    second: FX_Lock_03_3
+  - first:
+      213: -1049050502999146951
+    second: FX_Lock_03_4
+  - first:
+      213: -2491521936361906601
+    second: FX_Lock_03_5
+  - first:
+      213: -4746618433929886802
+    second: FX_Lock_03_6
+  - first:
+      213: 2280728626254462439
+    second: FX_Lock_03_7
+  - first:
+      213: -5991090362007042985
+    second: FX_Lock_04_0
+  - first:
+      213: -2900703249241086137
+    second: FX_Lock_04_1
+  - first:
+      213: -3588773717602293526
+    second: FX_Lock_04_2
+  - first:
+      213: 2512350987195198845
+    second: FX_Lock_04_3
+  - first:
+      213: -7272780109437994428
+    second: FX_Lock_04_4
+  - first:
+      213: 8112052166655327939
+    second: FX_Lock_04_5
+  - first:
+      213: -7257857331041763394
+    second: FX_Lock_04_6
+  - first:
+      213: -8050406955902640061
+    second: FX_Lock_04_7
+  - first:
+      213: 93572190032207864
+    second: FX_Lock_05_0
+  - first:
+      213: 8838377545406356707
+    second: FX_Lock_05_1
+  - first:
+      213: 1614431197236813360
+    second: FX_Lock_05_2
+  - first:
+      213: -6339852450111861374
+    second: FX_Lock_05_3
+  - first:
+      213: 8210945716387708848
+    second: FX_Lock_05_4
+  - first:
+      213: -4675189596321560657
+    second: FX_Lock_05_5
+  - first:
+      213: 7272749800369166283
+    second: FX_Lock_05_6
+  - first:
+      213: -1279964193360587452
+    second: FX_Lock_05_7
+  - first:
+      213: 8114185541167514439
+    second: FX_Lock_06_0
+  - first:
+      213: 4078726758123227504
+    second: FX_Lock_06_1
+  - first:
+      213: 372746968632482228
+    second: FX_Lock_06_2
+  - first:
+      213: -6504928333579037836
+    second: FX_Lock_06_3
+  - first:
+      213: -6041326160608724585
+    second: FX_Lock_06_4
+  - first:
+      213: 2047359230777818802
+    second: FX_Lock_06_5
+  - first:
+      213: -5288431690332573385
+    second: FX_Lock_06_6
+  - first:
+      213: -5738767255262826099
+    second: FX_Lock_06_7
+  - first:
+      213: -188193562349024285
+    second: FX_Lock_07_0
+  - first:
+      213: 880811523841807226
+    second: FX_Lock_07_1
+  - first:
+      213: 844850438281756468
+    second: FX_Lock_07_2
+  - first:
+      213: 8521508194050433275
+    second: FX_Lock_07_3
+  - first:
+      213: 2455001317155601943
+    second: FX_Lock_07_4
+  - first:
+      213: 1337559242542357784
+    second: FX_Lock_07_5
+  - first:
+      213: -1388775945744368459
+    second: FX_Lock_07_6
+  - first:
+      213: -2752387707434322140
+    second: FX_Lock_07_7
+  - first:
+      213: 4554657800447432900
+    second: FX_Lock_08_0
+  - first:
+      213: -2814959158066609642
+    second: FX_Lock_08_1
+  - first:
+      213: -8952327928610286057
+    second: FX_Lock_08_2
+  - first:
+      213: -1967919846221642415
+    second: FX_Lock_08_3
+  - first:
+      213: 4965218647740894583
+    second: FX_Lock_08_4
+  - first:
+      213: 8677199605103836148
+    second: FX_Lock_08_5
+  - first:
+      213: 6730896750502210748
+    second: FX_Lock_08_6
+  - first:
+      213: -3222865005657932452
+    second: FX_Lock_08_7
+  - first:
+      213: -6365417454997176234
+    second: FX_Lock_09_0
+  - first:
+      213: 2760032354263004931
+    second: FX_Lock_09_1
+  - first:
+      213: 8897903158786845115
+    second: FX_Lock_09_2
+  - first:
+      213: -8180077569957608987
+    second: FX_Lock_09_3
+  - first:
+      213: -3151534193241417714
+    second: FX_Lock_09_4
+  - first:
+      213: -4684632608977262945
+    second: FX_Lock_09_5
+  - first:
+      213: 2174651507124916159
+    second: FX_Lock_09_6
+  - first:
+      213: -7834646423745529152
+    second: FX_Lock_09_7
+  - first:
+      213: -7931060577619586931
+    second: FX_Lock_10_0
+  - first:
+      213: 5312288948857206398
+    second: FX_Lock_10_1
+  - first:
+      213: 8418769889120988551
+    second: FX_Lock_10_2
+  - first:
+      213: -6905769069317075087
+    second: FX_Lock_10_3
+  - first:
+      213: -3719990887738572861
+    second: FX_Lock_10_4
+  - first:
+      213: 8695595552306725168
+    second: FX_Lock_10_5
+  - first:
+      213: -2039113408324007900
+    second: FX_Lock_10_6
+  - first:
+      213: 242122109443135334
+    second: FX_Lock_10_7
+  - first:
+      213: 283880616005079406
+    second: FX_Lock_11_0
+  - first:
+      213: 6961610229004331876
+    second: FX_Lock_11_1
+  - first:
+      213: 4650826333408250068
+    second: FX_Lock_11_2
+  - first:
+      213: -3433068348981217392
+    second: FX_Lock_11_3
+  - first:
+      213: -6502605531830860005
+    second: FX_Lock_11_4
+  - first:
+      213: -8013429435357794199
+    second: FX_Lock_11_5
+  - first:
+      213: -6642230225329966747
+    second: FX_Lock_11_6
+  - first:
+      213: -7754786865095887435
+    second: FX_Lock_11_7
+  - first:
+      213: 7661906338500632967
+    second: FX_Lock_12_0
+  - first:
+      213: -3352933910842016330
+    second: FX_Lock_12_1
+  - first:
+      213: 1745363415477707175
+    second: FX_Lock_12_2
+  - first:
+      213: 4147627700576022246
+    second: FX_Lock_12_3
+  - first:
+      213: -6694268257188896799
+    second: FX_Lock_12_4
+  - first:
+      213: 2885634139714969378
+    second: FX_Lock_12_5
+  - first:
+      213: -5348259537022630206
+    second: FX_Lock_12_6
+  - first:
+      213: -6447314202768294822
+    second: FX_Lock_12_7
+  - first:
+      213: 8058795065458304467
+    second: FX_Lock_13_0
+  - first:
+      213: -2661784300118113274
+    second: FX_Lock_13_1
+  - first:
+      213: 4122043046512599398
+    second: FX_Lock_13_2
+  - first:
+      213: -3363806486025013818
+    second: FX_Lock_13_3
+  - first:
+      213: 3667799907229243673
+    second: FX_Lock_13_4
+  - first:
+      213: 8439122624304026714
+    second: FX_Lock_13_5
+  - first:
+      213: 3939478801677418288
+    second: FX_Lock_13_6
+  - first:
+      213: 2036341623551534053
+    second: FX_Lock_13_7
+  - first:
+      213: -7657687296158546296
+    second: FX_Lock_14_0
+  - first:
+      213: -4114278944085768040
+    second: FX_Lock_14_1
+  - first:
+      213: 3187603241919602963
+    second: FX_Lock_14_2
+  - first:
+      213: -91998873781218081
+    second: FX_Lock_14_3
+  - first:
+      213: -8892795757695312396
+    second: FX_Lock_14_4
+  - first:
+      213: 9171947727704536512
+    second: FX_Lock_14_5
+  - first:
+      213: -5827375456179713473
+    second: FX_Lock_14_6
+  - first:
+      213: -6464885158560952746
+    second: FX_Lock_14_7
+  - first:
+      213: 2418018708199202992
+    second: FX_Lock_15_0
+  - first:
+      213: -7662905693894266535
+    second: FX_Lock_15_1
+  - first:
+      213: 6702183085863859518
+    second: FX_Lock_15_2
+  - first:
+      213: 2026192263101148278
+    second: FX_Lock_15_3
+  - first:
+      213: -8613960151492595950
+    second: FX_Lock_15_4
+  - first:
+      213: 2058263810510608570
+    second: FX_Lock_15_5
+  - first:
+      213: 215544262824273894
+    second: FX_Lock_15_6
+  - first:
+      213: 922557263837042057
+    second: FX_Lock_15_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 108
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: FX_Lock_00_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 405
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b39e471b6d4db600800000000000000
+      internalID: 485629457173746615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_00_1
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 405
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d75f6978f643e77d0800000000000000
+      internalID: -2918837854868671107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_00_2
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 405
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04e3a8eb3254ca310800000000000000
+      internalID: 1417584002537766464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_00_3
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 405
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0daf78f0feabadd00800000000000000
+      internalID: 998315803336506064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_00_4
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 405
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3db9626f510d35d00800000000000000
+      internalID: 960339938302663635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_00_5
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 405
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d2fd8fdf30b48850800000000000000
+      internalID: 6378416760643515092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_00_6
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 405
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d94adcc572e47ab30800000000000000
+      internalID: 4298490300316099741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_00_7
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 405
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d2786ced5ba38370800000000000000
+      internalID: 8323684956197384915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_01_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 378
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 538f02b1ac0bb55a0800000000000000
+      internalID: -6531432452485744587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_01_1
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 378
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 522eb6471aecc96d0800000000000000
+      internalID: -2982281660387827163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_01_2
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 378
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97890eb86ca446f10800000000000000
+      internalID: 2262015129457563769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_01_3
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 378
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc3731174757a3260800000000000000
+      internalID: 7078098907339912143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_01_4
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 378
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d97c7abd596f93770800000000000000
+      internalID: 8591168887681697693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_01_5
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 378
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 069ea6d7b071f3390800000000000000
+      internalID: -7836519488485136032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_01_6
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 378
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e74a8af2fec281d0800000000000000
+      internalID: -3349887629829453856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_01_7
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 378
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: edd39d2f85e6a8960800000000000000
+      internalID: 7605012249079004638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_02_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 351
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4503df18967138ab0800000000000000
+      internalID: -5007132618786000812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_02_1
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 351
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13e50d84adc583dc0800000000000000
+      internalID: -3659072604644286927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_02_2
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 351
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 154067e34da195830800000000000000
+      internalID: 4060306037934523473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_02_3
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 351
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf958142a39e192b0800000000000000
+      internalID: -5579422027412383236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_02_4
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 351
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d758b8825ecf9a40800000000000000
+      internalID: 5377243333980084176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_02_5
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 351
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f83df0dbb836f3000800000000000000
+      internalID: 17842375356306319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_02_6
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 351
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f32718f6ae2b48b0800000000000000
+      internalID: -5166984852815797256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_02_7
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 351
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ca5cc6d37cadfd10800000000000000
+      internalID: 2161073009732639432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_03_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 324
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f1bc6a534b115010800000000000000
+      internalID: 1175750953814241782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_03_1
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 324
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d3b88862088f7d70800000000000000
+      internalID: 9043096120708346834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_03_2
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 324
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e7c0505c9303d6c0800000000000000
+      internalID: -4119945264216619038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_03_3
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 324
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3cdef6bcc40f068c0800000000000000
+      internalID: -4007939455738450493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_03_4
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 324
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93e7a4920260171f0800000000000000
+      internalID: -1049050502999146951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_03_5
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 324
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75e1e01eff55c6dd0800000000000000
+      internalID: -2491521936361906601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_03_6
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 324
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea3c949deaf902eb0800000000000000
+      internalID: -4746618433929886802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_03_7
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 324
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ed36fc0a96c6af10800000000000000
+      internalID: 2280728626254462439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_04_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 297
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 754cd43de0f5bdca0800000000000000
+      internalID: -5991090362007042985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_04_1
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 297
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 747e92e63c1aeb7d0800000000000000
+      internalID: -2900703249241086137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_04_2
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 297
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae8ae07615d123ec0800000000000000
+      internalID: -3588773717602293526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_04_3
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 297
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7d2fde69e9add220800000000000000
+      internalID: 2512350987195198845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_04_4
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 297
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44afb67f505e11b90800000000000000
+      internalID: -7272780109437994428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_04_5
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 297
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3cebde0577cc39070800000000000000
+      internalID: 8112052166655327939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_04_6
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 297
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebf7ac01639e64b90800000000000000
+      internalID: -7257857331041763394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_04_7
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 297
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 340e618c685374090800000000000000
+      internalID: -8050406955902640061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_05_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 270
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ff99bb396f6c4100800000000000000
+      internalID: 93572190032207864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_05_1
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 270
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ec1cb0cc8938aa70800000000000000
+      internalID: 8838377545406356707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_05_2
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 270
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03edb99ce9c976610800000000000000
+      internalID: 1614431197236813360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_05_3
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 270
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28d41be59c15408a0800000000000000
+      internalID: -6339852450111861374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_05_4
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 270
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0bffd4720a323f170800000000000000
+      internalID: 8210945716387708848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_05_5
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 270
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa7c6a515d36e1fb0800000000000000
+      internalID: -4675189596321560657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_05_6
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 270
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc71c47296ffde460800000000000000
+      internalID: 7272749800369166283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_05_7
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 270
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 445d5810957ac3ee0800000000000000
+      internalID: -1279964193360587452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_06_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 243
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74386e642c06b9070800000000000000
+      internalID: 8114185541167514439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_06_1
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 243
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 079c0d1606c8a9830800000000000000
+      internalID: 4078726758123227504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_06_2
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 243
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b95170a4634c2500800000000000000
+      internalID: 372746968632482228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_06_3
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 243
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 473d5ab252ad9b5a0800000000000000
+      internalID: -6504928333579037836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_06_4
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 243
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79974a08dd5e82ca0800000000000000
+      internalID: -6041326160608724585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_06_5
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 243
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2bef02e7f5ea96c10800000000000000
+      internalID: 2047359230777818802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_06_6
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 243
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 731fece9567bb96b0800000000000000
+      internalID: -5288431690332573385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_06_7
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 243
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d817a6d269dcb50b0800000000000000
+      internalID: -5738767255262826099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_07_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 216
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ebcb2fb3f6636df0800000000000000
+      internalID: -188193562349024285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_07_1
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 216
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7359a80a65493c00800000000000000
+      internalID: 880811523841807226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_07_2
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 216
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 43ffd165ff289bb00800000000000000
+      internalID: 844850438281756468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_07_3
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 216
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf0e4f8bd8a724670800000000000000
+      internalID: 8521508194050433275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_07_4
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 216
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71efc28d0bae11220800000000000000
+      internalID: 2455001317155601943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_07_5
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 216
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81d17cd5b07ff8210800000000000000
+      internalID: 1337559242542357784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_07_6
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 216
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bcbc49a2a31abce0800000000000000
+      internalID: -1388775945744368459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_07_7
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 216
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 427b93e76fd8dc9d0800000000000000
+      internalID: -2752387707434322140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_08_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 189
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c8912d4325653f30800000000000000
+      internalID: 4554657800447432900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_08_1
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 189
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 612053e5f814fe8d0800000000000000
+      internalID: -2814959158066609642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_08_2
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 189
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 716106e2e21f2c380800000000000000
+      internalID: -8952327928610286057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_08_3
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 189
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 155848b835b80b4e0800000000000000
+      internalID: -1967919846221642415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_08_4
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 189
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77dcdb2ad0008e440800000000000000
+      internalID: 4965218647740894583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_08_5
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 189
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4fbbf5b211b9b6870800000000000000
+      internalID: 8677199605103836148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_08_6
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 189
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbce389cee2f86d50800000000000000
+      internalID: 6730896750502210748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_08_7
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 189
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5db8b25a551643d0800000000000000
+      internalID: -3222865005657932452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_09_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 162
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65082d3dc8e79a7a0800000000000000
+      internalID: -6365417454997176234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_09_1
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 162
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3077e6c8dca9d4620800000000000000
+      internalID: 2760032354263004931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_09_2
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 162
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb9e051a7c3bb7b70800000000000000
+      internalID: 8897903158786845115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_09_3
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 162
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e1498f3ac68a7e80800000000000000
+      internalID: -8180077569957608987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_09_4
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 162
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e08195a49508344d0800000000000000
+      internalID: -3151534193241417714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_09_5
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 162
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f96e2be5677dcfeb0800000000000000
+      internalID: -4684632608977262945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_09_6
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 162
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbfc270260aed2e10800000000000000
+      internalID: 2174651507124916159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_09_7
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 162
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cafcdb569eb54390800000000000000
+      internalID: -7834646423745529152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_10_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 135
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8051eadc663fe190800000000000000
+      internalID: -7931060577619586931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_10_1
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 135
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e76fddc37aa09b940800000000000000
+      internalID: 5312288948857206398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_10_2
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 135
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78dafce0c9a75d470800000000000000
+      internalID: 8418769889120988551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_10_3
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 135
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17fc97aae97c920a0800000000000000
+      internalID: -6905769069317075087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_10_4
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 135
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3cff6a83fffef5cc0800000000000000
+      internalID: -3719990887738572861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_10_5
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 135
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03185b56516fca870800000000000000
+      internalID: 8695595552306725168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_10_6
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 135
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4288c18a82d93b3e0800000000000000
+      internalID: -2039113408324007900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_10_7
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 135
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66750a596c03c5300800000000000000
+      internalID: 242122109443135334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_11_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 108
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e611a9b8aeb80f300800000000000000
+      internalID: 283880616005079406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_11_1
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 108
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46b678c7e9b9c9060800000000000000
+      internalID: 6961610229004331876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_11_2
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 108
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d8c4dab8ed0b8040800000000000000
+      internalID: 4650826333408250068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_11_3
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 108
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0977659968a4b50d0800000000000000
+      internalID: -3433068348981217392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_11_4
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 108
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b174bb898ba12c5a0800000000000000
+      internalID: -6502605531830860005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_11_5
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 108
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 960f6d0b2649ac090800000000000000
+      internalID: -8013429435357794199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_11_6
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 108
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56138d65dce02d3a0800000000000000
+      internalID: -6642230225329966747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_11_7
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 108
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b5381dce66716490800000000000000
+      internalID: -7754786865095887435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_12_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 81
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 781e4a8683f845a60800000000000000
+      internalID: 7661906338500632967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_12_1
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 81
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bd76e86f5cf771d0800000000000000
+      internalID: -3352933910842016330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_12_2
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 81
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a1e28f67c6c83810800000000000000
+      internalID: 1745363415477707175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_12_3
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 81
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ee67692b655f8930800000000000000
+      internalID: 4147627700576022246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_12_4
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 81
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ef1513ec7e2913a0800000000000000
+      internalID: -6694268257188896799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_12_5
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 81
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22f537916f4db0820800000000000000
+      internalID: 2885634139714969378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_12_6
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 81
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c6cb21994a27c5b0800000000000000
+      internalID: -5348259537022630206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_12_7
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 81
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5c3aa454e98686a0800000000000000
+      internalID: -6447314202768294822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_13_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 54
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d5205a2a6796df60800000000000000
+      internalID: 8058795065458304467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_13_1
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 54
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6048fb228417f0bd0800000000000000
+      internalID: -2661784300118113274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_13_2
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 54
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 661a040bf40743930800000000000000
+      internalID: 4122043046512599398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_13_3
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 54
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c5f25bb2db5151d0800000000000000
+      internalID: -3363806486025013818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_13_4
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 54
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9191c913594a6e230800000000000000
+      internalID: 3667799907229243673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_13_5
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 54
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a549a9d7059cd1570800000000000000
+      internalID: 8439122624304026714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_13_6
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 54
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03ff92e0917dba630800000000000000
+      internalID: 3939478801677418288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_13_7
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 54
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e3a129eae9824c10800000000000000
+      internalID: 2036341623551534053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_14_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 27
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 886c27fe9fd6ab590800000000000000
+      internalID: -7657687296158546296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_14_1
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 27
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89806e6491527e6c0800000000000000
+      internalID: -4114278944085768040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_14_2
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 27
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31160878244ac3c20800000000000000
+      internalID: 3187603241919602963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_14_3
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 27
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd4d880038729bef0800000000000000
+      internalID: -91998873781218081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_14_4
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 27
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4fd587adf51769480800000000000000
+      internalID: -8892795757695312396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_14_5
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 27
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c5b7400ddd494f70800000000000000
+      internalID: 9171947727704536512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_14_6
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 27
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3a0499b5e0012fa0800000000000000
+      internalID: -5827375456179713473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_14_7
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 27
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65e8742633d1846a0800000000000000
+      internalID: -6464885158560952746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_15_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b0667234378e8120800000000000000
+      internalID: 2418018708199202992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_15_1
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 0
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9513d180fd3e7a590800000000000000
+      internalID: -7662905693894266535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_15_2
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 0
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e35fb84c100f20d50800000000000000
+      internalID: 6702183085863859518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_15_3
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 0
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67ce9c8c02b7e1c10800000000000000
+      internalID: 2026192263101148278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_15_4
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 0
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21fe9e481e0157880800000000000000
+      internalID: -8613960151492595950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_15_5
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 0
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab8d68fc70c609c10800000000000000
+      internalID: 2058263810510608570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_15_6
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 0
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e7a3037d54cdf200800000000000000
+      internalID: 215544262824273894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Lock_15_7
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 0
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98596fb81f49dcc00800000000000000
+      internalID: 922557263837042057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      FX_Lock_00_0: 485629457173746615
+      FX_Lock_00_1: -2918837854868671107
+      FX_Lock_00_2: 1417584002537766464
+      FX_Lock_00_3: 998315803336506064
+      FX_Lock_00_4: 960339938302663635
+      FX_Lock_00_5: 6378416760643515092
+      FX_Lock_00_6: 4298490300316099741
+      FX_Lock_00_7: 8323684956197384915
+      FX_Lock_01_0: -6531432452485744587
+      FX_Lock_01_1: -2982281660387827163
+      FX_Lock_01_2: 2262015129457563769
+      FX_Lock_01_3: 7078098907339912143
+      FX_Lock_01_4: 8591168887681697693
+      FX_Lock_01_5: -7836519488485136032
+      FX_Lock_01_6: -3349887629829453856
+      FX_Lock_01_7: 7605012249079004638
+      FX_Lock_02_0: -5007132618786000812
+      FX_Lock_02_1: -3659072604644286927
+      FX_Lock_02_2: 4060306037934523473
+      FX_Lock_02_3: -5579422027412383236
+      FX_Lock_02_4: 5377243333980084176
+      FX_Lock_02_5: 17842375356306319
+      FX_Lock_02_6: -5166984852815797256
+      FX_Lock_02_7: 2161073009732639432
+      FX_Lock_03_0: 1175750953814241782
+      FX_Lock_03_1: 9043096120708346834
+      FX_Lock_03_2: -4119945264216619038
+      FX_Lock_03_3: -4007939455738450493
+      FX_Lock_03_4: -1049050502999146951
+      FX_Lock_03_5: -2491521936361906601
+      FX_Lock_03_6: -4746618433929886802
+      FX_Lock_03_7: 2280728626254462439
+      FX_Lock_04_0: -5991090362007042985
+      FX_Lock_04_1: -2900703249241086137
+      FX_Lock_04_2: -3588773717602293526
+      FX_Lock_04_3: 2512350987195198845
+      FX_Lock_04_4: -7272780109437994428
+      FX_Lock_04_5: 8112052166655327939
+      FX_Lock_04_6: -7257857331041763394
+      FX_Lock_04_7: -8050406955902640061
+      FX_Lock_05_0: 93572190032207864
+      FX_Lock_05_1: 8838377545406356707
+      FX_Lock_05_2: 1614431197236813360
+      FX_Lock_05_3: -6339852450111861374
+      FX_Lock_05_4: 8210945716387708848
+      FX_Lock_05_5: -4675189596321560657
+      FX_Lock_05_6: 7272749800369166283
+      FX_Lock_05_7: -1279964193360587452
+      FX_Lock_06_0: 8114185541167514439
+      FX_Lock_06_1: 4078726758123227504
+      FX_Lock_06_2: 372746968632482228
+      FX_Lock_06_3: -6504928333579037836
+      FX_Lock_06_4: -6041326160608724585
+      FX_Lock_06_5: 2047359230777818802
+      FX_Lock_06_6: -5288431690332573385
+      FX_Lock_06_7: -5738767255262826099
+      FX_Lock_07_0: -188193562349024285
+      FX_Lock_07_1: 880811523841807226
+      FX_Lock_07_2: 844850438281756468
+      FX_Lock_07_3: 8521508194050433275
+      FX_Lock_07_4: 2455001317155601943
+      FX_Lock_07_5: 1337559242542357784
+      FX_Lock_07_6: -1388775945744368459
+      FX_Lock_07_7: -2752387707434322140
+      FX_Lock_08_0: 4554657800447432900
+      FX_Lock_08_1: -2814959158066609642
+      FX_Lock_08_2: -8952327928610286057
+      FX_Lock_08_3: -1967919846221642415
+      FX_Lock_08_4: 4965218647740894583
+      FX_Lock_08_5: 8677199605103836148
+      FX_Lock_08_6: 6730896750502210748
+      FX_Lock_08_7: -3222865005657932452
+      FX_Lock_09_0: -6365417454997176234
+      FX_Lock_09_1: 2760032354263004931
+      FX_Lock_09_2: 8897903158786845115
+      FX_Lock_09_3: -8180077569957608987
+      FX_Lock_09_4: -3151534193241417714
+      FX_Lock_09_5: -4684632608977262945
+      FX_Lock_09_6: 2174651507124916159
+      FX_Lock_09_7: -7834646423745529152
+      FX_Lock_10_0: -7931060577619586931
+      FX_Lock_10_1: 5312288948857206398
+      FX_Lock_10_2: 8418769889120988551
+      FX_Lock_10_3: -6905769069317075087
+      FX_Lock_10_4: -3719990887738572861
+      FX_Lock_10_5: 8695595552306725168
+      FX_Lock_10_6: -2039113408324007900
+      FX_Lock_10_7: 242122109443135334
+      FX_Lock_11_0: 283880616005079406
+      FX_Lock_11_1: 6961610229004331876
+      FX_Lock_11_2: 4650826333408250068
+      FX_Lock_11_3: -3433068348981217392
+      FX_Lock_11_4: -6502605531830860005
+      FX_Lock_11_5: -8013429435357794199
+      FX_Lock_11_6: -6642230225329966747
+      FX_Lock_11_7: -7754786865095887435
+      FX_Lock_12_0: 7661906338500632967
+      FX_Lock_12_1: -3352933910842016330
+      FX_Lock_12_2: 1745363415477707175
+      FX_Lock_12_3: 4147627700576022246
+      FX_Lock_12_4: -6694268257188896799
+      FX_Lock_12_5: 2885634139714969378
+      FX_Lock_12_6: -5348259537022630206
+      FX_Lock_12_7: -6447314202768294822
+      FX_Lock_13_0: 8058795065458304467
+      FX_Lock_13_1: -2661784300118113274
+      FX_Lock_13_2: 4122043046512599398
+      FX_Lock_13_3: -3363806486025013818
+      FX_Lock_13_4: 3667799907229243673
+      FX_Lock_13_5: 8439122624304026714
+      FX_Lock_13_6: 3939478801677418288
+      FX_Lock_13_7: 2036341623551534053
+      FX_Lock_14_0: -7657687296158546296
+      FX_Lock_14_1: -4114278944085768040
+      FX_Lock_14_2: 3187603241919602963
+      FX_Lock_14_3: -91998873781218081
+      FX_Lock_14_4: -8892795757695312396
+      FX_Lock_14_5: 9171947727704536512
+      FX_Lock_14_6: -5827375456179713473
+      FX_Lock_14_7: -6464885158560952746
+      FX_Lock_15_0: 2418018708199202992
+      FX_Lock_15_1: -7662905693894266535
+      FX_Lock_15_2: 6702183085863859518
+      FX_Lock_15_3: 2026192263101148278
+      FX_Lock_15_4: -8613960151492595950
+      FX_Lock_15_5: 2058263810510608570
+      FX_Lock_15_6: 215544262824273894
+      FX_Lock_15_7: 922557263837042057
+      T_FX_Lock_0: 2986026912667813181
+      T_FX_Lock_1: 3931981178088963402
+      T_FX_Lock_10: 1472967885939455727
+      T_FX_Lock_11: 1450996432023388032
+      T_FX_Lock_12: -5663734055612512849
+      T_FX_Lock_13: 4325861068557938459
+      T_FX_Lock_14: -7750288019356902749
+      T_FX_Lock_15: -3037221860841751285
+      T_FX_Lock_2: -250782348254332156
+      T_FX_Lock_3: -4592805438138069344
+      T_FX_Lock_4: 4424512312626919676
+      T_FX_Lock_5: -695210669866525029
+      T_FX_Lock_6: -4956490401504804622
+      T_FX_Lock_7: -6562097758079958661
+      T_FX_Lock_8: 2563105882605211276
+      T_FX_Lock_9: -6641817769529936607
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -25,3 +25,4 @@
 - 제작: `tools/build_glow.js`가 슬롯 모양(투명 모서리 포함)을 따라 `T_StageBoard_SlotGlow.png`(242x46, 사방 3도트 큼) 생성: 안쪽 2칸 밝은 청록 테두리 + 바깥 3칸 옅어지는 빛. 애니메이션 없음. 크레딧 0
 - Unity: `Layers/T_StageBoard_SlotGlow.png`(PPU 57.14, 9분할 27/11/27/12), `P_StageBoardRow`에 `SelectGlow`(Bg 바로 위, 사방 5.25px 큼) 추가. `StageBoardRow.Show(enemy, selected)`, `StageBoardView`가 `enemy == combat.Target`을 넘김
 - [확인] 플레이 모드: 스테이지 시작 시 첫 적, TAB 3번으로 오른쪽 이동·맨 왼쪽 순환, 타겟 처치 후 다음 살아있는 적으로 이동, 스테이지 1(적 1마리)도 선택, 콘솔 오류 없음. 캡처 `preview/Unity_StageBoard_Select.png`
+- [사용자 확인 2026-10-08] 직접 플레이에서 TAB으로 선택 테두리가 옮겨가는 것을 확인함 (위의 "실제 키 입력 미확인" 중 TAB 부분 해소)

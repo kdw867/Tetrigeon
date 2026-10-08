@@ -155,3 +155,11 @@ T_Title_BG, T_Title_Lemy, T_Title_Sentinel, T_Title_Queen, T_Title_Mino_{I,O,T,S
 ## EXIT 종료 (2026-10-06, "타이틀에서 EXIT 누르면 게임이 종료되게 해줘")
 - `TitleMenu.Quit`: 에디터에서는 `EditorApplication.isPlaying = false`(플레이 모드 종료), 빌드에서는 `Application.Quit()` (`#if UNITY_EDITOR`). 버튼 연결(Btn_EXIT → TitleMenu.Quit)은 그대로
 - 컴파일 에러 없음, 사용자가 에디터에서 종료 확인
+
+## 로고 G 시안 (2026-10-08, "G가 어색하니 중간에 초록 수정을 추가하면 어때") — 미적용
+- 도구: `tools/logo_grid_g.js` (logo_grid.js 복사본, 출력은 work/·preview/에만, 확정 `parts/T_Title_Logo.png`는 덮어쓰지 않음). 변경 없는 재생성(변형 0)이 현재 확정 로고와 바이트까지 같음을 확인
+- A: G 가운데 칸(2줄째 가운데)에 확정 초록 수정 추가 → `work/T_Title_Logo_G_A.png` (764x131 그대로). 안쪽 가로대가 꽉 차서 6/B처럼 읽힐 수 있음
+- B: 가운데에 추가 + 오른쪽 아래 수정은 돌로 → `work/T_Title_Logo_G_B.png`(png만 남김)
+- C: G를 4칸 폭으로(안쪽 가로대 두 칸) 하고 가로대 첫 칸을 초록 수정으로 → `work/T_Title_Logo_G_C.png` 789x131, 화면 2배 1578x262 (+50px). G가 가장 또렷함
+- 비교 `work/logo_compare_full_2x_C.png`(위부터 현재 / A / C), `work/logo_G_compare_x5.png`(현재 / A / B 확대)
+- [미적용] Unity 로고·TitleScene — 승인 전 적용 안 함

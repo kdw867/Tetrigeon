@@ -1,0 +1,1704 @@
+fileFormatVersion: 2
+guid: f1da56520dc926c43af3657efbae7606
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4104018248490688180
+    second: T_FX_CrystalBurst_0
+  - first:
+      213: -8015160138094162618
+    second: T_FX_CrystalBurst_1
+  - first:
+      213: 1264587834035825810
+    second: T_FX_CrystalBurst_2
+  - first:
+      213: -7758360326422820613
+    second: T_FX_CrystalBurst_3
+  - first:
+      213: -2075412345757127098
+    second: T_FX_CrystalBurst_4
+  - first:
+      213: -7400507089186866515
+    second: T_FX_CrystalBurst_5
+  - first:
+      213: 2151501590592976888
+    second: T_FX_CrystalBurst_6
+  - first:
+      213: 338201007112681388
+    second: T_FX_CrystalBurst_7
+  - first:
+      213: -879816862263839365
+    second: T_FX_CrystalBurst_8
+  - first:
+      213: 8967684443661108633
+    second: T_FX_CrystalBurst_9
+  - first:
+      213: -6563496321038321041
+    second: T_FX_CrystalBurst_10
+  - first:
+      213: -5052258714046316377
+    second: T_FX_CrystalBurst_11
+  - first:
+      213: -1108790521415950489
+    second: T_FX_CrystalBurst_12
+  - first:
+      213: 8936451768019234163
+    second: T_FX_CrystalBurst_13
+  - first:
+      213: 7800240778737466562
+    second: T_FX_CrystalBurst_14
+  - first:
+      213: -5326982347992377776
+    second: FX_CrystalBurst_00
+  - first:
+      213: 1935161836076520564
+    second: FX_CrystalBurst_01
+  - first:
+      213: 5296570085123191489
+    second: FX_CrystalBurst_02
+  - first:
+      213: 7693599687631115384
+    second: FX_CrystalBurst_03
+  - first:
+      213: -3772736955507114885
+    second: FX_CrystalBurst_04
+  - first:
+      213: -1889458711973094253
+    second: FX_CrystalBurst_05
+  - first:
+      213: 3976480502335381226
+    second: FX_CrystalBurst_06
+  - first:
+      213: 2337950683248635973
+    second: FX_CrystalBurst_07
+  - first:
+      213: -5051743949973837690
+    second: FX_CrystalBurst_I_0
+  - first:
+      213: 310097479885661241
+    second: FX_CrystalBurst_I_1
+  - first:
+      213: -2393264807762238814
+    second: FX_CrystalBurst_I_2
+  - first:
+      213: -8072535041278270192
+    second: FX_CrystalBurst_I_3
+  - first:
+      213: 5045773269712701405
+    second: FX_CrystalBurst_I_4
+  - first:
+      213: -5660497673473394353
+    second: FX_CrystalBurst_I_5
+  - first:
+      213: 8456511931316460892
+    second: FX_CrystalBurst_I_6
+  - first:
+      213: 7132024706041451018
+    second: FX_CrystalBurst_I_7
+  - first:
+      213: -4426854769477872408
+    second: FX_CrystalBurst_J_0
+  - first:
+      213: 5227511151880608252
+    second: FX_CrystalBurst_J_1
+  - first:
+      213: -5992090136842096675
+    second: FX_CrystalBurst_J_2
+  - first:
+      213: 469142925150470882
+    second: FX_CrystalBurst_J_3
+  - first:
+      213: -91253543308007512
+    second: FX_CrystalBurst_J_4
+  - first:
+      213: 2620589851015390574
+    second: FX_CrystalBurst_J_5
+  - first:
+      213: -952518236225791367
+    second: FX_CrystalBurst_J_6
+  - first:
+      213: -1534483111092030669
+    second: FX_CrystalBurst_J_7
+  - first:
+      213: 5609614210464436815
+    second: FX_CrystalBurst_L_0
+  - first:
+      213: 4091563396804829962
+    second: FX_CrystalBurst_L_1
+  - first:
+      213: -8090332480060334933
+    second: FX_CrystalBurst_L_2
+  - first:
+      213: 5501588638340621820
+    second: FX_CrystalBurst_L_3
+  - first:
+      213: -1330397183791773695
+    second: FX_CrystalBurst_L_4
+  - first:
+      213: 8235464654695151938
+    second: FX_CrystalBurst_L_5
+  - first:
+      213: 1308971444993397421
+    second: FX_CrystalBurst_L_6
+  - first:
+      213: 9097672365848923049
+    second: FX_CrystalBurst_L_7
+  - first:
+      213: -3998511807841410575
+    second: FX_CrystalBurst_O_0
+  - first:
+      213: 4143031717408547810
+    second: FX_CrystalBurst_O_1
+  - first:
+      213: 2616863851762626826
+    second: FX_CrystalBurst_O_2
+  - first:
+      213: 3390599289471314047
+    second: FX_CrystalBurst_O_3
+  - first:
+      213: 7207219327660061909
+    second: FX_CrystalBurst_O_4
+  - first:
+      213: 5770259855149040454
+    second: FX_CrystalBurst_O_5
+  - first:
+      213: -8507807717936174030
+    second: FX_CrystalBurst_O_6
+  - first:
+      213: 5523191527092016690
+    second: FX_CrystalBurst_O_7
+  - first:
+      213: -5177991392710242232
+    second: FX_CrystalBurst_S_0
+  - first:
+      213: -5559011758399917209
+    second: FX_CrystalBurst_S_1
+  - first:
+      213: 1582678441259521966
+    second: FX_CrystalBurst_S_2
+  - first:
+      213: 7971562321388332143
+    second: FX_CrystalBurst_S_3
+  - first:
+      213: 1828712277499398614
+    second: FX_CrystalBurst_S_4
+  - first:
+      213: -716547121755966094
+    second: FX_CrystalBurst_S_5
+  - first:
+      213: -862532635935244902
+    second: FX_CrystalBurst_S_6
+  - first:
+      213: 1517512306755279315
+    second: FX_CrystalBurst_S_7
+  - first:
+      213: 3242710923750872646
+    second: FX_CrystalBurst_T_0
+  - first:
+      213: 6100272841219821202
+    second: FX_CrystalBurst_T_1
+  - first:
+      213: 3766520934695190621
+    second: FX_CrystalBurst_T_2
+  - first:
+      213: 2220012695037023883
+    second: FX_CrystalBurst_T_3
+  - first:
+      213: 8436007592913085941
+    second: FX_CrystalBurst_T_4
+  - first:
+      213: 6964003937894149105
+    second: FX_CrystalBurst_T_5
+  - first:
+      213: -7854168153366843121
+    second: FX_CrystalBurst_T_6
+  - first:
+      213: -3806987598397689092
+    second: FX_CrystalBurst_T_7
+  - first:
+      213: 3068138821191879635
+    second: FX_CrystalBurst_Z_0
+  - first:
+      213: 2500367685085969737
+    second: FX_CrystalBurst_Z_1
+  - first:
+      213: -8678099168250040034
+    second: FX_CrystalBurst_Z_2
+  - first:
+      213: 494177747318199651
+    second: FX_CrystalBurst_Z_3
+  - first:
+      213: -7013200387448460030
+    second: FX_CrystalBurst_Z_4
+  - first:
+      213: -2883007331973776631
+    second: FX_CrystalBurst_Z_5
+  - first:
+      213: -8331231988069579682
+    second: FX_CrystalBurst_Z_6
+  - first:
+      213: 3290161775713402225
+    second: FX_CrystalBurst_Z_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 54
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: FX_CrystalBurst_I_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 162
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 688a49d84a994e9b0800000000000000
+      internalID: -5051743949973837690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_I_1
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 162
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9342456d300bd4400800000000000000
+      internalID: 310097479885661241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_I_2
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 162
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a263ef565a69ced0800000000000000
+      internalID: -2393264807762238814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_I_3
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 162
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01527bb662898ff80800000000000000
+      internalID: -8072535041278270192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_I_4
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 162
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd7036e1e00360640800000000000000
+      internalID: 5045773269712701405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_I_5
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 162
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4971b84b5fd171b0800000000000000
+      internalID: -5660497673473394353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_I_6
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 162
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5d58f80cc09b5570800000000000000
+      internalID: 8456511931316460892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_I_7
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 162
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0219ecdeaa0af260800000000000000
+      internalID: 7132024706041451018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_J_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 135
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e41709aa07a092c0800000000000000
+      internalID: -4426854769477872408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_J_1
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 135
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf99c3332b9db8840800000000000000
+      internalID: 5227511151880608252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_J_2
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 135
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddfa76b94c1d7dca0800000000000000
+      internalID: -5992090136842096675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_J_3
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 135
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e24b7a310bb28600800000000000000
+      internalID: 469142925150470882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_J_4
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 135
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a761a6c26dcbbef0800000000000000
+      internalID: -91253543308007512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_J_5
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 135
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6524c3c5943e5420800000000000000
+      internalID: 2620589851015390574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_J_6
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 135
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97a1ea7f5b9f7c2f0800000000000000
+      internalID: -952518236225791367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_J_7
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 135
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 333f5819dbb64bae0800000000000000
+      internalID: -1534483111092030669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_L_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 108
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4257b5476a59dd40800000000000000
+      internalID: 5609614210464436815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_L_1
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 108
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a03ea8a3b3728c830800000000000000
+      internalID: 4091563396804829962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_L_2
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 108
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bacd23b497d59bf80800000000000000
+      internalID: -8090332480060334933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_L_3
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 108
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf52e98c7b1995c40800000000000000
+      internalID: 5501588638340621820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_L_4
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 108
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10849e16fca798de0800000000000000
+      internalID: -1330397183791773695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_L_5
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 108
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 249b367587f3a4270800000000000000
+      internalID: 8235464654695151938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_L_6
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 108
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da216ff08966a2210800000000000000
+      internalID: 1308971444993397421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_L_7
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 108
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ab0051b0dc614e70800000000000000
+      internalID: 9097672365848923049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_O_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 81
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f1686f12be6288c0800000000000000
+      internalID: -3998511807841410575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_O_1
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 81
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e3205175610f7930800000000000000
+      internalID: 4143031717408547810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_O_2
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 81
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a013fd5fec7f05420800000000000000
+      internalID: 2616863851762626826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_O_3
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 81
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7821a0f614dd0f20800000000000000
+      internalID: 3390599289471314047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_O_4
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 81
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d4f1830bcf250460800000000000000
+      internalID: 7207219327660061909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_O_5
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 81
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6430bdf14c4141050800000000000000
+      internalID: 5770259855149040454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_O_6
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 81
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23c6613f4f13ee980800000000000000
+      internalID: -8507807717936174030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_O_7
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 81
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23654c64e6156ac40800000000000000
+      internalID: 5523191527092016690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_S_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 54
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 840d97333441428b0800000000000000
+      internalID: -5177991392710242232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_S_1
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 54
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7637a56324c6ad2b0800000000000000
+      internalID: -5559011758399917209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_S_2
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 54
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea751fc28adc6f510800000000000000
+      internalID: 1582678441259521966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_S_3
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 54
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f646d3732bda0ae60800000000000000
+      internalID: 7971562321388332143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_S_4
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 54
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d94fb0a024e06910800000000000000
+      internalID: 1828712277499398614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_S_5
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 54
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27538ee60305e06f0800000000000000
+      internalID: -716547121755966094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_S_6
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 54
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9df5e3332ba704f0800000000000000
+      internalID: -862532635935244902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_S_7
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 54
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d99e6227694f0510800000000000000
+      internalID: 1517512306755279315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_T_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 27
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 646137f876c600d20800000000000000
+      internalID: 3242710923750872646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_T_1
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 27
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29eced514d588a450800000000000000
+      internalID: 6100272841219821202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_T_2
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 27
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d50449f85de554430800000000000000
+      internalID: 3766520934695190621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_T_3
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 27
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b861a84b8c11fce10800000000000000
+      internalID: 2220012695037023883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_T_4
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 27
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f5251ab538b21570800000000000000
+      internalID: 8436007592913085941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_T_5
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 27
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1fb2a944fac15a060800000000000000
+      internalID: 6964003937894149105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_T_6
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 27
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f01326c7da3600390800000000000000
+      internalID: -7854168153366843121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_T_7
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 27
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf2303513fcda2bc0800000000000000
+      internalID: -3806987598397689092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_Z_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3db4abe8008349a20800000000000000
+      internalID: 3068138821191879635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_Z_1
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 0
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94d3a6d792713b220800000000000000
+      internalID: 2500367685085969737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_Z_2
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 0
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e11f7d6f8c2319780800000000000000
+      internalID: -8678099168250040034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_Z_3
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 0
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 365ddccfa0cabd600800000000000000
+      internalID: 494177747318199651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_Z_4
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 0
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20da087b76b1cae90800000000000000
+      internalID: -7013200387448460030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_Z_5
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 0
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90b3bdc3b108df7d0800000000000000
+      internalID: -2883007331973776631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_Z_6
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 0
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e54cdb9c5a4816c80800000000000000
+      internalID: -8331231988069579682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_CrystalBurst_Z_7
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 0
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17d37f6f3b009ad20800000000000000
+      internalID: 3290161775713402225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      FX_CrystalBurst_00: -5326982347992377776
+      FX_CrystalBurst_01: 1935161836076520564
+      FX_CrystalBurst_02: 5296570085123191489
+      FX_CrystalBurst_03: 7693599687631115384
+      FX_CrystalBurst_04: -3772736955507114885
+      FX_CrystalBurst_05: -1889458711973094253
+      FX_CrystalBurst_06: 3976480502335381226
+      FX_CrystalBurst_07: 2337950683248635973
+      FX_CrystalBurst_I_0: -5051743949973837690
+      FX_CrystalBurst_I_1: 310097479885661241
+      FX_CrystalBurst_I_2: -2393264807762238814
+      FX_CrystalBurst_I_3: -8072535041278270192
+      FX_CrystalBurst_I_4: 5045773269712701405
+      FX_CrystalBurst_I_5: -5660497673473394353
+      FX_CrystalBurst_I_6: 8456511931316460892
+      FX_CrystalBurst_I_7: 7132024706041451018
+      FX_CrystalBurst_J_0: -4426854769477872408
+      FX_CrystalBurst_J_1: 5227511151880608252
+      FX_CrystalBurst_J_2: -5992090136842096675
+      FX_CrystalBurst_J_3: 469142925150470882
+      FX_CrystalBurst_J_4: -91253543308007512
+      FX_CrystalBurst_J_5: 2620589851015390574
+      FX_CrystalBurst_J_6: -952518236225791367
+      FX_CrystalBurst_J_7: -1534483111092030669
+      FX_CrystalBurst_L_0: 5609614210464436815
+      FX_CrystalBurst_L_1: 4091563396804829962
+      FX_CrystalBurst_L_2: -8090332480060334933
+      FX_CrystalBurst_L_3: 5501588638340621820
+      FX_CrystalBurst_L_4: -1330397183791773695
+      FX_CrystalBurst_L_5: 8235464654695151938
+      FX_CrystalBurst_L_6: 1308971444993397421
+      FX_CrystalBurst_L_7: 9097672365848923049
+      FX_CrystalBurst_O_0: -3998511807841410575
+      FX_CrystalBurst_O_1: 4143031717408547810
+      FX_CrystalBurst_O_2: 2616863851762626826
+      FX_CrystalBurst_O_3: 3390599289471314047
+      FX_CrystalBurst_O_4: 7207219327660061909
+      FX_CrystalBurst_O_5: 5770259855149040454
+      FX_CrystalBurst_O_6: -8507807717936174030
+      FX_CrystalBurst_O_7: 5523191527092016690
+      FX_CrystalBurst_S_0: -5177991392710242232
+      FX_CrystalBurst_S_1: -5559011758399917209
+      FX_CrystalBurst_S_2: 1582678441259521966
+      FX_CrystalBurst_S_3: 7971562321388332143
+      FX_CrystalBurst_S_4: 1828712277499398614
+      FX_CrystalBurst_S_5: -716547121755966094
+      FX_CrystalBurst_S_6: -862532635935244902
+      FX_CrystalBurst_S_7: 1517512306755279315
+      FX_CrystalBurst_T_0: 3242710923750872646
+      FX_CrystalBurst_T_1: 6100272841219821202
+      FX_CrystalBurst_T_2: 3766520934695190621
+      FX_CrystalBurst_T_3: 2220012695037023883
+      FX_CrystalBurst_T_4: 8436007592913085941
+      FX_CrystalBurst_T_5: 6964003937894149105
+      FX_CrystalBurst_T_6: -7854168153366843121
+      FX_CrystalBurst_T_7: -3806987598397689092
+      FX_CrystalBurst_Z_0: 3068138821191879635
+      FX_CrystalBurst_Z_1: 2500367685085969737
+      FX_CrystalBurst_Z_2: -8678099168250040034
+      FX_CrystalBurst_Z_3: 494177747318199651
+      FX_CrystalBurst_Z_4: -7013200387448460030
+      FX_CrystalBurst_Z_5: -2883007331973776631
+      FX_CrystalBurst_Z_6: -8331231988069579682
+      FX_CrystalBurst_Z_7: 3290161775713402225
+      T_FX_CrystalBurst_0: -4104018248490688180
+      T_FX_CrystalBurst_1: -8015160138094162618
+      T_FX_CrystalBurst_10: -6563496321038321041
+      T_FX_CrystalBurst_11: -5052258714046316377
+      T_FX_CrystalBurst_12: -1108790521415950489
+      T_FX_CrystalBurst_13: 8936451768019234163
+      T_FX_CrystalBurst_14: 7800240778737466562
+      T_FX_CrystalBurst_2: 1264587834035825810
+      T_FX_CrystalBurst_3: -7758360326422820613
+      T_FX_CrystalBurst_4: -2075412345757127098
+      T_FX_CrystalBurst_5: -7400507089186866515
+      T_FX_CrystalBurst_6: 2151501590592976888
+      T_FX_CrystalBurst_7: 338201007112681388
+      T_FX_CrystalBurst_8: -879816862263839365
+      T_FX_CrystalBurst_9: 8967684443661108633
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
