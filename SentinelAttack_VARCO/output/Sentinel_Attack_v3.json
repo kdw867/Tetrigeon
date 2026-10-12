@@ -1,0 +1,160 @@
+{
+  "name": "Sentinel_Attack_v3",
+  "unity_applied": false,
+  "status": "프레임 제작·미리보기 단계, 사용자 컨펌 대기",
+  "sheet": {
+    "file": "T_AmethystSentinel_Attack_v3.png",
+    "size": [
+      864,
+      208
+    ],
+    "cell": [
+      144,
+      104
+    ],
+    "layout": "6열 x 2행, 왼쪽 위부터 01~06 / 다음 줄 이어서",
+    "alpha": "실제 투명 PNG, 알파 0/255만",
+    "frames": 12
+  },
+  "playback": {
+    "total_ms": 870,
+    "frame_ms": [
+      70,
+      70,
+      70,
+      70,
+      100,
+      40,
+      40,
+      130,
+      70,
+      70,
+      70,
+      70
+    ],
+    "base_fps": 14,
+    "note": "준비는 70ms씩, 05(준비 최대)는 100ms로 힘 모음, 06~07(휘두르는 중)은 45/35ms로 빠르게, 08(타격)은 130ms로 길게. Unity 클립에서는 프레임별 키 시간으로 그대로 재현 가능. GIF는 10ms 단위.",
+    "return_to_idle": "마지막 프레임 = 01번 = Idle 01 (바이트 동일)이라 Idle로 돌아갈 때 튀지 않음"
+  },
+  "pivot": {
+    "anchor_px_in_cell": [
+      72,
+      94
+    ],
+    "unity_normalized": [
+      0.5,
+      0.0962
+    ],
+    "ppu": 75.6,
+    "note": "원본 Idle 셀(96x96)을 (24,8)에 둔 144x104 캔버스. 원본 발 기준 (48,86)과 같은 지점. 캐릭터 축소 없음. Unity에 적용할 때는 Idle과 같은 PPU 75.6, 피벗 (0.5, 10/104)로 두면 발이 같은 자리에 온다."
+  },
+  "direction": {
+    "art_faces": "화면 왼쪽(레미 방향)",
+    "flipX": false,
+    "note": "EpicIdle SpriteRenderer flipX=0, 좌우 반전 없음"
+  },
+  "display": {
+    "scale": "도트 1칸 = FHD 화면 2px (PPU 75.6 x 루트 1.4)"
+  },
+  "hit_frame": {
+    "number": 8,
+    "index0": 7,
+    "time_from_start_ms": 460,
+    "note": "수정 팔이 가장 멀리 뻗은 자세. 피해 연출을 맞춘다면 이 프레임 (이번 단계에서는 전투 타이밍을 바꾸지 않음)"
+  },
+  "frames": [
+    {
+      "frame": 1,
+      "role": "rest",
+      "source": "AmethystSentinel_Idle_01 (원본 그대로)",
+      "ms": 70,
+      "rightFootAnchor": null
+    },
+    {
+      "frame": 2,
+      "role": "anticipation",
+      "source": "f02_a",
+      "ms": 70,
+      "rightFootAnchor": null
+    },
+    {
+      "frame": 3,
+      "role": "windup-1",
+      "source": "f03_b",
+      "ms": 70,
+      "rightFootAnchor": null
+    },
+    {
+      "frame": 4,
+      "role": "windup-2",
+      "source": "r7_f04_b",
+      "ms": 70,
+      "rightFootAnchor": 96
+    },
+    {
+      "frame": 5,
+      "role": "WINDUP (key)",
+      "source": "r4_windup_a",
+      "ms": 100,
+      "rightFootAnchor": 96
+    },
+    {
+      "frame": 6,
+      "role": "swing-1",
+      "source": "f06_b",
+      "ms": 40,
+      "rightFootAnchor": 96
+    },
+    {
+      "frame": 7,
+      "role": "swing-2",
+      "source": "r7_f07_a",
+      "ms": 40,
+      "rightFootAnchor": 96
+    },
+    {
+      "frame": 8,
+      "role": "STRIKE (key)",
+      "source": "r3_strike_a",
+      "ms": 130,
+      "rightFootAnchor": 96
+    },
+    {
+      "frame": 9,
+      "role": "RECOIL (key)",
+      "source": "r4_recoil_b",
+      "ms": 70,
+      "rightFootAnchor": 96
+    },
+    {
+      "frame": 10,
+      "role": "settle-1",
+      "source": "f10_b",
+      "ms": 70,
+      "rightFootAnchor": null
+    },
+    {
+      "frame": 11,
+      "role": "settle-2",
+      "source": "f11_c",
+      "ms": 70,
+      "rightFootAnchor": null
+    },
+    {
+      "frame": 12,
+      "role": "rest",
+      "source": "AmethystSentinel_Idle_01 (원본 그대로)",
+      "ms": 70,
+      "rightFootAnchor": null
+    }
+  ],
+  "sources": {
+    "idle_sheet_in_unity": "Tetrigeon/Assets/@Resources/Enemies/AmethystSentinelIdle/T_AmethystSentinel_Idle.png",
+    "varco_raw": "SentinelAttack_VARCO/work/varco_round3~5 (선택본은 output/varco_sources)",
+    "previous_attacks": "열어 보거나 재사용하지 않음, 삭제·덮어쓰기 없음"
+  },
+  "varco": {
+    "model": "nano-banana-pro (EditImage)",
+    "note": "핵심 자세 3장(준비·타격·반동)과 중간 프레임(02·03·04·06·07·10·11)을 VARCO가 그린 그림에서 원본 도트 격자로 환산해 사용. 색은 원본 Idle 01의 부류별(돌·윤곽 / 수정 / 코어) 밝기 분포에 맞추고 겉 한 겹은 윤곽색으로 정리. 01·12는 원본 Idle 01."
+  }
+}

@@ -35,9 +35,19 @@ public class EnemyView : MonoBehaviour
 
     private const float BarGap = 0.05f; // 발과 막대, 막대와 글자 사이 간격 (월드 단위)
 
+    private static readonly int AttackTrigger = Animator.StringToHash("Attack"); // 공격 모션 트리거 (매번 문자열을 만들지 않도록 한 번만 계산)
+
+    private Animator normalIdleAnimator; // 일반 몬스터의 Idle·공격 애니메이터
+    private Animator epicIdleAnimator; // 에픽(수호자)의 Idle·공격 애니메이터
+    private Animator bossIdleAnimator; // 보스(여왕)의 Idle·공격 애니메이터
+
     private void Awake()
     {
         enemy = GetComponent<Enemy>();
+        normalIdleAnimator = normalIdleBody != null ? normalIdleBody.GetComponent<Animator>() : null; // 공격 모션은 Idle과 같은 애니메이터에 있음
+        epicIdleAnimator = epicIdleBody != null ? epicIdleBody.GetComponent<Animator>() : null; // 수호자 공격 모션도 Idle과 같은 애니메이터에 있음
+        bossIdleAnimator = bossIdleBody != null ? bossIdleBody.GetComponent<Animator>() : null; // 여왕 공격 모션도 Idle과 같은 애니메이터에 있음
+        enemy.Acted += PlayAttack; // 이 적이 행동(공격·능력 사용)한다는 알림을 받으면 공격 모션 재생
 
         body = GetComponent<SpriteRenderer>(); // 프리팹에 붙어있는 렌더러 재사용 (중복 추가 방지)
         body.sortingOrder = 5; // 배경보다 앞, 블록보다 뒤
@@ -64,7 +74,21 @@ public class EnemyView : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (enemy != null) enemy.Acted -= PlayAttack; // 이벤트 구독 해제
         if (hpBar != null) Destroy(hpBar.gameObject); // 적이 사라지면 막대도 함께 제거
+    }
+
+    // 적이 행동할 때 공격 모션을 재생 (보이는 연출만, 전투 수치·순서·타이밍은 건드리지 않음)
+    // 애벌레는 모든 행동에 같은 모션, 여왕은 일반 공격에만, 수호자는 일반 공격과 강공격에 같은 모션(강공격 전용 모션은 나중에 구분 예정)
+    // 여왕의 능력 모션과 수호자의 능력 사용·강공격 준비 모션은 아직 없음
+    private void PlayAttack(EnemyActionKind kind)
+    {
+        Animator animator = null; // 이번 행동에 재생할 애니메이터 (모션이 없으면 null)
+        if (enemy.Tier == EnemyTier.Normal) animator = normalIdleAnimator; // 애벌레: 체력 공격과 능력 사용 모두 같은 모션
+        else if (enemy.Tier == EnemyTier.Epic && (kind == EnemyActionKind.BasicAttack || kind == EnemyActionKind.StrongAttack)) animator = epicIdleAnimator; // 수호자: 일반 공격과 강공격
+        else if (enemy.Tier == EnemyTier.Boss && kind == EnemyActionKind.BasicAttack) animator = bossIdleAnimator; // 여왕: 체력 공격(일반 공격)일 때만
+        if (animator == null || !animator.gameObject.activeInHierarchy) return; // 모션이 없거나 숨겨진 상태(사망 등)에서는 재생하지 않음
+        animator.SetTrigger(AttackTrigger); // Idle에서 공격으로 넘어가고, 끝나면 스스로 Idle로 돌아옴
     }
 
     // 월드 좌표 텍스트를 자식으로 생성 (기존 라벨들과 같은 방식)

@@ -510,7 +510,10 @@ public class CombatManager : MonoBehaviour
             bool stunned = enemy.ConsumeStun(); // 스턴도 같은 행동에서 함께 소비 (겹쳐도 합산하지 않음)
             if (frozen || stunned) continue; // 빙결·스턴인 적은 이번 행동을 쉼 (스킬 카운터와 강공격 기한도 그대로)
 
-            if (enemy.AdvanceTurnAndCheckSkill())
+            bool skillTurn = enemy.AdvanceTurnAndCheckSkill(); // 이번 행동이 능력 사용인지 (능력 카운터는 이전과 같은 순서로 한 번만 진행)
+            enemy.NotifyAction(skillTurn); // 이 적이 실제로 행동하는 순간을 연출에 알림 (일반 공격·능력 사용·강공격 준비·강공격을 구분해서 전달, 피해량·순서·타이밍은 그대로)
+
+            if (skillTurn)
             {
                 garbageLines += enemy.RollGarbageLines(); // 능력 턴인 적은 방해 줄만 추가
                 if (enemy.Tier == EnemyTier.Boss) bossSummons = true; // 보스는 가비지와 함께 일반 몹도 소환

@@ -1,0 +1,634 @@
+fileFormatVersion: 2
+guid: 8d22055b7d7f4b146a79a8846f17c076
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7444797313788805965
+    second: T_CrystalQueen_AttackFx_0
+  - first:
+      213: -4093472608410014478
+    second: T_CrystalQueen_AttackFx_1
+  - first:
+      213: -3308891611392535496
+    second: T_CrystalQueen_AttackFx_2
+  - first:
+      213: 3728863821519434963
+    second: T_CrystalQueen_AttackFx_3
+  - first:
+      213: 8325727923276777318
+    second: T_CrystalQueen_AttackFx_4
+  - first:
+      213: 8090325852566235331
+    second: T_CrystalQueen_AttackFx_5
+  - first:
+      213: -1550372748218998669
+    second: T_CrystalQueen_AttackFx_6
+  - first:
+      213: 6343698547747600729
+    second: T_CrystalQueen_AttackFx_7
+  - first:
+      213: 336225397583123522
+    second: T_CrystalQueen_AttackFx_8
+  - first:
+      213: 4228082860207343373
+    second: T_CrystalQueen_AttackFx_9
+  - first:
+      213: -1921847812112694574
+    second: T_CrystalQueen_AttackFx_10
+  - first:
+      213: 3448023747326796293
+    second: T_CrystalQueen_AttackFx_11
+  - first:
+      213: -3423400462578678886
+    second: T_CrystalQueen_AttackFx_12
+  - first:
+      213: 7923399207381155086
+    second: T_CrystalQueen_AttackFx_13
+  - first:
+      213: -6956370076191688586
+    second: T_CrystalQueen_AttackFx_14
+  - first:
+      213: -7639988430905991609
+    second: T_CrystalQueen_AttackFx_15
+  - first:
+      213: -5012805002996617051
+    second: T_CrystalQueen_AttackFx_16
+  - first:
+      213: -494813094850883818
+    second: T_CrystalQueen_AttackFx_17
+  - first:
+      213: 9065309127114841300
+    second: T_CrystalQueen_AttackFx_18
+  - first:
+      213: 1275436104345002528
+    second: T_CrystalQueen_AttackFx_19
+  - first:
+      213: -5025063714352180881
+    second: T_CrystalQueen_AttackFx_20
+  - first:
+      213: -1504304274842154038
+    second: T_CrystalQueen_AttackFx_21
+  - first:
+      213: 841645787111220088
+    second: T_CrystalQueen_AttackFx_22
+  - first:
+      213: -5036507890661889880
+    second: T_CrystalQueen_AttackFx_23
+  - first:
+      213: 2553644153532974237
+    second: T_CrystalQueen_AttackFx_24
+  - first:
+      213: -8302475934713957658
+    second: T_CrystalQueen_AttackFx_25
+  - first:
+      213: 4211076295133376114
+    second: T_CrystalQueen_AttackFx_26
+  - first:
+      213: -3854217579401691672
+    second: T_CrystalQueen_AttackFx_27
+  - first:
+      213: -6183128582586541735
+    second: T_CrystalQueen_AttackFx_28
+  - first:
+      213: 1668807039462753230
+    second: T_CrystalQueen_AttackFx_29
+  - first:
+      213: -7904318935895861900
+    second: T_CrystalQueen_AttackFx_30
+  - first:
+      213: -2386078658239062327
+    second: T_CrystalQueen_AttackFx_31
+  - first:
+      213: 9134431721863826481
+    second: T_CrystalQueen_AttackFx_32
+  - first:
+      213: -6885912143592813487
+    second: T_CrystalQueen_AttackFx_33
+  - first:
+      213: 4039978767590575702
+    second: T_CrystalQueen_AttackFx_34
+  - first:
+      213: -7012614636912050411
+    second: CrystalQueen_AttackFx_00
+  - first:
+      213: 4200904006048628702
+    second: CrystalQueen_AttackFx_01
+  - first:
+      213: 8599848302746125273
+    second: CrystalQueen_AttackFx_02
+  - first:
+      213: -4527310883019958123
+    second: CrystalQueen_AttackFx_03
+  - first:
+      213: -5303565154601693800
+    second: CrystalQueen_AttackFx_04
+  - first:
+      213: -8377915082600119348
+    second: CrystalQueen_AttackFx_05
+  - first:
+      213: 5086308472242249578
+    second: CrystalQueen_AttackFx_06
+  - first:
+      213: 6799218823529182493
+    second: CrystalQueen_AttackFx_07
+  - first:
+      213: 6881655848336753061
+    second: CrystalQueen_AttackFx_08
+  - first:
+      213: -3438622902592154455
+    second: CrystalQueen_AttackFx_09
+  - first:
+      213: -7384228799283807729
+    second: CrystalQueen_AttackFx_10
+  - first:
+      213: 845246579985192144
+    second: CrystalQueen_AttackFx_11
+  - first:
+      213: -2488029814100778050
+    second: CrystalQueen_AttackFx_12
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 0
+  spriteMeshType: 0
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.45}
+  spritePixelsToUnits: 75.6
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: CrystalQueen_AttackFx_00
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51ff62464203eae90800000000000000
+      internalID: -7012614636912050411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueen_AttackFx_01
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: edf3b08afeb9c4a30800000000000000
+      internalID: 4200904006048628702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueen_AttackFx_02
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d3cd67a77cc85770800000000000000
+      internalID: 8599848302746125273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueen_AttackFx_03
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 598d5d51db2cb21c0800000000000000
+      internalID: -4527310883019958123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueen_AttackFx_04
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89d83d46793f566b0800000000000000
+      internalID: -5303565154601693800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueen_AttackFx_05
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc38b37de9aabbb80800000000000000
+      internalID: -8377915082600119348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueen_AttackFx_06
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6f1f0a6b92369640800000000000000
+      internalID: 5086308472242249578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueen_AttackFx_07
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d153b960f7dab5e50800000000000000
+      internalID: 6799218823529182493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueen_AttackFx_08
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a10a92988d808f50800000000000000
+      internalID: 6881655848336753061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueen_AttackFx_09
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a4d87e40be8740d0800000000000000
+      internalID: -3438622902592154455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueen_AttackFx_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0aba76c703f58990800000000000000
+      internalID: -7384228799283807729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueen_AttackFx_11
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d491a3494beabb00800000000000000
+      internalID: 845246579985192144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueen_AttackFx_12
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb321f3f01eb87dd0800000000000000
+      internalID: -2488029814100778050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      CrystalQueen_AttackFx_00: -7012614636912050411
+      CrystalQueen_AttackFx_01: 4200904006048628702
+      CrystalQueen_AttackFx_02: 8599848302746125273
+      CrystalQueen_AttackFx_03: -4527310883019958123
+      CrystalQueen_AttackFx_04: -5303565154601693800
+      CrystalQueen_AttackFx_05: -8377915082600119348
+      CrystalQueen_AttackFx_06: 5086308472242249578
+      CrystalQueen_AttackFx_07: 6799218823529182493
+      CrystalQueen_AttackFx_08: 6881655848336753061
+      CrystalQueen_AttackFx_09: -3438622902592154455
+      CrystalQueen_AttackFx_10: -7384228799283807729
+      CrystalQueen_AttackFx_11: 845246579985192144
+      CrystalQueen_AttackFx_12: -2488029814100778050
+      T_CrystalQueen_AttackFx_0: -7444797313788805965
+      T_CrystalQueen_AttackFx_1: -4093472608410014478
+      T_CrystalQueen_AttackFx_10: -1921847812112694574
+      T_CrystalQueen_AttackFx_11: 3448023747326796293
+      T_CrystalQueen_AttackFx_12: -3423400462578678886
+      T_CrystalQueen_AttackFx_13: 7923399207381155086
+      T_CrystalQueen_AttackFx_14: -6956370076191688586
+      T_CrystalQueen_AttackFx_15: -7639988430905991609
+      T_CrystalQueen_AttackFx_16: -5012805002996617051
+      T_CrystalQueen_AttackFx_17: -494813094850883818
+      T_CrystalQueen_AttackFx_18: 9065309127114841300
+      T_CrystalQueen_AttackFx_19: 1275436104345002528
+      T_CrystalQueen_AttackFx_2: -3308891611392535496
+      T_CrystalQueen_AttackFx_20: -5025063714352180881
+      T_CrystalQueen_AttackFx_21: -1504304274842154038
+      T_CrystalQueen_AttackFx_22: 841645787111220088
+      T_CrystalQueen_AttackFx_23: -5036507890661889880
+      T_CrystalQueen_AttackFx_24: 2553644153532974237
+      T_CrystalQueen_AttackFx_25: -8302475934713957658
+      T_CrystalQueen_AttackFx_26: 4211076295133376114
+      T_CrystalQueen_AttackFx_27: -3854217579401691672
+      T_CrystalQueen_AttackFx_28: -6183128582586541735
+      T_CrystalQueen_AttackFx_29: 1668807039462753230
+      T_CrystalQueen_AttackFx_3: 3728863821519434963
+      T_CrystalQueen_AttackFx_30: -7904318935895861900
+      T_CrystalQueen_AttackFx_31: -2386078658239062327
+      T_CrystalQueen_AttackFx_32: 9134431721863826481
+      T_CrystalQueen_AttackFx_33: -6885912143592813487
+      T_CrystalQueen_AttackFx_34: 4039978767590575702
+      T_CrystalQueen_AttackFx_4: 8325727923276777318
+      T_CrystalQueen_AttackFx_5: 8090325852566235331
+      T_CrystalQueen_AttackFx_6: -1550372748218998669
+      T_CrystalQueen_AttackFx_7: 6343698547747600729
+      T_CrystalQueen_AttackFx_8: 336225397583123522
+      T_CrystalQueen_AttackFx_9: 4228082860207343373
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

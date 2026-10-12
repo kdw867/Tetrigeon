@@ -1,0 +1,868 @@
+fileFormatVersion: 2
+guid: d367e142665c21c44b9774ee528844a2
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -407354784598750664
+    second: T_AmethystSentinel_AttackChargeFx_0
+  - first:
+      213: -5183947204482653822
+    second: T_AmethystSentinel_AttackChargeFx_1
+  - first:
+      213: 7445660912970672807
+    second: T_AmethystSentinel_AttackChargeFx_2
+  - first:
+      213: 4351127268096019857
+    second: T_AmethystSentinel_AttackChargeFx_3
+  - first:
+      213: -7727533917805751412
+    second: T_AmethystSentinel_AttackChargeFx_4
+  - first:
+      213: 8690433021320134644
+    second: T_AmethystSentinel_AttackChargeFx_5
+  - first:
+      213: 2761025989731989158
+    second: T_AmethystSentinel_AttackChargeFx_6
+  - first:
+      213: -8333602602406581960
+    second: T_AmethystSentinel_AttackChargeFx_7
+  - first:
+      213: 9082396794745150120
+    second: T_AmethystSentinel_AttackChargeFx_8
+  - first:
+      213: 6000628144107154017
+    second: T_AmethystSentinel_AttackChargeFx_9
+  - first:
+      213: -1255369048691180278
+    second: T_AmethystSentinel_AttackChargeFx_10
+  - first:
+      213: -138918389943457214
+    second: T_AmethystSentinel_AttackChargeFx_11
+  - first:
+      213: -196453905186020801
+    second: T_AmethystSentinel_AttackChargeFx_12
+  - first:
+      213: 6097259961188980953
+    second: T_AmethystSentinel_AttackChargeFx_13
+  - first:
+      213: 3819641654557795481
+    second: T_AmethystSentinel_AttackChargeFx_14
+  - first:
+      213: -4887952846031891982
+    second: T_AmethystSentinel_AttackChargeFx_15
+  - first:
+      213: -6934020913918941836
+    second: T_AmethystSentinel_AttackChargeFx_16
+  - first:
+      213: 9107894858415928645
+    second: T_AmethystSentinel_AttackChargeFx_17
+  - first:
+      213: 8243419159907389682
+    second: T_AmethystSentinel_AttackChargeFx_18
+  - first:
+      213: -3897094087980985825
+    second: T_AmethystSentinel_AttackChargeFx_19
+  - first:
+      213: -1071734532523781758
+    second: T_AmethystSentinel_AttackChargeFx_20
+  - first:
+      213: 3005643330649409713
+    second: T_AmethystSentinel_AttackChargeFx_21
+  - first:
+      213: 1368065907826305870
+    second: T_AmethystSentinel_AttackChargeFx_22
+  - first:
+      213: -7989332709525106200
+    second: T_AmethystSentinel_AttackChargeFx_23
+  - first:
+      213: 2972668248718437521
+    second: T_AmethystSentinel_AttackChargeFx_24
+  - first:
+      213: 6375662991493209237
+    second: T_AmethystSentinel_AttackChargeFx_25
+  - first:
+      213: 4927616985010627963
+    second: T_AmethystSentinel_AttackChargeFx_26
+  - first:
+      213: -8967144247524356153
+    second: T_AmethystSentinel_AttackChargeFx_27
+  - first:
+      213: -4654351606230283001
+    second: T_AmethystSentinel_AttackChargeFx_28
+  - first:
+      213: 8797449240895325720
+    second: T_AmethystSentinel_AttackChargeFx_29
+  - first:
+      213: -3343289549554113972
+    second: T_AmethystSentinel_AttackChargeFx_30
+  - first:
+      213: 4154696789337049075
+    second: T_AmethystSentinel_AttackChargeFx_31
+  - first:
+      213: -5494209825612864387
+    second: T_AmethystSentinel_AttackChargeFx_32
+  - first:
+      213: 5672621261671857973
+    second: T_AmethystSentinel_AttackChargeFx_33
+  - first:
+      213: 4121116035834921595
+    second: T_AmethystSentinel_AttackChargeFx_34
+  - first:
+      213: -5335277216399162095
+    second: T_AmethystSentinel_AttackChargeFx_35
+  - first:
+      213: -7111081121940492420
+    second: T_AmethystSentinel_AttackChargeFx_36
+  - first:
+      213: 3757622252907409816
+    second: T_AmethystSentinel_AttackChargeFx_37
+  - first:
+      213: 5431897466855179533
+    second: T_AmethystSentinel_AttackChargeFx_38
+  - first:
+      213: -2168836832964489682
+    second: T_AmethystSentinel_AttackChargeFx_39
+  - first:
+      213: 4123213850169101429
+    second: T_AmethystSentinel_AttackChargeFx_40
+  - first:
+      213: -7634473204448108748
+    second: T_AmethystSentinel_AttackChargeFx_41
+  - first:
+      213: 4920126677198804932
+    second: T_AmethystSentinel_AttackChargeFx_42
+  - first:
+      213: -8651452789400117308
+    second: T_AmethystSentinel_AttackChargeFx_43
+  - first:
+      213: 8814004051567966200
+    second: T_AmethystSentinel_AttackChargeFx_44
+  - first:
+      213: 1982266500924621351
+    second: T_AmethystSentinel_AttackChargeFx_45
+  - first:
+      213: -1841191484318340434
+    second: T_AmethystSentinel_AttackChargeFx_46
+  - first:
+      213: 5172649118479888451
+    second: T_AmethystSentinel_AttackChargeFx_47
+  - first:
+      213: -8932490651150298291
+    second: T_AmethystSentinel_AttackChargeFx_48
+  - first:
+      213: 8413863257907871387
+    second: T_AmethystSentinel_AttackChargeFx_49
+  - first:
+      213: 5280719900313277912
+    second: T_AmethystSentinel_AttackChargeFx_50
+  - first:
+      213: 40624964270990301
+    second: T_AmethystSentinel_AttackChargeFx_51
+  - first:
+      213: -1602831462740852698
+    second: T_AmethystSentinel_AttackChargeFx_52
+  - first:
+      213: -3482682834353992319
+    second: T_AmethystSentinel_AttackChargeFx_53
+  - first:
+      213: -885337155959155694
+    second: T_AmethystSentinel_AttackChargeFx_54
+  - first:
+      213: -8447450813628439349
+    second: T_AmethystSentinel_AttackChargeFx_55
+  - first:
+      213: -2353962342544652970
+    second: T_AmethystSentinel_AttackChargeFx_56
+  - first:
+      213: 4541539626146897257
+    second: T_AmethystSentinel_AttackChargeFx_57
+  - first:
+      213: -4005307920179065339
+    second: T_AmethystSentinel_AttackChargeFx_58
+  - first:
+      213: -6129350334343616523
+    second: T_AmethystSentinel_AttackChargeFx_59
+  - first:
+      213: 4015498382524501570
+    second: T_AmethystSentinel_AttackChargeFx_60
+  - first:
+      213: 7383146292381707801
+    second: AmethystSentinel_AttackCharge_00
+  - first:
+      213: 2326395702648402934
+    second: AmethystSentinel_AttackCharge_01
+  - first:
+      213: 5821388535574533844
+    second: AmethystSentinel_AttackCharge_02
+  - first:
+      213: 6865319565305747061
+    second: AmethystSentinel_AttackCharge_03
+  - first:
+      213: -1447755162576417846
+    second: AmethystSentinel_AttackCharge_04
+  - first:
+      213: -4977652512987701447
+    second: AmethystSentinel_AttackCharge_05
+  - first:
+      213: -6193679862783157808
+    second: AmethystSentinel_AttackCharge_06
+  - first:
+      213: -9158133825531810432
+    second: AmethystSentinel_AttackCharge_07
+  - first:
+      213: 7082265113354263478
+    second: AmethystSentinel_AttackCharge_08
+  - first:
+      213: 6386525119775916801
+    second: AmethystSentinel_AttackCharge_09
+  - first:
+      213: 4884005442256566545
+    second: AmethystSentinel_AttackCharge_10
+  - first:
+      213: 282599950136022431
+    second: AmethystSentinel_AttackCharge_11
+  - first:
+      213: -7284991139255811652
+    second: AmethystSentinel_AttackCharge_12
+  - first:
+      213: 6519821545190130593
+    second: AmethystSentinel_AttackCharge_13
+  - first:
+      213: -905984101491770956
+    second: AmethystSentinel_AttackCharge_14
+  - first:
+      213: -5026442452693796786
+    second: AmethystSentinel_AttackCharge_15
+  - first:
+      213: 7270290997606919338
+    second: AmethystSentinel_AttackCharge_16
+  - first:
+      213: -8692121693553062783
+    second: AmethystSentinel_AttackCharge_17
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 0
+  spriteMeshType: 0
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 75.6
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: AmethystSentinel_AttackCharge_00
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 112
+        width: 56
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91e67227f64367660800000000000000
+      internalID: 7383146292381707801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AmethystSentinel_AttackCharge_01
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 112
+        width: 56
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f37a57d094094020800000000000000
+      internalID: 2326395702648402934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AmethystSentinel_AttackCharge_02
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 112
+        width: 56
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d69372b70ab9c050800000000000000
+      internalID: 5821388535574533844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AmethystSentinel_AttackCharge_03
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 112
+        width: 56
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 576969745c3864f50800000000000000
+      internalID: 6865319565305747061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AmethystSentinel_AttackCharge_04
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 112
+        width: 56
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: acb05e4a95a88ebe0800000000000000
+      internalID: -1447755162576417846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AmethystSentinel_AttackCharge_05
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 112
+        width: 56
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93f99048963dbeab0800000000000000
+      internalID: -4977652512987701447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AmethystSentinel_AttackCharge_06
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 56
+        width: 56
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d9d156faf0ab0aa0800000000000000
+      internalID: -6193679862783157808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AmethystSentinel_AttackCharge_07
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 56
+        width: 56
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08defabbec5c7e080800000000000000
+      internalID: -9158133825531810432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AmethystSentinel_AttackCharge_08
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 56
+        width: 56
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bb5f9ed892494260800000000000000
+      internalID: 7082265113354263478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AmethystSentinel_AttackCharge_09
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 56
+        width: 56
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1034a5952ce71a850800000000000000
+      internalID: 6386525119775916801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AmethystSentinel_AttackCharge_10
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 56
+        width: 56
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 119f6cab21977c340800000000000000
+      internalID: 4884005442256566545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AmethystSentinel_AttackCharge_11
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 56
+        width: 56
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f959669482ffbe300800000000000000
+      internalID: 282599950136022431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AmethystSentinel_AttackCharge_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 56
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb10ac8082386ea90800000000000000
+      internalID: -7284991139255811652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AmethystSentinel_AttackCharge_13
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 0
+        width: 56
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a30fffd62f0b7a50800000000000000
+      internalID: 6519821545190130593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AmethystSentinel_AttackCharge_14
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 0
+        width: 56
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b97e62824c4d63f0800000000000000
+      internalID: -905984101491770956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AmethystSentinel_AttackCharge_15
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 0
+        width: 56
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e483e33783d7e3ab0800000000000000
+      internalID: -5026442452693796786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AmethystSentinel_AttackCharge_16
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 0
+        width: 56
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aaca416842345e460800000000000000
+      internalID: 7270290997606919338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AmethystSentinel_AttackCharge_17
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 0
+        width: 56
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18c8d4f5f516f5780800000000000000
+      internalID: -8692121693553062783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      AmethystSentinel_AttackCharge_00: 7383146292381707801
+      AmethystSentinel_AttackCharge_01: 2326395702648402934
+      AmethystSentinel_AttackCharge_02: 5821388535574533844
+      AmethystSentinel_AttackCharge_03: 6865319565305747061
+      AmethystSentinel_AttackCharge_04: -1447755162576417846
+      AmethystSentinel_AttackCharge_05: -4977652512987701447
+      AmethystSentinel_AttackCharge_06: -6193679862783157808
+      AmethystSentinel_AttackCharge_07: -9158133825531810432
+      AmethystSentinel_AttackCharge_08: 7082265113354263478
+      AmethystSentinel_AttackCharge_09: 6386525119775916801
+      AmethystSentinel_AttackCharge_10: 4884005442256566545
+      AmethystSentinel_AttackCharge_11: 282599950136022431
+      AmethystSentinel_AttackCharge_12: -7284991139255811652
+      AmethystSentinel_AttackCharge_13: 6519821545190130593
+      AmethystSentinel_AttackCharge_14: -905984101491770956
+      AmethystSentinel_AttackCharge_15: -5026442452693796786
+      AmethystSentinel_AttackCharge_16: 7270290997606919338
+      AmethystSentinel_AttackCharge_17: -8692121693553062783
+      T_AmethystSentinel_AttackChargeFx_0: -407354784598750664
+      T_AmethystSentinel_AttackChargeFx_1: -5183947204482653822
+      T_AmethystSentinel_AttackChargeFx_10: -1255369048691180278
+      T_AmethystSentinel_AttackChargeFx_11: -138918389943457214
+      T_AmethystSentinel_AttackChargeFx_12: -196453905186020801
+      T_AmethystSentinel_AttackChargeFx_13: 6097259961188980953
+      T_AmethystSentinel_AttackChargeFx_14: 3819641654557795481
+      T_AmethystSentinel_AttackChargeFx_15: -4887952846031891982
+      T_AmethystSentinel_AttackChargeFx_16: -6934020913918941836
+      T_AmethystSentinel_AttackChargeFx_17: 9107894858415928645
+      T_AmethystSentinel_AttackChargeFx_18: 8243419159907389682
+      T_AmethystSentinel_AttackChargeFx_19: -3897094087980985825
+      T_AmethystSentinel_AttackChargeFx_2: 7445660912970672807
+      T_AmethystSentinel_AttackChargeFx_20: -1071734532523781758
+      T_AmethystSentinel_AttackChargeFx_21: 3005643330649409713
+      T_AmethystSentinel_AttackChargeFx_22: 1368065907826305870
+      T_AmethystSentinel_AttackChargeFx_23: -7989332709525106200
+      T_AmethystSentinel_AttackChargeFx_24: 2972668248718437521
+      T_AmethystSentinel_AttackChargeFx_25: 6375662991493209237
+      T_AmethystSentinel_AttackChargeFx_26: 4927616985010627963
+      T_AmethystSentinel_AttackChargeFx_27: -8967144247524356153
+      T_AmethystSentinel_AttackChargeFx_28: -4654351606230283001
+      T_AmethystSentinel_AttackChargeFx_29: 8797449240895325720
+      T_AmethystSentinel_AttackChargeFx_3: 4351127268096019857
+      T_AmethystSentinel_AttackChargeFx_30: -3343289549554113972
+      T_AmethystSentinel_AttackChargeFx_31: 4154696789337049075
+      T_AmethystSentinel_AttackChargeFx_32: -5494209825612864387
+      T_AmethystSentinel_AttackChargeFx_33: 5672621261671857973
+      T_AmethystSentinel_AttackChargeFx_34: 4121116035834921595
+      T_AmethystSentinel_AttackChargeFx_35: -5335277216399162095
+      T_AmethystSentinel_AttackChargeFx_36: -7111081121940492420
+      T_AmethystSentinel_AttackChargeFx_37: 3757622252907409816
+      T_AmethystSentinel_AttackChargeFx_38: 5431897466855179533
+      T_AmethystSentinel_AttackChargeFx_39: -2168836832964489682
+      T_AmethystSentinel_AttackChargeFx_4: -7727533917805751412
+      T_AmethystSentinel_AttackChargeFx_40: 4123213850169101429
+      T_AmethystSentinel_AttackChargeFx_41: -7634473204448108748
+      T_AmethystSentinel_AttackChargeFx_42: 4920126677198804932
+      T_AmethystSentinel_AttackChargeFx_43: -8651452789400117308
+      T_AmethystSentinel_AttackChargeFx_44: 8814004051567966200
+      T_AmethystSentinel_AttackChargeFx_45: 1982266500924621351
+      T_AmethystSentinel_AttackChargeFx_46: -1841191484318340434
+      T_AmethystSentinel_AttackChargeFx_47: 5172649118479888451
+      T_AmethystSentinel_AttackChargeFx_48: -8932490651150298291
+      T_AmethystSentinel_AttackChargeFx_49: 8413863257907871387
+      T_AmethystSentinel_AttackChargeFx_5: 8690433021320134644
+      T_AmethystSentinel_AttackChargeFx_50: 5280719900313277912
+      T_AmethystSentinel_AttackChargeFx_51: 40624964270990301
+      T_AmethystSentinel_AttackChargeFx_52: -1602831462740852698
+      T_AmethystSentinel_AttackChargeFx_53: -3482682834353992319
+      T_AmethystSentinel_AttackChargeFx_54: -885337155959155694
+      T_AmethystSentinel_AttackChargeFx_55: -8447450813628439349
+      T_AmethystSentinel_AttackChargeFx_56: -2353962342544652970
+      T_AmethystSentinel_AttackChargeFx_57: 4541539626146897257
+      T_AmethystSentinel_AttackChargeFx_58: -4005307920179065339
+      T_AmethystSentinel_AttackChargeFx_59: -6129350334343616523
+      T_AmethystSentinel_AttackChargeFx_6: 2761025989731989158
+      T_AmethystSentinel_AttackChargeFx_60: 4015498382524501570
+      T_AmethystSentinel_AttackChargeFx_7: -8333602602406581960
+      T_AmethystSentinel_AttackChargeFx_8: 9082396794745150120
+      T_AmethystSentinel_AttackChargeFx_9: 6000628144107154017
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,59 @@
+{
+ "frames": [
+  {
+   "n": 1,
+   "role": "rest (Idle 01)",
+   "src": null
+  },
+  {
+   "n": 2,
+   "role": "anticipation",
+   "src": "r5_f03_a"
+  },
+  {
+   "n": 3,
+   "role": "windup-mid",
+   "src": "r5_f02_b",
+   "rf": 88
+  },
+  {
+   "n": 4,
+   "role": "WINDUP",
+   "src": "r4_windup_a",
+   "rf": 88
+  },
+  {
+   "n": 5,
+   "role": "swing-mid",
+   "src": "r5_f05_a",
+   "rf": 88
+  },
+  {
+   "n": 6,
+   "role": "STRIKE (hit)",
+   "src": "r3_strike_a",
+   "rf": 88
+  },
+  {
+   "n": 7,
+   "role": "recoil",
+   "src": "r4_recoil_b",
+   "rf": 88
+  },
+  {
+   "n": 8,
+   "role": "settle (arm hangs)",
+   "src": "r5_f09_a"
+  },
+  {
+   "n": 9,
+   "role": "rise",
+   "src": "r5_f08_a"
+  },
+  {
+   "n": 10,
+   "role": "rest (Idle 01)",
+   "src": null
+  }
+ ]
+}

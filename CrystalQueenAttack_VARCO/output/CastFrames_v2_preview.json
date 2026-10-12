@@ -1,0 +1,29 @@
+{
+ "note": "미리보기 GIF 는 시간표 그대로, 첫 단계는 기본 자세 500ms 쉼 + 40ms. 게임 합성은 실제 Unity 영상이 아님.",
+ "loop_ms": 1440,
+ "attack_ms": 940,
+ "rest_between_attacks_ms": 500,
+ "composite": {
+  "source": "CountdownUI_VARCO/work/game_screen_empty_board.png",
+  "boss_slot": "스테이지 10 맨 오른쪽 (x 7.7)",
+  "sprite_pivot_screen": [
+   1767.6,
+   139.2
+  ],
+  "cell_origin_screen": [
+   1608,
+   -37
+  ],
+  "crop": [
+   1600,
+   0,
+   320,
+   310
+  ],
+  "fx_screen_x_range": [
+   1626,
+   1917
+  ],
+  "screen_width": 1920
+ }
+}

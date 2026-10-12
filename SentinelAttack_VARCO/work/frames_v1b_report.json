@@ -1,0 +1,120 @@
+[
+ {
+  "name": "idle01"
+ },
+ {
+  "name": "r5_f03_a",
+  "baselineRow": 91,
+  "feet": [
+   71,
+   128
+  ],
+  "offset": [
+   -33,
+   3
+  ],
+  "cutBelowSole": 0,
+  "rimToOutline": 0
+ },
+ {
+  "name": "r5_f02_b",
+  "baselineRow": 91,
+  "feet": [
+   71,
+   139
+  ],
+  "offset": [
+   -39,
+   3
+  ],
+  "cutBelowSole": 0,
+  "rimToOutline": 0
+ },
+ {
+  "name": "r4_windup_a",
+  "baselineRow": 91,
+  "feet": [
+   71,
+   139
+  ],
+  "offset": [
+   -39,
+   3
+  ],
+  "cutBelowSole": 0,
+  "rimToOutline": 0
+ },
+ {
+  "name": "r5_f05_a",
+  "baselineRow": 91,
+  "feet": [
+   71,
+   139
+  ],
+  "offset": [
+   -39,
+   3
+  ],
+  "cutBelowSole": 0,
+  "rimToOutline": 0
+ },
+ {
+  "name": "r3_strike_a",
+  "baselineRow": 91,
+  "feet": [
+   71,
+   139
+  ],
+  "offset": [
+   -39,
+   3
+  ],
+  "cutBelowSole": 0,
+  "rimToOutline": 0
+ },
+ {
+  "name": "r4_recoil_b",
+  "baselineRow": 91,
+  "feet": [
+   54,
+   139
+  ],
+  "offset": [
+   -39,
+   3
+  ],
+  "cutBelowSole": 0,
+  "rimToOutline": 0
+ },
+ {
+  "name": "r5_f09_a",
+  "baselineRow": 91,
+  "feet": [
+   71,
+   129
+  ],
+  "offset": [
+   -34,
+   3
+  ],
+  "cutBelowSole": 6,
+  "rimToOutline": 0
+ },
+ {
+  "name": "r5_f08_a",
+  "baselineRow": 91,
+  "feet": [
+   71,
+   129
+  ],
+  "offset": [
+   -34,
+   3
+  ],
+  "cutBelowSole": 0,
+  "rimToOutline": 0
+ },
+ {
+  "name": "idle01"
+ }
+]

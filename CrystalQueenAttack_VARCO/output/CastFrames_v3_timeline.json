@@ -1,0 +1,519 @@
+{
+ "note": "시전 공격 중간 프레임 v3 (미리보기용, Unity 미적용): 전신 기울이기(뒤 5도 → 앞 15도, 휘기) + 수정이 여왕 앞까지 비행. 레이어 2개(캐릭터, 이펙트=캐릭터 앞)는 같은 160x160 셀·피벗 (0.5,0.45).",
+ "cell": [
+  160,
+  160
+ ],
+ "pivot_unity": [
+  0.5,
+  0.45
+ ],
+ "ppu": 75.6,
+ "flipX": 0,
+ "attack_ms": 940,
+ "rest_between_attacks_ms": 500,
+ "lean_method": "몸(팔 제외)을 중심선이 휘는 bend 로 기울임: 기울기가 발바닥 0 → 발바닥 위 50px 이상 θ 로 부드럽게 변하고(발바닥 Y=147 고정), 결과는 2x2 도트 격자로 8x8 지점 다수결로 다시 찍음. 눈·코어는 원본 픽셀을 이동만 해서 다시 찍음. 팔·손은 원본 블록 그림 그대로 평행 이동(짝수 px)",
+ "lean_deg": {
+  "rest": 0,
+  "g1": -2,
+  "g2": -4,
+  "A": -5,
+  "r1": 5,
+  "B": 15,
+  "d1": 8,
+  "d2": 3
+ },
+ "body_axis_x": 91,
+ "ramp_px": 50,
+ "crystal_flight": {
+  "top_left_blocks_before_lean": [
+   [
+    66,
+    20
+   ],
+   [
+    67,
+    54
+   ],
+   [
+    66,
+    64
+   ]
+  ],
+  "top_left_cap_blocks": [
+   68,
+   67,
+   68
+  ],
+  "end_left_edge_block": [
+   24,
+   20,
+   23
+  ],
+  "ahead_of_queen_px": 10,
+  "rule": "수정 왼쪽 끝이 그 높이에서 여왕(팔 뻗기 자세)의 맨 왼쪽보다 10px 앞에서 소멸 섬광"
+ },
+ "representative_hit": {
+  "step": "T13",
+  "start_ms": 720,
+  "meaning": "첫 수정 소멸 섬광 시작 (제안값, 확정 아님)"
+ },
+ "character_cells": {
+  "rest": "0_rest",
+  "g1": "1_gather1",
+  "g2": "2_gather2",
+  "A": "3_clasp",
+  "r1": "4_reach-mid",
+  "B": "5_reach",
+  "d1": "6_lower1",
+  "d2": "7_lower2"
+ },
+ "steps": [
+  {
+   "step": "T00",
+   "start_ms": 0,
+   "ms": 40,
+   "lean_deg": 0,
+   "arm_shift_px": [
+    0,
+    0
+   ],
+   "mark_shift_px": null,
+   "character": "CastFrames_v3_cells/CrystalQueen_CastFrame_0_rest.png",
+   "fx": null,
+   "role": "기본"
+  },
+  {
+   "step": "T01",
+   "start_ms": 40,
+   "ms": 60,
+   "lean_deg": -2,
+   "arm_shift_px": [
+    0,
+    0
+   ],
+   "mark_shift_px": {
+    "face": [
+     2,
+     0
+    ],
+    "core": [
+     2,
+     0
+    ],
+    "hl": [
+     2,
+     0
+    ]
+   },
+   "character": "CastFrames_v3_cells/CrystalQueen_CastFrame_1_gather1.png",
+   "fx": null,
+   "role": "손 모으기 중간 1 (뒤로 2도)"
+  },
+  {
+   "step": "T02",
+   "start_ms": 100,
+   "ms": 60,
+   "lean_deg": -4,
+   "arm_shift_px": [
+    2,
+    0
+   ],
+   "mark_shift_px": {
+    "face": [
+     4,
+     0
+    ],
+    "core": [
+     2,
+     0
+    ],
+    "hl": [
+     6,
+     0
+    ]
+   },
+   "character": "CastFrames_v3_cells/CrystalQueen_CastFrame_2_gather2.png",
+   "fx": null,
+   "role": "손 모으기 중간 2 (뒤로 4도)"
+  },
+  {
+   "step": "T03",
+   "start_ms": 160,
+   "ms": 60,
+   "lean_deg": -5,
+   "arm_shift_px": [
+    2,
+    0
+   ],
+   "mark_shift_px": {
+    "face": [
+     4,
+     0
+    ],
+    "core": [
+     4,
+     0
+    ],
+    "hl": [
+     6,
+     2
+    ]
+   },
+   "character": "CastFrames_v3_cells/CrystalQueen_CastFrame_3_clasp.png",
+   "fx": null,
+   "role": "손 모음 (뒤로 5도)"
+  },
+  {
+   "step": "T04",
+   "start_ms": 220,
+   "ms": 60,
+   "lean_deg": -5,
+   "arm_shift_px": [
+    2,
+    0
+   ],
+   "mark_shift_px": {
+    "face": [
+     4,
+     0
+    ],
+    "core": [
+     4,
+     0
+    ],
+    "hl": [
+     6,
+     2
+    ]
+   },
+   "character": "CastFrames_v3_cells/CrystalQueen_CastFrame_3_clasp.png",
+   "fx": "CastFrames_v3_fx/CrystalQueen_CastFx_T04.png",
+   "role": "손 사이 마법"
+  },
+  {
+   "step": "T05",
+   "start_ms": 280,
+   "ms": 50,
+   "lean_deg": -5,
+   "arm_shift_px": [
+    2,
+    0
+   ],
+   "mark_shift_px": {
+    "face": [
+     4,
+     0
+    ],
+    "core": [
+     4,
+     0
+    ],
+    "hl": [
+     6,
+     2
+    ]
+   },
+   "character": "CastFrames_v3_cells/CrystalQueen_CastFrame_3_clasp.png",
+   "fx": "CastFrames_v3_fx/CrystalQueen_CastFx_T05.png",
+   "role": "마법 + 수정 생성 1"
+  },
+  {
+   "step": "T06",
+   "start_ms": 330,
+   "ms": 50,
+   "lean_deg": -5,
+   "arm_shift_px": [
+    2,
+    0
+   ],
+   "mark_shift_px": {
+    "face": [
+     4,
+     0
+    ],
+    "core": [
+     4,
+     0
+    ],
+    "hl": [
+     6,
+     2
+    ]
+   },
+   "character": "CastFrames_v3_cells/CrystalQueen_CastFrame_3_clasp.png",
+   "fx": "CastFrames_v3_fx/CrystalQueen_CastFx_T06.png",
+   "role": "마법 + 수정 생성 2"
+  },
+  {
+   "step": "T07",
+   "start_ms": 380,
+   "ms": 70,
+   "lean_deg": -5,
+   "arm_shift_px": [
+    2,
+    0
+   ],
+   "mark_shift_px": {
+    "face": [
+     4,
+     0
+    ],
+    "core": [
+     4,
+     0
+    ],
+    "hl": [
+     6,
+     2
+    ]
+   },
+   "character": "CastFrames_v3_cells/CrystalQueen_CastFrame_3_clasp.png",
+   "fx": "CastFrames_v3_fx/CrystalQueen_CastFx_T07.png",
+   "role": "마법 + 수정 3개 완성"
+  },
+  {
+   "step": "T08",
+   "start_ms": 450,
+   "ms": 50,
+   "lean_deg": 5,
+   "arm_shift_px": [
+    -2,
+    0
+   ],
+   "mark_shift_px": {
+    "face": [
+     -4,
+     2
+    ],
+    "core": [
+     -2,
+     2
+    ],
+    "hl": [
+     -6,
+     0
+    ]
+   },
+   "character": "CastFrames_v3_cells/CrystalQueen_CastFrame_4_reach-mid.png",
+   "fx": "CastFrames_v3_fx/CrystalQueen_CastFx_T08.png",
+   "role": "팔 뻗기 중간 (앞으로 5도) + 작은 마법"
+  },
+  {
+   "step": "T09",
+   "start_ms": 500,
+   "ms": 70,
+   "lean_deg": 15,
+   "arm_shift_px": [
+    -8,
+    2
+   ],
+   "mark_shift_px": {
+    "face": [
+     -14,
+     4
+    ],
+    "core": [
+     -8,
+     4
+    ],
+    "hl": [
+     -20,
+     0
+    ]
+   },
+   "character": "CastFrames_v3_cells/CrystalQueen_CastFrame_5_reach.png",
+   "fx": "CastFrames_v3_fx/CrystalQueen_CastFx_T09.png",
+   "role": "팔 뻗기 (앞으로 15도) + 마법"
+  },
+  {
+   "step": "T10",
+   "start_ms": 570,
+   "ms": 50,
+   "lean_deg": 15,
+   "arm_shift_px": [
+    -8,
+    2
+   ],
+   "mark_shift_px": {
+    "face": [
+     -14,
+     4
+    ],
+    "core": [
+     -8,
+     4
+    ],
+    "hl": [
+     -20,
+     0
+    ]
+   },
+   "character": "CastFrames_v3_cells/CrystalQueen_CastFrame_5_reach.png",
+   "fx": "CastFrames_v3_fx/CrystalQueen_CastFx_T10.png",
+   "role": "발사 1: 1번 수정 출발 + 마법"
+  },
+  {
+   "step": "T11",
+   "start_ms": 620,
+   "ms": 50,
+   "lean_deg": 15,
+   "arm_shift_px": [
+    -8,
+    2
+   ],
+   "mark_shift_px": {
+    "face": [
+     -14,
+     4
+    ],
+    "core": [
+     -8,
+     4
+    ],
+    "hl": [
+     -20,
+     0
+    ]
+   },
+   "character": "CastFrames_v3_cells/CrystalQueen_CastFrame_5_reach.png",
+   "fx": "CastFrames_v3_fx/CrystalQueen_CastFx_T11.png",
+   "role": "발사 2: 2번 출발"
+  },
+  {
+   "step": "T12",
+   "start_ms": 670,
+   "ms": 50,
+   "lean_deg": 15,
+   "arm_shift_px": [
+    -8,
+    2
+   ],
+   "mark_shift_px": {
+    "face": [
+     -14,
+     4
+    ],
+    "core": [
+     -8,
+     4
+    ],
+    "hl": [
+     -20,
+     0
+    ]
+   },
+   "character": "CastFrames_v3_cells/CrystalQueen_CastFrame_5_reach.png",
+   "fx": "CastFrames_v3_fx/CrystalQueen_CastFx_T12.png",
+   "role": "발사 3: 3번 출발"
+  },
+  {
+   "step": "T13",
+   "start_ms": 720,
+   "ms": 50,
+   "lean_deg": 15,
+   "arm_shift_px": [
+    -8,
+    2
+   ],
+   "mark_shift_px": {
+    "face": [
+     -14,
+     4
+    ],
+    "core": [
+     -8,
+     4
+    ],
+    "hl": [
+     -20,
+     0
+    ]
+   },
+   "character": "CastFrames_v3_cells/CrystalQueen_CastFrame_5_reach.png",
+   "fx": "CastFrames_v3_fx/CrystalQueen_CastFx_T13.png",
+   "role": "발사 4: 1번 소멸 섬광 (대표 타격 시점)"
+  },
+  {
+   "step": "T14",
+   "start_ms": 770,
+   "ms": 50,
+   "lean_deg": 15,
+   "arm_shift_px": [
+    -8,
+    2
+   ],
+   "mark_shift_px": {
+    "face": [
+     -14,
+     4
+    ],
+    "core": [
+     -8,
+     4
+    ],
+    "hl": [
+     -20,
+     0
+    ]
+   },
+   "character": "CastFrames_v3_cells/CrystalQueen_CastFrame_5_reach.png",
+   "fx": "CastFrames_v3_fx/CrystalQueen_CastFx_T14.png",
+   "role": "발사 5: 2번 섬광"
+  },
+  {
+   "step": "T15",
+   "start_ms": 820,
+   "ms": 60,
+   "lean_deg": 8,
+   "arm_shift_px": [
+    -4,
+    2
+   ],
+   "mark_shift_px": {
+    "face": [
+     -8,
+     2
+    ],
+    "core": [
+     -4,
+     2
+    ],
+    "hl": [
+     -10,
+     0
+    ]
+   },
+   "character": "CastFrames_v3_cells/CrystalQueen_CastFrame_6_lower1.png",
+   "fx": "CastFrames_v3_fx/CrystalQueen_CastFx_T15.png",
+   "role": "팔 내리기 중간 1 (앞으로 8도) + 3번 섬광"
+  },
+  {
+   "step": "T16",
+   "start_ms": 880,
+   "ms": 60,
+   "lean_deg": 3,
+   "arm_shift_px": [
+    -2,
+    0
+   ],
+   "mark_shift_px": {
+    "face": [
+     -2,
+     0
+    ],
+    "core": [
+     -2,
+     0
+    ],
+    "hl": [
+     -4,
+     0
+    ]
+   },
+   "character": "CastFrames_v3_cells/CrystalQueen_CastFrame_7_lower2.png",
+   "fx": "CastFrames_v3_fx/CrystalQueen_CastFx_T16.png",
+   "role": "팔 내리기 중간 2 (앞으로 3도) + 마지막 잔상"
+  }
+ ]
+}

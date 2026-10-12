@@ -1,5 +1,5 @@
 ﻿# TETRIGEON — TURN-BASED TETRIS ROGUELIKE
-Design notes | 2026-09-14 (code sync: 2026-10-01; crystal-cell design update: 2026-10-02; monster skill design update: 2026-10-06; crystal cells implemented: 2026-10-06; healing balance: 2026-10-06; exit to title: 2026-10-06; reward cards: 2026-10-06; no reward after the boss: 2026-10-07; HP bars: 2026-10-07; skill counter: 2026-10-07; stage panel removed: 2026-10-07; stage board: 2026-10-07; board effects: 2026-10-08; start countdown: 2026-10-08)
+Design notes | 2026-09-14 (code sync: 2026-10-01; crystal-cell design update: 2026-10-02; monster skill design update: 2026-10-06; crystal cells implemented: 2026-10-06; healing balance: 2026-10-06; exit to title: 2026-10-06; reward cards: 2026-10-06; no reward after the boss: 2026-10-07; HP bars: 2026-10-07; skill counter: 2026-10-07; stage panel removed: 2026-10-07; stage board: 2026-10-07; board effects: 2026-10-08; start countdown: 2026-10-08; Caterpillar attack motion: 2026-10-12; Queen attack motion: 2026-10-12; Guardian attack motion: 2026-10-12)
 
 Status: Core rules describe the intended direction. Recommendations, examples,
 and undecided details are not commitments. Based on prior discussion and the
@@ -314,6 +314,29 @@ Caterpillar gnaw -> all Garbage at once -> Queen skill -> HP damage.
 - The falling and NEXT minos are never eaten. Crystal cells are ordinary locked
   mino blocks and can be eaten (confirmed 2026-10-06); an eaten crystal triggers
   nothing, because it is not a line clear.
+- Attack motion (2026-10-12, confirmed after a preview review, implemented): a 10-frame, 0.625 s
+  (16 FPS) motion plays on the Crystal Caterpillar (normal tier, boss-summoned ones too) every time it
+  really acts on an enemy turn: both its basic HP attack and its skill (gnaw + Garbage), with the same motion for both (confirmed 2026-10-12: the Guardian and the Queen get separate basic-attack and skill motions instead). It does not
+  play when the action is blocked (frozen or stunned) or when the Caterpillar is dead. It is visual only:
+  damage, enemy order, skill counters and timing are unchanged, nothing waits for it and it never pauses
+  the game (the HP damage and the gnaw still apply the moment the enemy turn runs; the strike frame comes
+  about 0.31 s after that, and syncing the two is not done yet).
+  - Motion: the head and both bodies pull back and bunch together (the head sinks 1 px), thrust fast toward
+    screen left (toward Lemy) head first with the bodies following in a chain, hit the strike pose (frame 06:
+    head 5 px, middle body 3 px and rear body 1 px forward, segments at most 2 px apart), recoil and return.
+    The last frame equals the Idle rest pose, so it returns to Idle without a jump. Nothing is redrawn: the
+    approved Idle art is cut into head / first body / second body (each with its own legs, base and
+    crystals) and moved by whole pixels only. The object itself does not move.
+  - Implementation: `Enemy.Acted(EnemyActionKind)` (raised by `Enemy.NotifyAction(skillTurn)`, which classifies the action as
+    BasicAttack / Skill / Charging / StrongAttack; called once per acting enemy in `CombatManager.EnemyTurn` right after the
+    freeze/stun check and the skill-counter check) -> `EnemyView` fires the `Attack` trigger of
+    the normal Idle animator; the controller `CrystalLarva_Idle` gained the state `Attack` (Idle -> Attack on
+    the trigger, Attack -> Idle when it ends). `EnemyView.PlayAttack` decides per tier whether to play (see the Queen section). Assets in
+    `@Resources/Enemies/CrystalLarvaAttack`: `T_CrystalLarva_Attack` (320x128, 64x64 cells, PPU 75.6, pivot
+    (0.5, 0.1875), same import settings as the Idle sheet) and the clip `CrystalLarva_Attack`.
+  - Art: the art faces screen left and is not flipped. VARCO was tried (4 images = 80 credits) but could not
+    keep the design (mirrored, enlarged head, an invented block), so none of it was used.
+  - Limits: the time scale stops it (pause, game over), like Idle. The Caterpillar plays it for every kind of action.
 
 #### Amethyst Guardian / Sentinel: shield and charged attack (implemented 2026-10-06)
 - Skill turn: Garbage + shield 5 + charge 2 (Guardian actions until the strong
@@ -333,6 +356,32 @@ Caterpillar gnaw -> all Garbage at once -> Queen skill -> HP damage.
 - UI under the HP text: `보호막 n`, `강공격 n` (actions left), and `스턴`, shown
   from the stun until the Guardian's next action, like the freeze snowflake.
 
+- Attack motion (2026-10-12, applied provisionally on the instruction "apply the strong attack and the basic attack
+  with the current one for now"): a 1.25 s motion plays on the Amethyst Guardian / Sentinel for its basic HP attack
+  and for its strong attack (the action where the charge deadline reaches 0). It does not play on its skill turn
+  (shield + charge start), on the charging actions that only count the deadline down, when the action is blocked
+  by freeze or stun, or when it is dead; the skill and charge motions are separate and not made yet, and the strong
+  attack will get its own motion later (it shares the basic-attack motion for now). Visual only: damage, enemy order,
+  skill counters and timing are unchanged, nothing waits for it and it never pauses the game (the damage applies
+  the moment the enemy turn runs; the strike frame comes 0.83 s after that, and syncing the two is not done).
+  - Motion (the last version shown to the user, t2): the crystal arm is pulled back behind the body to the upper
+    right, a cyan/purple energy charge builds at the arm tip (0.28-0.71 s, three growing stages), the arm sweeps
+    down in front of the body and thrusts toward screen left (toward Lemy) at 0.83 s with a burst effect at the
+    fist, then recoils and returns to the Idle rest pose. The art is the approved Guardian art redrawn with VARCO
+    (EditImage) and post-processed to the original palette; the effects are drawn in code (cyan and purple only).
+  - Implementation: `Enemy.NotifyAction(skillTurn)` classifies each acting enemy as `EnemyActionKind` (`BasicAttack`,
+    `Skill`, `Charging`, `StrongAttack`; new file `Data/EnemyActionKind.cs`) and raises `Enemy.Acted(kind)`;
+    `EnemyView.PlayAttack` fires the `Attack` trigger of the Epic Idle animator for `BasicAttack` and `StrongAttack`.
+    The controller `AmethystSentinel_Idle` gained the trigger and the state `Attack` (Idle -> Attack on the trigger,
+    Attack -> Idle when it ends). The prefab `P_Enemy` got two children under `EpicIdle`: `EpicChargeFx` and
+    `EpicBurstFx` (SpriteRenderer, sorting order 6, empty by default); the clip `AmethystSentinel_Attack` animates the
+    body and both effect sprites. Assets in `@Resources/Enemies/AmethystSentinelAttack`: `T_AmethystSentinel_Attack`
+    (720x312, 13 cells of 144x104, pivot (0.5, 10/104), the same foot point as the Idle sheet),
+    `T_AmethystSentinel_AttackChargeFx` (336x168, 18 cells of 56x56), `T_AmethystSentinel_AttackBurstFx` (576x72,
+    8 cells of 72x72), all PPU 75.6, Point filter, uncompressed (same as the Idle sheet), and the clip.
+  - Limits: the pulled-back arm and its charge effect can overlap the neighbouring slot on the right (stage 10: the
+    Queen's slot), the time scale stops it (pause, game over), like Idle. The skill, charge and strong-attack-only
+    motions are still to be made.
 #### Crystal Queen: growth / rotation-lock alternation (implemented 2026-10-06)
 - Alternates on each skill turn: growth -> rotation lock -> growth ... The first
   skill of every stage is growth (stage entry creates new enemies). A frozen or
@@ -352,6 +401,36 @@ Caterpillar gnaw -> all Garbage at once -> Queen skill -> HP damage.
 - Repeat growth, or both debuffs on one piece, cannot occur in practice: NEXT is
   consumed within one turn and the Queen's skills are 6 turns apart.
 
+- Attack motion (2026-10-12, confirmed after preview reviews, implemented): a 0.94 s motion plays on the
+  Crystal Queen only when she makes her basic HP attack on an enemy turn. It does not play on her skill turns
+  (growth / rotation lock), when the action is blocked by freeze or stun, or when she is dead. The skill motion
+  is a separate motion that is not made yet, so skill turns still play nothing. It is visual only: damage, enemy
+  order, skill counters and timing are unchanged, nothing waits for it and it never pauses the game (the HP
+  damage applies the moment the enemy turn runs; the first crystal flash comes 0.72 s after that, which is the
+  proposed representative hit time, and syncing the two is not done yet).
+  - Sequence (17 steps in 10 ms multiples, total 0.94 s): both hands rise and come together in front of the solar
+    plexus with a 2 px gap between them while the whole body leans back 5 degrees; a small magic spark appears
+    between the hands and grows while three small purple crystals form behind her back; the arms thrust forward
+    (toward screen left, toward Lemy) while the body leans forward 15 degrees and a starburst appears in front of
+    the hands; the three crystals fire one after another and fly to a point about 10 px beyond the Queen's front
+    at their height (the large wings never detach), each vanishing in a short flash (about 0.1 s); the arms lower
+    and the body returns upright. The motion ends at the Idle rest pose.
+  - Art: the arms are the approved crystal arm guards (forearm covered by crystal, stone hands). Everything is drawn
+    on the same grid as the Idle art (2x2 sprite pixels = 1 dot, the game's density). The body lean is a smooth
+    bend with the feet fixed (a row shift was rejected because it left horizontal seams); the face details (eye,
+    brow, small highlights) and the chest core are kept pixel-exact. VARCO was used earlier in this work only to
+    clean up the arms-less base; the final frames are hand-built from the approved Idle art.
+  - Implementation: `Enemy.Acted(EnemyActionKind)` -> `EnemyView.PlayAttack` fires the `Attack` trigger of the Boss
+    Idle animator only for `BasicAttack`; the controller `CrystalQueen_Idle` gained the trigger parameter
+    `Attack` and the state `Attack` (Idle -> Attack on the trigger, Attack -> Idle when it ends). The prefab
+    `P_Enemy` got a child `BossAttackFx` (SpriteRenderer, sorting order 6, empty by default) under `BossIdle`; the
+    clip `CrystalQueen_Attack` animates the body sprite and the `BossAttackFx` sprite (magic, crystals and flashes,
+    one layer in front of the body). Assets in `@Resources/Enemies/CrystalQueenAttack`: `T_CrystalQueen_Attack`
+    (640x320, 8 cells of 160x160), `T_CrystalQueen_AttackFx` (800x480, 13 cells used), both PPU 75.6, pivot
+    (0.5, 0.45), Point filter, uncompressed (same as the Idle sheet), and the clip.
+  - Limits: the starburst in front of the hands can overlap the neighbouring slot's monster, the crystals form
+    just inside the right screen edge of the boss slot, and the time scale stops it (pause, game over), like Idle.
+    The Queen's skill motion (and the Guardian's skill and charge motions) are still to be made.
 Verified 2026-10-06 in play mode through direct enemy-turn and bag-settlement
 calls. A full hand-played run through stage 10 is still pending.
 

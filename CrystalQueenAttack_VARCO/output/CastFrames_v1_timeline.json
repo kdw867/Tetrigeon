@@ -1,0 +1,168 @@
+{
+ "note": "시전 공격 중간 프레임 v1 (미리보기용, Unity 미적용). 캐릭터·이펙트 레이어는 같은 160x160 셀·피벗 (0.5,0.45).",
+ "cell": [
+  160,
+  160
+ ],
+ "pivot_unity": [
+  0.5,
+  0.45
+ ],
+ "ppu": 75.6,
+ "flipX": 0,
+ "attack_ms": 940,
+ "rest_between_attacks_ms": 500,
+ "representative_hit": {
+  "step": "T12",
+  "start_ms": 670,
+  "meaning": "첫 수정 소멸 섬광 시작 (제안값, 확정 아님)"
+ },
+ "character_cells": {
+  "rest": "0_rest",
+  "g1": "1_gather1",
+  "g2": "2_gather2",
+  "A": "3_clasp",
+  "r1": "4_reach-mid",
+  "B": "5_reach",
+  "d1": "6_lower1",
+  "d2": "7_lower2"
+ },
+ "steps": [
+  {
+   "step": "T00",
+   "start_ms": 0,
+   "ms": 40,
+   "character": "CastFrames_v1_cells/CrystalQueen_CastFrame_0_rest.png",
+   "fx": null,
+   "role": "기본"
+  },
+  {
+   "step": "T01",
+   "start_ms": 40,
+   "ms": 60,
+   "character": "CastFrames_v1_cells/CrystalQueen_CastFrame_1_gather1.png",
+   "fx": null,
+   "role": "손 모으기 중간 1"
+  },
+  {
+   "step": "T02",
+   "start_ms": 100,
+   "ms": 60,
+   "character": "CastFrames_v1_cells/CrystalQueen_CastFrame_2_gather2.png",
+   "fx": null,
+   "role": "손 모으기 중간 2"
+  },
+  {
+   "step": "T03",
+   "start_ms": 160,
+   "ms": 60,
+   "character": "CastFrames_v1_cells/CrystalQueen_CastFrame_3_clasp.png",
+   "fx": null,
+   "role": "손 모음 (핵심 1)"
+  },
+  {
+   "step": "T04",
+   "start_ms": 220,
+   "ms": 60,
+   "character": "CastFrames_v1_cells/CrystalQueen_CastFrame_3_clasp.png",
+   "fx": "CastFrames_v1_fx/CrystalQueen_CastFx_T04.png",
+   "role": "손 사이 마법 (핵심 2)"
+  },
+  {
+   "step": "T05",
+   "start_ms": 280,
+   "ms": 50,
+   "character": "CastFrames_v1_cells/CrystalQueen_CastFrame_3_clasp.png",
+   "fx": "CastFrames_v1_fx/CrystalQueen_CastFx_T05.png",
+   "role": "마법 + 수정 생성 1"
+  },
+  {
+   "step": "T06",
+   "start_ms": 330,
+   "ms": 50,
+   "character": "CastFrames_v1_cells/CrystalQueen_CastFrame_3_clasp.png",
+   "fx": "CastFrames_v1_fx/CrystalQueen_CastFx_T06.png",
+   "role": "마법 + 수정 생성 2"
+  },
+  {
+   "step": "T07",
+   "start_ms": 380,
+   "ms": 70,
+   "character": "CastFrames_v1_cells/CrystalQueen_CastFrame_3_clasp.png",
+   "fx": "CastFrames_v1_fx/CrystalQueen_CastFx_T07.png",
+   "role": "마법 + 수정 3개 완성 (핵심 3)"
+  },
+  {
+   "step": "T08",
+   "start_ms": 450,
+   "ms": 50,
+   "character": "CastFrames_v1_cells/CrystalQueen_CastFrame_4_reach-mid.png",
+   "fx": "CastFrames_v1_fx/CrystalQueen_CastFx_T08.png",
+   "role": "팔 뻗기 중간 + 작은 마법"
+  },
+  {
+   "step": "T09",
+   "start_ms": 500,
+   "ms": 70,
+   "character": "CastFrames_v1_cells/CrystalQueen_CastFrame_5_reach.png",
+   "fx": "CastFrames_v1_fx/CrystalQueen_CastFx_T09.png",
+   "role": "팔 뻗기 + 마법 (핵심 4)"
+  },
+  {
+   "step": "T10",
+   "start_ms": 570,
+   "ms": 50,
+   "character": "CastFrames_v1_cells/CrystalQueen_CastFrame_5_reach.png",
+   "fx": "CastFrames_v1_fx/CrystalQueen_CastFx_T10.png",
+   "role": "발사 1: 1번 수정 출발 + 마법 (핵심 5)"
+  },
+  {
+   "step": "T11",
+   "start_ms": 620,
+   "ms": 50,
+   "character": "CastFrames_v1_cells/CrystalQueen_CastFrame_5_reach.png",
+   "fx": "CastFrames_v1_fx/CrystalQueen_CastFx_T11.png",
+   "role": "발사 2: 2번 출발"
+  },
+  {
+   "step": "T12",
+   "start_ms": 670,
+   "ms": 50,
+   "character": "CastFrames_v1_cells/CrystalQueen_CastFrame_5_reach.png",
+   "fx": "CastFrames_v1_fx/CrystalQueen_CastFx_T12.png",
+   "role": "발사 3: 1번 소멸 섬광 (대표 타격 시점)"
+  },
+  {
+   "step": "T13",
+   "start_ms": 720,
+   "ms": 50,
+   "character": "CastFrames_v1_cells/CrystalQueen_CastFrame_5_reach.png",
+   "fx": "CastFrames_v1_fx/CrystalQueen_CastFx_T13.png",
+   "role": "발사 4: 2번 소멸 섬광"
+  },
+  {
+   "step": "T14",
+   "start_ms": 770,
+   "ms": 50,
+   "character": "CastFrames_v1_cells/CrystalQueen_CastFrame_5_reach.png",
+   "fx": "CastFrames_v1_fx/CrystalQueen_CastFx_T14.png",
+   "role": "발사 5: 3번 소멸 섬광"
+  },
+  {
+   "step": "T15",
+   "start_ms": 820,
+   "ms": 60,
+   "character": "CastFrames_v1_cells/CrystalQueen_CastFrame_6_lower1.png",
+   "fx": "CastFrames_v1_fx/CrystalQueen_CastFx_T15.png",
+   "role": "팔 내리기 중간 1 + 마지막 섬광 잔상"
+  },
+  {
+   "step": "T16",
+   "start_ms": 880,
+   "ms": 60,
+   "character": "CastFrames_v1_cells/CrystalQueen_CastFrame_7_lower2.png",
+   "fx": null,
+   "role": "팔 내리기 중간 2"
+  }
+ ]
+}

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,6 +25,8 @@ public class Enemy : MonoBehaviour
     public int AttackDamage => EnemyStats.GetAttackDamage(Tier); // 체력 공격 턴의 피해량
     public int SkillInterval => EnemyStats.GetSkillInterval(Tier); // 능력 주기 (턴)
     public int TurnsUntilSkill => SkillInterval - turnsSinceSkill; // 능력 발동까지 남은 턴
+
+    public event Action<EnemyActionKind> Acted; // 이 적이 실제로 행동할 때 알림 (행동 종류를 함께 전달. 보이는 연출 전용이라 전투 수치와 순서에는 관여하지 않음)
 
     private int turnsSinceSkill; // 마지막 능력 사용 후 지난 턴 수
 
@@ -201,6 +204,17 @@ public class Enemy : MonoBehaviour
 
         turnsSinceSkill = 0; // 주기 도달: 카운터 리셋 후 능력 사용
         return true;
+    }
+
+    // 적 턴에서 이 적이 막히지 않고 행동할 때 호출: 공격 모션 같은 연출이 구독해서 재생한다 (피해·능력 계산은 따로 하며 여기서는 아무것도 바꾸지 않음)
+    // skillTurn: 이번 행동이 능력 주기에 도달한 능력 사용인지 (AdvanceTurnAndCheckSkill 결과). 강공격 준비 상태는 이 적이 스스로 알고 있으므로 행동 직전에 호출해야 함
+    public void NotifyAction(bool skillTurn)
+    {
+        EnemyActionKind kind = EnemyActionKind.BasicAttack; // 기본은 일반 체력 공격
+        if (skillTurn) kind = EnemyActionKind.Skill; // 능력 사용 턴 (수호자는 보호막과 강공격 준비 시작)
+        else if (ChargeActionsLeft > 1) kind = EnemyActionKind.Charging; // 강공격 준비 중이고 아직 기한이 남음 (공격하지 않고 기한만 셈)
+        else if (ChargeActionsLeft == 1) kind = EnemyActionKind.StrongAttack; // 이번 행동에서 기한이 0이 되어 강공격
+        Acted?.Invoke(kind); // 구독한 연출에 알림
     }
 
     // 이번 능력 발동으로 쌓을 방해 줄 수
