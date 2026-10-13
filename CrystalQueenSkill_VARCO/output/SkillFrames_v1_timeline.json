@@ -1,0 +1,228 @@
+{
+ "note": "수정여왕 SKILL 전체 프레임 v1 (미리보기용, Unity 미적용). 캐릭터 = 일반공격 v3 셀 재사용(수정 없음), 이펙트 = 새 투명 PNG 레이어(캐릭터 앞 한 층). 모든 셀 160x160, 같은 좌표·피벗, 크롭·중앙 정렬 없음.",
+ "cell": [
+  160,
+  160
+ ],
+ "pivot_unity": [
+  0.5,
+  0.45
+ ],
+ "pivot_cell_px_from_top_left": [
+  80,
+  88
+ ],
+ "ppu": 75.6,
+ "flipX": 0,
+ "attack_ms": 940,
+ "rest_between_attacks_ms": 500,
+ "frame_timing": "가변 시간표(10ms 배수, 고정 FPS 아님). 일반공격 17단계·940ms 와 같음. 키 시각 = start_ms.",
+ "fx_unique_cells": 11,
+ "fx_empty_steps": [
+  "T00",
+  "T01",
+  "T02",
+  "T03",
+  "T15",
+  "T16"
+ ],
+ "playback": "두 층을 같은 시간표로 동시에 바꿔 재생: 몸 스프라이트(승인된 일반공격 8셀) + 이펙트 스프라이트(캐릭터 앞 한 층, 빈 단계는 스프라이트 없음). Unity 적용 시에는 일반공격과 같은 구조(Idle 애니메이터의 별도 상태 + 자식 이펙트 SpriteRenderer)로 연결 예정(미적용).",
+ "skill_trigger_reference": {
+  "step": "T11",
+  "start_ms": 620,
+  "meaning": "왕관이 파열하는 순간 = 향후 스킬 발동 기준 시점(제안, 현재 전투 처리 시점은 변경하지 않음)"
+ },
+ "crown": {
+  "size_dots": [
+   21,
+   11
+  ],
+  "size_px": [
+   42,
+   22
+  ],
+  "top_cell_row_px": 19,
+  "center_block_x": 36,
+  "complete_visible_ms": "380~570 (+ 밝아짐 570~620)"
+ },
+ "hand_effect_blocks": {
+  "clasp": [
+   42,
+   50
+  ],
+  "reach_mid": [
+   23,
+   47
+  ],
+  "reach": [
+   11,
+   47
+  ]
+ },
+ "reuse": {
+  "character_cells": "CrystalQueenAttack_VARCO/output/CastFrames_v3_cells/",
+  "timeline": "CrystalQueenAttack_VARCO/output/CastFrames_v3_timeline.json",
+  "normal_fx_for_comparison_only": "CrystalQueenAttack_VARCO/output/CastFrames_v3_fx/"
+ },
+ "matches_key_scenes_v2_byte_for_byte": [
+  "T05:true",
+  "T09:true",
+  "T11:true",
+  "T14:true"
+ ],
+ "steps": [
+  {
+   "step": "T00",
+   "start_ms": 0,
+   "ms": 40,
+   "lean_deg": 0,
+   "character": "../../CrystalQueenAttack_VARCO/output/CastFrames_v3_cells/CrystalQueen_CastFrame_0_rest.png",
+   "fx": null,
+   "role": "기본 자세 (변화 없음)"
+  },
+  {
+   "step": "T01",
+   "start_ms": 40,
+   "ms": 60,
+   "lean_deg": -2,
+   "character": "../../CrystalQueenAttack_VARCO/output/CastFrames_v3_cells/CrystalQueen_CastFrame_1_gather1.png",
+   "fx": null,
+   "role": "손 모으기 중간 1 (뒤로 2도, 이펙트 없음)"
+  },
+  {
+   "step": "T02",
+   "start_ms": 100,
+   "ms": 60,
+   "lean_deg": -4,
+   "character": "../../CrystalQueenAttack_VARCO/output/CastFrames_v3_cells/CrystalQueen_CastFrame_2_gather2.png",
+   "fx": null,
+   "role": "손 모으기 중간 2 (뒤로 4도, 이펙트 없음)"
+  },
+  {
+   "step": "T03",
+   "start_ms": 160,
+   "ms": 60,
+   "lean_deg": -5,
+   "character": "../../CrystalQueenAttack_VARCO/output/CastFrames_v3_cells/CrystalQueen_CastFrame_3_clasp.png",
+   "fx": null,
+   "role": "손 모음 (뒤로 5도, 이펙트 없음)"
+  },
+  {
+   "step": "T04",
+   "start_ms": 220,
+   "ms": 60,
+   "lean_deg": -5,
+   "character": "../../CrystalQueenAttack_VARCO/output/CastFrames_v3_cells/CrystalQueen_CastFrame_3_clasp.png",
+   "fx": "SkillFrames_v1_fx/CrystalQueenSkill_Fx_T04.png",
+   "role": "손 기운 시작(금 테두리 보라, 작음) + 작은 빛(왕관 자리)"
+  },
+  {
+   "step": "T05",
+   "start_ms": 280,
+   "ms": 50,
+   "lean_deg": -5,
+   "character": "../../CrystalQueenAttack_VARCO/output/CastFrames_v3_cells/CrystalQueen_CastFrame_3_clasp.png",
+   "fx": "SkillFrames_v1_fx/CrystalQueenSkill_Fx_T05.png",
+   "role": "손 기운 + 공중 왕관 절반 드러남"
+  },
+  {
+   "step": "T06",
+   "start_ms": 330,
+   "ms": 50,
+   "lean_deg": -5,
+   "character": "../../CrystalQueenAttack_VARCO/output/CastFrames_v3_cells/CrystalQueen_CastFrame_3_clasp.png",
+   "fx": "SkillFrames_v1_fx/CrystalQueenSkill_Fx_T06.png",
+   "role": "손 기운 + 공중 왕관 4분의 3"
+  },
+  {
+   "step": "T07",
+   "start_ms": 380,
+   "ms": 70,
+   "lean_deg": -5,
+   "character": "../../CrystalQueenAttack_VARCO/output/CastFrames_v3_cells/CrystalQueen_CastFrame_3_clasp.png",
+   "fx": "SkillFrames_v1_fx/CrystalQueenSkill_Fx_T07.png",
+   "role": "손 기운 + 공중 왕관 완성 (유지 시작)"
+  },
+  {
+   "step": "T08",
+   "start_ms": 450,
+   "ms": 50,
+   "lean_deg": 5,
+   "character": "../../CrystalQueenAttack_VARCO/output/CastFrames_v3_cells/CrystalQueen_CastFrame_4_reach-mid.png",
+   "fx": "SkillFrames_v1_fx/CrystalQueenSkill_Fx_T08.png",
+   "role": "왕관 유지 + 팔 뻗기 중간(앞으로 5도), 손 기운 작은 별"
+  },
+  {
+   "step": "T09",
+   "start_ms": 500,
+   "ms": 70,
+   "lean_deg": 15,
+   "character": "../../CrystalQueenAttack_VARCO/output/CastFrames_v3_cells/CrystalQueen_CastFrame_5_reach.png",
+   "fx": "SkillFrames_v1_fx/CrystalQueenSkill_Fx_T09.png",
+   "role": "왕관 유지 + 팔 뻗기(앞으로 15도), 손 기운 큰 별"
+  },
+  {
+   "step": "T10",
+   "start_ms": 570,
+   "ms": 50,
+   "lean_deg": 15,
+   "character": "../../CrystalQueenAttack_VARCO/output/CastFrames_v3_cells/CrystalQueen_CastFrame_5_reach.png",
+   "fx": "SkillFrames_v1_fx/CrystalQueenSkill_Fx_T10.png",
+   "role": "왕관 한 단계 밝아짐 + 반짝임 (터지기 직전)"
+  },
+  {
+   "step": "T11",
+   "start_ms": 620,
+   "ms": 50,
+   "lean_deg": 15,
+   "character": "../../CrystalQueenAttack_VARCO/output/CastFrames_v3_cells/CrystalQueen_CastFrame_5_reach.png",
+   "fx": "SkillFrames_v1_fx/CrystalQueenSkill_Fx_T11.png",
+   "role": "왕관 파열: 다섯 조각으로 갈라짐 + 섬광 + 첫 파동 (스킬 발동 기준 시점, 제안)"
+  },
+  {
+   "step": "T12",
+   "start_ms": 670,
+   "ms": 50,
+   "lean_deg": 15,
+   "character": "../../CrystalQueenAttack_VARCO/output/CastFrames_v3_cells/CrystalQueen_CastFrame_5_reach.png",
+   "fx": "SkillFrames_v1_fx/CrystalQueenSkill_Fx_T12.png",
+   "role": "조각 흩어짐 + 파동 확산 + 손 기운 거의 꺼짐"
+  },
+  {
+   "step": "T13",
+   "start_ms": 720,
+   "ms": 50,
+   "lean_deg": 15,
+   "character": "../../CrystalQueenAttack_VARCO/output/CastFrames_v3_cells/CrystalQueen_CastFrame_5_reach.png",
+   "fx": "SkillFrames_v1_fx/CrystalQueenSkill_Fx_T13.png",
+   "role": "조각·파동 성김"
+  },
+  {
+   "step": "T14",
+   "start_ms": 770,
+   "ms": 50,
+   "lean_deg": 15,
+   "character": "../../CrystalQueenAttack_VARCO/output/CastFrames_v3_cells/CrystalQueen_CastFrame_5_reach.png",
+   "fx": "SkillFrames_v1_fx/CrystalQueenSkill_Fx_T14.png",
+   "role": "마지막 어두운 점"
+  },
+  {
+   "step": "T15",
+   "start_ms": 820,
+   "ms": 60,
+   "lean_deg": 8,
+   "character": "../../CrystalQueenAttack_VARCO/output/CastFrames_v3_cells/CrystalQueen_CastFrame_6_lower1.png",
+   "fx": null,
+   "role": "팔 내리기 1 (앞으로 8도, 이펙트 없음)"
+  },
+  {
+   "step": "T16",
+   "start_ms": 880,
+   "ms": 60,
+   "lean_deg": 3,
+   "character": "../../CrystalQueenAttack_VARCO/output/CastFrames_v3_cells/CrystalQueen_CastFrame_7_lower2.png",
+   "fx": null,
+   "role": "팔 내리기 2 (앞으로 3도, 이펙트 없음)"
+  }
+ ]
+}

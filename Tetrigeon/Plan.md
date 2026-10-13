@@ -1,5 +1,5 @@
 ﻿# TETRIGEON — TURN-BASED TETRIS ROGUELIKE
-Design notes | 2026-09-14 (code sync: 2026-10-01; crystal-cell design update: 2026-10-02; monster skill design update: 2026-10-06; crystal cells implemented: 2026-10-06; healing balance: 2026-10-06; exit to title: 2026-10-06; reward cards: 2026-10-06; no reward after the boss: 2026-10-07; HP bars: 2026-10-07; skill counter: 2026-10-07; stage panel removed: 2026-10-07; stage board: 2026-10-07; board effects: 2026-10-08; start countdown: 2026-10-08; Caterpillar attack motion: 2026-10-12; Queen attack motion: 2026-10-12; Guardian attack motion: 2026-10-12)
+Design notes | 2026-09-14 (code sync: 2026-10-01; crystal-cell design update: 2026-10-02; monster skill design update: 2026-10-06; crystal cells implemented: 2026-10-06; healing balance: 2026-10-06; exit to title: 2026-10-06; reward cards: 2026-10-06; no reward after the boss: 2026-10-07; HP bars: 2026-10-07; skill counter: 2026-10-07; stage panel removed: 2026-10-07; stage board: 2026-10-07; board effects: 2026-10-08; start countdown: 2026-10-08; Caterpillar attack motion: 2026-10-12; Queen attack motion: 2026-10-12; Guardian attack motion: 2026-10-12; Queen growth skill motion: 2026-10-13)
 
 Status: Core rules describe the intended direction. Recommendations, examples,
 and undecided details are not commitments. Based on prior discussion and the
@@ -403,8 +403,8 @@ Caterpillar gnaw -> all Garbage at once -> Queen skill -> HP damage.
 
 - Attack motion (2026-10-12, confirmed after preview reviews, implemented): a 0.94 s motion plays on the
   Crystal Queen only when she makes her basic HP attack on an enemy turn. It does not play on her skill turns
-  (growth / rotation lock), when the action is blocked by freeze or stun, or when she is dead. The skill motion
-  is a separate motion that is not made yet, so skill turns still play nothing. It is visual only: damage, enemy
+  (growth / rotation lock), when the action is blocked by freeze or stun, or when she is dead. Her growth skill
+  has its own motion (next bullet) and the rotation-lock skill motion is not made yet. It is visual only: damage, enemy
   order, skill counters and timing are unchanged, nothing waits for it and it never pauses the game (the HP
   damage applies the moment the enemy turn runs; the first crystal flash comes 0.72 s after that, which is the
   proposed representative hit time, and syncing the two is not done yet).
@@ -430,7 +430,36 @@ Caterpillar gnaw -> all Garbage at once -> Queen skill -> HP damage.
     (0.5, 0.45), Point filter, uncompressed (same as the Idle sheet), and the clip.
   - Limits: the starburst in front of the hands can overlap the neighbouring slot's monster, the crystals form
     just inside the right screen edge of the boss slot, and the time scale stops it (pause, game over), like Idle.
-    The Queen's skill motion (and the Guardian's skill and charge motions) are still to be made.
+    The Queen's rotation-lock motion (and the Guardian's skill and charge motions) are still to be made.
+- Growth skill motion (2026-10-13, confirmed after preview reviews, implemented): a 0.94 s motion plays on the
+  Crystal Queen only on the turns where she uses her crystal growth skill (the skill that adds one cell to every mino
+  in NEXT). It does not play on her rotation-lock turns (that skill gets its own motion later), on her basic attack
+  turns (those keep the basic attack motion), when the action is blocked by freeze or stun, or when she is dead. It is
+  visual only: the growth itself, damage, enemy order, skill counters and timing are unchanged, nothing waits for it
+  and it never pauses the game. The moment the crown bursts (0.62 s after the action starts) is recorded as the
+  proposed skill trigger time; syncing the real growth to it is not done.
+  - Look: the body motion is exactly the basic attack motion (same 8 body sprites, same timing, same lean), only the
+    effect layer is different. The crystal projectiles are gone. The hand magic uses the same positions and sizes as
+    the basic attack's hand magic but in a different colour (purple with a gold rim and a single white centre dot).
+    A separate crystal crown appears above the Queen, fades in, is held for about 0.24 s and then splits into five
+    pieces with a short thin purple and gold wave and a few fragments, which disappear quickly. The crown (21x11 dots =
+    42x22 px) is a crown carved from crystal (bright lavender faces) mixed with gold, pearls and one cyan gem. It sits
+    at the top of the screen (the Queen's tallest crystal reaches only 10 px below the screen top), so its lower
+    part overlaps the Queen's top crystals, separated by a dark outline. Everything is drawn on the same grid as the
+    Idle art (2x2 sprite pixels = 1 dot). No VARCO output was used for this effect (it was drawn in code).
+  - Implementation: `EnemyActionKind` gained `QueenGrowth` and `QueenRotationLock`; `Enemy.NotifyAction` reports one of
+    them instead of `Skill` for the Queen's skill turns (the growth / rotation-lock alternation is decided right after
+    the notification, so the notification reads the alternation state before it flips); `EnemyView.PlayAttack` fires the
+    new `Skill` trigger of the Boss Idle animator for `QueenGrowth` only. The controller `CrystalQueen_Idle` gained the
+    trigger `Skill` and the state `Skill` (Idle -> Skill on the trigger, Skill -> Idle when it ends, same settings as
+    `Attack`). The clip `CrystalQueen_Skill` animates the same body sprites as `CrystalQueen_Attack` and the same child
+    `BossAttackFx` (sprites from the new sheet), so the prefab `P_Enemy` is unchanged. Assets in
+    `@Resources/Enemies/CrystalQueenSkill`: `T_CrystalQueen_SkillFx` (800x480, 11 cells used of 160x160, PPU 75.6,
+    pivot (0.5, 0.45), Point filter, uncompressed, same import settings as `T_CrystalQueen_AttackFx`) and the clip.
+  - Limits: the hand magic at full reach can overlap the neighbouring slot's monster (same as the basic attack), the
+    crown overlaps the top of the Queen's crystals, the time scale stops the motion (pause, game over) like Idle, and the
+    target arrow above the Queen (drawn on top of everything) covers the lower centre of the crown while she is the
+    target (seen in play mode, not changed). Not yet played by hand in a full run.
 Verified 2026-10-06 in play mode through direct enemy-turn and bag-settlement
 calls. A full hand-played run through stage 10 is still pending.
 
@@ -644,6 +673,7 @@ Crystal activation numbers (confirmed 2026-10-06, implemented):
   extra Critical damage D x M (the base part is not repeated); J freezes for
   exactly 1 enemy action no matter how many lines were cleared, its release
   damage is round(D x 0.5 x M), and a boss still needs D >= 2 to be frozen.
+- S crystals (2026-10-13): restore exactly 1 HP per cleared S crystal, independent of lines, level, T-Spin and Perfect Clear bonuses. Multiple cells add together at bag end; max HP cap is unchanged. Direct upgraded S clears still use round(D x M).
 - Implementation (2026-10-06): the crystal cells of each mino type are chosen
   in MinoUpgrades.Upgrade and stored per type by cell index. A block knows
   whether it is a crystal from its own mino type and cell index
@@ -696,7 +726,7 @@ is the first. The shield absorbs enemy HP attacks before HP and is cleared at
 stage start.
 Healing balance (2026-10-06, confirmed after playtest: the player was too hard
 to defeat): the S Heal multiplier was lowered from 3 through 2 and 1.5 to 1 (2026-10-07: D x M; crystal
-activations use the same value) and the stage-clear heal from 20 through 15 to 10.
+activations now restore a fixed 1 HP per cell, updated 2026-10-13) and the stage-clear heal from 20 through 15 to 10.
 
 J and L abilities were swapped on 2026-09-30 (blue J = Freeze, orange L =
 Critical). Values and rules moved unchanged; upgrade levels stay with each mino.

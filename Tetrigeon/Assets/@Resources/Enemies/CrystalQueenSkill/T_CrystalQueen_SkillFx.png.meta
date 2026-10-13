@@ -1,0 +1,590 @@
+fileFormatVersion: 2
+guid: dc365885511879d45a4fd73955cfef7f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3215123854564019141
+    second: T_CrystalQueen_SkillFx_0
+  - first:
+      213: -3316371297421090644
+    second: T_CrystalQueen_SkillFx_1
+  - first:
+      213: -3493303492448246532
+    second: T_CrystalQueen_SkillFx_2
+  - first:
+      213: 8735012875334357269
+    second: T_CrystalQueen_SkillFx_3
+  - first:
+      213: -1358094858476341017
+    second: T_CrystalQueen_SkillFx_4
+  - first:
+      213: 5345393574477851264
+    second: T_CrystalQueen_SkillFx_5
+  - first:
+      213: -1123634001564582346
+    second: T_CrystalQueen_SkillFx_6
+  - first:
+      213: 1126379325181873489
+    second: T_CrystalQueen_SkillFx_7
+  - first:
+      213: -8618770830733303901
+    second: T_CrystalQueen_SkillFx_8
+  - first:
+      213: -1114484902978728204
+    second: T_CrystalQueen_SkillFx_9
+  - first:
+      213: 3181890326128382953
+    second: T_CrystalQueen_SkillFx_10
+  - first:
+      213: -6212427905135025464
+    second: T_CrystalQueen_SkillFx_11
+  - first:
+      213: -5235851734250172112
+    second: T_CrystalQueen_SkillFx_12
+  - first:
+      213: -3790237428128228991
+    second: T_CrystalQueen_SkillFx_13
+  - first:
+      213: -3966854150926864173
+    second: T_CrystalQueen_SkillFx_14
+  - first:
+      213: -2260883061992434550
+    second: T_CrystalQueen_SkillFx_15
+  - first:
+      213: 8644858718878808518
+    second: T_CrystalQueen_SkillFx_16
+  - first:
+      213: 948492631805101404
+    second: T_CrystalQueen_SkillFx_17
+  - first:
+      213: 1071270275956121437
+    second: T_CrystalQueen_SkillFx_18
+  - first:
+      213: 4174858699468687148
+    second: T_CrystalQueen_SkillFx_19
+  - first:
+      213: -1394608781548739638
+    second: T_CrystalQueen_SkillFx_20
+  - first:
+      213: -927270297438819254
+    second: T_CrystalQueen_SkillFx_21
+  - first:
+      213: -3967235607238618939
+    second: T_CrystalQueen_SkillFx_22
+  - first:
+      213: -8069065208118930047
+    second: T_CrystalQueen_SkillFx_23
+  - first:
+      213: 8203260221521243149
+    second: T_CrystalQueen_SkillFx_24
+  - first:
+      213: -6438272781138839180
+    second: T_CrystalQueen_SkillFx_25
+  - first:
+      213: 8989001927578699086
+    second: T_CrystalQueen_SkillFx_26
+  - first:
+      213: -2006587862899636121
+    second: T_CrystalQueen_SkillFx_27
+  - first:
+      213: -6666290633919583334
+    second: T_CrystalQueen_SkillFx_28
+  - first:
+      213: 2846269716666810848
+    second: T_CrystalQueen_SkillFx_29
+  - first:
+      213: 4395085378212463924
+    second: T_CrystalQueen_SkillFx_30
+  - first:
+      213: 6047838360876436746
+    second: T_CrystalQueen_SkillFx_31
+  - first:
+      213: 1840811166224623745
+    second: T_CrystalQueen_SkillFx_32
+  - first:
+      213: 996103761605475115
+    second: T_CrystalQueen_SkillFx_33
+  - first:
+      213: 5668507224299963418
+    second: T_CrystalQueen_SkillFx_34
+  - first:
+      213: 7256980484560988224
+    second: T_CrystalQueen_SkillFx_35
+  - first:
+      213: -2290949739539957694
+    second: T_CrystalQueen_SkillFx_36
+  - first:
+      213: 6002169999089428122
+    second: CrystalQueenSkillFx_00
+  - first:
+      213: 6424846319750502701
+    second: CrystalQueenSkillFx_01
+  - first:
+      213: -7229455635830757593
+    second: CrystalQueenSkillFx_02
+  - first:
+      213: 8746014267648278616
+    second: CrystalQueenSkillFx_03
+  - first:
+      213: 2062110640465041459
+    second: CrystalQueenSkillFx_04
+  - first:
+      213: -6484778585297967102
+    second: CrystalQueenSkillFx_05
+  - first:
+      213: -7129642572679849890
+    second: CrystalQueenSkillFx_06
+  - first:
+      213: 1436273033710021242
+    second: CrystalQueenSkillFx_07
+  - first:
+      213: 4172289297479595688
+    second: CrystalQueenSkillFx_08
+  - first:
+      213: 7963633904250846472
+    second: CrystalQueenSkillFx_09
+  - first:
+      213: -2751431764718985411
+    second: CrystalQueenSkillFx_10
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 0
+  spriteMeshType: 0
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.45}
+  spritePixelsToUnits: 75.6
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: CrystalQueenSkillFx_00
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a966b3530ddfb4350800000000000000
+      internalID: 6002169999089428122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueenSkillFx_01
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d29543100b3a92950800000000000000
+      internalID: 6424846319750502701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueenSkillFx_02
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 727acda0760dbab90800000000000000
+      internalID: -7229455635830757593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueenSkillFx_03
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8508ca753a5106970800000000000000
+      internalID: 8746014267648278616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueenSkillFx_04
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 338d874b3b61e9c10800000000000000
+      internalID: 2062110640465041459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueenSkillFx_05
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20821480c307106a0800000000000000
+      internalID: -6484778585297967102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueenSkillFx_06
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e585ae7cadb6e0d90800000000000000
+      internalID: -7129642572679849890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueenSkillFx_07
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7a22c6e6baaee310800000000000000
+      internalID: 1436273033710021242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueenSkillFx_08
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a67f64a203f6e930800000000000000
+      internalID: 4172289297479595688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueenSkillFx_09
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80df020c7d2848e60800000000000000
+      internalID: 7963633904250846472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueenSkillFx_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3fd2304363f0d9d0800000000000000
+      internalID: -2751431764718985411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      CrystalQueenSkillFx_00: 6002169999089428122
+      CrystalQueenSkillFx_01: 6424846319750502701
+      CrystalQueenSkillFx_02: -7229455635830757593
+      CrystalQueenSkillFx_03: 8746014267648278616
+      CrystalQueenSkillFx_04: 2062110640465041459
+      CrystalQueenSkillFx_05: -6484778585297967102
+      CrystalQueenSkillFx_06: -7129642572679849890
+      CrystalQueenSkillFx_07: 1436273033710021242
+      CrystalQueenSkillFx_08: 4172289297479595688
+      CrystalQueenSkillFx_09: 7963633904250846472
+      CrystalQueenSkillFx_10: -2751431764718985411
+      T_CrystalQueen_SkillFx_0: -3215123854564019141
+      T_CrystalQueen_SkillFx_1: -3316371297421090644
+      T_CrystalQueen_SkillFx_10: 3181890326128382953
+      T_CrystalQueen_SkillFx_11: -6212427905135025464
+      T_CrystalQueen_SkillFx_12: -5235851734250172112
+      T_CrystalQueen_SkillFx_13: -3790237428128228991
+      T_CrystalQueen_SkillFx_14: -3966854150926864173
+      T_CrystalQueen_SkillFx_15: -2260883061992434550
+      T_CrystalQueen_SkillFx_16: 8644858718878808518
+      T_CrystalQueen_SkillFx_17: 948492631805101404
+      T_CrystalQueen_SkillFx_18: 1071270275956121437
+      T_CrystalQueen_SkillFx_19: 4174858699468687148
+      T_CrystalQueen_SkillFx_2: -3493303492448246532
+      T_CrystalQueen_SkillFx_20: -1394608781548739638
+      T_CrystalQueen_SkillFx_21: -927270297438819254
+      T_CrystalQueen_SkillFx_22: -3967235607238618939
+      T_CrystalQueen_SkillFx_23: -8069065208118930047
+      T_CrystalQueen_SkillFx_24: 8203260221521243149
+      T_CrystalQueen_SkillFx_25: -6438272781138839180
+      T_CrystalQueen_SkillFx_26: 8989001927578699086
+      T_CrystalQueen_SkillFx_27: -2006587862899636121
+      T_CrystalQueen_SkillFx_28: -6666290633919583334
+      T_CrystalQueen_SkillFx_29: 2846269716666810848
+      T_CrystalQueen_SkillFx_3: 8735012875334357269
+      T_CrystalQueen_SkillFx_30: 4395085378212463924
+      T_CrystalQueen_SkillFx_31: 6047838360876436746
+      T_CrystalQueen_SkillFx_32: 1840811166224623745
+      T_CrystalQueen_SkillFx_33: 996103761605475115
+      T_CrystalQueen_SkillFx_34: 5668507224299963418
+      T_CrystalQueen_SkillFx_35: 7256980484560988224
+      T_CrystalQueen_SkillFx_36: -2290949739539957694
+      T_CrystalQueen_SkillFx_4: -1358094858476341017
+      T_CrystalQueen_SkillFx_5: 5345393574477851264
+      T_CrystalQueen_SkillFx_6: -1123634001564582346
+      T_CrystalQueen_SkillFx_7: 1126379325181873489
+      T_CrystalQueen_SkillFx_8: -8618770830733303901
+      T_CrystalQueen_SkillFx_9: -1114484902978728204
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

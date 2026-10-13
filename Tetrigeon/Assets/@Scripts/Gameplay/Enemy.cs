@@ -211,7 +211,8 @@ public class Enemy : MonoBehaviour
     public void NotifyAction(bool skillTurn)
     {
         EnemyActionKind kind = EnemyActionKind.BasicAttack; // 기본은 일반 체력 공격
-        if (skillTurn) kind = EnemyActionKind.Skill; // 능력 사용 턴 (수호자는 보호막과 강공격 준비 시작)
+        if (skillTurn && Tier == EnemyTier.Boss) kind = queenUsedGrowth ? EnemyActionKind.QueenRotationLock : EnemyActionKind.QueenGrowth; // 여왕 능력: 증식과 회전 금지가 번갈아 나오고 교대는 TakeQueenGrowthTurn 이 이 알림 뒤에 바꾸므로, 지금 값이 직전에 증식이었으면 이번은 회전 금지
+        else if (skillTurn) kind = EnemyActionKind.Skill; // 능력 사용 턴 (수호자는 보호막과 강공격 준비 시작)
         else if (ChargeActionsLeft > 1) kind = EnemyActionKind.Charging; // 강공격 준비 중이고 아직 기한이 남음 (공격하지 않고 기한만 셈)
         else if (ChargeActionsLeft == 1) kind = EnemyActionKind.StrongAttack; // 이번 행동에서 기한이 0이 되어 강공격
         Acted?.Invoke(kind); // 구독한 연출에 알림

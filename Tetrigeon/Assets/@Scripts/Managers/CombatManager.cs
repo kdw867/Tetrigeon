@@ -239,7 +239,7 @@ public class CombatManager : MonoBehaviour
 
             case TetrominoType.S: // 회복: 기본 피해에 더해 Lv.1 기준 1배만큼 회복 (최대 체력에서 잘리므로 초과분은 버려짐)
                 PendingDamage += baseDamage;
-                pendingHeal += RecordEffect(lockedType, AbilityValue(lockedType, damage, level)); // 회복 예정량 기록
+                pendingHeal += RecordEffect(lockedType, crystal ? 1 : AbilityValue(lockedType, damage, level)); // S 수정은 칸당 1 HP 고정, 직접 줄 삭제 회복은 기존 계산 유지
                 break;
 
             case TetrominoType.Z: // 폭발: 기본 피해 후 인접한 다른 적 1명에게 Lv.1 기준 0.7배 피해
