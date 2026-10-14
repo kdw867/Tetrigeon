@@ -1,0 +1,126 @@
+{
+ "poses": {
+  "stand": {
+   "name": "기본",
+   "dots": 4028,
+   "bbox": [
+    32,
+    22,
+    111,
+    94
+   ],
+   "height": 73,
+   "width": 80,
+   "bottomRow": 94,
+   "nonBinaryAlpha": 0,
+   "offPaletteColors": 0,
+   "edgeTouch": 0,
+   "bottomRuns": [
+    [
+     47,
+     70
+    ],
+    [
+     79,
+     101
+    ]
+   ]
+  },
+  "mid": {
+   "name": "웅크리는 중",
+   "dots": 3907,
+   "bbox": [
+    34,
+    26,
+    109,
+    94
+   ],
+   "height": 69,
+   "width": 76,
+   "bottomRow": 94,
+   "nonBinaryAlpha": 0,
+   "offPaletteColors": 0,
+   "edgeTouch": 0,
+   "bottomRuns": [
+    [
+     45,
+     70
+    ],
+    [
+     78,
+     102
+    ]
+   ]
+  },
+  "hold": {
+   "name": "웅크림 유지",
+   "dots": 3643,
+   "bbox": [
+    34,
+    32,
+    106,
+    94
+   ],
+   "height": 63,
+   "width": 73,
+   "bottomRow": 94,
+   "nonBinaryAlpha": 0,
+   "offPaletteColors": 0,
+   "edgeTouch": 0,
+   "bottomRuns": [
+    [
+     46,
+     70
+    ],
+    [
+     77,
+     103
+    ]
+   ]
+  }
+ },
+ "shield": {
+  "screenRect": [
+   1486,
+   119,
+   1658,
+   263
+  ],
+  "widthPx": 172,
+  "heightPx": 144,
+  "queenLeftEdgeX": 1712,
+  "gapToQueenPx": 54,
+  "larvaRightEdgeX": 1414,
+  "gapToLarvaPx": 72,
+  "hpBarTopY": 268,
+  "gapAboveHpBarPx": 5,
+  "topY": 119,
+  "layers": {
+   "fillDots": 4704,
+   "rimDots": 712
+  }
+ },
+ "alpha": {
+  "fill": [
+   0.2,
+   0.4,
+   0.6,
+   0.8,
+   1
+  ],
+  "rim": [
+   0.6,
+   0.7,
+   0.8,
+   0.9,
+   1
+  ],
+  "levels": [
+   0,
+   0.25,
+   0.5,
+   0.75,
+   1
+  ]
+ }
+}

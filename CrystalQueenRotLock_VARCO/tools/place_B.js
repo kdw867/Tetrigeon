@@ -1,0 +1,8 @@
+// B안(머리 위, 겹침 허용) 룬 자리 측정 (작업 폴더 전용): 단계별 머리 맨 위 열과, 고정 열일 때의 겹침 도트 수
+const path = require('path'), L = require('./lib_view.js'), { p, F, S } = L;
+const blocks = (c) => { const g = []; for (let j = 0; j < 80; j++) { g[j] = []; for (let i = 0; i < 80; i++) { let o = 0; for (let y = 0; y < 2; y++) for (let x = 0; x < 2; x++) if (c.d[((2 * j + 1 + y) * 160 + 2 * i + 1 + x) * 4 + 3]) o = 1; g[j][i] = o; } } return g; };
+const info = {}; for (const s of S.J.steps) { const g = blocks(L.bodyCell(s.step)); let top = 99; for (let j = 0; j < 80 && top === 99; j++) for (let i = 0; i < 80; i++) if (g[j][i]) { top = j; break; } const cols = []; for (let i = 0; i < 80; i++) { let t = 99; for (let j = 0; j < 80; j++) if (g[j][i]) { t = j; break; } if (t <= top + 1) cols.push(i); } info[s.step] = { lean: s.lean_deg, top, headCol: cols.length ? (Math.min(...cols) + Math.max(...cols)) / 2 : null, cols: cols.length ? Math.min(...cols) + '~' + Math.max(...cols) : '-', g }; }
+for (const [k, v] of Object.entries(info)) console.log(k, '기울기', String(v.lean).padStart(3), '맨 위 줄', v.top, '머리 맨 위 열', v.cols, '중심', v.headCol);
+// 고정 열 후보별: T06~T14 각 단계에서 룬(고리·자물쇠, y<66 구역)이 몸과 겹치는 도트 수 합계/최대
+const ids = ['T06', 'T07', 'T08', 'T09', 'T10', 'T11', 'T12', 'T13', 'T14'];
+for (const cx of [32, 34, 36, 38, 40, 42, 44]) { const keep = F.RC.slice(); F.RC[0] = cx; F.RC[1] = 19; const per = ids.map(id => { const f = F.buildFx(id), g = info[id].g; let n = 0; for (let j = 0; j < 80; j++) for (let i = 0; i < 80; i++) if (2 * j + 1 < 66 && f.d[((2 * j + 1) * 160 + 2 * i + 1) * 4 + 3] && g[j][i]) n++; return n; }); F.RC[0] = keep[0]; F.RC[1] = keep[1]; console.log('고정 열', cx, '겹침 도트(T06~T14)', per.join(' '), '| 합', per.reduce((a, b) => a + b), '최대', Math.max(...per)); }

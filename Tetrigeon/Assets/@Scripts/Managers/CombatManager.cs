@@ -538,7 +538,7 @@ public class CombatManager : MonoBehaviour
         if (garbageLines > 0) GridManager.Instance.AddGarbageLines(garbageLines); // 방해 줄은 한 번에 쌓음
 
         if (queenGrows) BagManager.Instance.GrowPreview(); // NEXT에 보이는 미노 전부에 칸 1개씩
-        if (queenLocksRotation) BagManager.Instance.LockNextRotation(); // NEXT 맨 위 미노 회전 금지
+        if (queenLocksRotation) BagManager.Instance.LockNextRotation(); // 발동 직후 새로 나올 미노 다음의 NEXT 2개 회전 금지
 
         hpDamage = AbsorbWithShield(hpDamage); // 보호막이 있으면 먼저 막아줌
         PlayerHp -= hpDamage; // 남은 피해만 체력에 적용

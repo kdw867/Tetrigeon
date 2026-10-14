@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 // 다음에 나올 조각 5개를 보드 옆 월드 좌표에 세로로 미리보기 (맨 위가 바로 다음 조각)
 public class NextView : MonoBehaviour
@@ -47,10 +47,11 @@ public class NextView : MonoBehaviour
                     0f);
 
                 SpriteRenderer spriteRenderer = block.AddComponent<SpriteRenderer>();
-                PieceVisuals.ApplyMinoArt(spriteRenderer, mino.Type, i, 1f, 10, mino.RotationLocked); // 칸별 원본 아트와 방향 적용 (회전 금지는 침식 색)
+                PieceVisuals.ApplyMinoArt(spriteRenderer, mino.Type, i, 1f, 10); // 원래 미노 색과 칸별 아트 유지
                 spriteRenderer.sortingOrder = 10;
             }
 
+            if (mino.RotationLocked) RotationLockSeal.Create(container.transform); // 중앙 정렬된 슬롯에 잠금 표식 추가
             slots[slot] = container;
         }
     }

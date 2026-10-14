@@ -1,0 +1,526 @@
+fileFormatVersion: 2
+guid: 38dbb52fb997bdb4fb84aa6a90a159b9
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6253290184328100980
+    second: T_CrystalQueen_RotLockFx_0
+  - first:
+      213: 5226590414221442368
+    second: T_CrystalQueen_RotLockFx_1
+  - first:
+      213: 5168759180464943143
+    second: T_CrystalQueen_RotLockFx_2
+  - first:
+      213: 3422398180788904966
+    second: T_CrystalQueen_RotLockFx_3
+  - first:
+      213: -8905778771416386381
+    second: T_CrystalQueen_RotLockFx_4
+  - first:
+      213: -1217395721185358438
+    second: T_CrystalQueen_RotLockFx_5
+  - first:
+      213: 8362286653645450372
+    second: T_CrystalQueen_RotLockFx_6
+  - first:
+      213: -2906875784593819226
+    second: T_CrystalQueen_RotLockFx_7
+  - first:
+      213: 1438047567094861588
+    second: T_CrystalQueen_RotLockFx_8
+  - first:
+      213: 2829059668949508662
+    second: T_CrystalQueen_RotLockFx_9
+  - first:
+      213: 6637185799838838360
+    second: T_CrystalQueen_RotLockFx_10
+  - first:
+      213: 1228534042263536242
+    second: T_CrystalQueen_RotLockFx_11
+  - first:
+      213: -5614533675442962084
+    second: T_CrystalQueen_RotLockFx_12
+  - first:
+      213: -6899845071375692729
+    second: T_CrystalQueen_RotLockFx_13
+  - first:
+      213: 1901128809852575323
+    second: T_CrystalQueen_RotLockFx_14
+  - first:
+      213: -8768366278372717284
+    second: T_CrystalQueen_RotLockFx_15
+  - first:
+      213: -5297676289911790809
+    second: T_CrystalQueen_RotLockFx_16
+  - first:
+      213: -343740527414074782
+    second: T_CrystalQueen_RotLockFx_17
+  - first:
+      213: 5971581098774286691
+    second: T_CrystalQueen_RotLockFx_18
+  - first:
+      213: -592096234882311044
+    second: T_CrystalQueen_RotLockFx_19
+  - first:
+      213: 3872258472447324500
+    second: T_CrystalQueen_RotLockFx_20
+  - first:
+      213: -4784601567185909375
+    second: CrystalQueenRotLockFx_00
+  - first:
+      213: 8472267676510807350
+    second: CrystalQueenRotLockFx_01
+  - first:
+      213: -4278726018374036370
+    second: CrystalQueenRotLockFx_02
+  - first:
+      213: 3308953541502211038
+    second: CrystalQueenRotLockFx_03
+  - first:
+      213: -3491296739269150436
+    second: CrystalQueenRotLockFx_04
+  - first:
+      213: 8439778384644955116
+    second: CrystalQueenRotLockFx_05
+  - first:
+      213: -4684015668745519754
+    second: CrystalQueenRotLockFx_06
+  - first:
+      213: 6065535887590777381
+    second: CrystalQueenRotLockFx_07
+  - first:
+      213: 2514472276494526109
+    second: CrystalQueenRotLockFx_08
+  - first:
+      213: 106377863139775100
+    second: CrystalQueenRotLockFx_09
+  - first:
+      213: -4702042440914729322
+    second: CrystalQueenRotLockFx_10
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 0
+  spriteMeshType: 0
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.45}
+  spritePixelsToUnits: 75.6
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: CrystalQueenRotLockFx_00
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1894b1c793ea99db0800000000000000
+      internalID: -4784601567185909375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueenRotLockFx_01
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6356374509a839570800000000000000
+      internalID: 8472267676510807350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueenRotLockFx_02
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e64189f1b59ee94c0800000000000000
+      internalID: -4278726018374036370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueenRotLockFx_03
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed39283e6b3cbed20800000000000000
+      internalID: 3308953541502211038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueenRotLockFx_04
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c19f1620d1c6c8fc0800000000000000
+      internalID: -3491296739269150436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueenRotLockFx_05
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ceb58c799bd102570800000000000000
+      internalID: 8439778384644955116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueenRotLockFx_06
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67d3f06f0980ffeb0800000000000000
+      internalID: -4684015668745519754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueenRotLockFx_07
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5226b30d0cc1d2450800000000000000
+      internalID: 6065535887590777381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueenRotLockFx_08
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d962606963335e220800000000000000
+      internalID: 2514472276494526109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueenRotLockFx_09
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7259685a1ee97100800000000000000
+      internalID: 106377863139775100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CrystalQueenRotLockFx_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 696877eff4dfebeb0800000000000000
+      internalID: -4702042440914729322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      CrystalQueenRotLockFx_00: -4784601567185909375
+      CrystalQueenRotLockFx_01: 8472267676510807350
+      CrystalQueenRotLockFx_02: -4278726018374036370
+      CrystalQueenRotLockFx_03: 3308953541502211038
+      CrystalQueenRotLockFx_04: -3491296739269150436
+      CrystalQueenRotLockFx_05: 8439778384644955116
+      CrystalQueenRotLockFx_06: -4684015668745519754
+      CrystalQueenRotLockFx_07: 6065535887590777381
+      CrystalQueenRotLockFx_08: 2514472276494526109
+      CrystalQueenRotLockFx_09: 106377863139775100
+      CrystalQueenRotLockFx_10: -4702042440914729322
+      T_CrystalQueen_RotLockFx_0: 6253290184328100980
+      T_CrystalQueen_RotLockFx_1: 5226590414221442368
+      T_CrystalQueen_RotLockFx_10: 6637185799838838360
+      T_CrystalQueen_RotLockFx_11: 1228534042263536242
+      T_CrystalQueen_RotLockFx_12: -5614533675442962084
+      T_CrystalQueen_RotLockFx_13: -6899845071375692729
+      T_CrystalQueen_RotLockFx_14: 1901128809852575323
+      T_CrystalQueen_RotLockFx_15: -8768366278372717284
+      T_CrystalQueen_RotLockFx_16: -5297676289911790809
+      T_CrystalQueen_RotLockFx_17: -343740527414074782
+      T_CrystalQueen_RotLockFx_18: 5971581098774286691
+      T_CrystalQueen_RotLockFx_19: -592096234882311044
+      T_CrystalQueen_RotLockFx_2: 5168759180464943143
+      T_CrystalQueen_RotLockFx_20: 3872258472447324500
+      T_CrystalQueen_RotLockFx_3: 3422398180788904966
+      T_CrystalQueen_RotLockFx_4: -8905778771416386381
+      T_CrystalQueen_RotLockFx_5: -1217395721185358438
+      T_CrystalQueen_RotLockFx_6: 8362286653645450372
+      T_CrystalQueen_RotLockFx_7: -2906875784593819226
+      T_CrystalQueen_RotLockFx_8: 1438047567094861588
+      T_CrystalQueen_RotLockFx_9: 2829059668949508662
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

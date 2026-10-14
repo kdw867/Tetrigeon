@@ -1,0 +1,50 @@
+{
+ "note": "수정여왕 회전 잠금 핵심 장면 4개 (미리보기 전용, Unity 미적용). 캐릭터 = 승인된 일반공격 v3 셀 재사용(수정 없음).",
+ "cell": [
+  160,
+  160
+ ],
+ "pivot_unity": [
+  0.5,
+  0.45
+ ],
+ "rune_center_block": [
+  16,
+  19
+ ],
+ "rune_ring_radius_blocks": 6,
+ "scenes": [
+  {
+   "scene": "1_hand-aura",
+   "step": "T05",
+   "start_ms": 280,
+   "ms": 50,
+   "character": "../../CrystalQueenAttack_VARCO/output/CastFrames_v3_cells/CrystalQueen_CastFrame_3_clasp.png",
+   "fx": "RotLockScenes_v1_fx/CrystalQueenRotLock_Fx_T05.png"
+  },
+  {
+   "scene": "2_rune-appears",
+   "step": "T07",
+   "start_ms": 380,
+   "ms": 70,
+   "character": "../../CrystalQueenAttack_VARCO/output/CastFrames_v3_cells/CrystalQueen_CastFrame_3_clasp.png",
+   "fx": "RotLockScenes_v1_fx/CrystalQueenRotLock_Fx_T07.png"
+  },
+  {
+   "scene": "3_lock-closes",
+   "step": "T11",
+   "start_ms": 620,
+   "ms": 50,
+   "character": "../../CrystalQueenAttack_VARCO/output/CastFrames_v3_cells/CrystalQueen_CastFrame_5_reach.png",
+   "fx": "RotLockScenes_v1_fx/CrystalQueenRotLock_Fx_T11.png"
+  },
+  {
+   "scene": "4_lock-held",
+   "step": "T12",
+   "start_ms": 670,
+   "ms": 50,
+   "character": "../../CrystalQueenAttack_VARCO/output/CastFrames_v3_cells/CrystalQueen_CastFrame_5_reach.png",
+   "fx": "RotLockScenes_v1_fx/CrystalQueenRotLock_Fx_T12.png"
+  }
+ ]
+}

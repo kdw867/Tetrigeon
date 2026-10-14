@@ -1,0 +1,42 @@
+{
+ "guide": {
+  "dots": 3733,
+  "purple": 1217,
+  "cyan": 66,
+  "stone": 2450
+ },
+ "orig": {
+  "dots": 4028,
+  "purple": 1285,
+  "cyan": 66,
+  "stone": 2677
+ },
+ "cand": {
+  "clean_mid_1": {
+   "iou": 0.9349736379613357,
+   "st": {
+    "dots": 3974,
+    "purple": 1239,
+    "cyan": 58,
+    "stone": 2677
+   },
+   "comps": [
+    3974
+   ],
+   "holes": 0
+  },
+  "clean_mid_2": {
+   "iou": 0.9445151438024942,
+   "st": {
+    "dots": 3907,
+    "purple": 1256,
+    "cyan": 63,
+    "stone": 2588
+   },
+   "comps": [
+    3907
+   ],
+   "holes": 0
+  }
+ }
+}

@@ -1,5 +1,5 @@
 ﻿# TETRIGEON — TURN-BASED TETRIS ROGUELIKE
-Design notes | 2026-09-14 (code sync: 2026-10-01; crystal-cell design update: 2026-10-02; monster skill design update: 2026-10-06; crystal cells implemented: 2026-10-06; healing balance: 2026-10-06; exit to title: 2026-10-06; reward cards: 2026-10-06; no reward after the boss: 2026-10-07; HP bars: 2026-10-07; skill counter: 2026-10-07; stage panel removed: 2026-10-07; stage board: 2026-10-07; board effects: 2026-10-08; start countdown: 2026-10-08; Caterpillar attack motion: 2026-10-12; Queen attack motion: 2026-10-12; Guardian attack motion: 2026-10-12; Queen growth skill motion: 2026-10-13)
+Design notes | 2026-09-14 (code sync: 2026-10-01; crystal-cell design update: 2026-10-02; monster skill design update: 2026-10-06; crystal cells implemented: 2026-10-06; healing balance: 2026-10-06; exit to title: 2026-10-06; reward cards: 2026-10-06; no reward after the boss: 2026-10-07; HP bars: 2026-10-07; skill counter: 2026-10-07; stage panel removed: 2026-10-07; stage board: 2026-10-07; board effects: 2026-10-08; start countdown: 2026-10-08; Caterpillar attack motion: 2026-10-12; Queen attack motion: 2026-10-12; Guardian attack motion: 2026-10-12; Queen growth skill motion: 2026-10-13; Queen rotation lock targets: 2026-10-14; Queen rotation lock skill motion: 2026-10-14)
 
 Status: Core rules describe the intended direction. Recommendations, examples,
 and undecided details are not commitments. Based on prior discussion and the
@@ -299,7 +299,7 @@ Caterpillar gnaw -> all Garbage at once -> Queen skill -> HP damage.
 | --- | --- | --- |
 | Crystal Caterpillar / Larva (normal) | Gnaw locked blocks | Eats locked mino blocks on the board |
 | Amethyst Guardian / Sentinel (epic) | Shield and charged attack | Breaking the shield in time cancels the strong attack and stuns the Guardian; otherwise the strong attack hits |
-| Crystal Queen (boss) | Crystal growth / rotation lock, alternating | Growth adds a cell to every mino in NEXT; rotation lock seals the top NEXT mino |
+| Crystal Queen (boss) | Crystal growth / rotation lock, alternating | Growth adds a cell to every mino in NEXT; rotation lock seals the two NEXT minos that come after the one appearing right away |
 
 #### Crystal Caterpillar: gnaw locked blocks (implemented 2026-10-06)
 - Each Caterpillar using its skill immediately removes 1 locked block, chosen
@@ -392,19 +392,39 @@ Caterpillar gnaw -> all Garbage at once -> Queen skill -> HP damage.
   entries are unaffected. The extra cell rotates with the piece, locks as an
   ordinary block, and uses the art `MinoSprites/T_Mino_Grown` for every mino type
   and upgrade level.
-- Rotation lock: only the top NEXT mino. It cannot rotate until it locks;
-  moving, soft drop, and hard drop still work. It is shown slightly darkened
-  (eroded tint) in NEXT, Hold, the active piece, and its ghost; the tint ends on lock.
-- Hold keeps the growth and the rotation lock. Top Out's bag reset discards
-  modified NEXT minos like any other remaining bag piece. T-Spin detection is
-  unchanged.
+- Rotation lock (targets changed 2026-10-14, implemented): the skill fires right after a mino locks and before the next
+  mino is taken from the queue, so the front mino of NEXT at that instant is the one that appears right after the
+  skill. That mino stays normal; the next two NEXT minos get the lock; every later mino is normal. Example: if the
+  coming order is T -> I -> S -> O, then T is normal, I is locked, S is locked, O is normal. A mino that is already
+  being controlled is never given a new lock, and the Hold content is never a target.
+  - The lock belongs to the individual mino (its `MinoState`), not to a mino type or a NEXT slot. It follows that mino
+    when the queue moves (also across the bag boundary) and when it goes into Hold and comes back out, and it never
+    moves to another mino, even one of the same type. A mino that is already locked keeps its lock, and no third mino
+    is added. The extra cell from growth and the upgrade crystals are untouched, so one mino can carry both a grown
+    cell and the lock. There is no separate counter: the existing per-mino flag is reused
+    (`BagManager.LockNextRotation`).
+  - A locked mino cannot rotate (clockwise, counterclockwise or 180 degrees). A blocked rotation changes nothing:
+    orientation, position, wall kick, the T-Spin rotation record, lock delay and the DAS cut stay as they were.
+    Moving, soft drop, and hard drop still work. The lock role ends when the mino locks. A rotation seal is centered over the mino in NEXT, Hold and the active piece
+    (visual updated 2026-10-14: it is the Queen's rotation lock rune, two clockwise arrowhead arcs around a padlock in
+    blue violet and white with a dark outline and no backing plate, 27x27 dots = 54 px on screen). Original block colors
+    remain unchanged; the ghost has no seal. The seal is always fully opaque, neither rotates nor pulses, follows the
+    mino, and disappears on lock or when its view is removed.
+    A shared prefab `UI/RotationLock/P_RotationLockSeal` supplies the sprite; no gameplay counters are added.
+  - Verified 2026-10-14 in play mode (stage 10) through the real lock -> bag settlement -> Queen skill -> next spawn
+    path, the real Top Out coroutine, and direct calls for Hold swaps, rotation input handlers and bag boundaries.
+    Real key presses (Z / X / Up / A) could not be injected into the editor and are not verified.
+- Hold keeps the growth and the rotation lock of the mino placed in it. Swapping with a normal mino never moves a lock
+  onto it. Hold charges and the other Hold rules are unchanged. Top Out's bag reset discards the NEXT minos together
+  with their locks like any other remaining bag piece, and the Hold is cleared as before, so no lock carries over. A
+  new stage or a new game starts with no locks. T-Spin detection is unchanged.
 - Repeat growth, or both debuffs on one piece, cannot occur in practice: NEXT is
   consumed within one turn and the Queen's skills are 6 turns apart.
 
 - Attack motion (2026-10-12, confirmed after preview reviews, implemented): a 0.94 s motion plays on the
   Crystal Queen only when she makes her basic HP attack on an enemy turn. It does not play on her skill turns
   (growth / rotation lock), when the action is blocked by freeze or stun, or when she is dead. Her growth skill
-  has its own motion (next bullet) and the rotation-lock skill motion is not made yet. It is visual only: damage, enemy
+  and her rotation-lock skill have their own motions (next bullets). It is visual only: damage, enemy
   order, skill counters and timing are unchanged, nothing waits for it and it never pauses the game (the HP
   damage applies the moment the enemy turn runs; the first crystal flash comes 0.72 s after that, which is the
   proposed representative hit time, and syncing the two is not done yet).
@@ -430,10 +450,10 @@ Caterpillar gnaw -> all Garbage at once -> Queen skill -> HP damage.
     (0.5, 0.45), Point filter, uncompressed (same as the Idle sheet), and the clip.
   - Limits: the starburst in front of the hands can overlap the neighbouring slot's monster, the crystals form
     just inside the right screen edge of the boss slot, and the time scale stops it (pause, game over), like Idle.
-    The Queen's rotation-lock motion (and the Guardian's skill and charge motions) are still to be made.
+    The Guardian's skill and charge motions are still to be made.
 - Growth skill motion (2026-10-13, confirmed after preview reviews, implemented): a 0.94 s motion plays on the
   Crystal Queen only on the turns where she uses her crystal growth skill (the skill that adds one cell to every mino
-  in NEXT). It does not play on her rotation-lock turns (that skill gets its own motion later), on her basic attack
+  in NEXT). It does not play on her rotation-lock turns (that skill has its own motion, below), on her basic attack
   turns (those keep the basic attack motion), when the action is blocked by freeze or stun, or when she is dead. It is
   visual only: the growth itself, damage, enemy order, skill counters and timing are unchanged, nothing waits for it
   and it never pauses the game. The moment the crown bursts (0.62 s after the action starts) is recorded as the
@@ -460,6 +480,39 @@ Caterpillar gnaw -> all Garbage at once -> Queen skill -> HP damage.
     crown overlaps the top of the Queen's crystals, the time scale stops the motion (pause, game over) like Idle, and the
     target arrow above the Queen (drawn on top of everything) covers the lower centre of the crown while she is the
     target (seen in play mode, not changed). Not yet played by hand in a full run.
+- Rotation lock skill motion (2026-10-14, confirmed after preview reviews, implemented): a 0.94 s motion plays on the
+  Crystal Queen only on the turns where she uses her rotation lock skill (the skill that seals the two NEXT minos after
+  the one that appears right away). It does not play on her growth turns (those keep the growth motion), on her basic
+  attack turns (those keep the basic attack motion), when the action is blocked by freeze or stun, or when she is dead.
+  It is visual only: the lock itself (`BagManager.LockNextRotation`), damage, enemy order, skill counters and timing are
+  unchanged, nothing waits for it and it never pauses the game. The moment the lock closes and the rune stops (0.62 s
+  after the action starts) is recorded as the proposed skill trigger time; syncing the real lock to it is not done.
+  - Look: the body motion is exactly the basic attack / growth motion (same 8 body sprites, same timing, same lean), only
+    the effect layer is different. The hand magic uses the same positions and sizes as the other two motions but in blue
+    violet (pale periwinkle rim, white centre dot), which differs from the basic attack (light lavender) and the growth
+    skill (gold rim). A small rotation rune (two arcs with arrowheads turning clockwise, 15x17 dots = 30x34 px) appears
+    above the Queen's head, follows the head while she leans, turns about 111 degrees (about 1/3 turn) and stops dead at
+    0.62 s while an open padlock (7x7 dots, silver shackle, white body, dark keyhole) closes in its centre; a small cross
+    glint flashes on the padlock, the ring brightens, and the hand magic flashes once and fades. The closed padlock stays
+    clear for about 0.15 s and then dissolves (about 0.2 s in total). The rune overlaps the top of the Queen's crystals
+    (up to about 69 dots) but never her eye, core or face. Everything is drawn on the same grid as the Idle art (2x2
+    sprite pixels = 1 dot). No VARCO output was used (it was drawn in code).
+  - Implementation: `EnemyView.PlayAttack` fires the new `RotLock` trigger of the Boss Idle animator for
+    `EnemyActionKind.QueenRotationLock` only (the action kinds and the notification from `Enemy.NotifyAction` came with
+    the growth motion). The controller `CrystalQueen_Idle` gained the trigger `RotLock` and the state `RotLock` (Idle ->
+    RotLock on the trigger, RotLock -> Idle when it ends, same settings as `Skill`). The clip `CrystalQueen_RotLock`
+    animates the same body sprites as `CrystalQueen_Attack` and the same child `BossAttackFx` (sprites from the new
+    sheet), so the prefab `P_Enemy` is unchanged. Assets in `@Resources/Enemies/CrystalQueenRotLock`:
+    `T_CrystalQueen_RotLockFx` (800x480, 11 cells used of 160x160, PPU 75.6, pivot (0.5, 0.45), Point filter,
+    uncompressed, same import settings as `T_CrystalQueen_SkillFx`) and the clip.
+  - Limits: the hand magic at full reach can overlap the neighbouring slot's monster (same as the other motions), the
+    rune overlaps the top of the Queen's crystals, the time scale stops the motion (pause, game over) like Idle, and the
+    target arrow above the Queen (drawn on top of everything) may cover the lower part of the rune while she is the
+    target (not checked in play mode). The NEXT-side marking of the locked minos (halo and padlock icon) was only a
+    preview proposal and is not implemented. Verified 2026-10-14 in play mode (stage 10, direct enemy-turn calls, 36
+    turns): basic attacks fire `Attack`, growth turns `Skill`, rotation lock turns `RotLock`, the other enemies are
+    unchanged; the animator stepped every 0.01 s matches the timetable (77 samples, 0 mismatches) and returns to Idle with
+    an empty effect layer. Not yet played by hand in a full run.
 Verified 2026-10-06 in play mode through direct enemy-turn and bag-settlement
 calls. A full hand-played run through stage 10 is still pending.
 

@@ -71,10 +71,18 @@ public class BagManager : MonoBehaviour
         OnQueueChanged?.Invoke(PeekNext()); // 바뀐 모양으로 NEXT 갱신
     }
 
-    // 수정여왕 회전 금지: NEXT 맨 위 미노 1개 (고정될 때까지 회전 불가)
+    // 수정여왕 회전 금지: 발동 직후 새로 나올 미노(큐 0번)는 그대로 두고, 그다음 NEXT 2개(큐 1·2번)만 개체째 잠금 (고정될 때까지 회전 불가)
+    // 이 능력은 미노가 고정된 직후, 다음 미노를 큐에서 꺼내기 전에 발동하므로 큐 0번이 곧 등장할 미노다.
+    // 잠금은 MinoState 에 저장돼 큐·Hold 를 옮겨 다녀도 그 미노를 따라가고, 이미 잠긴 미노가 대상이면 그대로 둔다
     public void LockNextRotation()
     {
-        queue.Peek().RotationLocked = true; // 바로 다음에 나올 미노
+        int index = 0; // 큐 안의 순서 (0 = 발동 직후 새로 나올 미노)
+        foreach (MinoState mino in queue)
+        {
+            if (index == 1 || index == 2) mino.RotationLocked = true; // 1·2번만 잠금 (0번과 세 번째 이후는 건드리지 않음)
+            index++; // 다음 순서로
+            if (index > 2) break; // 3번 이후는 볼 필요 없음
+        }
         OnQueueChanged?.Invoke(PeekNext()); // 침식 표시로 NEXT 갱신
     }
 

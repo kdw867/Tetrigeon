@@ -1,0 +1,191 @@
+// 수정여왕 회전 잠금 회귀 점검 — Unity MCP `execute_code`(CodeDom, C# 6)에 이 파일 내용을 그대로 붙여 플레이 모드(SampleScene)에서 실행한다.
+// 이 프로젝트에는 테스트 어셈블리(asmdef)·NUnit 테스트가 없고, 지금까지 플레이 모드 검증은 execute_code 리플렉션 방식이라 같은 방식으로 남긴다. Unity 가 컴파일하지 않도록 Assets 밖(Tests/)에 .txt 로 둠.
+// 규칙(2026-10-14): 여왕 회전 잠금이 발동하면 "발동 직후 새로 나올 미노"(큐 0번)는 정상, 그다음 NEXT 2개(1·2번)만 개체째 잠금, 이후는 정상.
+// 구분: [함수] = 게임 함수를 직접 호출해서 확인, [경로] = 실제 고정→정산→여왕 스킬→다음 미노 생성 경로를 그대로 지나가며 확인. 실제 키 입력(Z·X·↑·A)은 에디터에서 주입할 수 없어 이 점검에 없음.
+var sb = new System.Text.StringBuilder(); int pass = 0, fail = 0;
+System.Action<string, bool, string> check = (name, ok, detail) => { if (ok) pass++; else fail++; sb.AppendLine((ok ? "PASS " : "FAIL ") + name + ((detail != null && detail.Length > 0) ? "  [" + detail + "]" : "")); };
+var BF = System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance;
+var cm = CombatManager.Instance; var bag = BagManager.Instance; var sp = PieceSpawner.Instance;
+if (cm == null || bag == null || sp == null) return "싱글톤 null → 플레이 중지 후 다시 플레이";
+var fQueue = typeof(BagManager).GetField("queue", BF);
+var fCur = typeof(PieceSpawner).GetField("currentPiece", BF);
+var fHeld = typeof(PieceSpawner).GetField("heldPiece", BF);
+var fHoldUsed = typeof(PieceSpawner).GetField("holdUsed", BF);
+var fLockTimer = typeof(PieceSpawner).GetField("lockTimer", BF);
+var fCharges = typeof(PieceSpawner).GetField("holdCharges", BF);
+var mSwap = typeof(PieceSpawner).GetMethod("SwapHold", BF);
+var mHard = typeof(PieceSpawner).GetMethod("HardDrop", BF);
+var fPlaced = typeof(CombatManager).GetField("piecesPlaced", BF);
+var mEnemyTurn = typeof(CombatManager).GetMethod("EnemyTurn", BF);
+var fDas = typeof(Piece).GetField("dasCutTimer", BF);
+var mRot = typeof(Piece).GetMethod("RotateWithDasCut", BF);
+var setJust = typeof(Piece).GetProperty("JustMoved").GetSetMethod(true);
+var hpSet = typeof(CombatManager).GetProperty("PlayerHp").GetSetMethod(true);
+var fUsedGrowth = typeof(Enemy).GetField("queenUsedGrowth", BF);
+var fSince = typeof(Enemy).GetField("turnsSinceSkill", BF);
+System.Func<System.Collections.Generic.Queue<MinoState>> Q = () => (System.Collections.Generic.Queue<MinoState>)fQueue.GetValue(bag);
+System.Func<int, MinoState[]> head = n => { var r = new MinoState[System.Math.Min(n, Q().Count)]; int i = 0; foreach (var m in Q()) { if (i >= r.Length) break; r[i++] = m; } return r; }; // 큐 길이보다 많이 요청하면 있는 만큼만
+System.Func<Piece> cur = () => (Piece)fCur.GetValue(sp);
+System.Func<MinoState> held = () => (MinoState)fHeld.GetValue(sp);
+System.Func<MinoState, string> lk = m => m == null ? "null" : (m.RotationLocked ? "잠금" : "정상");
+System.Func<MinoState[], string> flags = a => { string s = ""; foreach (var m in a) s += (m.RotationLocked ? "L" : "."); return s; };
+System.Action charge = () => fCharges.SetValue(sp, 4); // Hold 충전량 보충 (여러 번 교환하는 점검이라)
+System.Action ensureView = () => { var pv = cur().GetComponent<PieceView>(); if (typeof(PieceView).GetField("blocks", BF).GetValue(pv) == null) typeof(PieceView).GetMethod("Start", BF).Invoke(pv, null); }; // 한 번의 호출 안에서는 프레임이 지나지 않아 방금 생성한 조각의 PieceView.Start 가 아직 안 돌았을 수 있어 직접 돌림
+System.Action<int> dropAt = dx => { var p = cur(); ensureView(); for (int i = 0; i < System.Math.Abs(dx); i++) p.TryMove(dx < 0 ? UnityEngine.Vector2Int.left : UnityEngine.Vector2Int.right); mHard.Invoke(sp, null); };
+System.Func<string> nextFlags = () => { var nv = UnityEngine.Object.FindFirstObjectByType<NextView>(); var slots = (UnityEngine.GameObject[])typeof(NextView).GetField("slots", BF).GetValue(nv); string s = ""; foreach (var g in slots) s += g.transform.GetChild(0).GetComponent<UnityEngine.SpriteRenderer>().color.r < 0.9f ? "E" : "n"; return s; };
+try {
+  // ── 0) 준비: 스테이지 10(여왕), 시작 카운트다운이 막아 둔 첫 조각 내보내기
+  typeof(CombatManager).GetField("stageNumber", BF).SetValue(cm, 10);
+  typeof(CombatManager).GetMethod("StartStage", BF).Invoke(cm, null);
+  sp.SetCountdownActive(false);
+  var queen = cm.Enemies[2]; var kinds = new System.Collections.Generic.List<string>(); queen.Acted += k => kinds.Add(k.ToString());
+  var all0 = head(12); bool anyLocked0 = false; foreach (var m in all0) if (m.RotationLocked) anyLocked0 = true;
+  check("0 새 스테이지 시작: 큐·Hold·현재 미노에 잠금 없음", !anyLocked0 && held() == null && cur() != null && !cur().Mino.RotationLocked, "큐 " + flags(all0));
+
+  // ── 1) [경로] 실제 고정 → 정산 → 여왕 회전 잠금 → 다음 미노 생성. 여왕의 다음 능력이 회전 잠금이 되도록 상태만 맞춤
+  fUsedGrowth.SetValue(queen, true); fSince.SetValue(queen, queen.SkillInterval - 1);
+  foreach (var e in cm.Enemies) if (e != queen) fSince.SetValue(e, 0);
+  hpSet.Invoke(cm, new object[] { 1000 });
+  charge(); mSwap.Invoke(sp, null); var X = held(); fHoldUsed.SetValue(sp, false); // Hold 에 정상 미노 X 를 미리 넣어 둠 (스킬 대상이 아니어야 함)
+  UnityEngine.Vector2Int?[] grownB = new UnityEngine.Vector2Int?[6]; string[] cellsB = new string[6];
+  bag.GrowPreview(); // 증식 칸이 있는 미노에도 잠금이 같이 붙을 수 있어야 함 (NEXT 5개에 칸 추가)
+  MinoUpgrades.Upgrade(head(2)[1].Type); MinoUpgrades.Upgrade(head(2)[1].Type); // 강화 수정 칸 1개 만들어 둠 (종류별 정적 데이터)
+  var q = head(6);
+  for (int i = 0; i < 6; i++) { grownB[i] = q[i].GrownCell; cellsB[i] = string.Join(",", System.Array.ConvertAll(q[i].GetCells(0), c => c.ToString())); }
+  string crystalB = ""; foreach (TetrominoType t in System.Enum.GetValues(typeof(TetrominoType))) { crystalB += t + ":" + MinoUpgrades.GetLevel(t); for (int c = 0; c < 4; c++) crystalB += MinoUpgrades.IsCrystalCell(t, c) ? "C" : "-"; crystalB += " "; }
+  fPlaced.SetValue(cm, 6); // 다음 고정이 이번 턴의 7번째 조각 → 실제 EndPlayerTurn → EnemyTurn 경로
+  kinds.Clear(); ensureView(); mHard.Invoke(sp, null);
+  var after = head(5);
+  check("1 [경로] 여왕 능력 = 회전 잠금", kinds.Count == 1 && kinds[0] == "QueenRotationLock", string.Join(",", kinds.ToArray()));
+  check("1 [경로] 발동 직후 새로 나온 미노(원래 큐 0번)는 정상", cur() != null && cur().Mino == q[0] && !q[0].RotationLocked, cur() == null ? "현재 조각 없음" : lk(cur().Mino));
+  check("1 [경로] 그다음 NEXT 2개(원래 1·2번)만 잠김, 이후는 정상", after[0] == q[1] && after[1] == q[2] && after[2] == q[3] && flags(after) == "LL...", "NEXT " + flags(after));
+  check("1 [경로] Hold 에 있던 정상 미노는 대상이 아님", held() == X && !X.RotationLocked, lk(held()));
+  check("4 NEXT 표시가 실제 잠금 상태를 따름(위 두 칸만 침식 색)", nextFlags() == "EEnnn", nextFlags());
+  bool dataOk = true;
+  var qNow = new MinoState[] { cur().Mino, after[0], after[1], after[2], after[3], after[4] };
+  for (int i = 0; i < 5; i++) { var m = qNow[i]; if (m != q[i] || m.GrownCell != grownB[i] || string.Join(",", System.Array.ConvertAll(m.GetCells(0), c => c.ToString())) != cellsB[i]) dataOk = false; }
+  string crystalA = ""; foreach (TetrominoType t in System.Enum.GetValues(typeof(TetrominoType))) { crystalA += t + ":" + MinoUpgrades.GetLevel(t); for (int c = 0; c < 4; c++) crystalA += MinoUpgrades.IsCrystalCell(t, c) ? "C" : "-"; crystalA += " "; }
+  check("9 증식 칸·모양·개체가 잠금 부여 뒤에도 그대로 (큐 5개 비교)", dataOk, "");
+  check("9 증식 칸이 있는 미노에 잠금이 함께 붙음", q[1].GrownCell != null && q[1].RotationLocked && q[2].GrownCell != null && q[2].RotationLocked, "");
+  check("9 강화 수정 칸·강화 단계 데이터 불변", crystalA == crystalB, crystalB == crystalA ? "" : crystalB + " → " + crystalA);
+
+  // ── 2) [경로] 실제 생성 순서 + Hold. 큐에서 나오는 순서: 정상 → 잠금 → 잠금 → 정상
+  var order = new System.Collections.Generic.List<string>(); order.Add(lk(cur().Mino)); // q0 (지금 조작 중)
+  dropAt(-3); // q0 고정 → q1 생성
+  order.Add(cur().Mino == q[1] ? lk(cur().Mino) : "?");
+  check("5 Hold 에 넣기 전: 잠긴 q1 이 조작 중, Hold 는 정상 X", cur().Mino == q[1] && q[1].RotationLocked && held() == X, "");
+  charge(); mSwap.Invoke(sp, null); // 잠긴 q1 ↔ 정상 X
+  check("5 잠긴 미노를 Hold 에 넣으면 잠금 유지", held() == q[1] && q[1].RotationLocked, lk(held()));
+  check("6 정상 미노(X)와 교환해도 잠금이 옮겨붙지 않음", cur().Mino == X && !X.RotationLocked && q[1].RotationLocked, lk(cur().Mino));
+  var hv = UnityEngine.Object.FindFirstObjectByType<HoldView>(); var hb = (UnityEngine.Transform[])typeof(HoldView).GetField("blocks", BF).GetValue(hv);
+  check("4 Hold 표시가 잠긴 미노를 침식 색으로 보여줌", hb != null && hb.Length > 0 && hb[0].GetComponent<UnityEngine.SpriteRenderer>().color.r < 0.9f, "");
+  dropAt(3); // X 고정 → q2 생성
+  order.Add(cur().Mino == q[2] ? lk(cur().Mino) : "?");
+  charge(); mSwap.Invoke(sp, null); // 잠긴 q2 ↔ Hold 의 잠긴 q1
+  check("5 Hold 에서 다시 꺼내도 잠금 유지", cur().Mino == q[1] && q[1].RotationLocked && held() == q[2] && q[2].RotationLocked, lk(cur().Mino));
+  dropAt(1); // Hold 에서 나온 q1 고정 → q3 생성
+  order.Add(cur().Mino == q[3] ? lk(cur().Mino) : "?");
+  check("2 [경로] 실제 생성 순서 정상→잠금→잠금→정상", string.Join(" → ", order.ToArray()) == "정상 → 잠금 → 잠금 → 정상", string.Join(" → ", order.ToArray()));
+  charge(); mSwap.Invoke(sp, null); // 정상 q3 ↔ Hold 의 잠긴 q2
+  check("6 정상 q3 을 Hold 에 넣고 잠긴 q2 를 꺼내도 q3 은 정상 유지", held() == q[3] && !q[3].RotationLocked && cur().Mino == q[2] && q[2].RotationLocked, lk(held()));
+
+  // ── 3) [함수] 회전 차단과 이동·낙하 (현재 조작 중 = 잠긴 q2)
+  var p = cur(); var sd = p.TryMove(UnityEngine.Vector2Int.down); // 소프트 드롭 한 칸은 가능
+  System.Func<string> st = () => p.RotationState + "|" + p.BoardPosition + "|" + p.LastActionWasRotation + "|" + p.LastKickTestIndex + "|" + p.JustMoved + "|" + (float)fDas.GetValue(p) + "|" + (float)fLockTimer.GetValue(sp);
+  bool mv = p.TryMove(UnityEngine.Vector2Int.left) && p.TryMove(UnityEngine.Vector2Int.right); // 좌우 이동 가능
+  while (p.TryMove(UnityEngine.Vector2Int.down)) { } // 바닥까지 내려 착지 상태로
+  setJust.Invoke(p, new object[] { false }); fLockTimer.SetValue(sp, 0.31f); fDas.SetValue(p, 0f); // LOCK 유예와 DCD 를 기준값으로
+  string b0 = st(); bool r1 = p.TryRotate(1), r2 = p.TryRotate(-1), r3 = p.TryRotate(2);
+  mRot.Invoke(p, new object[] { 1 }); mRot.Invoke(p, new object[] { -1 }); mRot.Invoke(p, new object[] { 2 }); // 실제 입력 처리 함수(회전 + DCD)
+  string a0 = st();
+  check("7 [함수] 잠긴 미노: 시계·반시계·180도 회전 모두 실패", !r1 && !r2 && !r3, r1 + "," + r2 + "," + r3);
+  check("7 [함수] 잠긴 미노: 소프트 드롭·좌우 이동은 가능", sd && mv, "");
+  check("8 [함수] 회전 실패가 방향·좌표·킥·마지막 동작·이동 기록·DCD·LOCK 유예를 바꾸지 않음", b0 == a0, b0 + " → " + a0);
+  while (p.TryMove(UnityEngine.Vector2Int.left)) { } // 벽에 붙임 (킥이 필요한 상황)
+  string w0 = st(); bool rw = p.TryRotate(1) || p.TryRotate(-1); string w1 = st();
+  check("8 [함수] 벽에 붙어도 회전 실패 + 킥 상태 불변", !rw && w0 == w1, "");
+  var ctrlPiece = cur(); // 비교용: 정상 미노는 같은 입력으로 회전함 (통제군)
+  charge(); fHoldUsed.SetValue(sp, false); mSwap.Invoke(sp, null); // 잠긴 q2 를 Hold 로, 정상 q3 을 꺼냄
+  var pc = cur(); string c0 = pc.RotationState + "|" + pc.BoardPosition; bool rc = pc.TryRotate(1); string c1 = pc.RotationState + "|" + pc.BoardPosition;
+  check("7 [함수] 통제군: 정상 미노는 회전함", pc.Mino == q[3] && rc && c0 != c1, c0 + " → " + c1);
+  charge(); fHoldUsed.SetValue(sp, false); mSwap.Invoke(sp, null); // 다시 잠긴 q2 가 조작 중
+  fHoldUsed.SetValue(sp, false);
+  dropAt(0); // 하드 드롭 가능 (잠긴 q2 고정)
+  check("7 [경로] 잠긴 미노도 하드 드롭으로 고정됨 → 다음 조각 생성", cur() != null && cur().Mino != q[2], cur() == null ? "현재 조각 없음" : lk(cur().Mino));
+  check("5 고정된 미노의 잠금 역할은 끝나고 Hold 의 q3 은 계속 정상", held() != null && !held().RotationLocked, lk(held()));
+
+  // ── 4) [함수] 가방 경계: 목표 2개가 서로 다른 가방에 걸쳐도 정확해야 함 (큐는 가방 두 개 분량까지 이어서 채워짐)
+  bag.ResetBag();
+  var chunk = new System.Collections.Generic.Dictionary<MinoState, int>(); int nextChunk = 0;
+  System.Action register = () => { var fresh = new System.Collections.Generic.List<MinoState>(); foreach (var m in Q()) if (!chunk.ContainsKey(m)) fresh.Add(m); if (fresh.Count > 0) { foreach (var m in fresh) chunk[m] = nextChunk; nextChunk++; } };
+  register(); var seen = new System.Collections.Generic.HashSet<int>(); string bres = "";
+  for (int iter = 0; iter < 60 && seen.Count < 3; iter++) {
+    int latest = nextChunk - 1, bIdx = -1, ii = 0; foreach (var m in Q()) { if (chunk[m] == latest) { bIdx = ii; break; } ii++; }
+    if (nextChunk > 1 && bIdx >= 1 && bIdx <= 3 && !seen.Contains(bIdx)) {
+      seen.Add(bIdx); var h = head(6); bag.LockNextRotation();
+      bool ok = flags(h) == ".LL..." && !h[0].RotationLocked; bres += "경계@" + bIdx + ":" + flags(h) + " ";
+      check("3 [함수] 가방 경계가 큐 " + bIdx + "번 앞에 있을 때 1·2번만 잠김", ok, flags(h));
+      foreach (var m in h) m.RotationLocked = false;
+    }
+    bag.Dequeue(); register();
+  }
+  check("3 가방 경계 3가지 위치(1·2·3번)를 모두 확인", seen.Count == 3, bres);
+
+  // ── 5) [함수] 같은 종류 미노가 여러 개여도 지정된 개체만 잠기고, 큐가 움직여도 잠금이 개체를 따라감
+  var qq = Q(); qq.Clear(); var types = new TetrominoType[] { TetrominoType.T, TetrominoType.I, TetrominoType.I, TetrominoType.I, TetrominoType.O, TetrominoType.S, TetrominoType.I };
+  var objs = new MinoState[types.Length]; for (int i = 0; i < types.Length; i++) { objs[i] = new MinoState(types[i]); qq.Enqueue(objs[i]); }
+  bag.LockNextRotation();
+  string fl = ""; foreach (var o in objs) fl += o.RotationLocked ? "L" : ".";
+  check("4 [함수] 같은 종류(I) 4개 중 지정된 2개만 잠김", fl == ".LL....", fl);
+  var d1 = bag.Dequeue(); var d2 = bag.Dequeue(); var d3 = bag.Dequeue();
+  check("2 [함수] 큐에서 꺼낼 때 잠금이 개체를 따라감 (정상 → 잠금 → 잠금 → 정상)", d1 == objs[0] && !d1.RotationLocked && d2 == objs[1] && d2.RotationLocked && d3 == objs[2] && d3.RotationLocked && !objs[3].RotationLocked, "");
+  bag.LockNextRotation(); // 이미 잠긴 미노가 대상이어도 그대로 유지, 세 번째 이후는 건드리지 않음
+  var hh = head(6); string f2 = flags(hh);
+  check("4 [함수] 이미 잠긴 미노는 그대로, 추가로 3번째 이후를 잠그지 않음", f2.Length == 6 && f2[1] == 'L' && f2[2] == 'L' && f2[3] == '.' && f2[4] == '.' && f2[5] == '.', f2);
+  bag.ResetBag();
+
+  // ── 6) [함수] 이미 조작 중인 미노에는 새 잠금을 걸지 않음 + 스킬 주기·교대 유지 (적 턴을 직접 호출)
+  sp.SetCountdownActive(false); if (cur() == null) { typeof(PieceSpawner).GetMethod("SpawnNext", BF).Invoke(sp, null); }
+  var curBefore = cur(); bool curLockedBefore = curBefore != null && curBefore.Mino.RotationLocked;
+  fUsedGrowth.SetValue(queen, false); fSince.SetValue(queen, 0); foreach (var e in cm.Enemies) if (e != queen) fSince.SetValue(e, 0);
+  var seq = new System.Collections.Generic.List<string>(); var gotLock = ""; var gotGrow = "";
+  for (int turn = 1; turn <= 18; turn++) {
+    hpSet.Invoke(cm, new object[] { 1000 }); kinds.Clear(); var hb2 = head(6);
+    mEnemyTurn.Invoke(cm, null);
+    if (turn == 6 || turn == 12 || turn == 18) seq.Add("턴" + turn + ":" + (kinds.Count > 0 ? kinds[0] : "행동없음"));
+    if (turn == 6) { var g = head(5); bool allGrown = true; foreach (var m in g) if (m.GrownCell == null) allGrown = false; gotGrow = allGrown && flags(head(6)) == "......" ? "증식 OK" : "증식 이상 " + flags(head(6)); }
+    if (turn == 12) { gotLock = flags(head(6)); }
+    if (turn == 12) { foreach (var m in head(6)) m.RotationLocked = false; }
+  }
+  check("11 [함수] 스킬 주기 6턴·교대(증식→회전 잠금→증식) 유지", string.Join(" ", seq.ToArray()) == "턴6:QueenGrowth 턴12:QueenRotationLock 턴18:QueenGrowth", string.Join(" ", seq.ToArray()));
+  check("11 [함수] 증식 턴: NEXT 5개 전부 칸 추가, 잠금 없음", gotGrow == "증식 OK", gotGrow);
+  check("1 [함수] 회전 잠금 턴: 0번 정상, 1·2번 잠금, 나머지 정상", gotLock == ".LL...", gotLock);
+  check("1 [함수] 이미 조작 중인 현재 미노에는 새 잠금을 걸지 않음", cur() == curBefore && (curBefore == null || curBefore.Mino.RotationLocked == curLockedBefore), "");
+  bag.ResetBag();
+
+  // ── 7) 새 스테이지: 이전 잠금이 남지 않음 (StartStage → ResetBag·ClearHold·새 조각)
+  fUsedGrowth.SetValue(queen, true); fSince.SetValue(queen, queen.SkillInterval - 1); hpSet.Invoke(cm, new object[] { 1000 });
+  mEnemyTurn.Invoke(cm, null); // 잠금 걸어 둠
+  var pre = head(6); bool hadLock = flags(pre) == ".LL...";
+  typeof(CombatManager).GetField("stageNumber", BF).SetValue(cm, 10); typeof(CombatManager).GetMethod("StartStage", BF).Invoke(cm, null); sp.SetCountdownActive(false);
+  var post = head(12); bool postLock = false; foreach (var m in post) if (m.RotationLocked) postLock = true;
+  check("10 [경로] 새 스테이지: 큐·Hold·현재 미노에 이전 잠금이 남지 않음", hadLock && !postLock && held() == null && cur() != null && !cur().Mino.RotationLocked, "이전 " + flags(pre) + " 이후 큐 " + flags(post));
+} catch (System.Exception ex) { check("예외", false, ex.GetType().Name + ": " + (ex.InnerException != null ? ex.InnerException.Message : ex.Message)); }
+sb.AppendLine("결과: PASS " + pass + " / FAIL " + fail);
+return sb.ToString();
+
+/* ─────────────────────────────────────────────────────────────────────────────────────────────
+   추가 점검 절차 (같은 방식, 프레임이 필요해서 호출을 나눠 실행). 에디터가 백그라운드면 프레임이 멈추므로
+   UnityEditor.EditorApplication.isPaused = true 후 EditorApplication.Step() 을 반복 호출해서 프레임을 진행한다.
+   한 번의 execute_code 호출 안에서는 프레임이 지나지 않아, 방금 만든 조각의 PieceView.Start 가 안 돌았으면 고정(Lock)에서 NullReference 가 난다(위 스크립트의 ensureView 가 이를 보정).
+
+   [Top Out 경로] 호출 1: 위 0)·1) 준비처럼 StartStage(10) 후 여왕 다음 능력을 회전 잠금으로 맞추고(queenUsedGrowth=true, turnsSinceSkill=SkillInterval-1),
+     piecesPlaced=3, PieceSpawner 의 topOutStartDelay·topOutRowDelay 를 0 으로, 조작 중인 조각 Destroy 후 currentPiece=null,
+     보드 x 2~7 · y 18~21 칸을 GridManager.SetCell 로 막고 PieceSpawner.SpawnNext 호출(스폰 불가 → TopOutSequence 코루틴 시작), 그 시점 큐 6개를 보관.
+     호출 2: isPaused=true 후 Step() 60회. 호출 3: 확인 — 여왕 행동 = QueenRotationLock, 보관한 큐의 1·2번만 잠겨 있었고(.LL...),
+     새 큐 길이 6·잠금 없음·보관한 미노가 큐/현재 조각에 남아 있지 않음·Hold 비어 있음·piecesPlaced=0. (2026-10-14 결과: 모두 만족)
+
+   [현재 조작 미노 표시] StartStage(10) 후 Step 4회 → piecesPlaced=6 으로 하드 드롭(여왕 회전 잠금 발동) → Step 4회 →
+     조작 중 미노의 PieceView.Blocks·ghostBlocks 색: 정상이면 전부 흰색(r=1), 잠금이면 침식 색(r=0.5). 하드 드롭 → Step 4회 후 잠긴 미노 확인.
+     (2026-10-14 결과: 발동 직후 정상 미노 nnnn/고스트 nnnn, 그다음 잠긴 미노 EEEE/고스트 EEEE, TryRotate(1)=false)
+   ───────────────────────────────────────────────────────────────────────────────────────────── */

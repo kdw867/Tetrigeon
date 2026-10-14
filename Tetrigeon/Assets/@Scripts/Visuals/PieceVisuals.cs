@@ -9,7 +9,6 @@ public static class PieceVisuals
     private static Sprite grownSprite; // 여왕 증식 칸 아트 캐시
     private static Sprite[,] crystalSprites; // 강화 미노 수정 칸의 칸별 아트 캐시
 
-    private static readonly Color ErodedTint = new Color(0.5f, 0.42f, 0.55f); // 회전 금지 미노: 약간 까맣게 침식된 색
 
     public static Sprite GetMinoSprite(TetrominoType type, int cellIndex = 0, bool previewUpgraded = false) // 원본 칸 순서로 아트 제공 (previewUpgraded: 아직 강화 전이어도 강화 외형으로, 보상 카드 미리보기용)
     {
@@ -68,12 +67,11 @@ public static class PieceVisuals
 
     private const float CellFill = 25f / 27f; // FHD 27픽셀 칸에서 양쪽 1픽셀씩 동일한 간격 확보
 
-    public static void ApplyMinoArt(SpriteRenderer renderer, TetrominoType type, int cellIndex, float opacity = 1f, int sortingOrder = 10, bool eroded = false) // 실체와 고스트의 투명도·표시 순서를 함께 설정 (eroded: 여왕 회전 금지 표시)
+    public static void ApplyMinoArt(SpriteRenderer renderer, TetrominoType type, int cellIndex, float opacity = 1f, int sortingOrder = 10) // 실체와 고스트의 투명도·표시 순서를 함께 설정
     {
         renderer.sprite = GetMinoSprite(type, cellIndex); // 현재 강화 단계의 칸별 그림 적용
         renderer.gameObject.AddComponent<MinoArtBinding>().Initialize(type, cellIndex); // 고정 후에도 강화 변경을 구독
-        Color tint = eroded ? ErodedTint : Color.white; // 회전 금지 미노는 어둡게
-        renderer.color = new Color(tint.r, tint.g, tint.b, opacity); // 원본 색(또는 침식 색)에 지정한 투명도 적용
+        renderer.color = new Color(1f, 1f, 1f, opacity); // 잠금 여부와 무관하게 원래 미노 색 유지
         renderer.sortingOrder = sortingOrder; // 바탕과 함께 표시 순서 결정
         Vector2 size = renderer.sprite.rect.size / renderer.sprite.pixelsPerUnit; // 원본 분할 영역의 크기 확인 (타이트 메시 트림 오차 없는 슬라이스 원본 크기)
         renderer.transform.localScale = new Vector3(GridManager.CellSize / size.x * CellFill, GridManager.CellSize / size.y * CellFill, 1f); // 모든 타입의 표시 영역을 25픽셀 정사각형으로 통일

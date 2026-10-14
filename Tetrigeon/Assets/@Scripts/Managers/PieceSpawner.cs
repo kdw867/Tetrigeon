@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic; // 지워진 수정 칸 목록
 using UnityEngine;
@@ -258,7 +258,6 @@ public class PieceSpawner : MonoBehaviour
             blocks[i].SetParent(GridManager.Instance.transform); // 조각에서 분리, 개별 오브젝트로 독립
             blocks[i].position = GridManager.CellToWorld(boardCell); // PieceView가 갱신 안 한 마지막 프레임 위치 보정
             blocks[i].rotation = PieceVisuals.GetArtRotation(currentPiece.Type, currentPiece.RotationState, i); // 고정 직전 회전도 균열 방향에 반영 (증식 칸은 L 보정 제외)
-            if (currentPiece.Mino.RotationLocked) blocks[i].GetComponent<SpriteRenderer>().color = Color.white; // 회전 금지는 고정과 함께 끝나므로 침식 색 해제
             GridManager.Instance.SetCell(boardCell, blocks[i]); // 그리드에 칸 단위로 등록
         }
 

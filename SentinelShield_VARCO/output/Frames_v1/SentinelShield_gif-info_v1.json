@@ -1,0 +1,137 @@
+[
+ {
+  "file": "SentinelShield_1a_body_crouch-hold-return_x4_v1.gif",
+  "size": "688x424",
+  "bytes": 56648,
+  "frames": 5,
+  "total_ms": 1800,
+  "max_color_diff": 0,
+  "px_over8": 0
+ },
+ {
+  "file": "SentinelShield_1b_body_stun-slump-recover_x4_v1.gif",
+  "size": "688x424",
+  "bytes": 54346,
+  "frames": 5,
+  "total_ms": 2180,
+  "max_color_diff": 0,
+  "px_over8": 0
+ },
+ {
+  "file": "SentinelShield_2_shield_create-and-density_x4_v1.gif",
+  "size": "688x424",
+  "bytes": 284492,
+  "frames": 23,
+  "total_ms": 2970,
+  "max_color_diff": 85,
+  "px_over8": 74256
+ },
+ {
+  "file": "SentinelShield_3a_explosion_fx-only_x4_v1.gif",
+  "size": "688x424",
+  "bytes": 64203,
+  "frames": 10,
+  "total_ms": 1260,
+  "max_color_diff": 0,
+  "px_over8": 0
+ },
+ {
+  "file": "SentinelShield_3b_explosion_with-body_x4_v1.gif",
+  "size": "688x424",
+  "bytes": 75564,
+  "frames": 10,
+  "total_ms": 1260,
+  "max_color_diff": 0,
+  "px_over8": 0
+ },
+ {
+  "file": "SentinelShield_4a_break-melt_fx-only_x4_v1.gif",
+  "size": "688x424",
+  "bytes": 42240,
+  "frames": 15,
+  "total_ms": 1620,
+  "max_color_diff": 0,
+  "px_over8": 0
+ },
+ {
+  "file": "SentinelShield_4b_break-melt_with-body_x4_v1.gif",
+  "size": "688x424",
+  "bytes": 59714,
+  "frames": 15,
+  "total_ms": 1620,
+  "max_color_diff": 0,
+  "px_over8": 0
+ },
+ {
+  "file": "SentinelShield_5a_stun-stars_loop_x6_v1.gif",
+  "size": "1032x636",
+  "bytes": 31189,
+  "frames": 12,
+  "total_ms": 840,
+  "max_color_diff": 0,
+  "px_over8": 0
+ },
+ {
+  "file": "SentinelShield_5b_stun-stars_fx-only_x6_v1.gif",
+  "size": "1032x636",
+  "bytes": 15500,
+  "frames": 12,
+  "total_ms": 840,
+  "max_color_diff": 0,
+  "px_over8": 0
+ },
+ {
+  "file": "SentinelShield_6a_FAIL_cell_x4_v1.gif",
+  "size": "688x424",
+  "bytes": 404005,
+  "frames": 37,
+  "total_ms": 3660,
+  "max_color_diff": 85,
+  "px_over8": 74256
+ },
+ {
+  "file": "SentinelShield_6b_FAIL_game-screen_x2_v1.gif",
+  "size": "960x580",
+  "bytes": 443581,
+  "frames": 37,
+  "total_ms": 3660,
+  "max_color_diff": 85,
+  "px_over8": 1459568
+ },
+ {
+  "file": "SentinelShield_6c_FAIL_game-screen_actual-size_x1_v1.gif",
+  "size": "480x290",
+  "bytes": 187770,
+  "frames": 37,
+  "total_ms": 3660,
+  "max_color_diff": 85,
+  "px_over8": 364892
+ },
+ {
+  "file": "SentinelShield_7a_SUCCESS_cell_x4_v1.gif",
+  "size": "688x424",
+  "bytes": 333156,
+  "frames": 59,
+  "total_ms": 5070,
+  "max_color_diff": 85,
+  "px_over8": 49424
+ },
+ {
+  "file": "SentinelShield_7b_SUCCESS_game-screen_x2_v1.gif",
+  "size": "960x580",
+  "bytes": 383797,
+  "frames": 59,
+  "total_ms": 5070,
+  "max_color_diff": 85,
+  "px_over8": 1584080
+ },
+ {
+  "file": "SentinelShield_7c_SUCCESS_game-screen_actual-size_x1_v1.gif",
+  "size": "480x290",
+  "bytes": 163539,
+  "frames": 59,
+  "total_ms": 5070,
+  "max_color_diff": 85,
+  "px_over8": 396020
+ }
+]

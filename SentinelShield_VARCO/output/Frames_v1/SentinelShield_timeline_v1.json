@@ -1,0 +1,1064 @@
+{
+ "version": "v1",
+ "note": "합성 미리보기(실제 Unity 영상 아님). 충전 구간은 LOCK 14번을 90ms 간격으로 압축 표시, 실제 게임에서는 플레이어 진행 속도에 따름. 반복 GIF 는 마지막 장면 뒤에 600ms 쉼.",
+ "canvas": {
+  "body_cell": "144x104, 발 기준점 (72,94)",
+  "fx_canvas": "208x136 (셀 원점 = (32,32)), 발 기준점 (104,126)",
+  "block": "2x2 텍스처 px = 화면 4px",
+  "screen_origin_fx": [
+   1366,
+   7
+  ],
+  "screen_origin_cell": [
+   1430,
+   71
+  ]
+ },
+ "fail": {
+  "total_ms": 3060,
+  "explosion_start_ms": 2060,
+  "remi_hit_ms": 2300,
+  "remi_hit_offset_from_explosion_start_ms": 240,
+  "explosion_total_ms": 660,
+  "explosion_peak_frame": "X3",
+  "frames": [
+   {
+    "id": "S0",
+    "ms": 120,
+    "start_ms": 0,
+    "body": "stand",
+    "fx": false,
+    "charge_percent": null,
+    "note": "기본 자세",
+    "remi_hit": false
+   },
+   {
+    "id": "S1",
+    "ms": 80,
+    "start_ms": 120,
+    "body": "mid",
+    "fx": false,
+    "charge_percent": null,
+    "note": "웅크리는 중",
+    "remi_hit": false
+   },
+   {
+    "id": "C0",
+    "ms": 90,
+    "start_ms": 200,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "웅크림 + 바닥 룬 선",
+    "remi_hit": false
+   },
+   {
+    "id": "C1",
+    "ms": 70,
+    "start_ms": 290,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "보호막 생성",
+    "remi_hit": false
+   },
+   {
+    "id": "C2",
+    "ms": 70,
+    "start_ms": 360,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "보호막 생성",
+    "remi_hit": false
+   },
+   {
+    "id": "C3",
+    "ms": 70,
+    "start_ms": 430,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "보호막 생성",
+    "remi_hit": false
+   },
+   {
+    "id": "C4",
+    "ms": 70,
+    "start_ms": 500,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "보호막 생성",
+    "remi_hit": false
+   },
+   {
+    "id": "C5",
+    "ms": 60,
+    "start_ms": 570,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "보호막 완성 번쩍임",
+    "remi_hit": false
+   },
+   {
+    "id": "C6",
+    "ms": 80,
+    "start_ms": 630,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "안정",
+    "remi_hit": false
+   },
+   {
+    "id": "L00",
+    "ms": 90,
+    "start_ms": 710,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": 0,
+    "note": "충전 0/14 (압축 표시)",
+    "remi_hit": false
+   },
+   {
+    "id": "L01",
+    "ms": 90,
+    "start_ms": 800,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": 7,
+    "note": "충전 1/14 (압축 표시)",
+    "remi_hit": false
+   },
+   {
+    "id": "L02",
+    "ms": 90,
+    "start_ms": 890,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": 14,
+    "note": "충전 2/14 (압축 표시)",
+    "remi_hit": false
+   },
+   {
+    "id": "L03",
+    "ms": 90,
+    "start_ms": 980,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": 21,
+    "note": "충전 3/14 (압축 표시)",
+    "remi_hit": false
+   },
+   {
+    "id": "L04",
+    "ms": 90,
+    "start_ms": 1070,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": 29,
+    "note": "충전 4/14 (압축 표시)",
+    "remi_hit": false
+   },
+   {
+    "id": "L05",
+    "ms": 90,
+    "start_ms": 1160,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": 36,
+    "note": "충전 5/14 (압축 표시)",
+    "remi_hit": false
+   },
+   {
+    "id": "L06",
+    "ms": 90,
+    "start_ms": 1250,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": 43,
+    "note": "충전 6/14 (압축 표시)",
+    "remi_hit": false
+   },
+   {
+    "id": "L07",
+    "ms": 90,
+    "start_ms": 1340,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": 50,
+    "note": "충전 7/14 (압축 표시)",
+    "remi_hit": false
+   },
+   {
+    "id": "L08",
+    "ms": 90,
+    "start_ms": 1430,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": 57,
+    "note": "충전 8/14 (압축 표시)",
+    "remi_hit": false
+   },
+   {
+    "id": "L09",
+    "ms": 90,
+    "start_ms": 1520,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": 64,
+    "note": "충전 9/14 (압축 표시)",
+    "remi_hit": false
+   },
+   {
+    "id": "L10",
+    "ms": 90,
+    "start_ms": 1610,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": 71,
+    "note": "충전 10/14 (압축 표시)",
+    "remi_hit": false
+   },
+   {
+    "id": "L11",
+    "ms": 90,
+    "start_ms": 1700,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": 79,
+    "note": "충전 11/14 (압축 표시)",
+    "remi_hit": false
+   },
+   {
+    "id": "L12",
+    "ms": 90,
+    "start_ms": 1790,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": 86,
+    "note": "충전 12/14 (압축 표시)",
+    "remi_hit": false
+   },
+   {
+    "id": "L13",
+    "ms": 90,
+    "start_ms": 1880,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": 93,
+    "note": "충전 13/14 (압축 표시)",
+    "remi_hit": false
+   },
+   {
+    "id": "L14",
+    "ms": 90,
+    "start_ms": 1970,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": 100,
+    "note": "충전 14/14 (압축 표시)",
+    "remi_hit": false
+   },
+   {
+    "id": "X0",
+    "ms": 120,
+    "start_ms": 2060,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": 100,
+    "note": "충전 완료 100% (불투명)",
+    "remi_hit": false
+   },
+   {
+    "id": "X1",
+    "ms": 60,
+    "start_ms": 2180,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "부풀기 1",
+    "remi_hit": false
+   },
+   {
+    "id": "X2",
+    "ms": 60,
+    "start_ms": 2240,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "부풀기 2 + 금",
+    "remi_hit": false
+   },
+   {
+    "id": "X3",
+    "ms": 50,
+    "start_ms": 2300,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "폭발 정점(번쩍임) — 레미 피격 연결 시점",
+    "remi_hit": true
+   },
+   {
+    "id": "X4",
+    "ms": 50,
+    "start_ms": 2350,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "조각·빛 입자 퍼짐 1/6",
+    "remi_hit": false
+   },
+   {
+    "id": "X5",
+    "ms": 50,
+    "start_ms": 2400,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "조각·빛 입자 퍼짐 2/6",
+    "remi_hit": false
+   },
+   {
+    "id": "X6",
+    "ms": 60,
+    "start_ms": 2450,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "조각·빛 입자 퍼짐 3/6",
+    "remi_hit": false
+   },
+   {
+    "id": "X7",
+    "ms": 60,
+    "start_ms": 2510,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "조각·빛 입자 퍼짐 4/6",
+    "remi_hit": false
+   },
+   {
+    "id": "X8",
+    "ms": 70,
+    "start_ms": 2570,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "조각·빛 입자 퍼짐 5/6",
+    "remi_hit": false
+   },
+   {
+    "id": "X9",
+    "ms": 80,
+    "start_ms": 2640,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "조각·빛 입자 퍼짐 6/6",
+    "remi_hit": false
+   },
+   {
+    "id": "R1",
+    "ms": 100,
+    "start_ms": 2720,
+    "body": "hold",
+    "fx": false,
+    "charge_percent": null,
+    "note": "보호막 사라짐",
+    "remi_hit": false
+   },
+   {
+    "id": "R2",
+    "ms": 80,
+    "start_ms": 2820,
+    "body": "mid",
+    "fx": false,
+    "charge_percent": null,
+    "note": "복귀 중",
+    "remi_hit": false
+   },
+   {
+    "id": "R3",
+    "ms": 160,
+    "start_ms": 2900,
+    "body": "stand",
+    "fx": false,
+    "charge_percent": null,
+    "note": "기본 자세 복귀",
+    "remi_hit": false
+   }
+  ]
+ },
+ "success": {
+  "total_ms": 4470,
+  "melt_start_ms": 1610,
+  "stun_start_ms": 1890,
+  "stars_start_ms": 2170,
+  "recover_start_ms": 4130,
+  "frames": [
+   {
+    "id": "S0",
+    "ms": 120,
+    "start_ms": 0,
+    "body": "stand",
+    "fx": false,
+    "charge_percent": null,
+    "note": "기본 자세",
+    "remi_hit": false
+   },
+   {
+    "id": "S1",
+    "ms": 80,
+    "start_ms": 120,
+    "body": "mid",
+    "fx": false,
+    "charge_percent": null,
+    "note": "웅크리는 중",
+    "remi_hit": false
+   },
+   {
+    "id": "C0",
+    "ms": 90,
+    "start_ms": 200,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "웅크림 + 바닥 룬 선",
+    "remi_hit": false
+   },
+   {
+    "id": "C1",
+    "ms": 70,
+    "start_ms": 290,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "보호막 생성",
+    "remi_hit": false
+   },
+   {
+    "id": "C2",
+    "ms": 70,
+    "start_ms": 360,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "보호막 생성",
+    "remi_hit": false
+   },
+   {
+    "id": "C3",
+    "ms": 70,
+    "start_ms": 430,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "보호막 생성",
+    "remi_hit": false
+   },
+   {
+    "id": "C4",
+    "ms": 70,
+    "start_ms": 500,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "보호막 생성",
+    "remi_hit": false
+   },
+   {
+    "id": "C5",
+    "ms": 60,
+    "start_ms": 570,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "보호막 완성 번쩍임",
+    "remi_hit": false
+   },
+   {
+    "id": "C6",
+    "ms": 80,
+    "start_ms": 630,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "안정",
+    "remi_hit": false
+   },
+   {
+    "id": "L00",
+    "ms": 90,
+    "start_ms": 710,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": 0,
+    "note": "충전 0/14 (압축 표시)",
+    "remi_hit": false
+   },
+   {
+    "id": "L01",
+    "ms": 90,
+    "start_ms": 800,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": 7,
+    "note": "충전 1/14 (압축 표시)",
+    "remi_hit": false
+   },
+   {
+    "id": "L02",
+    "ms": 90,
+    "start_ms": 890,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": 14,
+    "note": "충전 2/14 (압축 표시)",
+    "remi_hit": false
+   },
+   {
+    "id": "L03",
+    "ms": 90,
+    "start_ms": 980,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": 21,
+    "note": "충전 3/14 (압축 표시)",
+    "remi_hit": false
+   },
+   {
+    "id": "L04",
+    "ms": 90,
+    "start_ms": 1070,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": 29,
+    "note": "충전 4/14 (압축 표시)",
+    "remi_hit": false
+   },
+   {
+    "id": "L05",
+    "ms": 90,
+    "start_ms": 1160,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": 36,
+    "note": "충전 5/14 (압축 표시)",
+    "remi_hit": false
+   },
+   {
+    "id": "L06",
+    "ms": 90,
+    "start_ms": 1250,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": 43,
+    "note": "충전 6/14 (압축 표시)",
+    "remi_hit": false
+   },
+   {
+    "id": "L07",
+    "ms": 90,
+    "start_ms": 1340,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": 50,
+    "note": "충전 7/14 (압축 표시)",
+    "remi_hit": false
+   },
+   {
+    "id": "M0",
+    "ms": 50,
+    "start_ms": 1430,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "피격 번쩍임(보호막이 순간 불투명)",
+    "remi_hit": false
+   },
+   {
+    "id": "M1",
+    "ms": 60,
+    "start_ms": 1480,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "중간 파손 1: 금·조각",
+    "remi_hit": false
+   },
+   {
+    "id": "M2",
+    "ms": 70,
+    "start_ms": 1540,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "중간 파손 2: 금 확대",
+    "remi_hit": false
+   },
+   {
+    "id": "D00",
+    "ms": 70,
+    "start_ms": 1610,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "녹아내림 1/12",
+    "remi_hit": false
+   },
+   {
+    "id": "D01",
+    "ms": 70,
+    "start_ms": 1680,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "녹아내림 2/12",
+    "remi_hit": false
+   },
+   {
+    "id": "D02",
+    "ms": 70,
+    "start_ms": 1750,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "녹아내림 3/12",
+    "remi_hit": false
+   },
+   {
+    "id": "D03",
+    "ms": 70,
+    "start_ms": 1820,
+    "body": "hold",
+    "fx": true,
+    "charge_percent": null,
+    "note": "녹아내림 4/12",
+    "remi_hit": false
+   },
+   {
+    "id": "D04",
+    "ms": 70,
+    "start_ms": 1890,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "녹아내림 5/12 · 힘 빠진 자세로 처짐",
+    "remi_hit": false
+   },
+   {
+    "id": "D05",
+    "ms": 70,
+    "start_ms": 1960,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "녹아내림 6/12",
+    "remi_hit": false
+   },
+   {
+    "id": "D06",
+    "ms": 70,
+    "start_ms": 2030,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "녹아내림 7/12",
+    "remi_hit": false
+   },
+   {
+    "id": "D07",
+    "ms": 70,
+    "start_ms": 2100,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "녹아내림 8/12",
+    "remi_hit": false
+   },
+   {
+    "id": "D08",
+    "ms": 70,
+    "start_ms": 2170,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "녹아내림 9/12 · 스턴 별 시작",
+    "remi_hit": false
+   },
+   {
+    "id": "D09",
+    "ms": 70,
+    "start_ms": 2240,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "녹아내림 10/12",
+    "remi_hit": false
+   },
+   {
+    "id": "D10",
+    "ms": 70,
+    "start_ms": 2310,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "녹아내림 11/12",
+    "remi_hit": false
+   },
+   {
+    "id": "D11",
+    "ms": 70,
+    "start_ms": 2380,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "녹아내림 12/12",
+    "remi_hit": false
+   },
+   {
+    "id": "T00",
+    "ms": 70,
+    "start_ms": 2450,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "스턴 유지(별 루프)",
+    "remi_hit": false
+   },
+   {
+    "id": "T01",
+    "ms": 70,
+    "start_ms": 2520,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "스턴 유지(별 루프)",
+    "remi_hit": false
+   },
+   {
+    "id": "T02",
+    "ms": 70,
+    "start_ms": 2590,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "스턴 유지(별 루프)",
+    "remi_hit": false
+   },
+   {
+    "id": "T03",
+    "ms": 70,
+    "start_ms": 2660,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "스턴 유지(별 루프)",
+    "remi_hit": false
+   },
+   {
+    "id": "T04",
+    "ms": 70,
+    "start_ms": 2730,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "스턴 유지(별 루프)",
+    "remi_hit": false
+   },
+   {
+    "id": "T05",
+    "ms": 70,
+    "start_ms": 2800,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "스턴 유지(별 루프)",
+    "remi_hit": false
+   },
+   {
+    "id": "T06",
+    "ms": 70,
+    "start_ms": 2870,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "스턴 유지(별 루프)",
+    "remi_hit": false
+   },
+   {
+    "id": "T07",
+    "ms": 70,
+    "start_ms": 2940,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "스턴 유지(별 루프)",
+    "remi_hit": false
+   },
+   {
+    "id": "T08",
+    "ms": 70,
+    "start_ms": 3010,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "스턴 유지(별 루프)",
+    "remi_hit": false
+   },
+   {
+    "id": "T09",
+    "ms": 70,
+    "start_ms": 3080,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "스턴 유지(별 루프)",
+    "remi_hit": false
+   },
+   {
+    "id": "T10",
+    "ms": 70,
+    "start_ms": 3150,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "스턴 유지(별 루프)",
+    "remi_hit": false
+   },
+   {
+    "id": "T11",
+    "ms": 70,
+    "start_ms": 3220,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "스턴 유지(별 루프)",
+    "remi_hit": false
+   },
+   {
+    "id": "T12",
+    "ms": 70,
+    "start_ms": 3290,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "스턴 유지(별 루프)",
+    "remi_hit": false
+   },
+   {
+    "id": "T13",
+    "ms": 70,
+    "start_ms": 3360,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "스턴 유지(별 루프)",
+    "remi_hit": false
+   },
+   {
+    "id": "T14",
+    "ms": 70,
+    "start_ms": 3430,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "스턴 유지(별 루프)",
+    "remi_hit": false
+   },
+   {
+    "id": "T15",
+    "ms": 70,
+    "start_ms": 3500,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "스턴 유지(별 루프)",
+    "remi_hit": false
+   },
+   {
+    "id": "T16",
+    "ms": 70,
+    "start_ms": 3570,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "스턴 유지(별 루프)",
+    "remi_hit": false
+   },
+   {
+    "id": "T17",
+    "ms": 70,
+    "start_ms": 3640,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "스턴 유지(별 루프)",
+    "remi_hit": false
+   },
+   {
+    "id": "T18",
+    "ms": 70,
+    "start_ms": 3710,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "스턴 유지(별 루프)",
+    "remi_hit": false
+   },
+   {
+    "id": "T19",
+    "ms": 70,
+    "start_ms": 3780,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "스턴 유지(별 루프)",
+    "remi_hit": false
+   },
+   {
+    "id": "T20",
+    "ms": 70,
+    "start_ms": 3850,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "스턴 유지(별 루프)",
+    "remi_hit": false
+   },
+   {
+    "id": "T21",
+    "ms": 70,
+    "start_ms": 3920,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "스턴 유지(별 루프)",
+    "remi_hit": false
+   },
+   {
+    "id": "T22",
+    "ms": 70,
+    "start_ms": 3990,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "스턴 유지(별 루프)",
+    "remi_hit": false
+   },
+   {
+    "id": "T23",
+    "ms": 70,
+    "start_ms": 4060,
+    "body": "stun",
+    "fx": true,
+    "charge_percent": null,
+    "note": "스턴 유지(별 루프)",
+    "remi_hit": false
+   },
+   {
+    "id": "R1",
+    "ms": 100,
+    "start_ms": 4130,
+    "body": "hold",
+    "fx": false,
+    "charge_percent": null,
+    "note": "스턴 해제: 별 사라짐·일어남",
+    "remi_hit": false
+   },
+   {
+    "id": "R2",
+    "ms": 80,
+    "start_ms": 4230,
+    "body": "mid",
+    "fx": false,
+    "charge_percent": null,
+    "note": "복귀 중",
+    "remi_hit": false
+   },
+   {
+    "id": "R3",
+    "ms": 160,
+    "start_ms": 4310,
+    "body": "stand",
+    "fx": false,
+    "charge_percent": null,
+    "note": "기본 자세 복귀",
+    "remi_hit": false
+   }
+  ]
+ },
+ "stars_loop": {
+  "frames": 12,
+  "ms_each": 70,
+  "orbit": {
+   "cx": 44,
+   "cy": 31,
+   "rx": 10,
+   "ry": 2.6,
+   "headTop": 41,
+   "headX": 55
+  }
+ },
+ "files": {
+  "cells": "cells/",
+  "fx_files": [
+   "fx_create_0.png",
+   "fx_create_1.png",
+   "fx_create_2.png",
+   "fx_create_3.png",
+   "fx_create_4.png",
+   "fx_create_5.png",
+   "fx_create_6.png",
+   "fx_held_0.png",
+   "fx_held_25.png",
+   "fx_held_50.png",
+   "fx_held_75.png",
+   "fx_held_100.png",
+   "fx_layer_fill.png",
+   "fx_layer_rim.png",
+   "fx_explode_X0.png",
+   "fx_explode_X1.png",
+   "fx_explode_X2.png",
+   "fx_explode_X3.png",
+   "fx_explode_X4.png",
+   "fx_explode_X5.png",
+   "fx_explode_X6.png",
+   "fx_explode_X7.png",
+   "fx_explode_X8.png",
+   "fx_explode_X9.png",
+   "fx_break_M0.png",
+   "fx_break_M1.png",
+   "fx_break_M2.png",
+   "fx_melt_00.png",
+   "fx_melt_01.png",
+   "fx_melt_02.png",
+   "fx_melt_03.png",
+   "fx_melt_04.png",
+   "fx_melt_05.png",
+   "fx_melt_06.png",
+   "fx_melt_07.png",
+   "fx_melt_08.png",
+   "fx_melt_09.png",
+   "fx_melt_10.png",
+   "fx_melt_11.png",
+   "fx_stars_00.png",
+   "fx_stars_01.png",
+   "fx_stars_02.png",
+   "fx_stars_03.png",
+   "fx_stars_04.png",
+   "fx_stars_05.png",
+   "fx_stars_06.png",
+   "fx_stars_07.png",
+   "fx_stars_08.png",
+   "fx_stars_09.png",
+   "fx_stars_10.png",
+   "fx_stars_11.png"
+  ]
+ }
+}

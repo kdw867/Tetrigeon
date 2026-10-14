@@ -1,8 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 // Hold 슬롯에 든 조각을 보드 옆 월드 좌표에 표시 (다른 조각 비주얼이랑 같은 방식)
 public class HoldView : MonoBehaviour
 {
+    private RotationLockSeal rotationSeal; // 보관 미노의 잠금 표식
     private Transform[] blocks; // 현재 표시 중인 블록들
 
     private void OnEnable()
@@ -24,6 +25,7 @@ public class HoldView : MonoBehaviour
         MinoState mino = PieceSpawner.Instance.HeldPiece; // 여왕 스킬로 바뀐 모양·회전 금지까지 포함한 보관 미노
         Vector2Int[] cells = mino.GetCells(0); // 스폰 모양 그대로 표시 (증식 칸 포함)
         Vector2 boundsCenter = TetrominoData.GetSpawnBoundsCenter(mino.Type, mino.GrownCell); // 모양 중심 (박스 정중앙 정렬용)
+        if (mino.RotationLocked) rotationSeal = RotationLockSeal.Create(transform); // 보관한 미노 상태 그대로 표시
         blocks = new Transform[cells.Length];
 
         for (int i = 0; i < cells.Length; i++)
@@ -36,7 +38,7 @@ public class HoldView : MonoBehaviour
                 0f);
 
             SpriteRenderer spriteRenderer = block.AddComponent<SpriteRenderer>();
-            PieceVisuals.ApplyMinoArt(spriteRenderer, mino.Type, i, 1f, 10, mino.RotationLocked); // 칸별 원본 아트와 방향 적용 (회전 금지는 침식 색)
+            PieceVisuals.ApplyMinoArt(spriteRenderer, mino.Type, i, 1f, 10); // 원래 미노 색과 칸별 아트 유지
             spriteRenderer.sortingOrder = 10;
 
             blocks[i] = block.transform;
@@ -45,6 +47,8 @@ public class HoldView : MonoBehaviour
 
     private void ClearBlocks()
     {
+        if (rotationSeal != null) Destroy(rotationSeal.gameObject); // 교환·비우기 때 이전 표식 제거
+        rotationSeal = null; // 제거한 참조 초기화
         if (blocks == null) return;
         foreach (Transform block in blocks)
             if (block != null) Destroy(block.gameObject); // 이전 블록 삭제
