@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
     private const int GuardianShield = 5; // 수호자 보호막 수치
     private const int GuardianChargeActions = 2; // 보호막 생성 후 강공격까지 수호자 행동 수 (= 보호막을 깰 가방 정산 기회)
     private const int GuardianStrongAttack = 9; // 강공격 피해 (기본 공격 3의 3배)
-    private const int StunActions = 1; // 보호막이 깨졌을 때 막는 수호자 행동 수
+    private const int StunActions = 1; // 보호막이 깨졌을 때 막는 수호자 행동 수 (이어서 일어서는 행동 1번을 더 씀)
 
     public EnemyTier Tier { get; private set; } // 이 적의 등급
     public int MaxHp { get; private set; } // 등급에서 정해진 최대 체력
@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour
     public int TurnsUntilSkill => SkillInterval - turnsSinceSkill; // 능력 발동까지 남은 턴
 
     public event Action<EnemyActionKind> Acted; // 이 적이 실제로 행동할 때 알림 (행동 종류를 함께 전달. 보이는 연출 전용이라 전투 수치와 순서에는 관여하지 않음)
+    public float MotionSeconds { get; private set; } // 이번 행동에 연출이 재생한 모션의 길이(초), 모션이 없으면 0 (턴 연출이 이 시간만큼 기다린 뒤 다음 적이 행동)
 
     private int turnsSinceSkill; // 마지막 능력 사용 후 지난 턴 수
 
@@ -38,6 +39,7 @@ public class Enemy : MonoBehaviour
     public int Shield { get; private set; } // 수호자 보호막 (피해를 체력보다 먼저 받음)
     public int ChargeActionsLeft { get; private set; } // 강공격까지 남은 수호자 행동 수 (0이면 준비 중 아님)
     public int ChargeActionsTotal => GuardianChargeActions; // 보호막 생성 후 강공격까지 전체 기한 (보호막 농도 표시가 충전 진행도를 계산할 때 읽음)
+    public bool RecoveringFromStun { get; private set; } // 방금 소비한 행동이 스턴 자세에서 일어서는 행동인지 (일어서는 모션만 하고 공격하지 않음)
     public bool IsStunned => stunActionsLeft > 0 || stunnedLastAction; // 스턴 표시: 막을 행동이 남았거나 직전 행동을 스턴으로 쉼 (빙결 눈송이처럼 다음 행동 전까지 유지)
     private int stunActionsLeft; // 스턴으로 막을 행동 수
     private bool stunnedLastAction; // 직전 적 턴의 행동이 스턴으로 막혔는지
@@ -100,13 +102,21 @@ public class Enemy : MonoBehaviour
         return GuardianStrongAttack; // 강공격 피해
     }
 
-    // 적 턴에서 호출: 스턴으로 막을 행동이 남아 있으면 소비하고 true
+    // 적 턴에서 호출: 스턴으로 막을 행동이 남아 있으면 소비하고 true. 스턴이 끝난 뒤 이어지는 한 번의 행동도 스턴 자세에서 일어서는 데 쓰고 true (이때 RecoveringFromStun 이 true)
     public bool ConsumeStun()
     {
-        stunnedLastAction = stunActionsLeft > 0; // 이번 행동이 스턴으로 막히는지 기록 (다음 적 턴까지 표시)
-        if (stunActionsLeft <= 0) return false; // 스턴이 없으면 정상 행동
+        RecoveringFromStun = false; // 이번 행동에 대한 기록을 새로 시작
+        if (stunActionsLeft > 0)
+        {
+            stunActionsLeft--; // 행동 한 번 차단
+            stunnedLastAction = true; // 이번 행동이 스턴으로 막혔음을 기록 (일어서는 행동까지 표시 유지)
+            return true;
+        }
 
-        stunActionsLeft--; // 행동 한 번 차단
+        if (!stunnedLastAction) return false; // 스턴과 상관없는 정상 행동
+
+        stunnedLastAction = false; // 스턴 표시를 끝내고
+        RecoveringFromStun = true; // 스턴 자세에서 일어서는 이 행동이 한 턴을 씀 (공격·능력 사용·카운터 진행 없음)
         return true;
     }
 
@@ -207,7 +217,7 @@ public class Enemy : MonoBehaviour
         return true;
     }
 
-    // 적 턴에서 이 적이 막히지 않고 행동할 때 호출: 공격 모션 같은 연출이 구독해서 재생한다 (피해·능력 계산은 따로 하며 여기서는 아무것도 바꾸지 않음)
+    // 적 턴에서 이 적이 막히지 않고 행동할 때 호출: 공격 모션 같은 연출이 구독해서 재생한다 (피해·능력 계산은 따로 하며 여기서는 모션 길이 기록만 비움)
     // skillTurn: 이번 행동이 능력 주기에 도달한 능력 사용인지 (AdvanceTurnAndCheckSkill 결과). 강공격 준비 상태는 이 적이 스스로 알고 있으므로 행동 직전에 호출해야 함
     public void NotifyAction(bool skillTurn)
     {
@@ -216,7 +226,21 @@ public class Enemy : MonoBehaviour
         else if (skillTurn) kind = EnemyActionKind.Skill; // 능력 사용 턴 (수호자는 보호막과 강공격 준비 시작)
         else if (ChargeActionsLeft > 1) kind = EnemyActionKind.Charging; // 강공격 준비 중이고 아직 기한이 남음 (공격하지 않고 기한만 셈)
         else if (ChargeActionsLeft == 1) kind = EnemyActionKind.StrongAttack; // 이번 행동에서 기한이 0이 되어 강공격
+        MotionSeconds = 0f; // 이전 행동의 모션 길이를 비움 (이번 행동의 연출이 다시 알려줌)
         Acted?.Invoke(kind); // 구독한 연출에 알림
+    }
+
+    // 연출이 이 적의 모션을 재생할 때 길이를 알림 (모션이 겹치면 가장 긴 값). 턴 연출이 이 시간만큼 기다림
+    public void ReportMotion(float seconds)
+    {
+        MotionSeconds = Mathf.Max(MotionSeconds, seconds); // 가장 긴 모션이 끝날 때까지 기다림
+    }
+
+    // 스턴 자세에서 일어서는 행동일 때 호출: 연출이 일어서는 모션을 재생한다 (이 행동은 공격하지 않으며 여기서는 모션 길이 기록만 비움)
+    public void NotifyRecovery()
+    {
+        MotionSeconds = 0f; // 이전 행동의 모션 길이를 비움 (연출이 다시 알려줌)
+        Acted?.Invoke(EnemyActionKind.StunRecovery); // 구독한 연출에 알림
     }
 
     // 이번 능력 발동으로 쌓을 방해 줄 수

@@ -1,8 +1,12 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Piece : MonoBehaviour
 {
     [SerializeField] private float gravityInterval = 1f; // 자동 낙하 간격 (초당 한 칸)
+
+    public event System.Action OnRotated; // 회전 성공 시 소리 알림
+    public event System.Action OnHorizontalMoved; // 좌우 이동 성공 시 소리 알림
+    public event System.Action OnRotationBlocked; // 봉인으로 회전 실패 시 소리 알림
 
     private float leftTimer; // 왼쪽 키의 DAS/ARR 타이머
     private float rightTimer; // 오른쪽 키의 DAS/ARR 타이머
@@ -114,12 +118,17 @@ public class Piece : MonoBehaviour
         BoardPosition = newPosition;
         LastActionWasRotation = false;
         JustMoved = true; // 이동 성공 기록
+        if (delta.x != 0) OnHorizontalMoved?.Invoke(); // 낙하·벽 충돌은 이동음 제외
         return true;
     }
 
     public bool TryRotate(int direction)
     {
-        if (Mino.RotationLocked) return false; // 여왕 회전 금지: 이동·드랍은 그대로 두고 회전만 막음
+        if (Mino.RotationLocked) // 여왕 봉인에 의한 실패만 알림
+        {
+            OnRotationBlocked?.Invoke(); // 회전 잠금 실패음 재생 요청
+            return false; // 위치와 회전 상태 유지
+        }
 
         int newRotationState = RotationState + direction;
         Vector2Int[] tests = SRSKickData.GetTests(Type, RotationState, newRotationState);
@@ -134,6 +143,7 @@ public class Piece : MonoBehaviour
                 LastActionWasRotation = true;
                 LastKickTestIndex = direction == 2 ? -1 : i; // 5번째 킥 T스핀 특례는 90도 회전에만 적용
                 JustMoved = true; // 회전 성공 기록
+                OnRotated?.Invoke(); // 실제 회전 성공 후에만 재생 요청
                 return true;
             }
         }

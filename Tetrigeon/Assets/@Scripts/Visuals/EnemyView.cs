@@ -38,6 +38,9 @@ public class EnemyView : MonoBehaviour
     private static readonly int SkillTrigger = Animator.StringToHash("Skill"); // 여왕 증식 능력 모션 트리거
     private static readonly int RotLockTrigger = Animator.StringToHash("RotLock"); // 여왕 회전 금지 능력 모션 트리거
     private static readonly int AttackTrigger = Animator.StringToHash("Attack"); // 공격 모션 트리거 (매번 문자열을 만들지 않도록 한 번만 계산)
+    private const float LarvaAttackSeconds = 0.625f; // 애벌레 공격 모션(CrystalLarva_Attack) 길이
+    private const float SentinelAttackSeconds = 1.25f; // 수호자 일반 공격 모션(AmethystSentinel_Attack) 길이
+    private const float QueenMotionSeconds = 0.94f; // 여왕 공격·수정 증식·회전 금지 모션 길이 (셋 다 같음)
 
     private Animator normalIdleAnimator; // 일반 몬스터의 Idle·공격 애니메이터
     private Animator epicIdleAnimator; // 에픽(수호자)의 Idle·공격 애니메이터
@@ -80,20 +83,22 @@ public class EnemyView : MonoBehaviour
         if (hpBar != null) Destroy(hpBar.gameObject); // 적이 사라지면 막대도 함께 제거
     }
 
-    // 적이 행동할 때 공격 모션을 재생 (보이는 연출만, 전투 수치·순서·타이밍은 건드리지 않음)
+    // 적이 행동할 때 공격 모션을 재생 (전투 수치와 순서는 건드리지 않고, 재생한 모션의 길이만 적에게 알려 턴 연출이 모션이 끝나길 기다리게 함)
     // 애벌레는 모든 행동에 같은 모션, 수호자는 일반 공격에만 공격 모션(강공격은 폭발 연출이라 공격 모션을 쓰지 않음), 여왕은 일반 공격·수정 증식 능력·회전 금지 능력에 각각 다른 모션
     // 수호자의 능력 사용(보호막 생성)·강공격 준비·강공격(폭발)·스턴 연출은 GuardianShieldView 가 담당
     private void PlayAttack(EnemyActionKind kind)
     {
         Animator animator = null; // 이번 행동에 재생할 애니메이터 (모션이 없으면 null)
         int trigger = AttackTrigger; // 재생할 모션 트리거 (기본은 공격)
-        if (enemy.Tier == EnemyTier.Normal) animator = normalIdleAnimator; // 애벌레: 체력 공격과 능력 사용 모두 같은 모션
-        else if (enemy.Tier == EnemyTier.Epic && kind == EnemyActionKind.BasicAttack) animator = epicIdleAnimator; // 수호자: 일반 공격만
-        else if (enemy.Tier == EnemyTier.Boss && kind == EnemyActionKind.QueenGrowth) { animator = bossIdleAnimator; trigger = SkillTrigger; } // 여왕: 수정 증식 능력일 때는 왕관 연출
-        else if (enemy.Tier == EnemyTier.Boss && kind == EnemyActionKind.QueenRotationLock) { animator = bossIdleAnimator; trigger = RotLockTrigger; } // 여왕: 회전 금지 능력일 때는 회전 룬과 자물쇠 연출
-        else if (enemy.Tier == EnemyTier.Boss && kind == EnemyActionKind.BasicAttack) animator = bossIdleAnimator; // 여왕: 체력 공격(일반 공격)일 때만
+        float seconds = 0f; // 이번 모션의 길이 (턴 연출이 이만큼 기다림)
+        if (enemy.Tier == EnemyTier.Normal) { animator = normalIdleAnimator; seconds = LarvaAttackSeconds; } // 애벌레: 체력 공격과 능력 사용 모두 같은 모션
+        else if (enemy.Tier == EnemyTier.Epic && kind == EnemyActionKind.BasicAttack) { animator = epicIdleAnimator; seconds = SentinelAttackSeconds; } // 수호자: 일반 공격만
+        else if (enemy.Tier == EnemyTier.Boss && kind == EnemyActionKind.QueenGrowth) { animator = bossIdleAnimator; trigger = SkillTrigger; seconds = QueenMotionSeconds; } // 여왕: 수정 증식 능력일 때는 왕관 연출
+        else if (enemy.Tier == EnemyTier.Boss && kind == EnemyActionKind.QueenRotationLock) { animator = bossIdleAnimator; trigger = RotLockTrigger; seconds = QueenMotionSeconds; } // 여왕: 회전 금지 능력일 때는 회전 룬과 자물쇠 연출
+        else if (enemy.Tier == EnemyTier.Boss && kind == EnemyActionKind.BasicAttack) { animator = bossIdleAnimator; seconds = QueenMotionSeconds; } // 여왕: 체력 공격(일반 공격)일 때만
         if (animator == null || !animator.gameObject.activeInHierarchy) return; // 모션이 없거나 숨겨진 상태(사망 등)에서는 재생하지 않음
         animator.SetTrigger(trigger); // Idle에서 공격으로 넘어가고, 끝나면 스스로 Idle로 돌아옴
+        enemy.ReportMotion(seconds); // 모션을 실제로 재생한 때만 길이를 알림 (턴 연출이 모션이 끝날 때까지 기다림)
     }
 
     // 월드 좌표 텍스트를 자식으로 생성 (기존 라벨들과 같은 방식)

@@ -13,6 +13,9 @@ public class GuardianShieldView : MonoBehaviour
     private const float FillAlphaGain = 0.80f; // 충전 100%에서 면 알파에 더해지는 양 (합쳐서 1.0)
     private const float RimAlphaBase = 0.60f; // 충전 0%일 때 테두리 알파
     private const float RimAlphaGain = 0.40f; // 충전 100%에서 테두리 알파에 더해지는 양 (합쳐서 1.0)
+    private const float CastSeconds = 0.6f; // 보호막 생성 모션(AmethystSentinel_ShieldCast) 길이
+    private const float ExplodeSeconds = 1.01f; // 폭발 모션(AmethystSentinel_ShieldExplode) 길이
+    private const float RecoverSeconds = 0.35f; // 스턴에서 일어서는 모션(AmethystSentinel_ShieldRecover) 길이
 
     private static readonly int CastTrigger = Animator.StringToHash("ShieldCast"); // 웅크리며 보호막 생성 모션 트리거
     private static readonly int ExplodeTrigger = Animator.StringToHash("ShieldExplode"); // 폭발 후 복귀 모션 트리거
@@ -47,16 +50,22 @@ public class GuardianShieldView : MonoBehaviour
     // 적이 행동하는 순간: 능력 사용이면 보호막 생성 모션, 강공격이면 폭발 모션 (이 알림은 피해 계산보다 먼저 오며 여기서는 아무것도 바꾸지 않음)
     private void OnActed(EnemyActionKind kind)
     {
-        if (stunned && !enemy.IsStunned) EndStun(); // 스턴이 이번 행동 직전에 끝났으면 먼저 일어서게 함 (같은 적 턴의 행동 알림은 상태 갱신 알림보다 먼저 와서, 이어지는 능력 사용이 스턴 중으로 오해되지 않게)
+        if (stunned && !enemy.IsStunned) // 스턴이 이번 행동에서 끝남 (스턴에서 일어서는 행동 알림이 상태 갱신 알림보다 먼저 옴)
+        {
+            EndStun(); // 별이 사라지고 일어서는 모션
+            if (kind == EnemyActionKind.StunRecovery) enemy.ReportMotion(RecoverSeconds); // 이 행동은 공격하지 않고, 턴 연출이 일어서는 모션이 끝날 때까지 기다림
+        }
         if (kind == EnemyActionKind.Skill && !shieldUp && !stunned) // 이미 서 있는 보호막이나 스턴 중에는 새로 시작하지 않음
         {
             shieldUp = true; // 보호막 생성 시작
             animator.SetTrigger(CastTrigger); // 웅크림 + 보호막이 바닥 룬 선에서 자라남
+            enemy.ReportMotion(CastSeconds); // 턴 연출이 이 모션이 끝날 때까지 기다림
         }
         else if (kind == EnemyActionKind.StrongAttack && shieldUp) // 기한 안에 못 깨서 강공격 = 폭발
         {
             shieldUp = false; // 보호막이 폭발로 사라짐
             animator.SetTrigger(ExplodeTrigger); // 불투명 → 부풀어 오름 → 조각과 빛으로 퍼짐 → 기본 자세로 복귀
+            enemy.ReportMotion(ExplodeSeconds); // 턴 연출이 이 모션이 끝날 때까지 기다림
         }
     }
 
@@ -93,7 +102,7 @@ public class GuardianShieldView : MonoBehaviour
     private void ApplyDensity()
     {
         CombatManager combat = CombatManager.Instance; // 가방 진행도를 읽을 전투 매니저
-        if (combat == null || enemy.ChargeActionsTotal <= 0) return; // 읽을 수 없으면 그대로 둠
+        if (combat == null || combat.IsTurnSequenceRunning || enemy.ChargeActionsTotal <= 0) return; // 읽을 수 없거나 정산 연출 중이면 그대로 둠 (가방 진행도와 기한이 따로 바뀌어 중간값이 튀므로, 연출이 끝난 뒤 최종 상태로 한 번에 갱신)
 
         int perBag = combat.PiecesPerBag; // 한 가방의 조각 수
         int total = enemy.ChargeActionsTotal * perBag; // 강공격까지 허용되는 고정 수

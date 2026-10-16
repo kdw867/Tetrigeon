@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +12,8 @@ public class CombatManager : MonoBehaviour
     public static event Action<bool> OnCombatEnded; // 전투 종료 알림 (true = 플레이어 승리)
     public static event Action<int> OnStageCleared; // 스테이지 클리어 알림 (보상 처리용, 스테이지 번호 전달)
     public static event Action OnStageStarted; // 다음 스테이지가 준비된 직후, 첫 조각이 나오기 전의 알림 (시작 카운트다운용)
-    public static event Action OnPlayerAttack; // 가방 정산에서 타겟이 피해를 받을 때 알림 (레미 공격 모션용, 보이는 연출 전용이라 피해·순서·타이밍에는 관여하지 않음)
+    public static event Action OnPlayerAttack; // 가방 정산에서 타겟이 피해를 받을 때 알림 (레미 공격 모션용, 모션이 끝나면 피해가 들어감)
+    public static event Action<bool> OnTurnSequenceChanged; // 정산 연출(레미 공격 → 몬스터 행동 모션)이 시작(true)·끝(false)날 때 알림 (연출 동안 새 조각을 내보내지 않기 위함)
 
     [SerializeField] private int stageNumber = 1; // 진행할 스테이지 번호 (지도 구현 전까지 여기서 지정)
     [SerializeField] private int playerMaxHp = 100; // 플레이어 최대 체력
@@ -34,6 +36,7 @@ public class CombatManager : MonoBehaviour
     private const int CriticalBonusPerLevel = 1; // 치명타 Lv.1 기준 추가 피해 배수 (Lv.1 = 2배)
     private const int ShieldMultiplier = 2; // 보호막 배율 (Lv.1 기준)
     private const int HealMultiplier = 1; // 회복 배율을 Lv.1 기준 1배로 적용
+    private const float PlayerAttackSeconds = 1.29f; // 레미 공격 모션(Lemy_CoreRelease)의 길이 (클립 길이와 같아야 함)
 
     public int PlayerHp { get; private set; } // 현재 플레이어 체력
     public int PlayerShield { get; private set; } // 남아있는 보호막 (체력보다 먼저 깎임)
@@ -42,6 +45,7 @@ public class CombatManager : MonoBehaviour
     public int PendingDamage { get; private set; } // 이번 가방에서 누적된 피해 (아직 미적용)
     public int PiecesLeftInBag => piecesPerBag - piecesPlaced; // 이번 턴에 남은 조각 수
     public int PiecesPerBag => piecesPerBag; // 한 턴(가방)의 조각 수 (보호막 농도 표시가 충전 진행도를 계산할 때 읽음)
+    public bool IsTurnSequenceRunning => turnSequenceActive; // 정산 연출 중인지 (보호막 농도처럼 연출이 끝난 뒤 한 번에 갱신할 표시가 읽음)
     public IReadOnlyList<Enemy> Enemies => enemies; // UI가 읽을 적 목록
     public Enemy Target => targetIndex >= 0 && targetIndex < enemies.Count && enemies[targetIndex].IsAlive ? enemies[targetIndex] : null; // 현재 타겟 (죽은 적은 타겟이 되지 않음)
 
@@ -50,6 +54,7 @@ public class CombatManager : MonoBehaviour
     private int piecesPlaced; // 이번 가방에서 배치한 조각 수
     private bool combatEnded; // 승패가 이미 결정됐는지
     private bool stageCleared; // 스테이지 완료 처리가 이미 실행됐는지 (중복 방지)
+    private bool turnSequenceActive; // 정산 연출(레미 공격 → 몬스터 행동 모션)이 진행 중인지
 
     // 강화 미노 능력으로 이번 가방에 쌓인 효과들 (기존 피해와 같이 가방 끝에 한 번에 정산)
     private int pendingPierceDamage; // I: 살아있는 적 전체에게 줄 피해
@@ -82,6 +87,11 @@ public class CombatManager : MonoBehaviour
 
     private int shieldTurnsLeft; // 보호막 남은 턴
 
+    private void Start()
+    {
+        Instantiate(Resources.Load<GameObject>("Audio/P_GameplayBgm"), transform, false); // 게임 시작에만 생성하여 스테이지 사이에도 BGM 반복 유지
+    }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -113,6 +123,7 @@ public class CombatManager : MonoBehaviour
     {
         if (combatEnded || stageCleared) return; // 전투가 끝났으면 타겟 변경도 막음
         if (PauseMenu.IsGamePaused) return; // 일시정지 중에는 타겟 변경도 막음
+        if (turnSequenceActive) return; // 정산 연출 중에는 타겟 변경도 막음
         if (Input.GetKeyDown(KeyCode.Tab)) CycleTarget(); // Tab으로 오른쪽 적에게 타겟 이동
     }
 
@@ -361,12 +372,30 @@ public class CombatManager : MonoBehaviour
 
     private void EndPlayerTurn()
     {
+        SetTurnSequence(true); // 이 호출 뒤에 이어지는 조각 생성도 연출이 끝날 때까지 보류되도록 먼저 알림
+        StartCoroutine(TurnSequence()); // 레미 공격 → 정산 → 몬스터 행동을 차례대로 진행
+    }
+
+    // 정산 연출의 시작과 끝을 알림 (PieceSpawner 가 새 조각 생성을 미뤘다가 끝나면 내보냄)
+    private void SetTurnSequence(bool active)
+    {
+        turnSequenceActive = active; // 연출 진행 여부 기록
+        OnTurnSequenceChanged?.Invoke(active); // 조각 생성 담당에게 알림
+    }
+
+    // 한 턴의 순서: 레미 공격 모션 → (모션이 끝나면) 플레이어 쪽 정산 → 몬스터가 왼쪽부터 차례로 모션과 행동
+    // 연출 동안에는 새 조각이 나오지 않아 테트리스가 멈춰 있다. 모션 시간은 일시정지 중에는 흐르지 않음
+    private IEnumerator TurnSequence()
+    {
         Enemy target = Target;
-        if (target != null && target.IsAlive)
+        if (target != null && target.IsAlive && PendingDamage > 0)
         {
-            if (PendingDamage > 0) OnPlayerAttack?.Invoke(); // 타겟이 피해를 받는 정산이면 레미 공격 연출 (피해 적용 전에 알리기만 함)
-            DealDamage(target, PendingDamage); // 누적 피해는 타겟 한 마리에게만, 초과분은 소멸
+            OnPlayerAttack?.Invoke(); // 타겟이 피해를 받는 정산이면 레미 공격 모션 시작
+            yield return new WaitForSeconds(PlayerAttackSeconds); // 모션이 끝난 뒤에 피해가 들어감
         }
+
+        if (target != null && target.IsAlive)
+            DealDamage(target, PendingDamage); // 누적 피해는 타겟 한 마리에게만, 초과분은 소멸
 
         ReleaseFreezes(); // 지난 정산에서 건 빙결을 해제하고 파괴 피해 적용 (이번 정산의 새 빙결보다 먼저)
         ResolveUpgradedAbilities(target); // 강화 능력 효과도 같은 시점에 정산
@@ -376,14 +405,15 @@ public class CombatManager : MonoBehaviour
         piecesPlaced = 0;
 
         MoveTargetToLivingEnemy(); // 타겟이 죽었으면 살아있는 적으로 옮김
+        OnStateChanged?.Invoke(); // 피해가 들어간 순간 체력·누적 피해 표시 갱신
 
         if (IsStageComplete())
-        {
-            CompleteStage(); // 모든 적(보스전은 보스) 처치 시에만 완료 처리
-            return;
-        }
+            CompleteStage(); // 모든 적(보스전은 보스) 처치 시에만 완료 처리, 몬스터 행동 없이 끝남
+        else
+            yield return EnemyPhase(); // 몬스터가 왼쪽부터 차례로 행동
 
-        EnemyTurn();
+        SetTurnSequence(false); // 연출이 끝났으니 새 조각 생성을 다시 허용 (스테이지 완료·패배면 조각이 나오지 않음)
+        OnStateChanged?.Invoke(); // 최종 상태로 표시 갱신 (보호막 농도처럼 연출 중 미뤄둔 표시 포함)
     }
 
     // 빙결 해제: 예정된 행동을 모두 차단한 적만 해제하고 파괴 피해를 한 번 준다.
@@ -494,10 +524,11 @@ public class CombatManager : MonoBehaviour
         OnStateChanged?.Invoke();
     }
 
-    private void EnemyTurn()
+    // 몬스터 행동: 살아있는 적이 왼쪽부터 한 마리씩 (독 피해 → 행동 모션 → 모션이 끝나면 그 적의 체력 공격이 들어감)
+    // 방해 줄·갉아먹기·소환·여왕 능력은 "줄 구멍 공유, 갉아먹기 먼저" 같은 기존 규칙이 한 번에 처리하는 것을 전제로 하므로 마지막 모션이 끝난 뒤 기존 순서대로 한 번에 적용
+    private IEnumerator EnemyPhase()
     {
         int garbageLines = 0; // 이번 턴에 능력을 쓴 적들의 방해 줄 합계
-        int hpDamage = 0; // 이번 턴에 체력 공격을 한 적들의 피해 합계
 
         bool bossSummons = false; // 이번 턴에 보스가 능력을 썼는지 (소환은 루프가 끝난 뒤 처리)
         int gnawCount = 0; // 이번 턴에 능력을 쓴 애벌레 수 (한 마리당 1칸)
@@ -508,16 +539,26 @@ public class CombatManager : MonoBehaviour
         {
             if (!enemy.IsAlive) continue; // 죽은 적은 행동하지 않음
 
-            DealDamage(enemy, enemy.TickPoison()); // 독은 행동 전에 먼저 적용 (이번 정산에 새로 걸린 독은 건너뜀)
+            int poisonDamage = enemy.TickPoison(); // 독은 행동 전에 먼저 적용 (이번 정산에 새로 걸린 독은 건너뜀)
+            DealDamage(enemy, poisonDamage);
+            if (poisonDamage > 0) OnStateChanged?.Invoke(); // 독 피해를 이 적의 차례에 바로 표시
             if (!enemy.IsAlive) continue; // 독으로 죽었으면 행동하지 않음
 
             bool frozen = enemy.ConsumeFreezeBlock(); // 빙결 횟수가 남았으면 소비
             bool stunned = enemy.ConsumeStun(); // 스턴도 같은 행동에서 함께 소비 (겹쳐도 합산하지 않음)
-            if (frozen || stunned) continue; // 빙결·스턴인 적은 이번 행동을 쉼 (스킬 카운터와 강공격 기한도 그대로)
+            if (stunned && enemy.RecoveringFromStun) // 스턴에서 일어서는 행동: 일어서는 모션만 하고 이 턴을 씀 (공격하지 않음)
+            {
+                enemy.NotifyRecovery(); // 일어서는 모션을 연출에 알림
+                if (enemy.MotionSeconds > 0f)
+                    yield return new WaitForSeconds(enemy.MotionSeconds); // 일어서는 모션이 끝날 때까지 기다림
+                OnStateChanged?.Invoke(); // 스턴 표시 제거
+            }
+            if (frozen || stunned) continue; // 빙결·스턴인 적은 이번 행동을 쉼 (스킬 카운터와 강공격 기한도 그대로, 일어서는 모션 말고는 모션 없음)
 
             bool skillTurn = enemy.AdvanceTurnAndCheckSkill(); // 이번 행동이 능력 사용인지 (능력 카운터는 이전과 같은 순서로 한 번만 진행)
-            enemy.NotifyAction(skillTurn); // 이 적이 실제로 행동하는 순간을 연출에 알림 (일반 공격·능력 사용·강공격 준비·강공격을 구분해서 전달, 피해량·순서·타이밍은 그대로)
+            enemy.NotifyAction(skillTurn); // 이 적이 실제로 행동하는 순간을 연출에 알림 (일반 공격·능력 사용·강공격 준비·강공격을 구분해서 전달, 모션이 있으면 연출이 enemy.MotionSeconds 에 길이를 남김)
 
+            int hpHit = 0; // 이 적이 이번 행동으로 플레이어 체력에 주는 피해
             if (skillTurn)
             {
                 garbageLines += enemy.RollGarbageLines(); // 능력 턴인 적은 방해 줄만 추가
@@ -531,9 +572,25 @@ public class CombatManager : MonoBehaviour
                 }
             }
             else if (enemy.ChargeActionsLeft > 0)
-                hpDamage += enemy.AdvanceCharge(); // 준비 중인 수호자는 일반 공격 대신 기한을 세고, 기한이 되면 강공격
+                hpHit = enemy.AdvanceCharge(); // 준비 중인 수호자는 일반 공격 대신 기한을 세고, 기한이 되면 강공격
             else
-                hpDamage += enemy.AttackDamage; // 나머지 적은 체력 공격만
+                hpHit = enemy.AttackDamage; // 나머지 적은 체력 공격만
+
+            if (enemy.MotionSeconds > 0f)
+                yield return new WaitForSeconds(enemy.MotionSeconds); // 이 적의 모션이 끝날 때까지 기다림 (다음 적은 그 뒤에 행동)
+
+            if (hpHit > 0)
+            {
+                PlayerHp -= AbsorbWithShield(hpHit); // 보호막이 있으면 먼저 막아주고 남은 피해만 체력에 적용
+                if (PlayerHp <= 0)
+                {
+                    PlayerHp = 0;
+                    EndCombat(false); // 플레이어 체력 0 이하면 패배 (뒤에 남은 적은 행동하지 않음)
+                    yield break;
+                }
+            }
+
+            OnStateChanged?.Invoke(); // 이 적 행동의 결과(체력·스킬 카운터·강공격 기한) 표시 갱신
         }
 
         if (bossSummons) SummonNormal(); // 소환된 적이 같은 턴에 바로 행동하지 않도록 루프 종료 후 처리
@@ -545,26 +602,12 @@ public class CombatManager : MonoBehaviour
         if (queenGrows) BagManager.Instance.GrowPreview(); // NEXT에 보이는 미노 전부에 칸 1개씩
         if (queenLocksRotation) BagManager.Instance.LockNextRotation(); // 발동 직후 새로 나올 미노 다음의 NEXT 2개 회전 금지
 
-        hpDamage = AbsorbWithShield(hpDamage); // 보호막이 있으면 먼저 막아줌
-        PlayerHp -= hpDamage; // 남은 피해만 체력에 적용
         TickShield(); // 보호막 지속 턴 감소
-
-        if (PlayerHp <= 0)
-        {
-            PlayerHp = 0;
-            EndCombat(false); // 플레이어 체력 0 이하면 패배
-            return;
-        }
 
         MoveTargetToLivingEnemy(); // 독·빙결 피해로 타겟이 죽었을 수 있음
 
         if (IsStageComplete())
-        {
             CompleteStage(); // 독·빙결 피해로 전멸한 경우도 스테이지 완료 처리
-            return;
-        }
-
-        OnStateChanged?.Invoke();
     }
 
     // 보호막이 피해를 먼저 흡수하고, 흡수한 만큼 줄어든다

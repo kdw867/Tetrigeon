@@ -1,5 +1,5 @@
 ﻿# TETRIGEON — TURN-BASED TETRIS ROGUELIKE
-Design notes | 2026-09-14 (code sync: 2026-10-01; crystal-cell design update: 2026-10-02; monster skill design update: 2026-10-06; crystal cells implemented: 2026-10-06; healing balance: 2026-10-06; exit to title: 2026-10-06; reward cards: 2026-10-06; no reward after the boss: 2026-10-07; HP bars: 2026-10-07; skill counter: 2026-10-07; stage panel removed: 2026-10-07; stage board: 2026-10-07; board effects: 2026-10-08; start countdown: 2026-10-08; Caterpillar attack motion: 2026-10-12; Queen attack motion: 2026-10-12; Guardian attack motion: 2026-10-12; Queen growth skill motion: 2026-10-13; Queen rotation lock targets: 2026-10-14; Queen rotation lock skill motion: 2026-10-14; Guardian shield skill motion: 2026-10-16; Lemy attack motion: 2026-10-16)
+Design notes | 2026-09-14 (code sync: 2026-10-01; crystal-cell design update: 2026-10-02; monster skill design update: 2026-10-06; crystal cells implemented: 2026-10-06; healing balance: 2026-10-06; exit to title: 2026-10-06; reward cards: 2026-10-06; no reward after the boss: 2026-10-07; HP bars: 2026-10-07; skill counter: 2026-10-07; stage panel removed: 2026-10-07; stage board: 2026-10-07; board effects: 2026-10-08; start countdown: 2026-10-08; Caterpillar attack motion: 2026-10-12; Queen attack motion: 2026-10-12; Guardian attack motion: 2026-10-12; Queen growth skill motion: 2026-10-13; Queen rotation lock targets: 2026-10-14; Queen rotation lock skill motion: 2026-10-14; Guardian shield skill motion: 2026-10-16; Lemy attack motion: 2026-10-16; turn sequence: 2026-10-16; Guardian stun recovery turn: 2026-10-16)
 
 Status: Core rules describe the intended direction. Recommendations, examples,
 and undecided details are not commitments. Based on prior discussion and the
@@ -38,7 +38,9 @@ small; defer complex branches and events.
 Standard pieces: I, J, L, O, S, T, Z. Each bag contains one of each, shuffled.
 One player turn uses all seven pieces: turn starts -> place seven -> resolve
 player damage from the lines cleared during that bag -> enemy turn -> next bag.
-Enemies act after a bag, not after each piece.
+Enemies act after a bag, not after each piece. Since 2026-10-16 the end of a bag is a
+sequence (Lemy's attack motion, then each monster's motion from the leftmost) during which
+the board is frozen; see "Turn sequence" in section 7.
 Implemented turn counting (2026-10-01): a player turn ends after 7 actual Locks.
 Hold swaps are not Locks, so a held piece can carry over and the turn boundary
 can drift from the 7-bag boundary; the piece queue itself never resets mid-stage.
@@ -241,10 +243,10 @@ upgrade abilities (section 7). Special pieces are not implemented.
 
 ### Lemy attack motion "Core Release" (2026-10-16, motion specified by the user, applied on the instruction "apply" after two preview rounds; implemented)
 - When it plays: on a bag settlement where the targeted enemy takes damage (the bag's accumulated damage is above 0 and
-  the target is alive), including a Top Out forced settlement. It does not play when the accumulated damage is 0. Visual
-  only: `CombatManager.OnPlayerAttack` is raised right before the damage is applied and nothing else changes; damage, enemy
-  order, skill counters and timing are unchanged, nothing waits for it and it never pauses the game (the damage applies the
-  moment the bag ends, the motion takes 1.28 s; pause and game over stop it, like Idle).
+  the target is alive), including a Top Out forced settlement. It does not play when the accumulated damage is 0.
+  `CombatManager.OnPlayerAttack` is raised when the turn sequence starts; since 2026-10-16 (section 7, "Turn sequence")
+  the sequence waits for the motion (1.29 s) and the damage and the other player-side settlement apply when it ends,
+  while the board is frozen; damage values, enemy order and skill counters are unchanged (pause stops it, like Idle).
 - Motion (1.28 s, stepped poses): Lemy squashes slightly (the torso is compressed vertically by about 7 % with the feet fixed,
   so the head and arms follow the shoulder line instead of sinking into the body) and opens both arms (0.12-0.26 s); the chest
   core lights up in four stages while eight symmetric light clumps gather into it, the torso breathing in (0.26-0.64 s); at
@@ -272,8 +274,8 @@ upgrade abilities (section 7). Special pieces are not implemented.
 - Checked in play mode through the real settlement path: a bag with 0 damage raises no event, a bag with 3 damage raises it once
   (the target loses exactly 3), the animator goes Idle -> Attack (1.28 s) -> Idle, and the 17 frames match the approved preview
   (0 differing pixels in the rest, bolt and fade frames, at most 28 pixels with a colour difference up to 59 in the glint frames).
-- Limits: the bolt is short and disappears before the enemies; the damage numbers change immediately while the motion plays for
-  1.28 s; Lemy's Idle blink and bobbing pause during the motion; not hand-played.
+- Limits: the bolt is short and disappears before the enemies although the damage now lands when the motion ends (a bolt
+  that reaches the target is not made); Lemy's Idle blink and bobbing pause during the motion; not hand-played.
 
 ### Target selection with multiple enemies (2026-09-17)
 When a stage holds several enemies the player picks which one to attack.
@@ -319,6 +321,57 @@ this does not trigger Top Out.
 Enemy HP and basic attack damage are fixed within each tier, regardless of stage.
 Initial enemy HP and basic attack damage are listed below; final balance is TBD.
 
+### Turn sequence (2026-10-16, requested by the user; implemented)
+The end of a bag is now a visible sequence instead of one instant:
+1. The player's turn ends (the 7th Lock, or the Top Out forced settlement).
+2. Lemy's attack motion plays (1.29 s) when the targeted enemy would take damage (accumulated damage above 0 and the
+   target alive); with no damage there is no motion and no wait. When it ends the player-side settlement applies exactly
+   as before and in the same order: damage to the target, freeze release, then the upgraded-mino abilities (pierce,
+   explosion, poison, freeze, heal, shield). If that kills every enemy (or the boss) the stage is cleared right there,
+   after the whole motion, and the enemies do not act.
+3. Each living enemy then acts one at a time from the leftmost position to the right. Its poison ticks first (the
+   damage is shown at once; an enemy killed by poison does not act). A frozen or stunned enemy is skipped with no motion
+   and no wait, except a Guardian standing up from a stun: it plays its 0.35 s recover motion, the sequence waits
+   for it and it does not attack. Otherwise its action motion plays and, when the motion ends, its HP attack hits the player (the player
+   shield absorbs first and the HP bar changes then). If the player reaches 0 HP combat ends there and the enemies to
+   the right do not act.
+4. After the last motion everything that is rolled for the whole enemy turn is applied at once in the old order (boss
+   summon, Caterpillar gnaw, all Garbage with one shared hole column, Queen growth / rotation lock), then the player
+   shield timer ticks, a dead target is replaced and the stage-clear check runs. These board and NEXT effects stay batched
+   on purpose: the confirmed rules (one shared Garbage hole per activation, gnawing before Garbage) depend on it, so their
+   motions play in the enemy's own slot but the board changes after the last motion.
+- Motion lengths are the clip lengths: Lemy 1.29 s; Caterpillar 0.625 s (every action); Guardian 1.25 s basic attack,
+  0.6 s shield cast, 1.01 s explosion (strong attack), 0.35 s stun recovery; Queen 0.94 s (attack, growth, rotation lock). Actions without a
+  motion (the Guardian counting down its charge) do not wait. Each view reports the length it really played through
+  `Enemy.ReportMotion` (the Lemy length is a constant in `CombatManager`), so the sequence waits exactly as long as the
+  motion that played. A turn with three enemies takes about 3.8 s (tunable through those constants).
+- Play is frozen during the sequence: no new piece is spawned (the piece after the 7th Lock is deferred and the NEXT
+  queue does not advance), so gravity, movement, rotation, Hold and hard drop have nothing to act on and key presses do
+  nothing; the Tab target switch is ignored too. Pausing stops the sequence timer and the motions together and resuming
+  continues them. When the sequence ends the deferred piece is spawned exactly once (never on a stage-clear or defeat).
+  A Top Out waits for the sequence to finish before starting its new bag, so the Queen effects reach the old bag exactly
+  as before.
+- Implementation: `CombatManager.EndPlayerTurn` starts the coroutine `TurnSequence` (player phase), which runs
+  `EnemyPhase` (the old `EnemyTurn` body with a wait after each acting enemy and the HP damage applied per enemy). The
+  static event `CombatManager.OnTurnSequenceChanged(bool)` makes `PieceSpawner` defer and release `SpawnNext`.
+  `Enemy.MotionSeconds` / `Enemy.ReportMotion` carry the motion length from `EnemyView` and `GuardianShieldView`.
+  `GuardianShieldView` skips the shield density update while the sequence runs and updates once at its end, because the
+  bag progress and the charge deadline change at different moments inside the sequence (the density would jump).
+- Checked in play mode through the real Lock path (hard drop of the 7th piece) on stages 1, 2, 3, 5, 6 and 10 and a
+  Top Out: on stage 6 Lemy's motion starts at 0 s and the damage lands at 1.30 s, the three enemy motions start at
+  1.30 / 1.94 / 2.58 s and the player's HP drops after each of them (98 / 96 / 93), the sequence ends at 3.84 s and the
+  next piece appears once; no piece exists during the sequence; a frozen enemy and a dead enemy are skipped without
+  waiting; poison ticks before the motion; a skill turn on stage 5 applies its Garbage and gnaw only after the last
+  motion; the stage clears once at 1.30 s with no new piece and time stopped; defeat after the first enemy's hit ends
+  combat without the others acting; a Top Out spawns exactly one piece after its sequence; pausing for 100 frames kept the
+  time and every value still and resuming finished the sequence with no early piece; the clip lengths match the constants
+  (the Guardian cast / explosion clips are 0.6 s / 1.01 s, so the constants use those); the console stayed empty.
+- Limits: real key presses were not injected (the freeze relies on no piece existing, which was checked); Lemy's bolt is
+  still short and ends before the enemies although the damage now lands when its motion ends (a bolt that reaches the
+  target is not made); Garbage, gnaw and the Queen effects appear after the last monster's motion rather than at their
+  own monster's slot; the Guardian shield-break (melt) reaction does not wait, so play can resume while the
+  melt is still playing; not hand-played.
+
 ### Monster skill update (2026-10-06, confirmed and implemented)
 KEEP Garbage alongside the new monster skills; new skills do not replace it.
 Each new skill fires together with that monster's Garbage on the SAME skill
@@ -329,7 +382,8 @@ and new skill alike) and leaves the skill counter unchanged. Existing boss
 summon and escort rules remain in place.
 Implemented within-turn order: each living enemy left to right as before
 (poison -> skip if dead -> freeze/stun -> skill or attack), then boss summon ->
-Caterpillar gnaw -> all Garbage at once -> Queen skill -> HP damage.
+Caterpillar gnaw -> all Garbage at once -> Queen skill. Since 2026-10-16 each enemy's HP damage
+lands at the end of its own motion instead of last (see "Turn sequence").
 
 | Monster | Skill | Outcome |
 | --- | --- | --- |
@@ -353,10 +407,10 @@ Caterpillar gnaw -> all Garbage at once -> Queen skill -> HP damage.
 - Attack motion (2026-10-12, confirmed after a preview review, implemented): a 10-frame, 0.625 s
   (16 FPS) motion plays on the Crystal Caterpillar (normal tier, boss-summoned ones too) every time it
   really acts on an enemy turn: both its basic HP attack and its skill (gnaw + Garbage), with the same motion for both (confirmed 2026-10-12: the Guardian and the Queen get separate basic-attack and skill motions instead). It does not
-  play when the action is blocked (frozen or stunned) or when the Caterpillar is dead. It is visual only:
-  damage, enemy order, skill counters and timing are unchanged, nothing waits for it and it never pauses
-  the game (the HP damage and the gnaw still apply the moment the enemy turn runs; the strike frame comes
-  about 0.31 s after that, and syncing the two is not done yet).
+  play when the action is blocked (frozen or stunned) or when the Caterpillar is dead. Damage, enemy order and skill
+  counters are unchanged; since 2026-10-16 (section 7, "Turn sequence") the sequence waits for the whole 0.625 s motion
+  and the HP damage lands when it ends, while the gnaw and Garbage apply after the last monster's motion (the strike
+  frame, about 0.31 s into the motion, is not synced to the damage).
   - Motion: the head and both bodies pull back and bunch together (the head sinks 1 px), thrust fast toward
     screen left (toward Lemy) head first with the bodies following in a chain, hit the strike pose (frame 06:
     head 5 px, middle body 3 px and rear body 1 px forward, segments at most 2 px apart), recoil and return.
@@ -386,7 +440,11 @@ Caterpillar gnaw -> all Garbage at once -> Queen skill -> HP damage.
 - Breaking the shield cancels the strong attack and stuns the Guardian for 1
   action. If poison breaks it at the start of the deadline turn, the attack is
   cancelled and that same action is the stunned one.
-- Frozen or stunned actions advance neither the charge nor the skill counter.
+- Standing up from the stun costs one more action (2026-10-16): the Guardian's next action after the
+  stunned one is spent standing up (the 0.35 s recover motion; no attack, no skill, no counter change, the
+  `스턴` label goes away then) and only the action after that is a normal one. So a break costs the
+  Guardian two actions in total.
+- Frozen, stunned or standing-up actions advance neither the charge nor the skill counter.
   Overlapping freeze and stun each lose one per blocked action (no stacking).
 - The skill counter keeps advancing during the charge (charge 2 < interval 5).
 - UI under the HP text: `보호막 n`, `강공격 n` (actions left), and `스턴`, shown
@@ -397,9 +455,9 @@ Caterpillar gnaw -> all Garbage at once -> Queen skill -> HP damage.
   (it also played for the strong attack until 2026-10-16, when the strong attack became the shield explosion below).
   It does not play on its skill turn (shield + charge start), on the charging actions that only count the deadline
   down, on the strong attack, when the action is blocked by freeze or stun, or when it is dead; those are covered by
-  the shield skill motion below. Visual only: damage, enemy order,
-  skill counters and timing are unchanged, nothing waits for it and it never pauses the game (the damage applies
-  the moment the enemy turn runs; the strike frame comes 0.83 s after that, and syncing the two is not done).
+  the shield skill motion below. Damage, enemy order and skill counters are unchanged; since 2026-10-16 (section 7,
+  "Turn sequence") the sequence waits for the whole 1.25 s motion and the HP damage lands when it ends (the strike
+  frame, 0.83 s into the motion, is not synced to the damage).
   - Motion (the last version shown to the user, t2): the crystal arm is pulled back behind the body to the upper
     right, a cyan/purple energy charge builds at the arm tip (0.28-0.71 s, three growing stages), the arm sweeps
     down in front of the body and thrusts toward screen left (toward Lemy) at 0.83 s with a burst effect at the
@@ -421,9 +479,10 @@ Caterpillar gnaw -> all Garbage at once -> Queen skill -> HP damage.
   shield-density and branch GIF previews; implemented): the Amethyst Guardian / Sentinel crouches and builds a
   translucent purple crystal dome when it uses its skill, the dome gets denser with every real piece lock, and then it
   either explodes (the deadline ran out) or melts away (the shield was broken in time) and the Guardian is stunned.
-  Visual only: the shield value (5), the charge deadline (2 Guardian actions), the stun (1 action), the damage, the
-  enemy order, the skill counters and the timing are unchanged; nothing waits for the motion and it never pauses the
-  game. The real damage of the strong attack is still applied exactly once by the existing enemy turn (9, the player
+  The shield value (5), the charge deadline (2 Guardian actions), the stun (1 action), the damage, the enemy order
+  and the skill counters are unchanged; since 2026-10-16 (section 7, "Turn sequence") the sequence waits for the cast
+  (0.6 s) and explosion (1.01 s) motions and the strong attack's damage lands when the explosion ends, while the melt
+  reaction does not wait (the stand-up is the Guardian's own action and waits). The real damage of the strong attack is still applied exactly once by the existing enemy turn (9, the player
   shield absorbs first); no animation event deals damage. Lemy has no hit reaction in the game yet, so nothing is
   linked to the explosion; its peak (the flash frame, 0.24 s after the explosion starts) is recorded as the proposed
   hit time for when Lemy gets one.
@@ -436,8 +495,9 @@ Caterpillar gnaw -> all Garbage at once -> Queen skill -> HP damage.
     from the top with angular pixel drops falling down and a puddle on the ground that evaporates; the Guardian
     slumps into a limp crouch halfway through) -> the limp crouch is held while `Enemy.IsStunned` with three yellow
     stars (5x5-dot front star, 3x3-dot back star, short tails) orbiting above the head in a 0.84 s loop -> when the
-    stun ends the stars disappear and the Guardian stands up in 0.34 s. If the stun ends on the same enemy turn as an
-    action, the queued `Attack` motion (basic attack) plays right after standing up.
+    stun ends the stars disappear and the Guardian stands up in 0.34 s. Since 2026-10-16 the stun ends on the
+    Guardian's stand-up action, which is spent standing up (it does not attack); the turn sequence waits for the
+    0.35 s motion, and the next action is the first normal one.
   - Density (charge progress, 0-1): `((ChargeActionsTotal - ChargeActionsLeft) * piecesPerBag + piecesPlaced) /
     (ChargeActionsTotal * piecesPerBag)`, read from the state, not counted by events; the shield value does not
     change it. The Guardian allows 14 real locks from the shield creation to the explosion (2 bags of 7; the lock that
@@ -516,10 +576,10 @@ Caterpillar gnaw -> all Garbage at once -> Queen skill -> HP damage.
 - Attack motion (2026-10-12, confirmed after preview reviews, implemented): a 0.94 s motion plays on the
   Crystal Queen only when she makes her basic HP attack on an enemy turn. It does not play on her skill turns
   (growth / rotation lock), when the action is blocked by freeze or stun, or when she is dead. Her growth skill
-  and her rotation-lock skill have their own motions (next bullets). It is visual only: damage, enemy
-  order, skill counters and timing are unchanged, nothing waits for it and it never pauses the game (the HP
-  damage applies the moment the enemy turn runs; the first crystal flash comes 0.72 s after that, which is the
-  proposed representative hit time, and syncing the two is not done yet).
+  and her rotation-lock skill have their own motions (next bullets). Damage, enemy order and skill counters are
+  unchanged; since 2026-10-16 (section 7, "Turn sequence") the sequence waits for the whole 0.94 s motion and the HP
+  damage lands when it ends (the first crystal flash, 0.72 s into the motion, is the proposed representative hit time
+  and is not synced to the damage).
   - Sequence (17 steps in 10 ms multiples, total 0.94 s): both hands rise and come together in front of the solar
     plexus with a 2 px gap between them while the whole body leans back 5 degrees; a small magic spark appears
     between the hands and grows while three small purple crystals form behind her back; the arms thrust forward
@@ -545,9 +605,10 @@ Caterpillar gnaw -> all Garbage at once -> Queen skill -> HP damage.
 - Growth skill motion (2026-10-13, confirmed after preview reviews, implemented): a 0.94 s motion plays on the
   Crystal Queen only on the turns where she uses her crystal growth skill (the skill that adds one cell to every mino
   in NEXT). It does not play on her rotation-lock turns (that skill has its own motion, below), on her basic attack
-  turns (those keep the basic attack motion), when the action is blocked by freeze or stun, or when she is dead. It is
-  visual only: the growth itself, damage, enemy order, skill counters and timing are unchanged, nothing waits for it
-  and it never pauses the game. The moment the crown bursts (0.62 s after the action starts) is recorded as the
+  turns (those keep the basic attack motion), when the action is blocked by freeze or stun, or when she is dead. The
+  growth itself, damage, enemy order and skill counters are unchanged; since 2026-10-16 (section 7, "Turn sequence")
+  the sequence waits for the whole 0.94 s motion and the real growth is applied after the last monster's motion. The
+  moment the crown bursts (0.62 s after the action starts) is recorded as the
   proposed skill trigger time; syncing the real growth to it is not done.
   - Look: the body motion is exactly the basic attack motion (same 8 body sprites, same timing, same lean), only the
     effect layer is different. The crystal projectiles are gone. The hand magic uses the same positions and sizes as
@@ -575,8 +636,9 @@ Caterpillar gnaw -> all Garbage at once -> Queen skill -> HP damage.
   Crystal Queen only on the turns where she uses her rotation lock skill (the skill that seals the two NEXT minos after
   the one that appears right away). It does not play on her growth turns (those keep the growth motion), on her basic
   attack turns (those keep the basic attack motion), when the action is blocked by freeze or stun, or when she is dead.
-  It is visual only: the lock itself (`BagManager.LockNextRotation`), damage, enemy order, skill counters and timing are
-  unchanged, nothing waits for it and it never pauses the game. The moment the lock closes and the rune stops (0.62 s
+  The lock itself (`BagManager.LockNextRotation`), damage, enemy order and skill counters are unchanged; since
+  2026-10-16 (section 7, "Turn sequence") the sequence waits for the whole 0.94 s motion and the real lock is applied
+  after the last monster's motion. The moment the lock closes and the rune stops (0.62 s
   after the action starts) is recorded as the proposed skill trigger time; syncing the real lock to it is not done.
   - Look: the body motion is exactly the basic attack / growth motion (same 8 body sprites, same timing, same lean), only
     the effect layer is different. The hand magic uses the same positions and sizes as the other two motions but in blue
@@ -909,8 +971,8 @@ pierce, heal, shield) -> stage completion check -> enemy turn.
   release. Its number is how many more enemy actions it will block; after the
   last block it shows no number until the release.
 - Enemy-turn order (implemented): each living enemy, left to right: poison damage
-  -> skip if dead -> skip its action if a freeze block or stun remains (skill counter
-  unchanged) -> Garbage skill (+ new monster skill) or HP attack. Then boss summon,
+  -> skip if dead -> skip its action if a freeze block or stun remains, including the stand-up action
+  after a stun (skill counter unchanged) -> Garbage skill (+ new monster skill) or HP attack. Then boss summon,
   Caterpillar gnaw, all Garbage lines at once, Queen skill (2026-10-06),
   HP damage absorbed by the shield first, shield duration tick, defeat
   check, and stage completion check.
@@ -940,6 +1002,7 @@ Confirmed Top Out sequence (2026-09-17):
 3. End the player's turn immediately and pass to the enemy turn. Line-clear
    damage accumulated earlier in that bag still resolves; the Top Out removal
    itself contributes none. Enemy Garbage lands on the freshly emptied board.
+   Since 2026-10-16 this settlement runs as the turn sequence (section 7); step 4 starts when it ends.
 4. Reset the bag: discard the current bag's remaining pieces, generate a new
    seven-bag, and empty the Hold slot. Preserve Hold charges and partial recharge
    progress (confirmed 2026-09-18). The next turn starts from that state.
@@ -1044,3 +1107,11 @@ Verify and report:
 - Every stage 1-10 spawns the lineup in section 7 (stage 9 is now combat);
   unapproved reward/map content is not invented.
 Report changed files, compilation/test results, and anything not verified.
+
+
+### Piece control sounds (2026-10-16)
+Successful horizontal moves play the short stone click; blocked moves and vertical drops are silent. Queen rotation-locked attempts play the seal rejection sound; ordinary collision-based rotation failures are silent. PieceAudio on P_Piece uses one 2D AudioSource, no auto-play or looping. Same-frame repeated moves (ARR 0) are coalesced; new playback replaces rather than stacks sounds. Successful clockwise, counterclockwise and 180-degree rotations play the stone turn sound. Failed ordinary rotations remain silent; sealed rotations play only the rejection sound.
+
+
+### Gameplay BGM (2026-10-16)
+Crystal Cavern Groove plays on a looping 2D AudioSource instantiated once under CombatManager from Audio/P_GameplayBgm. Stage changes and rewards keep playback running; returning to the title destroys the scene-owned source. Source volume is 0.3, with existing global audio volume applied. The original MP3 is preserved; this enables repetition without editing the musical loop seam.

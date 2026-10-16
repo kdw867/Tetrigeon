@@ -13,6 +13,11 @@ public class PieceSpawner : MonoBehaviour
     public static event Action<TetrominoType?> OnHoldChanged; // Hold 슬롯 내용 바뀔 때 알림 (UI 연결용)
     public static event Action<int, int> OnHoldChargesChanged; // 남은 충전량, 충전 진행도 바뀔 때 알림 (코어 UI용)
 
+    public static event Action<bool, int> OnLandingAudio; // 하드드롭 여부와 삭제 줄 수 알림
+    public static event Action OnHoldSucceeded; // 실제 홀드 성공 알림
+    public static event Action OnHoldRejected; // 충전 부족 또는 같은 조각 재홀드 알림
+    public static event Action OnHoldRecharged; // Lock으로 충전 하나 회복 알림
+
     [SerializeField] private Piece piecePrefab;
     [SerializeField] private float lockDelay = 0.5f; // 착지 후 고정까지 유예 시간
     [SerializeField] private float topOutRowDelay = 0.15f; // Top Out 한 줄 지울 때마다 딜레이 (눈에 보이게)
@@ -33,6 +38,8 @@ public class PieceSpawner : MonoBehaviour
     private bool combatEnded; // 전투가 끝나 더 이상 조각을 내보내지 않는 상태인지
     private bool inputEnabled = true; // 보상 화면·일시정지로 조작이 막혀 있는지
     private bool countdownActive; // 시작 카운트다운 중이라 첫 조각을 내보내지 않는 상태인지 (일시정지·재개와 별개로 유지됨)
+    private bool turnSequenceActive; // 정산 연출(레미 공격 → 몬스터 행동 모션) 중이라 새 조각을 내보내지 않는 상태인지
+    private bool spawnDeferred; // 정산 연출 중에 미뤄둔 새 조각이 있는지 (연출이 끝나면 정확히 한 번 내보냄)
     private int holdCharges; // 남은 홀드 충전량 (룬 점등 개수)
     private int rechargeProgress; // 다음 충전까지 쌓인 Lock 횟수
 
@@ -54,11 +61,13 @@ public class PieceSpawner : MonoBehaviour
         rechargeProgress = 0; // 스테이지 진입 시 진행도는 0
 
         CombatManager.OnCombatEnded += HandleCombatEnded; // 전투 끝나면 조작을 막기 위해 구독
+        CombatManager.OnTurnSequenceChanged += HandleTurnSequenceChanged; // 정산 연출 동안 새 조각을 미루기 위해 구독
     }
 
     private void OnDestroy()
     {
         CombatManager.OnCombatEnded -= HandleCombatEnded; // 이벤트 구독 해제
+        CombatManager.OnTurnSequenceChanged -= HandleTurnSequenceChanged;
     }
 
     // 일시정지용 입력 차단/해제 (Update는 timeScale 0에서도 계속 돌기 때문에 따로 막아야 함)
@@ -91,8 +100,18 @@ public class PieceSpawner : MonoBehaviour
             currentPiece.enabled = false; // 낙하 중인 조각의 이동·회전 입력 중단 (블록은 화면에 그대로 유지)
     }
 
+    // 정산 연출 동안 새 조각을 막고, 끝나면 미뤄둔 조각을 내보냄 (조각이 없으니 이동·회전·Hold·하드드롭·낙하·LOCK이 모두 실제로 일어나지 않음)
+    private void HandleTurnSequenceChanged(bool active)
+    {
+        turnSequenceActive = active; // 연출 진행 여부 기록
+        if (active || !spawnDeferred) return; // 시작이거나 미뤄둔 조각이 없으면 할 일 없음 (Top Out 은 자기 코루틴이 새 가방으로 이어감)
+        spawnDeferred = false; // 미뤄둔 조각은 한 번만 내보냄
+        SpawnNext(); // 연출이 끝난 순간 다음 턴의 조각 시작 (전투 종료·보상 화면이면 SpawnNext 가 스스로 막음)
+    }
+
     private void Start()
     {
+        Instantiate(Resources.Load<GameObject>("Audio/P_BoardActionAudio"), transform, false); // 조각이 사라져도 효과음 유지
         SpawnNext();
     }
 
@@ -106,8 +125,8 @@ public class PieceSpawner : MonoBehaviour
             return;
         }
 
-        if (!holdUsed && holdCharges > 0 && (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.LeftShift)))
-            SwapHold(); // 충전이 남아있을 때만 홀드 (0개면 보관 미노도 현재 미노도 건드리지 않음)
+        if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.LeftShift))
+            SwapHold(); // 성공 또는 사용 불가 알림은 실제 홀드 처리에서 결정
     }
 
     private void LateUpdate()
@@ -133,6 +152,11 @@ public class PieceSpawner : MonoBehaviour
     private void SpawnNext()
     {
         if (combatEnded || !inputEnabled || countdownActive) return; // 전투 종료·보상 화면·시작 카운트다운 중에는 새 조각을 내보내지 않음
+        if (turnSequenceActive) // 정산 연출 중에는 조각을 내보내지 않고 끝난 뒤로 미룸
+        {
+            spawnDeferred = true; // 연출이 끝나면 내보낼 조각이 있음
+            return;
+        }
 
         holdUsed = false; // 새 조각이니 Hold 다시 사용 가능
 
@@ -159,6 +183,7 @@ public class PieceSpawner : MonoBehaviour
         GridManager.Instance.ClearAllBlocks(); // 칸 정보에 안 잡힌 블록까지 남김없이 정리
 
         OnTopOut?.Invoke(); // 보드를 다 비운 뒤 알림 (HP 페널티 + 턴 종료 + 적 턴의 방해 줄이 빈 보드 위에 쌓이도록)
+        while (turnSequenceActive) yield return null; // Top Out 으로 시작된 정산 연출이 끝난 뒤에 새 가방으로 (여왕 능력 등이 이전과 같은 순서로 이번 가방에 먼저 적용됨)
 
         BagManager.Instance.ResetBag(); // 남은 조각 버리고 새 가방으로
         ClearHold(); // Hold 슬롯 비우기
@@ -204,7 +229,12 @@ public class PieceSpawner : MonoBehaviour
 
     private void SwapHold()
     {
-        if (!isActiveAndEnabled || combatEnded || currentPiece == null || holdUsed || holdCharges <= 0) return; // 모든 호출 경로에서 실패한 홀드는 상태를 바꾸지 않음
+        if (!isActiveAndEnabled || !inputEnabled || countdownActive || turnSequenceActive || combatEnded || currentPiece == null) return; // 조작 차단 중에는 소리도 내지 않음
+        if (holdUsed || holdCharges <= 0) // 홀드 사용 조건 실패
+        {
+            OnHoldRejected?.Invoke(); // 실패음만 재생하고 상태 유지
+            return; // 교환 중단
+        }
         MinoState current = currentPiece.Mino; // 지금 조각 상태 기억 (증식 칸·회전 금지 유지)
         Destroy(currentPiece.gameObject); // 지금 조각은 그리드에 등록 없이 바로 제거 (고정 아님)
 
@@ -218,6 +248,7 @@ public class PieceSpawner : MonoBehaviour
         OnHoldChargesChanged?.Invoke(holdCharges, rechargeProgress); // 룬 표시 갱신
 
         OnHoldChanged?.Invoke(HeldType);
+        OnHoldSucceeded?.Invoke(); // 실제 교환 완료 효과음
     }
 
     // 실제 Lock 1회를 충전 진행도에 반영 (가득 찬 상태에서는 진행도를 쌓지 않음)
@@ -230,6 +261,7 @@ public class PieceSpawner : MonoBehaviour
         {
             rechargeProgress = 0; // 진행도를 0으로 되돌리고
             holdCharges++; // 충전 1개 회복
+            OnHoldRecharged?.Invoke(); // 초기 충전과 구분되는 회복 효과음
         }
 
         OnHoldChargesChanged?.Invoke(holdCharges, rechargeProgress); // 룬·진행도 표시 갱신
@@ -238,10 +270,10 @@ public class PieceSpawner : MonoBehaviour
     private void HardDrop()
     {
         while (currentPiece.TryMove(Vector2Int.down)) { }
-        Lock();
+        Lock(true); // 하드드롭은 일반 고정음 대신 전용음 사용
     }
 
-    private void Lock()
+    private void Lock(bool hardDrop = false) // 고정 경로의 소리 구분
     {
         TSpinType tSpin = EvaluateTSpin(currentPiece); // 줄 지우기 전, 고정 시점 보드 상태로 T스핀 판정
         TetrominoType lockedType = currentPiece.Type; // 조각이 사라지기 전에 종류를 기억 (강화 능력은 방금 고정한 조각 기준)
@@ -269,6 +301,7 @@ public class PieceSpawner : MonoBehaviour
         List<TetrominoType> clearedCrystals = new List<TetrominoType>(); // 이번에 지워진 수정 칸의 원본 종류 (칸마다 하나)
         int clearedLines = GridManager.Instance.ClearLines(clearedCrystals, clearedRows, clearedCrystalCells); // 꽉 찬 줄 정리 (연출용 줄·수정 칸 좌표도 함께 기록)
 
+        OnLandingAudio?.Invoke(hardDrop, clearedLines); // 정산 연출 전에 고정·삭제 효과음 알림
         OnPieceLocked?.Invoke(lockedType, tSpin, clearedLines, clearedCrystals);
         OnLockVisual?.Invoke(lockedCells, clearedRows, clearedCrystalCells, clearedCrystals); // 규칙 처리가 끝난 뒤 연출만 알림 (여기서 아무것도 바꾸지 않음)
 
