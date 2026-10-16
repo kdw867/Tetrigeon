@@ -1,0 +1,617 @@
+{
+ "ppu": 75.6,
+ "body": {
+  "file": "T_AmethystSentinel_Shield.png",
+  "width": 576,
+  "height": 104,
+  "sprites": [
+   {
+    "name": "AmethystSentinel_Shield_stand",
+    "file": "Sentinel_stand.png",
+    "x": 0,
+    "y": 0,
+    "w": 144,
+    "h": 104,
+    "pivot": [
+     0.5,
+     0.09615384615384616
+    ]
+   },
+   {
+    "name": "AmethystSentinel_Shield_mid",
+    "file": "Sentinel_mid.png",
+    "x": 144,
+    "y": 0,
+    "w": 144,
+    "h": 104,
+    "pivot": [
+     0.5,
+     0.09615384615384616
+    ]
+   },
+   {
+    "name": "AmethystSentinel_Shield_hold",
+    "file": "Sentinel_hold.png",
+    "x": 288,
+    "y": 0,
+    "w": 144,
+    "h": 104,
+    "pivot": [
+     0.5,
+     0.09615384615384616
+    ]
+   },
+   {
+    "name": "AmethystSentinel_Shield_stun",
+    "file": "Sentinel_stun.png",
+    "x": 432,
+    "y": 0,
+    "w": 144,
+    "h": 104,
+    "pivot": [
+     0.5,
+     0.09615384615384616
+    ]
+   }
+  ]
+ },
+ "fx": {
+  "file": "T_AmethystSentinel_ShieldFx.png",
+  "width": 1664,
+  "height": 816,
+  "sprites": [
+   {
+    "name": "ShieldFx_fill",
+    "file": "fx_layer_fill.png",
+    "x": 0,
+    "y": 680,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_rim",
+    "file": "fx_layer_rim.png",
+    "x": 208,
+    "y": 680,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_create_0",
+    "file": "fx_create_0.png",
+    "x": 416,
+    "y": 680,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_create_1",
+    "file": "fx_create_1.png",
+    "x": 624,
+    "y": 680,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_create_2",
+    "file": "fx_create_2.png",
+    "x": 832,
+    "y": 680,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_create_3",
+    "file": "fx_create_3.png",
+    "x": 1040,
+    "y": 680,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_create_4",
+    "file": "fx_create_4.png",
+    "x": 1248,
+    "y": 680,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_create_5",
+    "file": "fx_create_5.png",
+    "x": 1456,
+    "y": 680,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_create_6",
+    "file": "fx_create_6.png",
+    "x": 0,
+    "y": 544,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_explode_0",
+    "file": "fx_explode_X0.png",
+    "x": 208,
+    "y": 544,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_explode_1",
+    "file": "fx_explode_X1.png",
+    "x": 416,
+    "y": 544,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_explode_2",
+    "file": "fx_explode_X2.png",
+    "x": 624,
+    "y": 544,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_explode_3",
+    "file": "fx_explode_X3.png",
+    "x": 832,
+    "y": 544,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_explode_4",
+    "file": "fx_explode_X4.png",
+    "x": 1040,
+    "y": 544,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_explode_5",
+    "file": "fx_explode_X5.png",
+    "x": 1248,
+    "y": 544,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_explode_6",
+    "file": "fx_explode_X6.png",
+    "x": 1456,
+    "y": 544,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_explode_7",
+    "file": "fx_explode_X7.png",
+    "x": 0,
+    "y": 408,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_explode_8",
+    "file": "fx_explode_X8.png",
+    "x": 208,
+    "y": 408,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_explode_9",
+    "file": "fx_explode_X9.png",
+    "x": 416,
+    "y": 408,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_break_0",
+    "file": "fx_break_M0.png",
+    "x": 624,
+    "y": 408,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_break_1",
+    "file": "fx_break_M1.png",
+    "x": 832,
+    "y": 408,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_break_2",
+    "file": "fx_break_M2.png",
+    "x": 1040,
+    "y": 408,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_melt_00",
+    "file": "fx_melt_00.png",
+    "x": 1248,
+    "y": 408,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_melt_01",
+    "file": "fx_melt_01.png",
+    "x": 1456,
+    "y": 408,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_melt_02",
+    "file": "fx_melt_02.png",
+    "x": 0,
+    "y": 272,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_melt_03",
+    "file": "fx_melt_03.png",
+    "x": 208,
+    "y": 272,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_melt_04",
+    "file": "fx_melt_04.png",
+    "x": 416,
+    "y": 272,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_melt_05",
+    "file": "fx_melt_05.png",
+    "x": 624,
+    "y": 272,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_melt_06",
+    "file": "fx_melt_06.png",
+    "x": 832,
+    "y": 272,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_melt_07",
+    "file": "fx_melt_07.png",
+    "x": 1040,
+    "y": 272,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_melt_08",
+    "file": "fx_melt_08.png",
+    "x": 1248,
+    "y": 272,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_melt_09",
+    "file": "fx_melt_09.png",
+    "x": 1456,
+    "y": 272,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_melt_10",
+    "file": "fx_melt_10.png",
+    "x": 0,
+    "y": 136,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_melt_11",
+    "file": "fx_melt_11.png",
+    "x": 208,
+    "y": 136,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_stars_00",
+    "file": "fx_stars_00.png",
+    "x": 416,
+    "y": 136,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_stars_01",
+    "file": "fx_stars_01.png",
+    "x": 624,
+    "y": 136,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_stars_02",
+    "file": "fx_stars_02.png",
+    "x": 832,
+    "y": 136,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_stars_03",
+    "file": "fx_stars_03.png",
+    "x": 1040,
+    "y": 136,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_stars_04",
+    "file": "fx_stars_04.png",
+    "x": 1248,
+    "y": 136,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_stars_05",
+    "file": "fx_stars_05.png",
+    "x": 1456,
+    "y": 136,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_stars_06",
+    "file": "fx_stars_06.png",
+    "x": 0,
+    "y": 0,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_stars_07",
+    "file": "fx_stars_07.png",
+    "x": 208,
+    "y": 0,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_stars_08",
+    "file": "fx_stars_08.png",
+    "x": 416,
+    "y": 0,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_stars_09",
+    "file": "fx_stars_09.png",
+    "x": 624,
+    "y": 0,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_stars_10",
+    "file": "fx_stars_10.png",
+    "x": 832,
+    "y": 0,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   },
+   {
+    "name": "ShieldFx_stars_11",
+    "file": "fx_stars_11.png",
+    "x": 1040,
+    "y": 0,
+    "w": 208,
+    "h": 136,
+    "pivot": [
+     0.5,
+     0.07352941176470588
+    ]
+   }
+  ]
+ }
+}

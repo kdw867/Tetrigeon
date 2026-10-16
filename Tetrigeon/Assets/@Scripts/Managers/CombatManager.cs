@@ -11,6 +11,7 @@ public class CombatManager : MonoBehaviour
     public static event Action<bool> OnCombatEnded; // 전투 종료 알림 (true = 플레이어 승리)
     public static event Action<int> OnStageCleared; // 스테이지 클리어 알림 (보상 처리용, 스테이지 번호 전달)
     public static event Action OnStageStarted; // 다음 스테이지가 준비된 직후, 첫 조각이 나오기 전의 알림 (시작 카운트다운용)
+    public static event Action OnPlayerAttack; // 가방 정산에서 타겟이 피해를 받을 때 알림 (레미 공격 모션용, 보이는 연출 전용이라 피해·순서·타이밍에는 관여하지 않음)
 
     [SerializeField] private int stageNumber = 1; // 진행할 스테이지 번호 (지도 구현 전까지 여기서 지정)
     [SerializeField] private int playerMaxHp = 100; // 플레이어 최대 체력
@@ -40,6 +41,7 @@ public class CombatManager : MonoBehaviour
     public int StageNumber => stageNumber;
     public int PendingDamage { get; private set; } // 이번 가방에서 누적된 피해 (아직 미적용)
     public int PiecesLeftInBag => piecesPerBag - piecesPlaced; // 이번 턴에 남은 조각 수
+    public int PiecesPerBag => piecesPerBag; // 한 턴(가방)의 조각 수 (보호막 농도 표시가 충전 진행도를 계산할 때 읽음)
     public IReadOnlyList<Enemy> Enemies => enemies; // UI가 읽을 적 목록
     public Enemy Target => targetIndex >= 0 && targetIndex < enemies.Count && enemies[targetIndex].IsAlive ? enemies[targetIndex] : null; // 현재 타겟 (죽은 적은 타겟이 되지 않음)
 
@@ -361,7 +363,10 @@ public class CombatManager : MonoBehaviour
     {
         Enemy target = Target;
         if (target != null && target.IsAlive)
+        {
+            if (PendingDamage > 0) OnPlayerAttack?.Invoke(); // 타겟이 피해를 받는 정산이면 레미 공격 연출 (피해 적용 전에 알리기만 함)
             DealDamage(target, PendingDamage); // 누적 피해는 타겟 한 마리에게만, 초과분은 소멸
+        }
 
         ReleaseFreezes(); // 지난 정산에서 건 빙결을 해제하고 파괴 피해 적용 (이번 정산의 새 빙결보다 먼저)
         ResolveUpgradedAbilities(target); // 강화 능력 효과도 같은 시점에 정산

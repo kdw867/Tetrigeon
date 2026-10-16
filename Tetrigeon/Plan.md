@@ -1,5 +1,5 @@
 ﻿# TETRIGEON — TURN-BASED TETRIS ROGUELIKE
-Design notes | 2026-09-14 (code sync: 2026-10-01; crystal-cell design update: 2026-10-02; monster skill design update: 2026-10-06; crystal cells implemented: 2026-10-06; healing balance: 2026-10-06; exit to title: 2026-10-06; reward cards: 2026-10-06; no reward after the boss: 2026-10-07; HP bars: 2026-10-07; skill counter: 2026-10-07; stage panel removed: 2026-10-07; stage board: 2026-10-07; board effects: 2026-10-08; start countdown: 2026-10-08; Caterpillar attack motion: 2026-10-12; Queen attack motion: 2026-10-12; Guardian attack motion: 2026-10-12; Queen growth skill motion: 2026-10-13; Queen rotation lock targets: 2026-10-14; Queen rotation lock skill motion: 2026-10-14)
+Design notes | 2026-09-14 (code sync: 2026-10-01; crystal-cell design update: 2026-10-02; monster skill design update: 2026-10-06; crystal cells implemented: 2026-10-06; healing balance: 2026-10-06; exit to title: 2026-10-06; reward cards: 2026-10-06; no reward after the boss: 2026-10-07; HP bars: 2026-10-07; skill counter: 2026-10-07; stage panel removed: 2026-10-07; stage board: 2026-10-07; board effects: 2026-10-08; start countdown: 2026-10-08; Caterpillar attack motion: 2026-10-12; Queen attack motion: 2026-10-12; Guardian attack motion: 2026-10-12; Queen growth skill motion: 2026-10-13; Queen rotation lock targets: 2026-10-14; Queen rotation lock skill motion: 2026-10-14; Guardian shield skill motion: 2026-10-16; Lemy attack motion: 2026-10-16)
 
 Status: Core rules describe the intended direction. Recommendations, examples,
 and undecided details are not commitments. Based on prior discussion and the
@@ -239,6 +239,42 @@ candidates, separate from the basic attack rules.
 Implemented (2026-10-01): shield, healing, poison, and freeze exist only as mino
 upgrade abilities (section 7). Special pieces are not implemented.
 
+### Lemy attack motion "Core Release" (2026-10-16, motion specified by the user, applied on the instruction "apply" after two preview rounds; implemented)
+- When it plays: on a bag settlement where the targeted enemy takes damage (the bag's accumulated damage is above 0 and
+  the target is alive), including a Top Out forced settlement. It does not play when the accumulated damage is 0. Visual
+  only: `CombatManager.OnPlayerAttack` is raised right before the damage is applied and nothing else changes; damage, enemy
+  order, skill counters and timing are unchanged, nothing waits for it and it never pauses the game (the damage applies the
+  moment the bag ends, the motion takes 1.28 s; pause and game over stop it, like Idle).
+- Motion (1.28 s, stepped poses): Lemy squashes slightly (the torso is compressed vertically by about 7 % with the feet fixed,
+  so the head and arms follow the shoulder line instead of sinking into the body) and opens both arms (0.12-0.26 s); the chest
+  core lights up in four stages while eight symmetric light clumps gather into it, the torso breathing in (0.26-0.64 s); at
+  0.64 s a cross flash and a short magic bolt are released toward screen right, the torso stretches up, the head tilts 5
+  degrees to the right around the neck and the right arm pushes forward, then the torso settles back (0.64-0.84 s); the
+  bolt flies about 420 px to the right (the enemies are not reached) and scatters into a small cross (to 1.28 s); the pose
+  returns to Idle (blends 0.05 s in and out).
+- Art: Lemy's approved art is unchanged. The shoulder glints belong to the body sprite, so the arms were separated from them
+  by three derived sprites made in code from the approved ones (`BodyFeet_Open` without the shoulder glints, and the two arm
+  sprites with those glints moved onto them at their rest positions; identical to the originals in the rest pose). The
+  effects (core light, flash, bolt) are drawn in code in the lit chest core's colours (6 colours) on a 3-screen-pixel dot grid,
+  the same as Lemy's art. VARCO was not used (not connected in this session; the art was reused and the effects need
+  transparency, which VARCO cannot output). The chest core `Art` sprite is not touched: the glow is a separate layer above
+  it, so a later Hold-occupancy ON/OFF switch of the core does not conflict.
+- Implementation: new script `Visuals/LemyAttackView` on the `P_GolemIdle` root (subscribes to `CombatManager.OnPlayerAttack`
+  and fires the `Attack` trigger); the controller `GolemIdle` gained the trigger `Attack` and the state `Attack` (Idle -> Attack
+  on the trigger, back to Idle when it ends, 0.05 s blends); the clip `Lemy_CoreRelease` animates `BodyFeet` (sprite, position
+  y, scale y), `Head` (position, z rotation), both arms (sprite, position) and two new children of the prefab `P_GolemIdle`,
+  `CoreFx` and `Bolt` (SpriteRenderer, sorting order 5, empty by default). Every animated position carries x, y and z keys
+  because a partly animated position resets the missing components to 0 (found in the play check). The arms' sorting order is 1
+  so the arm sprites with the glints are drawn over the body (nothing overlaps in the rest pose, so Idle looks the same).
+  Assets in `@Resources/GolemAttack`: `T_Lemy_AttackParts` (324x191, 3 sprites, PPU 100) and `T_Lemy_AttackFx` (125x38, 9 sprites
+  of 25x19 dots, PPU 10.8 = 3 screen pixels per dot under Lemy's 0.3 scale), both with the same import settings as `T_GolemParts`,
+  and the clip. The older unused clip `GolemIdle/Lemy_Attack.anim` is left untouched.
+- Checked in play mode through the real settlement path: a bag with 0 damage raises no event, a bag with 3 damage raises it once
+  (the target loses exactly 3), the animator goes Idle -> Attack (1.28 s) -> Idle, and the 17 frames match the approved preview
+  (0 differing pixels in the rest, bolt and fade frames, at most 28 pixels with a colour difference up to 59 in the glint frames).
+- Limits: the bolt is short and disappears before the enemies; the damage numbers change immediately while the motion plays for
+  1.28 s; Lemy's Idle blink and bobbing pause during the motion; not hand-played.
+
 ### Target selection with multiple enemies (2026-09-17)
 When a stage holds several enemies the player picks which one to attack.
 - Tab cycles the target to the enemy on the right; from the rightmost enemy it
@@ -358,10 +394,10 @@ Caterpillar gnaw -> all Garbage at once -> Queen skill -> HP damage.
 
 - Attack motion (2026-10-12, applied provisionally on the instruction "apply the strong attack and the basic attack
   with the current one for now"): a 1.25 s motion plays on the Amethyst Guardian / Sentinel for its basic HP attack
-  and for its strong attack (the action where the charge deadline reaches 0). It does not play on its skill turn
-  (shield + charge start), on the charging actions that only count the deadline down, when the action is blocked
-  by freeze or stun, or when it is dead; the skill and charge motions are separate and not made yet, and the strong
-  attack will get its own motion later (it shares the basic-attack motion for now). Visual only: damage, enemy order,
+  (it also played for the strong attack until 2026-10-16, when the strong attack became the shield explosion below).
+  It does not play on its skill turn (shield + charge start), on the charging actions that only count the deadline
+  down, on the strong attack, when the action is blocked by freeze or stun, or when it is dead; those are covered by
+  the shield skill motion below. Visual only: damage, enemy order,
   skill counters and timing are unchanged, nothing waits for it and it never pauses the game (the damage applies
   the moment the enemy turn runs; the strike frame comes 0.83 s after that, and syncing the two is not done).
   - Motion (the last version shown to the user, t2): the crystal arm is pulled back behind the body to the upper
@@ -371,7 +407,7 @@ Caterpillar gnaw -> all Garbage at once -> Queen skill -> HP damage.
     (EditImage) and post-processed to the original palette; the effects are drawn in code (cyan and purple only).
   - Implementation: `Enemy.NotifyAction(skillTurn)` classifies each acting enemy as `EnemyActionKind` (`BasicAttack`,
     `Skill`, `Charging`, `StrongAttack`; new file `Data/EnemyActionKind.cs`) and raises `Enemy.Acted(kind)`;
-    `EnemyView.PlayAttack` fires the `Attack` trigger of the Epic Idle animator for `BasicAttack` and `StrongAttack`.
+    `EnemyView.PlayAttack` fires the `Attack` trigger of the Epic Idle animator for `BasicAttack` only (`StrongAttack` is the shield explosion since 2026-10-16).
     The controller `AmethystSentinel_Idle` gained the trigger and the state `Attack` (Idle -> Attack on the trigger,
     Attack -> Idle when it ends). The prefab `P_Enemy` got two children under `EpicIdle`: `EpicChargeFx` and
     `EpicBurstFx` (SpriteRenderer, sorting order 6, empty by default); the clip `AmethystSentinel_Attack` animates the
@@ -380,8 +416,64 @@ Caterpillar gnaw -> all Garbage at once -> Queen skill -> HP damage.
     `T_AmethystSentinel_AttackChargeFx` (336x168, 18 cells of 56x56), `T_AmethystSentinel_AttackBurstFx` (576x72,
     8 cells of 72x72), all PPU 75.6, Point filter, uncompressed (same as the Idle sheet), and the clip.
   - Limits: the pulled-back arm and its charge effect can overlap the neighbouring slot on the right (stage 10: the
-    Queen's slot), the time scale stops it (pause, game over), like Idle. The skill, charge and strong-attack-only
-    motions are still to be made.
+    Queen's slot), the time scale stops it (pause, game over), like Idle.
+- Shield skill motion (2026-10-16, applied on the instruction "apply the motion and the effects" after the key-pose,
+  shield-density and branch GIF previews; implemented): the Amethyst Guardian / Sentinel crouches and builds a
+  translucent purple crystal dome when it uses its skill, the dome gets denser with every real piece lock, and then it
+  either explodes (the deadline ran out) or melts away (the shield was broken in time) and the Guardian is stunned.
+  Visual only: the shield value (5), the charge deadline (2 Guardian actions), the stun (1 action), the damage, the
+  enemy order, the skill counters and the timing are unchanged; nothing waits for the motion and it never pauses the
+  game. The real damage of the strong attack is still applied exactly once by the existing enemy turn (9, the player
+  shield absorbs first); no animation event deals damage. Lemy has no hit reaction in the game yet, so nothing is
+  linked to the explosion; its peak (the flash frame, 0.24 s after the explosion starts) is recorded as the proposed
+  hit time for when Lemy gets one.
+  - Flow: skill turn (`EnemyActionKind.Skill`) -> 0.6 s crouch + shield growing from the base line (a rune line, then the
+    dome grows, a short flash, then it settles at the 0% look) -> the Guardian stays crouched and the dome stays at its
+    fixed size and position while only the opacity changes -> charge deadline reached (`StrongAttack`): a 1.0 s
+    explosion (opaque dome, two short expansion steps with cracks, a flash at 0.24 s, then 34 crystal fragments and 34
+    light particles burst outward and shrink; no body explosion and no extra attack motion) and the Guardian stands
+    back up to the Idle pose; or the shield breaks in time: a 1.03 s hit flash, cracks, chips and melt (the dome sinks
+    from the top with angular pixel drops falling down and a puddle on the ground that evaporates; the Guardian
+    slumps into a limp crouch halfway through) -> the limp crouch is held while `Enemy.IsStunned` with three yellow
+    stars (5x5-dot front star, 3x3-dot back star, short tails) orbiting above the head in a 0.84 s loop -> when the
+    stun ends the stars disappear and the Guardian stands up in 0.34 s. If the stun ends on the same enemy turn as an
+    action, the queued `Attack` motion (basic attack) plays right after standing up.
+  - Density (charge progress, 0-1): `((ChargeActionsTotal - ChargeActionsLeft) * piecesPerBag + piecesPlaced) /
+    (ChargeActionsTotal * piecesPerBag)`, read from the state, not counted by events; the shield value does not
+    change it. The Guardian allows 14 real locks from the shield creation to the explosion (2 bags of 7; the lock that
+    caused the creation is not counted; hold, move, rotate and hard-drop inputs are not counted), so one lock adds
+    exactly 1/14 and 25/50/75/100% are the 3.5th/7th/10.5th/14th lock. Opacity: dome fill 0.20 + 0.80 p, rim 0.60 +
+    0.40 p. Freeze or stun block the Guardian actions without advancing the deadline, so the display falls back to the
+    start of the current bag (it matches the real deadline); a Top Out settles an unfinished bag and the display jumps up.
+    No combat rule was changed for this.
+  - Cleared when: the Guardian dies (the Epic body object is turned off by `EnemyView`, which also resets the view
+    state), the stage changes (the enemy objects are destroyed), or a new shield starts (the density is recomputed).
+  - Implementation: new script `Visuals/GuardianShieldView` on the `EpicIdle` object; it subscribes to
+    `Enemy.Acted` (`Skill` -> `ShieldCast`, `StrongAttack` -> `ShieldExplode`) and to `CombatManager.OnStateChanged`
+    (density, shield broken -> `ShieldBreak`, stun ended -> `ShieldRecover`) and only reads enemy state. Two tiny
+    read-only properties were added: `Enemy.ChargeActionsTotal` and `CombatManager.PiecesPerBag`. `EnemyView.PlayAttack`
+    no longer plays the attack motion for the Guardian's `StrongAttack`. The controller `AmethystSentinel_Idle` gained
+    the triggers `ShieldCast`, `ShieldExplode`, `ShieldBreak`, `ShieldRecover` and the states `ShieldCast` (Idle ->),
+    `ShieldHold` (after the cast; loops the crouch), `ShieldExplode` (-> Idle), `ShieldBreak` (-> `StunHold`),
+    `StunHold` (loops; -> `ShieldRecover`), `ShieldRecover` (-> Idle); a cast that is interrupted by a break or an
+    explosion can leave `ShieldCast` at once. The prefab `P_Enemy` got four SpriteRenderer children under `EpicIdle`
+    (local position 0, sorting orders: `EpicShieldFill` 6, `EpicShieldRim` 7, `EpicShieldFx` 8, `EpicStunStars` 9; the body
+    is 5) and the script with the fill and rim references. The six clips animate the body and the four children;
+    the density only changes the colour alpha of the fill and rim children.
+  - Assets in `@Resources/Enemies/AmethystSentinelShield`: `T_AmethystSentinel_Shield` (576x104, 4 cells of 144x104: stand,
+    mid, hold, stun; pivot (0.5, 10/104), the same foot point as the Attack sheet), `T_AmethystSentinel_ShieldFx` (1664x816,
+    46 cells of 208x136, pivot (0.5, 10/136) so the foot points line up: fill and rim layers, 7 create, 10 explode, 3
+    break, 12 melt, 12 star frames), both PPU 75.6, Point filter, uncompressed (identical import settings to the Attack
+    sheet), and the clips `AmethystSentinel_ShieldCast` (0.59 s), `_ShieldHold` (loop), `_ShieldExplode` (1.0 s), `_ShieldBreak`
+    (1.02 s), `_StunHold` (0.84 s loop), `_ShieldRecover` (0.34 s).
+  - Art: the crouch, mid-crouch and limp poses are the approved Guardian art with its parts moved by whole dots (feet
+    and design unchanged: the same 22 colours, crystal layout and core) and the joint seams cleaned with VARCO
+    (EditImage, 3 of 13 generated images were used); the dome, explosion, break, melt and stars are drawn in code on the
+    same 2x2-pixel dot grid (VARCO has no transparent output). Everything stays inside x 1450-1697 and y 103-262 of the
+    stage 10 layout: it never covers the Caterpillar, the Queen, the target arrow or the HP bar (checked by numbers).
+  - Limits: translucent dome colours are blended at runtime, so only the opaque art keeps the exact palette; the
+    time scale stops it (pause, game over), like Idle; no hand-played check; the preview GIFs and the Unity render
+    sheets are in `SentinelShield_VARCO/output/Frames_v1` (outside Assets).
 #### Crystal Queen: growth / rotation-lock alternation (implemented 2026-10-06)
 - Alternates on each skill turn: growth -> rotation lock -> growth ... The first
   skill of every stage is growth (stage entry creates new enemies). A frozen or
@@ -450,7 +542,6 @@ Caterpillar gnaw -> all Garbage at once -> Queen skill -> HP damage.
     (0.5, 0.45), Point filter, uncompressed (same as the Idle sheet), and the clip.
   - Limits: the starburst in front of the hands can overlap the neighbouring slot's monster, the crystals form
     just inside the right screen edge of the boss slot, and the time scale stops it (pause, game over), like Idle.
-    The Guardian's skill and charge motions are still to be made.
 - Growth skill motion (2026-10-13, confirmed after preview reviews, implemented): a 0.94 s motion plays on the
   Crystal Queen only on the turns where she uses her crystal growth skill (the skill that adds one cell to every mino
   in NEXT). It does not play on her rotation-lock turns (that skill has its own motion, below), on her basic attack

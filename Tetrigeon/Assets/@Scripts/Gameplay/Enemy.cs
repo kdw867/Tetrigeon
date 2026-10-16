@@ -37,6 +37,7 @@ public class Enemy : MonoBehaviour
 
     public int Shield { get; private set; } // 수호자 보호막 (피해를 체력보다 먼저 받음)
     public int ChargeActionsLeft { get; private set; } // 강공격까지 남은 수호자 행동 수 (0이면 준비 중 아님)
+    public int ChargeActionsTotal => GuardianChargeActions; // 보호막 생성 후 강공격까지 전체 기한 (보호막 농도 표시가 충전 진행도를 계산할 때 읽음)
     public bool IsStunned => stunActionsLeft > 0 || stunnedLastAction; // 스턴 표시: 막을 행동이 남았거나 직전 행동을 스턴으로 쉼 (빙결 눈송이처럼 다음 행동 전까지 유지)
     private int stunActionsLeft; // 스턴으로 막을 행동 수
     private bool stunnedLastAction; // 직전 적 턴의 행동이 스턴으로 막혔는지

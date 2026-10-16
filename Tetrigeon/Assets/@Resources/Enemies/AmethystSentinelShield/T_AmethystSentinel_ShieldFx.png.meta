@@ -1,0 +1,2104 @@
+fileFormatVersion: 2
+guid: b08c0bd2f16d7c14e8db45979e84e847
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2450204187808767922
+    second: T_AmethystSentinel_ShieldFx_0
+  - first:
+      213: -7528360209379312269
+    second: T_AmethystSentinel_ShieldFx_1
+  - first:
+      213: -8180244750592898004
+    second: T_AmethystSentinel_ShieldFx_2
+  - first:
+      213: 1817961480608659525
+    second: T_AmethystSentinel_ShieldFx_3
+  - first:
+      213: 4235145970216093798
+    second: T_AmethystSentinel_ShieldFx_4
+  - first:
+      213: 3235351377109074527
+    second: T_AmethystSentinel_ShieldFx_5
+  - first:
+      213: -3699291462695568935
+    second: T_AmethystSentinel_ShieldFx_6
+  - first:
+      213: 2511031082314339473
+    second: T_AmethystSentinel_ShieldFx_7
+  - first:
+      213: -4230661928854841794
+    second: T_AmethystSentinel_ShieldFx_8
+  - first:
+      213: -6647124468233026560
+    second: T_AmethystSentinel_ShieldFx_9
+  - first:
+      213: -540777941233701977
+    second: T_AmethystSentinel_ShieldFx_10
+  - first:
+      213: 8421058792223036310
+    second: T_AmethystSentinel_ShieldFx_11
+  - first:
+      213: -1805561696554706809
+    second: T_AmethystSentinel_ShieldFx_12
+  - first:
+      213: -6839384140714620310
+    second: T_AmethystSentinel_ShieldFx_13
+  - first:
+      213: 2010472767591005626
+    second: T_AmethystSentinel_ShieldFx_14
+  - first:
+      213: -4047314986219575861
+    second: T_AmethystSentinel_ShieldFx_15
+  - first:
+      213: 2861307129647926787
+    second: T_AmethystSentinel_ShieldFx_16
+  - first:
+      213: 671196335271231926
+    second: T_AmethystSentinel_ShieldFx_17
+  - first:
+      213: -4546797095427487517
+    second: T_AmethystSentinel_ShieldFx_18
+  - first:
+      213: -4469786880629964190
+    second: T_AmethystSentinel_ShieldFx_19
+  - first:
+      213: -4996329949831691079
+    second: T_AmethystSentinel_ShieldFx_20
+  - first:
+      213: 8926285456222585280
+    second: T_AmethystSentinel_ShieldFx_21
+  - first:
+      213: 6630256215212326596
+    second: T_AmethystSentinel_ShieldFx_22
+  - first:
+      213: 4144866833904078285
+    second: T_AmethystSentinel_ShieldFx_23
+  - first:
+      213: -781490715554914219
+    second: T_AmethystSentinel_ShieldFx_24
+  - first:
+      213: -8697264919194317462
+    second: T_AmethystSentinel_ShieldFx_25
+  - first:
+      213: -5960829777246202739
+    second: T_AmethystSentinel_ShieldFx_26
+  - first:
+      213: 6084469013855042122
+    second: T_AmethystSentinel_ShieldFx_27
+  - first:
+      213: 1436329267997107333
+    second: T_AmethystSentinel_ShieldFx_28
+  - first:
+      213: 1346238154096629434
+    second: T_AmethystSentinel_ShieldFx_29
+  - first:
+      213: 5965678081352197876
+    second: T_AmethystSentinel_ShieldFx_30
+  - first:
+      213: -4305306336505459129
+    second: T_AmethystSentinel_ShieldFx_31
+  - first:
+      213: -8289218305303630315
+    second: T_AmethystSentinel_ShieldFx_32
+  - first:
+      213: -8199318589677213495
+    second: T_AmethystSentinel_ShieldFx_33
+  - first:
+      213: 6417307147463168886
+    second: T_AmethystSentinel_ShieldFx_34
+  - first:
+      213: -2375218505336252173
+    second: T_AmethystSentinel_ShieldFx_35
+  - first:
+      213: 6471583660440794758
+    second: T_AmethystSentinel_ShieldFx_36
+  - first:
+      213: 6104764686028415094
+    second: T_AmethystSentinel_ShieldFx_37
+  - first:
+      213: -3964703789742125018
+    second: T_AmethystSentinel_ShieldFx_38
+  - first:
+      213: -894986635220235047
+    second: T_AmethystSentinel_ShieldFx_39
+  - first:
+      213: -4051944627248507321
+    second: T_AmethystSentinel_ShieldFx_40
+  - first:
+      213: 5884092782417752571
+    second: T_AmethystSentinel_ShieldFx_41
+  - first:
+      213: 8459367165673117530
+    second: T_AmethystSentinel_ShieldFx_42
+  - first:
+      213: -8024925110129335744
+    second: T_AmethystSentinel_ShieldFx_43
+  - first:
+      213: 1551695772920210038
+    second: T_AmethystSentinel_ShieldFx_44
+  - first:
+      213: -3290480218853175748
+    second: T_AmethystSentinel_ShieldFx_45
+  - first:
+      213: 3611586278525318163
+    second: T_AmethystSentinel_ShieldFx_46
+  - first:
+      213: 5055177735781212816
+    second: T_AmethystSentinel_ShieldFx_47
+  - first:
+      213: -6811928370933585133
+    second: T_AmethystSentinel_ShieldFx_48
+  - first:
+      213: 7110524122666369152
+    second: T_AmethystSentinel_ShieldFx_49
+  - first:
+      213: -4362174504095274597
+    second: T_AmethystSentinel_ShieldFx_50
+  - first:
+      213: 242236383686675945
+    second: T_AmethystSentinel_ShieldFx_51
+  - first:
+      213: 4637730687687059150
+    second: T_AmethystSentinel_ShieldFx_52
+  - first:
+      213: -897074829870024974
+    second: T_AmethystSentinel_ShieldFx_53
+  - first:
+      213: 389434086150332796
+    second: T_AmethystSentinel_ShieldFx_54
+  - first:
+      213: 7516376524335437275
+    second: T_AmethystSentinel_ShieldFx_55
+  - first:
+      213: -3112724947633892020
+    second: T_AmethystSentinel_ShieldFx_56
+  - first:
+      213: -2048407418793959418
+    second: T_AmethystSentinel_ShieldFx_57
+  - first:
+      213: 6947148996627872164
+    second: T_AmethystSentinel_ShieldFx_58
+  - first:
+      213: -4179986024029115164
+    second: T_AmethystSentinel_ShieldFx_59
+  - first:
+      213: 8874953302615350417
+    second: T_AmethystSentinel_ShieldFx_60
+  - first:
+      213: -5543982519188695463
+    second: T_AmethystSentinel_ShieldFx_61
+  - first:
+      213: 5496882660873214377
+    second: T_AmethystSentinel_ShieldFx_62
+  - first:
+      213: 7224506815371898864
+    second: T_AmethystSentinel_ShieldFx_63
+  - first:
+      213: 4029230147882858330
+    second: T_AmethystSentinel_ShieldFx_64
+  - first:
+      213: 7811208581256053258
+    second: T_AmethystSentinel_ShieldFx_65
+  - first:
+      213: 4751943372450775971
+    second: T_AmethystSentinel_ShieldFx_66
+  - first:
+      213: 597486690683022684
+    second: T_AmethystSentinel_ShieldFx_67
+  - first:
+      213: 8046730465524180767
+    second: T_AmethystSentinel_ShieldFx_68
+  - first:
+      213: -1044523826284531692
+    second: T_AmethystSentinel_ShieldFx_69
+  - first:
+      213: 4472124671896113553
+    second: T_AmethystSentinel_ShieldFx_70
+  - first:
+      213: 7403175237757905785
+    second: T_AmethystSentinel_ShieldFx_71
+  - first:
+      213: -6877867703905598119
+    second: T_AmethystSentinel_ShieldFx_72
+  - first:
+      213: 8609486402698171785
+    second: T_AmethystSentinel_ShieldFx_73
+  - first:
+      213: 7952992892857477798
+    second: T_AmethystSentinel_ShieldFx_74
+  - first:
+      213: 819872259998975798
+    second: T_AmethystSentinel_ShieldFx_75
+  - first:
+      213: 7783063246611321777
+    second: T_AmethystSentinel_ShieldFx_76
+  - first:
+      213: 3301177804804781884
+    second: T_AmethystSentinel_ShieldFx_77
+  - first:
+      213: 2292414699510272894
+    second: T_AmethystSentinel_ShieldFx_78
+  - first:
+      213: -7205975246760666206
+    second: T_AmethystSentinel_ShieldFx_79
+  - first:
+      213: -6425204716812251246
+    second: T_AmethystSentinel_ShieldFx_80
+  - first:
+      213: 1667720576663066837
+    second: T_AmethystSentinel_ShieldFx_81
+  - first:
+      213: 7490563310139781812
+    second: T_AmethystSentinel_ShieldFx_82
+  - first:
+      213: -1241115498195788425
+    second: T_AmethystSentinel_ShieldFx_83
+  - first:
+      213: 8695603811308954018
+    second: T_AmethystSentinel_ShieldFx_84
+  - first:
+      213: -5574465576214452383
+    second: T_AmethystSentinel_ShieldFx_85
+  - first:
+      213: -4950373429012862273
+    second: T_AmethystSentinel_ShieldFx_86
+  - first:
+      213: -8019786512248203936
+    second: T_AmethystSentinel_ShieldFx_87
+  - first:
+      213: -3362967677957967101
+    second: T_AmethystSentinel_ShieldFx_88
+  - first:
+      213: 1395356699360480847
+    second: T_AmethystSentinel_ShieldFx_89
+  - first:
+      213: -8024222624511442057
+    second: T_AmethystSentinel_ShieldFx_90
+  - first:
+      213: 653379607908062283
+    second: T_AmethystSentinel_ShieldFx_91
+  - first:
+      213: -2748946554918881160
+    second: T_AmethystSentinel_ShieldFx_92
+  - first:
+      213: -5057623691887360080
+    second: T_AmethystSentinel_ShieldFx_93
+  - first:
+      213: 4796812680613870412
+    second: T_AmethystSentinel_ShieldFx_94
+  - first:
+      213: -6231329276351123918
+    second: T_AmethystSentinel_ShieldFx_95
+  - first:
+      213: 510101339805438829
+    second: T_AmethystSentinel_ShieldFx_96
+  - first:
+      213: 488296183104862383
+    second: T_AmethystSentinel_ShieldFx_97
+  - first:
+      213: 8803656774491824858
+    second: T_AmethystSentinel_ShieldFx_98
+  - first:
+      213: 6860340636418830337
+    second: T_AmethystSentinel_ShieldFx_99
+  - first:
+      213: -519732357563838607
+    second: T_AmethystSentinel_ShieldFx_100
+  - first:
+      213: 7504087778904673183
+    second: T_AmethystSentinel_ShieldFx_101
+  - first:
+      213: -153445428032667191
+    second: T_AmethystSentinel_ShieldFx_102
+  - first:
+      213: 4982746053474581492
+    second: T_AmethystSentinel_ShieldFx_103
+  - first:
+      213: 7220333028198127452
+    second: T_AmethystSentinel_ShieldFx_104
+  - first:
+      213: 4209416028715698935
+    second: T_AmethystSentinel_ShieldFx_105
+  - first:
+      213: -8280344520641871647
+    second: T_AmethystSentinel_ShieldFx_106
+  - first:
+      213: 6802660160848821788
+    second: T_AmethystSentinel_ShieldFx_107
+  - first:
+      213: -4017735255570002292
+    second: T_AmethystSentinel_ShieldFx_108
+  - first:
+      213: -8521786868214489631
+    second: T_AmethystSentinel_ShieldFx_109
+  - first:
+      213: 6675710455426789778
+    second: T_AmethystSentinel_ShieldFx_110
+  - first:
+      213: -8989642217430567251
+    second: T_AmethystSentinel_ShieldFx_111
+  - first:
+      213: 1837330484626725642
+    second: T_AmethystSentinel_ShieldFx_112
+  - first:
+      213: 7048837554432592030
+    second: T_AmethystSentinel_ShieldFx_113
+  - first:
+      213: -412363642575318942
+    second: T_AmethystSentinel_ShieldFx_114
+  - first:
+      213: -680243305757889160
+    second: T_AmethystSentinel_ShieldFx_115
+  - first:
+      213: 479386387726555239
+    second: T_AmethystSentinel_ShieldFx_116
+  - first:
+      213: -5096005727084544699
+    second: T_AmethystSentinel_ShieldFx_117
+  - first:
+      213: -994918935365582660
+    second: T_AmethystSentinel_ShieldFx_118
+  - first:
+      213: 2442905915913219541
+    second: T_AmethystSentinel_ShieldFx_119
+  - first:
+      213: -7526987878959965274
+    second: T_AmethystSentinel_ShieldFx_120
+  - first:
+      213: -8004537341876891616
+    second: T_AmethystSentinel_ShieldFx_121
+  - first:
+      213: 4603790743864682581
+    second: T_AmethystSentinel_ShieldFx_122
+  - first:
+      213: 7187511533833162255
+    second: T_AmethystSentinel_ShieldFx_123
+  - first:
+      213: 5297620400333953166
+    second: T_AmethystSentinel_ShieldFx_124
+  - first:
+      213: 2185204281571440884
+    second: T_AmethystSentinel_ShieldFx_125
+  - first:
+      213: 7318279181961368662
+    second: T_AmethystSentinel_ShieldFx_126
+  - first:
+      213: 5452132928014735610
+    second: T_AmethystSentinel_ShieldFx_127
+  - first:
+      213: 9040235422833925227
+    second: T_AmethystSentinel_ShieldFx_128
+  - first:
+      213: -1846969099216521309
+    second: T_AmethystSentinel_ShieldFx_129
+  - first:
+      213: 8061271057641613495
+    second: T_AmethystSentinel_ShieldFx_130
+  - first:
+      213: 7527981081640482833
+    second: T_AmethystSentinel_ShieldFx_131
+  - first:
+      213: -7802865138929238777
+    second: T_AmethystSentinel_ShieldFx_132
+  - first:
+      213: -6878035082971818950
+    second: T_AmethystSentinel_ShieldFx_133
+  - first:
+      213: -5732072018075402783
+    second: T_AmethystSentinel_ShieldFx_134
+  - first:
+      213: -6673748724482095510
+    second: T_AmethystSentinel_ShieldFx_135
+  - first:
+      213: 1848242621142900672
+    second: T_AmethystSentinel_ShieldFx_136
+  - first:
+      213: 5418948639103684488
+    second: T_AmethystSentinel_ShieldFx_137
+  - first:
+      213: -6137338109190805356
+    second: T_AmethystSentinel_ShieldFx_138
+  - first:
+      213: -2711720302443774855
+    second: T_AmethystSentinel_ShieldFx_139
+  - first:
+      213: -5023073903229550738
+    second: T_AmethystSentinel_ShieldFx_140
+  - first:
+      213: 230170411217719862
+    second: T_AmethystSentinel_ShieldFx_141
+  - first:
+      213: -682730934202830722
+    second: T_AmethystSentinel_ShieldFx_142
+  - first:
+      213: -8115430514897506864
+    second: T_AmethystSentinel_ShieldFx_143
+  - first:
+      213: -5543666282441424065
+    second: T_AmethystSentinel_ShieldFx_144
+  - first:
+      213: 2725159596806831211
+    second: T_AmethystSentinel_ShieldFx_145
+  - first:
+      213: -7253055936668375836
+    second: T_AmethystSentinel_ShieldFx_146
+  - first:
+      213: 8482137228541298309
+    second: T_AmethystSentinel_ShieldFx_147
+  - first:
+      213: -1986101910349254979
+    second: T_AmethystSentinel_ShieldFx_148
+  - first:
+      213: 3768715838454910107
+    second: T_AmethystSentinel_ShieldFx_149
+  - first:
+      213: 1706796253496877836
+    second: T_AmethystSentinel_ShieldFx_150
+  - first:
+      213: 39740885446602778
+    second: T_AmethystSentinel_ShieldFx_151
+  - first:
+      213: -6190939711002401577
+    second: T_AmethystSentinel_ShieldFx_152
+  - first:
+      213: 339128586745594530
+    second: T_AmethystSentinel_ShieldFx_153
+  - first:
+      213: -8743408255009334963
+    second: T_AmethystSentinel_ShieldFx_154
+  - first:
+      213: 1497932687216562937
+    second: T_AmethystSentinel_ShieldFx_155
+  - first:
+      213: 5820552088255808229
+    second: T_AmethystSentinel_ShieldFx_156
+  - first:
+      213: -8193166132115407392
+    second: T_AmethystSentinel_ShieldFx_157
+  - first:
+      213: -9002802330509371951
+    second: T_AmethystSentinel_ShieldFx_158
+  - first:
+      213: 8694192508940780441
+    second: T_AmethystSentinel_ShieldFx_159
+  - first:
+      213: -6827875424985305982
+    second: T_AmethystSentinel_ShieldFx_160
+  - first:
+      213: 8215673530305377382
+    second: T_AmethystSentinel_ShieldFx_161
+  - first:
+      213: -5519184195069685637
+    second: T_AmethystSentinel_ShieldFx_162
+  - first:
+      213: -7416765674720006570
+    second: T_AmethystSentinel_ShieldFx_163
+  - first:
+      213: -3289734350605275976
+    second: T_AmethystSentinel_ShieldFx_164
+  - first:
+      213: 1661996395253148425
+    second: T_AmethystSentinel_ShieldFx_165
+  - first:
+      213: -3995744159940373692
+    second: T_AmethystSentinel_ShieldFx_166
+  - first:
+      213: -6824724714855446572
+    second: T_AmethystSentinel_ShieldFx_167
+  - first:
+      213: -7048273808964249350
+    second: T_AmethystSentinel_ShieldFx_168
+  - first:
+      213: 4577843471105737679
+    second: T_AmethystSentinel_ShieldFx_169
+  - first:
+      213: -7343542447369965769
+    second: T_AmethystSentinel_ShieldFx_170
+  - first:
+      213: 7037706739472713246
+    second: T_AmethystSentinel_ShieldFx_171
+  - first:
+      213: 4715080546536255180
+    second: T_AmethystSentinel_ShieldFx_172
+  - first:
+      213: 1185624134873723571
+    second: T_AmethystSentinel_ShieldFx_173
+  - first:
+      213: -6243243442470925971
+    second: T_AmethystSentinel_ShieldFx_174
+  - first:
+      213: 4347298341420933669
+    second: T_AmethystSentinel_ShieldFx_175
+  - first:
+      213: 8500665698429142218
+    second: T_AmethystSentinel_ShieldFx_176
+  - first:
+      213: 2463680653447747443
+    second: T_AmethystSentinel_ShieldFx_177
+  - first:
+      213: -8867969456230186054
+    second: T_AmethystSentinel_ShieldFx_178
+  - first:
+      213: -521532396955283223
+    second: T_AmethystSentinel_ShieldFx_179
+  - first:
+      213: 5870624089535503046
+    second: T_AmethystSentinel_ShieldFx_180
+  - first:
+      213: -6564988495239030968
+    second: T_AmethystSentinel_ShieldFx_181
+  - first:
+      213: -9153634894583807624
+    second: T_AmethystSentinel_ShieldFx_182
+  - first:
+      213: 5606809358362154569
+    second: T_AmethystSentinel_ShieldFx_183
+  - first:
+      213: -4252899738657320043
+    second: T_AmethystSentinel_ShieldFx_184
+  - first:
+      213: -4262142431759897157
+    second: T_AmethystSentinel_ShieldFx_185
+  - first:
+      213: 5911319464559580779
+    second: T_AmethystSentinel_ShieldFx_186
+  - first:
+      213: 4215194656803091185
+    second: T_AmethystSentinel_ShieldFx_187
+  - first:
+      213: -8058904605343173108
+    second: ShieldFx_fill
+  - first:
+      213: 4160526755135848367
+    second: ShieldFx_rim
+  - first:
+      213: -6325707835904278975
+    second: ShieldFx_create_0
+  - first:
+      213: -8108594374272628718
+    second: ShieldFx_create_1
+  - first:
+      213: 8584599874562051974
+    second: ShieldFx_create_2
+  - first:
+      213: 1768580699715314088
+    second: ShieldFx_create_3
+  - first:
+      213: -790562873341151382
+    second: ShieldFx_create_4
+  - first:
+      213: 8459608594472935537
+    second: ShieldFx_create_5
+  - first:
+      213: -5964499073544316576
+    second: ShieldFx_create_6
+  - first:
+      213: 4896862824202046163
+    second: ShieldFx_explode_0
+  - first:
+      213: 4228036993504888584
+    second: ShieldFx_explode_1
+  - first:
+      213: -3364364829777138484
+    second: ShieldFx_explode_2
+  - first:
+      213: -9189782286077561390
+    second: ShieldFx_explode_3
+  - first:
+      213: -87111846997382681
+    second: ShieldFx_explode_4
+  - first:
+      213: 8720191643072964279
+    second: ShieldFx_explode_5
+  - first:
+      213: -4002367551270248742
+    second: ShieldFx_explode_6
+  - first:
+      213: 5542791476857569273
+    second: ShieldFx_explode_7
+  - first:
+      213: -8934388562808059694
+    second: ShieldFx_explode_8
+  - first:
+      213: 1515406854422083142
+    second: ShieldFx_explode_9
+  - first:
+      213: -8388591618936357714
+    second: ShieldFx_break_0
+  - first:
+      213: -6896279809692539635
+    second: ShieldFx_break_1
+  - first:
+      213: 3043482473447175468
+    second: ShieldFx_break_2
+  - first:
+      213: -3458209930981951712
+    second: ShieldFx_melt_00
+  - first:
+      213: 3947045627052966296
+    second: ShieldFx_melt_01
+  - first:
+      213: 5921233369317063606
+    second: ShieldFx_melt_02
+  - first:
+      213: -1474558192249803542
+    second: ShieldFx_melt_03
+  - first:
+      213: -1859350492773647103
+    second: ShieldFx_melt_04
+  - first:
+      213: -6232382389686163404
+    second: ShieldFx_melt_05
+  - first:
+      213: 722909677504192210
+    second: ShieldFx_melt_06
+  - first:
+      213: 8794547855334762050
+    second: ShieldFx_melt_07
+  - first:
+      213: 4328480574560946986
+    second: ShieldFx_melt_08
+  - first:
+      213: 81021136295513630
+    second: ShieldFx_melt_09
+  - first:
+      213: -7174556670064186136
+    second: ShieldFx_melt_10
+  - first:
+      213: -5268554963173933983
+    second: ShieldFx_melt_11
+  - first:
+      213: 1105307373340072655
+    second: ShieldFx_stars_00
+  - first:
+      213: 4666718212716214870
+    second: ShieldFx_stars_01
+  - first:
+      213: -2958724744971990839
+    second: ShieldFx_stars_02
+  - first:
+      213: 7936327392505253214
+    second: ShieldFx_stars_03
+  - first:
+      213: -1905243652017624413
+    second: ShieldFx_stars_04
+  - first:
+      213: 9027685348504827258
+    second: ShieldFx_stars_05
+  - first:
+      213: 6071500082958927366
+    second: ShieldFx_stars_06
+  - first:
+      213: -9179546069098197784
+    second: ShieldFx_stars_07
+  - first:
+      213: 1103336980127967113
+    second: ShieldFx_stars_08
+  - first:
+      213: 8511963858544264350
+    second: ShieldFx_stars_09
+  - first:
+      213: -7694364741029324050
+    second: ShieldFx_stars_10
+  - first:
+      213: 2830524739359567436
+    second: ShieldFx_stars_11
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 0
+  spriteMeshType: 0
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.09615385}
+  spritePixelsToUnits: 75.6
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ShieldFx_fill
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 680
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c06b2c795f4092090800000000000000
+      internalID: -8058904605343173108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_rim
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 680
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: faf71665a092db930800000000000000
+      internalID: 4160526755135848367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_create_0
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 680
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14e35000d329638a0800000000000000
+      internalID: -6325707835904278975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_create_1
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 680
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 218cfb5b06c787f80800000000000000
+      internalID: -8108594374272628718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_create_2
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 680
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68f422e4a10a22770800000000000000
+      internalID: 8584599874562051974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_create_3
+      rect:
+        serializedVersion: 2
+        x: 1040
+        y: 680
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a1a42ba6c24b8810800000000000000
+      internalID: 1768580699715314088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_create_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 680
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6773e9514b5705f0800000000000000
+      internalID: -790562873341151382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_create_5
+      rect:
+        serializedVersion: 2
+        x: 1456
+        y: 680
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 170a66c1231966570800000000000000
+      internalID: 8459608594472935537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_create_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 544
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0699e32a1b7d93da0800000000000000
+      internalID: -5964499073544316576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_explode_0
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 544
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3da016e3bc625f340800000000000000
+      internalID: 4896862824202046163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_explode_1
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 544
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 807c1179e310daa30800000000000000
+      internalID: 4228036993504888584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_explode_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 544
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ccce05233006f41d0800000000000000
+      internalID: -3364364829777138484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_explode_3
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 544
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d57b2b43b5577080800000000000000
+      internalID: -9189782286077561390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_explode_4
+      rect:
+        serializedVersion: 2
+        x: 1040
+        y: 544
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e92ef79c348acef0800000000000000
+      internalID: -87111846997382681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_explode_5
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 544
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b6a1ba0918540970800000000000000
+      internalID: 8720191643072964279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_explode_6
+      rect:
+        serializedVersion: 2
+        x: 1456
+        y: 544
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ade9cf5eaebb478c0800000000000000
+      internalID: -4002367551270248742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_explode_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 408
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ff78223b73fbec40800000000000000
+      internalID: 5542791476857569273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_explode_8
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 408
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d8438440fca20480800000000000000
+      internalID: -8934388562808059694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_explode_9
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 408
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6463500518ec70510800000000000000
+      internalID: 1515406854422083142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_break_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 408
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eacba730e5cb59b80800000000000000
+      internalID: -8388591618936357714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_break_1
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 408
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d05e3971d0e7b40a0800000000000000
+      internalID: -6896279809692539635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_break_2
+      rect:
+        serializedVersion: 2
+        x: 1040
+        y: 408
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2532fd3f2f9c3a20800000000000000
+      internalID: 3043482473447175468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_melt_00
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 408
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 027b711e368f100d0800000000000000
+      internalID: -3458209930981951712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_melt_01
+      rect:
+        serializedVersion: 2
+        x: 1456
+        y: 408
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89140c0e519b6c630800000000000000
+      internalID: 3947045627052966296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_melt_02
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 272
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bb355a90627c2250800000000000000
+      internalID: 5921233369317063606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_melt_03
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 272
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aecee4ef221598be0800000000000000
+      internalID: -1474558192249803542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_melt_04
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 272
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10d774df3924236e0800000000000000
+      internalID: -1859350492773647103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_melt_05
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 272
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4382b56bc312289a0800000000000000
+      internalID: -6232382389686163404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_melt_06
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 272
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2de5454858a480a00800000000000000
+      internalID: 722909677504192210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_melt_07
+      rect:
+        serializedVersion: 2
+        x: 1040
+        y: 272
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 246e66dcda28c0a70800000000000000
+      internalID: 8794547855334762050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_melt_08
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 272
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2b42e7362ad11c30800000000000000
+      internalID: 4328480574560946986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_melt_09
+      rect:
+        serializedVersion: 2
+        x: 1456
+        y: 272
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1e41305b48df1100800000000000000
+      internalID: 81021136295513630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_melt_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 136
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ec2ae398bade6c90800000000000000
+      internalID: -7174556670064186136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_melt_11
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 136
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16c756ccc2552e6b0800000000000000
+      internalID: -5268554963173933983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_stars_00
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 136
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fca1e8b2337d65f00800000000000000
+      internalID: 1105307373340072655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_stars_01
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 136
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65abbc73d7383c040800000000000000
+      internalID: 4666718212716214870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_stars_02
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 136
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c849cb358f70f6d0800000000000000
+      internalID: -2958724744971990839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_stars_03
+      rect:
+        serializedVersion: 2
+        x: 1040
+        y: 136
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5d4a7b07bf732e60800000000000000
+      internalID: 7936327392505253214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_stars_04
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 136
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3aaebee2ef63f85e0800000000000000
+      internalID: -1905243652017624413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_stars_05
+      rect:
+        serializedVersion: 2
+        x: 1456
+        y: 136
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a75f0a56ef7c84d70800000000000000
+      internalID: 9027685348504827258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_stars_06
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6068582482d424450800000000000000
+      internalID: 6071500082958927366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_stars_07
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 0
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ec81184c73bb9080800000000000000
+      internalID: -9179546069098197784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_stars_08
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 0
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98764104327df4f00800000000000000
+      internalID: 1103336980127967113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_stars_09
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 0
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e948e71f702902670800000000000000
+      internalID: 8511963858544264350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_stars_10
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 0
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eea18a6d800283590800000000000000
+      internalID: -7694364741029324050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldFx_stars_11
+      rect:
+        serializedVersion: 2
+        x: 1040
+        y: 0
+        width: 208
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5, y: 0.073529415}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4e6b71f04b084720800000000000000
+      internalID: 2830524739359567436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      ShieldFx_break_0: -8388591618936357714
+      ShieldFx_break_1: -6896279809692539635
+      ShieldFx_break_2: 3043482473447175468
+      ShieldFx_create_0: -6325707835904278975
+      ShieldFx_create_1: -8108594374272628718
+      ShieldFx_create_2: 8584599874562051974
+      ShieldFx_create_3: 1768580699715314088
+      ShieldFx_create_4: -790562873341151382
+      ShieldFx_create_5: 8459608594472935537
+      ShieldFx_create_6: -5964499073544316576
+      ShieldFx_explode_0: 4896862824202046163
+      ShieldFx_explode_1: 4228036993504888584
+      ShieldFx_explode_2: -3364364829777138484
+      ShieldFx_explode_3: -9189782286077561390
+      ShieldFx_explode_4: -87111846997382681
+      ShieldFx_explode_5: 8720191643072964279
+      ShieldFx_explode_6: -4002367551270248742
+      ShieldFx_explode_7: 5542791476857569273
+      ShieldFx_explode_8: -8934388562808059694
+      ShieldFx_explode_9: 1515406854422083142
+      ShieldFx_fill: -8058904605343173108
+      ShieldFx_melt_00: -3458209930981951712
+      ShieldFx_melt_01: 3947045627052966296
+      ShieldFx_melt_02: 5921233369317063606
+      ShieldFx_melt_03: -1474558192249803542
+      ShieldFx_melt_04: -1859350492773647103
+      ShieldFx_melt_05: -6232382389686163404
+      ShieldFx_melt_06: 722909677504192210
+      ShieldFx_melt_07: 8794547855334762050
+      ShieldFx_melt_08: 4328480574560946986
+      ShieldFx_melt_09: 81021136295513630
+      ShieldFx_melt_10: -7174556670064186136
+      ShieldFx_melt_11: -5268554963173933983
+      ShieldFx_rim: 4160526755135848367
+      ShieldFx_stars_00: 1105307373340072655
+      ShieldFx_stars_01: 4666718212716214870
+      ShieldFx_stars_02: -2958724744971990839
+      ShieldFx_stars_03: 7936327392505253214
+      ShieldFx_stars_04: -1905243652017624413
+      ShieldFx_stars_05: 9027685348504827258
+      ShieldFx_stars_06: 6071500082958927366
+      ShieldFx_stars_07: -9179546069098197784
+      ShieldFx_stars_08: 1103336980127967113
+      ShieldFx_stars_09: 8511963858544264350
+      ShieldFx_stars_10: -7694364741029324050
+      ShieldFx_stars_11: 2830524739359567436
+      T_AmethystSentinel_ShieldFx_0: -2450204187808767922
+      T_AmethystSentinel_ShieldFx_1: -7528360209379312269
+      T_AmethystSentinel_ShieldFx_10: -540777941233701977
+      T_AmethystSentinel_ShieldFx_100: -519732357563838607
+      T_AmethystSentinel_ShieldFx_101: 7504087778904673183
+      T_AmethystSentinel_ShieldFx_102: -153445428032667191
+      T_AmethystSentinel_ShieldFx_103: 4982746053474581492
+      T_AmethystSentinel_ShieldFx_104: 7220333028198127452
+      T_AmethystSentinel_ShieldFx_105: 4209416028715698935
+      T_AmethystSentinel_ShieldFx_106: -8280344520641871647
+      T_AmethystSentinel_ShieldFx_107: 6802660160848821788
+      T_AmethystSentinel_ShieldFx_108: -4017735255570002292
+      T_AmethystSentinel_ShieldFx_109: -8521786868214489631
+      T_AmethystSentinel_ShieldFx_11: 8421058792223036310
+      T_AmethystSentinel_ShieldFx_110: 6675710455426789778
+      T_AmethystSentinel_ShieldFx_111: -8989642217430567251
+      T_AmethystSentinel_ShieldFx_112: 1837330484626725642
+      T_AmethystSentinel_ShieldFx_113: 7048837554432592030
+      T_AmethystSentinel_ShieldFx_114: -412363642575318942
+      T_AmethystSentinel_ShieldFx_115: -680243305757889160
+      T_AmethystSentinel_ShieldFx_116: 479386387726555239
+      T_AmethystSentinel_ShieldFx_117: -5096005727084544699
+      T_AmethystSentinel_ShieldFx_118: -994918935365582660
+      T_AmethystSentinel_ShieldFx_119: 2442905915913219541
+      T_AmethystSentinel_ShieldFx_12: -1805561696554706809
+      T_AmethystSentinel_ShieldFx_120: -7526987878959965274
+      T_AmethystSentinel_ShieldFx_121: -8004537341876891616
+      T_AmethystSentinel_ShieldFx_122: 4603790743864682581
+      T_AmethystSentinel_ShieldFx_123: 7187511533833162255
+      T_AmethystSentinel_ShieldFx_124: 5297620400333953166
+      T_AmethystSentinel_ShieldFx_125: 2185204281571440884
+      T_AmethystSentinel_ShieldFx_126: 7318279181961368662
+      T_AmethystSentinel_ShieldFx_127: 5452132928014735610
+      T_AmethystSentinel_ShieldFx_128: 9040235422833925227
+      T_AmethystSentinel_ShieldFx_129: -1846969099216521309
+      T_AmethystSentinel_ShieldFx_13: -6839384140714620310
+      T_AmethystSentinel_ShieldFx_130: 8061271057641613495
+      T_AmethystSentinel_ShieldFx_131: 7527981081640482833
+      T_AmethystSentinel_ShieldFx_132: -7802865138929238777
+      T_AmethystSentinel_ShieldFx_133: -6878035082971818950
+      T_AmethystSentinel_ShieldFx_134: -5732072018075402783
+      T_AmethystSentinel_ShieldFx_135: -6673748724482095510
+      T_AmethystSentinel_ShieldFx_136: 1848242621142900672
+      T_AmethystSentinel_ShieldFx_137: 5418948639103684488
+      T_AmethystSentinel_ShieldFx_138: -6137338109190805356
+      T_AmethystSentinel_ShieldFx_139: -2711720302443774855
+      T_AmethystSentinel_ShieldFx_14: 2010472767591005626
+      T_AmethystSentinel_ShieldFx_140: -5023073903229550738
+      T_AmethystSentinel_ShieldFx_141: 230170411217719862
+      T_AmethystSentinel_ShieldFx_142: -682730934202830722
+      T_AmethystSentinel_ShieldFx_143: -8115430514897506864
+      T_AmethystSentinel_ShieldFx_144: -5543666282441424065
+      T_AmethystSentinel_ShieldFx_145: 2725159596806831211
+      T_AmethystSentinel_ShieldFx_146: -7253055936668375836
+      T_AmethystSentinel_ShieldFx_147: 8482137228541298309
+      T_AmethystSentinel_ShieldFx_148: -1986101910349254979
+      T_AmethystSentinel_ShieldFx_149: 3768715838454910107
+      T_AmethystSentinel_ShieldFx_15: -4047314986219575861
+      T_AmethystSentinel_ShieldFx_150: 1706796253496877836
+      T_AmethystSentinel_ShieldFx_151: 39740885446602778
+      T_AmethystSentinel_ShieldFx_152: -6190939711002401577
+      T_AmethystSentinel_ShieldFx_153: 339128586745594530
+      T_AmethystSentinel_ShieldFx_154: -8743408255009334963
+      T_AmethystSentinel_ShieldFx_155: 1497932687216562937
+      T_AmethystSentinel_ShieldFx_156: 5820552088255808229
+      T_AmethystSentinel_ShieldFx_157: -8193166132115407392
+      T_AmethystSentinel_ShieldFx_158: -9002802330509371951
+      T_AmethystSentinel_ShieldFx_159: 8694192508940780441
+      T_AmethystSentinel_ShieldFx_16: 2861307129647926787
+      T_AmethystSentinel_ShieldFx_160: -6827875424985305982
+      T_AmethystSentinel_ShieldFx_161: 8215673530305377382
+      T_AmethystSentinel_ShieldFx_162: -5519184195069685637
+      T_AmethystSentinel_ShieldFx_163: -7416765674720006570
+      T_AmethystSentinel_ShieldFx_164: -3289734350605275976
+      T_AmethystSentinel_ShieldFx_165: 1661996395253148425
+      T_AmethystSentinel_ShieldFx_166: -3995744159940373692
+      T_AmethystSentinel_ShieldFx_167: -6824724714855446572
+      T_AmethystSentinel_ShieldFx_168: -7048273808964249350
+      T_AmethystSentinel_ShieldFx_169: 4577843471105737679
+      T_AmethystSentinel_ShieldFx_17: 671196335271231926
+      T_AmethystSentinel_ShieldFx_170: -7343542447369965769
+      T_AmethystSentinel_ShieldFx_171: 7037706739472713246
+      T_AmethystSentinel_ShieldFx_172: 4715080546536255180
+      T_AmethystSentinel_ShieldFx_173: 1185624134873723571
+      T_AmethystSentinel_ShieldFx_174: -6243243442470925971
+      T_AmethystSentinel_ShieldFx_175: 4347298341420933669
+      T_AmethystSentinel_ShieldFx_176: 8500665698429142218
+      T_AmethystSentinel_ShieldFx_177: 2463680653447747443
+      T_AmethystSentinel_ShieldFx_178: -8867969456230186054
+      T_AmethystSentinel_ShieldFx_179: -521532396955283223
+      T_AmethystSentinel_ShieldFx_18: -4546797095427487517
+      T_AmethystSentinel_ShieldFx_180: 5870624089535503046
+      T_AmethystSentinel_ShieldFx_181: -6564988495239030968
+      T_AmethystSentinel_ShieldFx_182: -9153634894583807624
+      T_AmethystSentinel_ShieldFx_183: 5606809358362154569
+      T_AmethystSentinel_ShieldFx_184: -4252899738657320043
+      T_AmethystSentinel_ShieldFx_185: -4262142431759897157
+      T_AmethystSentinel_ShieldFx_186: 5911319464559580779
+      T_AmethystSentinel_ShieldFx_187: 4215194656803091185
+      T_AmethystSentinel_ShieldFx_19: -4469786880629964190
+      T_AmethystSentinel_ShieldFx_2: -8180244750592898004
+      T_AmethystSentinel_ShieldFx_20: -4996329949831691079
+      T_AmethystSentinel_ShieldFx_21: 8926285456222585280
+      T_AmethystSentinel_ShieldFx_22: 6630256215212326596
+      T_AmethystSentinel_ShieldFx_23: 4144866833904078285
+      T_AmethystSentinel_ShieldFx_24: -781490715554914219
+      T_AmethystSentinel_ShieldFx_25: -8697264919194317462
+      T_AmethystSentinel_ShieldFx_26: -5960829777246202739
+      T_AmethystSentinel_ShieldFx_27: 6084469013855042122
+      T_AmethystSentinel_ShieldFx_28: 1436329267997107333
+      T_AmethystSentinel_ShieldFx_29: 1346238154096629434
+      T_AmethystSentinel_ShieldFx_3: 1817961480608659525
+      T_AmethystSentinel_ShieldFx_30: 5965678081352197876
+      T_AmethystSentinel_ShieldFx_31: -4305306336505459129
+      T_AmethystSentinel_ShieldFx_32: -8289218305303630315
+      T_AmethystSentinel_ShieldFx_33: -8199318589677213495
+      T_AmethystSentinel_ShieldFx_34: 6417307147463168886
+      T_AmethystSentinel_ShieldFx_35: -2375218505336252173
+      T_AmethystSentinel_ShieldFx_36: 6471583660440794758
+      T_AmethystSentinel_ShieldFx_37: 6104764686028415094
+      T_AmethystSentinel_ShieldFx_38: -3964703789742125018
+      T_AmethystSentinel_ShieldFx_39: -894986635220235047
+      T_AmethystSentinel_ShieldFx_4: 4235145970216093798
+      T_AmethystSentinel_ShieldFx_40: -4051944627248507321
+      T_AmethystSentinel_ShieldFx_41: 5884092782417752571
+      T_AmethystSentinel_ShieldFx_42: 8459367165673117530
+      T_AmethystSentinel_ShieldFx_43: -8024925110129335744
+      T_AmethystSentinel_ShieldFx_44: 1551695772920210038
+      T_AmethystSentinel_ShieldFx_45: -3290480218853175748
+      T_AmethystSentinel_ShieldFx_46: 3611586278525318163
+      T_AmethystSentinel_ShieldFx_47: 5055177735781212816
+      T_AmethystSentinel_ShieldFx_48: -6811928370933585133
+      T_AmethystSentinel_ShieldFx_49: 7110524122666369152
+      T_AmethystSentinel_ShieldFx_5: 3235351377109074527
+      T_AmethystSentinel_ShieldFx_50: -4362174504095274597
+      T_AmethystSentinel_ShieldFx_51: 242236383686675945
+      T_AmethystSentinel_ShieldFx_52: 4637730687687059150
+      T_AmethystSentinel_ShieldFx_53: -897074829870024974
+      T_AmethystSentinel_ShieldFx_54: 389434086150332796
+      T_AmethystSentinel_ShieldFx_55: 7516376524335437275
+      T_AmethystSentinel_ShieldFx_56: -3112724947633892020
+      T_AmethystSentinel_ShieldFx_57: -2048407418793959418
+      T_AmethystSentinel_ShieldFx_58: 6947148996627872164
+      T_AmethystSentinel_ShieldFx_59: -4179986024029115164
+      T_AmethystSentinel_ShieldFx_6: -3699291462695568935
+      T_AmethystSentinel_ShieldFx_60: 8874953302615350417
+      T_AmethystSentinel_ShieldFx_61: -5543982519188695463
+      T_AmethystSentinel_ShieldFx_62: 5496882660873214377
+      T_AmethystSentinel_ShieldFx_63: 7224506815371898864
+      T_AmethystSentinel_ShieldFx_64: 4029230147882858330
+      T_AmethystSentinel_ShieldFx_65: 7811208581256053258
+      T_AmethystSentinel_ShieldFx_66: 4751943372450775971
+      T_AmethystSentinel_ShieldFx_67: 597486690683022684
+      T_AmethystSentinel_ShieldFx_68: 8046730465524180767
+      T_AmethystSentinel_ShieldFx_69: -1044523826284531692
+      T_AmethystSentinel_ShieldFx_7: 2511031082314339473
+      T_AmethystSentinel_ShieldFx_70: 4472124671896113553
+      T_AmethystSentinel_ShieldFx_71: 7403175237757905785
+      T_AmethystSentinel_ShieldFx_72: -6877867703905598119
+      T_AmethystSentinel_ShieldFx_73: 8609486402698171785
+      T_AmethystSentinel_ShieldFx_74: 7952992892857477798
+      T_AmethystSentinel_ShieldFx_75: 819872259998975798
+      T_AmethystSentinel_ShieldFx_76: 7783063246611321777
+      T_AmethystSentinel_ShieldFx_77: 3301177804804781884
+      T_AmethystSentinel_ShieldFx_78: 2292414699510272894
+      T_AmethystSentinel_ShieldFx_79: -7205975246760666206
+      T_AmethystSentinel_ShieldFx_8: -4230661928854841794
+      T_AmethystSentinel_ShieldFx_80: -6425204716812251246
+      T_AmethystSentinel_ShieldFx_81: 1667720576663066837
+      T_AmethystSentinel_ShieldFx_82: 7490563310139781812
+      T_AmethystSentinel_ShieldFx_83: -1241115498195788425
+      T_AmethystSentinel_ShieldFx_84: 8695603811308954018
+      T_AmethystSentinel_ShieldFx_85: -5574465576214452383
+      T_AmethystSentinel_ShieldFx_86: -4950373429012862273
+      T_AmethystSentinel_ShieldFx_87: -8019786512248203936
+      T_AmethystSentinel_ShieldFx_88: -3362967677957967101
+      T_AmethystSentinel_ShieldFx_89: 1395356699360480847
+      T_AmethystSentinel_ShieldFx_9: -6647124468233026560
+      T_AmethystSentinel_ShieldFx_90: -8024222624511442057
+      T_AmethystSentinel_ShieldFx_91: 653379607908062283
+      T_AmethystSentinel_ShieldFx_92: -2748946554918881160
+      T_AmethystSentinel_ShieldFx_93: -5057623691887360080
+      T_AmethystSentinel_ShieldFx_94: 4796812680613870412
+      T_AmethystSentinel_ShieldFx_95: -6231329276351123918
+      T_AmethystSentinel_ShieldFx_96: 510101339805438829
+      T_AmethystSentinel_ShieldFx_97: 488296183104862383
+      T_AmethystSentinel_ShieldFx_98: 8803656774491824858
+      T_AmethystSentinel_ShieldFx_99: 6860340636418830337
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

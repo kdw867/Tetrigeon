@@ -1,0 +1,236 @@
+{
+ "frames": {
+  "F00_rest": {
+   "overlay": false
+  },
+  "F01_antic": {
+   "overlay": false
+  },
+  "F02_crouch": {
+   "overlay": false
+  },
+  "F03_charge1": {
+   "dots_px": 477,
+   "bbox": [
+    310,
+    209,
+    363,
+    244
+   ],
+   "nonBinaryAlpha": 0,
+   "offPalettePx": 0,
+   "misalignedPx": 0,
+   "overlapHpBarPx": 0,
+   "overlapEyesPx": 0,
+   "touchesCanvasEdge": 0
+  },
+  "F04_charge2": {
+   "dots_px": 603,
+   "bbox": [
+    316,
+    211,
+    357,
+    240
+   ],
+   "nonBinaryAlpha": 0,
+   "offPalettePx": 0,
+   "misalignedPx": 0,
+   "overlapHpBarPx": 0,
+   "overlapEyesPx": 0,
+   "touchesCanvasEdge": 0
+  },
+  "F05_charge3": {
+   "dots_px": 567,
+   "bbox": [
+    316,
+    212,
+    354,
+    238
+   ],
+   "nonBinaryAlpha": 0,
+   "offPalettePx": 0,
+   "misalignedPx": 0,
+   "overlapHpBarPx": 0,
+   "overlapEyesPx": 0,
+   "touchesCanvasEdge": 0
+  },
+  "F06_charge4": {
+   "dots_px": 621,
+   "bbox": [
+    322,
+    211,
+    348,
+    237
+   ],
+   "nonBinaryAlpha": 0,
+   "offPalettePx": 0,
+   "misalignedPx": 0,
+   "overlapHpBarPx": 0,
+   "overlapEyesPx": 0,
+   "touchesCanvasEdge": 0
+  },
+  "F07_release": {
+   "dots_px": 693,
+   "bbox": [
+    319,
+    204,
+    369,
+    236
+   ],
+   "nonBinaryAlpha": 0,
+   "offPalettePx": 0,
+   "misalignedPx": 0,
+   "overlapHpBarPx": 0,
+   "overlapEyesPx": 0,
+   "touchesCanvasEdge": 0
+  },
+  "F08_fly1": {
+   "dots_px": 549,
+   "bbox": [
+    349,
+    210,
+    396,
+    230
+   ],
+   "nonBinaryAlpha": 0,
+   "offPalettePx": 0,
+   "misalignedPx": 0,
+   "overlapHpBarPx": 0,
+   "overlapEyesPx": 0,
+   "touchesCanvasEdge": 0
+  },
+  "F09_fly2": {
+   "dots_px": 549,
+   "bbox": [
+    397,
+    210,
+    444,
+    230
+   ],
+   "nonBinaryAlpha": 0,
+   "offPalettePx": 0,
+   "misalignedPx": 0,
+   "overlapHpBarPx": 0,
+   "overlapEyesPx": 0,
+   "touchesCanvasEdge": 0
+  },
+  "F10_fly3": {
+   "dots_px": 549,
+   "bbox": [
+    457,
+    210,
+    504,
+    230
+   ],
+   "nonBinaryAlpha": 0,
+   "offPalettePx": 0,
+   "misalignedPx": 0,
+   "overlapHpBarPx": 0,
+   "overlapEyesPx": 0,
+   "touchesCanvasEdge": 0
+  },
+  "F11_fly4": {
+   "dots_px": 549,
+   "bbox": [
+    529,
+    210,
+    576,
+    230
+   ],
+   "nonBinaryAlpha": 0,
+   "offPalettePx": 0,
+   "misalignedPx": 0,
+   "overlapHpBarPx": 0,
+   "overlapEyesPx": 0,
+   "touchesCanvasEdge": 0
+  },
+  "F12_fly5": {
+   "dots_px": 549,
+   "bbox": [
+    601,
+    210,
+    648,
+    230
+   ],
+   "nonBinaryAlpha": 0,
+   "offPalettePx": 0,
+   "misalignedPx": 0,
+   "overlapHpBarPx": 0,
+   "overlapEyesPx": 0,
+   "touchesCanvasEdge": 0
+  },
+  "F13_fly6": {
+   "dots_px": 549,
+   "bbox": [
+    673,
+    210,
+    720,
+    230
+   ],
+   "nonBinaryAlpha": 0,
+   "offPalettePx": 0,
+   "misalignedPx": 0,
+   "overlapHpBarPx": 0,
+   "overlapEyesPx": 0,
+   "touchesCanvasEdge": 0
+  },
+  "F14_fade1": {
+   "dots_px": 153,
+   "bbox": [
+    745,
+    210,
+    765,
+    230
+   ],
+   "nonBinaryAlpha": 0,
+   "offPalettePx": 0,
+   "misalignedPx": 0,
+   "overlapHpBarPx": 0,
+   "overlapEyesPx": 0,
+   "touchesCanvasEdge": 0
+  },
+  "F15_fade2": {
+   "dots_px": 72,
+   "bbox": [
+    742,
+    207,
+    768,
+    233
+   ],
+   "nonBinaryAlpha": 0,
+   "offPalettePx": 0,
+   "misalignedPx": 0,
+   "overlapHpBarPx": 0,
+   "overlapEyesPx": 0,
+   "touchesCanvasEdge": 0
+  },
+  "F16_rest": {
+   "overlay": false
+  }
+ },
+ "summary": {
+  "total_ms": 1280,
+  "release_ms": 640,
+  "fxScreenRange": [
+   310,
+   204,
+   768,
+   244
+  ],
+  "offPalettePx_total": 0,
+  "nonBinaryAlphaPx_total": 0,
+  "misalignedPx_total": 0,
+  "overlapHpBarPx_total": 0,
+  "overlapEyesPx_total": 0,
+  "touchesCanvasEdge_frames": 0,
+  "posesAre3pxMultiples": true,
+  "palette": [
+   "ol=#0e1115",
+   "t1=#007078",
+   "t2=#00b8c0",
+   "t3=#00f8f8",
+   "w=#e0f8f8",
+   "st=#385860"
+  ]
+ }
+}

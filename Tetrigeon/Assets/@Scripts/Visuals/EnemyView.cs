@@ -81,14 +81,14 @@ public class EnemyView : MonoBehaviour
     }
 
     // 적이 행동할 때 공격 모션을 재생 (보이는 연출만, 전투 수치·순서·타이밍은 건드리지 않음)
-    // 애벌레는 모든 행동에 같은 모션, 수호자는 일반 공격과 강공격에 같은 모션(강공격 전용 모션은 나중에 구분 예정), 여왕은 일반 공격·수정 증식 능력·회전 금지 능력에 각각 다른 모션
-    // 수호자의 능력 사용·강공격 준비 모션은 아직 없음
+    // 애벌레는 모든 행동에 같은 모션, 수호자는 일반 공격에만 공격 모션(강공격은 폭발 연출이라 공격 모션을 쓰지 않음), 여왕은 일반 공격·수정 증식 능력·회전 금지 능력에 각각 다른 모션
+    // 수호자의 능력 사용(보호막 생성)·강공격 준비·강공격(폭발)·스턴 연출은 GuardianShieldView 가 담당
     private void PlayAttack(EnemyActionKind kind)
     {
         Animator animator = null; // 이번 행동에 재생할 애니메이터 (모션이 없으면 null)
         int trigger = AttackTrigger; // 재생할 모션 트리거 (기본은 공격)
         if (enemy.Tier == EnemyTier.Normal) animator = normalIdleAnimator; // 애벌레: 체력 공격과 능력 사용 모두 같은 모션
-        else if (enemy.Tier == EnemyTier.Epic && (kind == EnemyActionKind.BasicAttack || kind == EnemyActionKind.StrongAttack)) animator = epicIdleAnimator; // 수호자: 일반 공격과 강공격
+        else if (enemy.Tier == EnemyTier.Epic && kind == EnemyActionKind.BasicAttack) animator = epicIdleAnimator; // 수호자: 일반 공격만
         else if (enemy.Tier == EnemyTier.Boss && kind == EnemyActionKind.QueenGrowth) { animator = bossIdleAnimator; trigger = SkillTrigger; } // 여왕: 수정 증식 능력일 때는 왕관 연출
         else if (enemy.Tier == EnemyTier.Boss && kind == EnemyActionKind.QueenRotationLock) { animator = bossIdleAnimator; trigger = RotLockTrigger; } // 여왕: 회전 금지 능력일 때는 회전 룬과 자물쇠 연출
         else if (enemy.Tier == EnemyTier.Boss && kind == EnemyActionKind.BasicAttack) animator = bossIdleAnimator; // 여왕: 체력 공격(일반 공격)일 때만

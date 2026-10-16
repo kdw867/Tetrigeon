@@ -1,0 +1,15 @@
+// Plan.md 수정 (영문 문서, CRLF + BOM 유지): 수호자 공격 모션 문단의 낡은 문장을 현재 동작에 맞추고, 보호막 스킬 모션 항목(work/plan_shield_block.txt)을 추가한다. 바꿀 곳이 정확히 1곳인지 확인한다.
+const fs = require('fs'), path = require('path');
+const f = path.join(__dirname, '..', '..', 'Tetrigeon', 'Plan.md'); let t = fs.readFileSync(f, 'utf8'); if (t.charCodeAt(0) !== 0xFEFF) throw new Error('BOM 없음');
+const block = fs.readFileSync(path.join(__dirname, '..', 'work', 'plan_shield_block.txt'), 'utf8').replace(/\r?\n/g, '\n');
+const rep = (a, b) => { const A = a.replace(/\n/g, '\r\n'), B = b.replace(/\n/g, '\r\n'), n = t.split(A).length - 1; if (n !== 1) throw new Error('바꿀 곳 ' + n + '개: ' + a.slice(0, 70)); t = t.replace(A, () => B); };
+rep('Queen rotation lock skill motion: 2026-10-14)', 'Queen rotation lock skill motion: 2026-10-14; Guardian shield skill motion: 2026-10-16)');
+rep('  with the current one for now"): a 1.25 s motion plays on the Amethyst Guardian / Sentinel for its basic HP attack\n  and for its strong attack (the action where the charge deadline reaches 0). It does not play on its skill turn\n  (shield + charge start), on the charging actions that only count the deadline down, when the action is blocked\n  by freeze or stun, or when it is dead; the skill and charge motions are separate and not made yet, and the strong\n  attack will get its own motion later (it shares the basic-attack motion for now). Visual only: damage, enemy order,\n',
+    '  with the current one for now"): a 1.25 s motion plays on the Amethyst Guardian / Sentinel for its basic HP attack\n  (it also played for the strong attack until 2026-10-16, when the strong attack became the shield explosion below).\n  It does not play on its skill turn (shield + charge start), on the charging actions that only count the deadline\n  down, on the strong attack, when the action is blocked by freeze or stun, or when it is dead; those are covered by\n  the shield skill motion below. Visual only: damage, enemy order,\n');
+rep('`EnemyView.PlayAttack` fires the `Attack` trigger of the Epic Idle animator for `BasicAttack` and `StrongAttack`.',
+    '`EnemyView.PlayAttack` fires the `Attack` trigger of the Epic Idle animator for `BasicAttack` only (`StrongAttack` is the shield explosion since 2026-10-16).');
+rep("    Queen's slot), the time scale stops it (pause, game over), like Idle. The skill, charge and strong-attack-only\n    motions are still to be made.\n",
+    "    Queen's slot), the time scale stops it (pause, game over), like Idle.\n" + block);
+rep("    just inside the right screen edge of the boss slot, and the time scale stops it (pause, game over), like Idle.\n    The Guardian's skill and charge motions are still to be made.\n",
+    "    just inside the right screen edge of the boss slot, and the time scale stops it (pause, game over), like Idle.\n");
+fs.writeFileSync(f, t, 'utf8'); const b = fs.readFileSync(f); console.log('저장 BOM', b[0] === 0xEF && b[1] === 0xBB && b[2] === 0xBF, 'LF만 있는 줄', (b.toString().replace(/\r\n/g, '').match(/\n/g) || []).length);

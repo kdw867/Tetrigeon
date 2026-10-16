@@ -1,0 +1,57 @@
+- Shield skill motion (2026-10-16, applied on the instruction "apply the motion and the effects" after the key-pose,
+  shield-density and branch GIF previews; implemented): the Amethyst Guardian / Sentinel crouches and builds a
+  translucent purple crystal dome when it uses its skill, the dome gets denser with every real piece lock, and then it
+  either explodes (the deadline ran out) or melts away (the shield was broken in time) and the Guardian is stunned.
+  Visual only: the shield value (5), the charge deadline (2 Guardian actions), the stun (1 action), the damage, the
+  enemy order, the skill counters and the timing are unchanged; nothing waits for the motion and it never pauses the
+  game. The real damage of the strong attack is still applied exactly once by the existing enemy turn (9, the player
+  shield absorbs first); no animation event deals damage. Lemy has no hit reaction in the game yet, so nothing is
+  linked to the explosion; its peak (the flash frame, 0.24 s after the explosion starts) is recorded as the proposed
+  hit time for when Lemy gets one.
+  - Flow: skill turn (`EnemyActionKind.Skill`) -> 0.6 s crouch + shield growing from the base line (a rune line, then the
+    dome grows, a short flash, then it settles at the 0% look) -> the Guardian stays crouched and the dome stays at its
+    fixed size and position while only the opacity changes -> charge deadline reached (`StrongAttack`): a 1.0 s
+    explosion (opaque dome, two short expansion steps with cracks, a flash at 0.24 s, then 34 crystal fragments and 34
+    light particles burst outward and shrink; no body explosion and no extra attack motion) and the Guardian stands
+    back up to the Idle pose; or the shield breaks in time: a 1.03 s hit flash, cracks, chips and melt (the dome sinks
+    from the top with angular pixel drops falling down and a puddle on the ground that evaporates; the Guardian
+    slumps into a limp crouch halfway through) -> the limp crouch is held while `Enemy.IsStunned` with three yellow
+    stars (5x5-dot front star, 3x3-dot back star, short tails) orbiting above the head in a 0.84 s loop -> when the
+    stun ends the stars disappear and the Guardian stands up in 0.34 s. If the stun ends on the same enemy turn as an
+    action, the queued `Attack` motion (basic attack) plays right after standing up.
+  - Density (charge progress, 0-1): `((ChargeActionsTotal - ChargeActionsLeft) * piecesPerBag + piecesPlaced) /
+    (ChargeActionsTotal * piecesPerBag)`, read from the state, not counted by events; the shield value does not
+    change it. The Guardian allows 14 real locks from the shield creation to the explosion (2 bags of 7; the lock that
+    caused the creation is not counted; hold, move, rotate and hard-drop inputs are not counted), so one lock adds
+    exactly 1/14 and 25/50/75/100% are the 3.5th/7th/10.5th/14th lock. Opacity: dome fill 0.20 + 0.80 p, rim 0.60 +
+    0.40 p. Freeze or stun block the Guardian actions without advancing the deadline, so the display falls back to the
+    start of the current bag (it matches the real deadline); a Top Out settles an unfinished bag and the display jumps up.
+    No combat rule was changed for this.
+  - Cleared when: the Guardian dies (the Epic body object is turned off by `EnemyView`, which also resets the view
+    state), the stage changes (the enemy objects are destroyed), or a new shield starts (the density is recomputed).
+  - Implementation: new script `Visuals/GuardianShieldView` on the `EpicIdle` object; it subscribes to
+    `Enemy.Acted` (`Skill` -> `ShieldCast`, `StrongAttack` -> `ShieldExplode`) and to `CombatManager.OnStateChanged`
+    (density, shield broken -> `ShieldBreak`, stun ended -> `ShieldRecover`) and only reads enemy state. Two tiny
+    read-only properties were added: `Enemy.ChargeActionsTotal` and `CombatManager.PiecesPerBag`. `EnemyView.PlayAttack`
+    no longer plays the attack motion for the Guardian's `StrongAttack`. The controller `AmethystSentinel_Idle` gained
+    the triggers `ShieldCast`, `ShieldExplode`, `ShieldBreak`, `ShieldRecover` and the states `ShieldCast` (Idle ->),
+    `ShieldHold` (after the cast; loops the crouch), `ShieldExplode` (-> Idle), `ShieldBreak` (-> `StunHold`),
+    `StunHold` (loops; -> `ShieldRecover`), `ShieldRecover` (-> Idle); a cast that is interrupted by a break or an
+    explosion can leave `ShieldCast` at once. The prefab `P_Enemy` got four SpriteRenderer children under `EpicIdle`
+    (local position 0, sorting orders: `EpicShieldFill` 6, `EpicShieldRim` 7, `EpicShieldFx` 8, `EpicStunStars` 9; the body
+    is 5) and the script with the fill and rim references. The six clips animate the body and the four children;
+    the density only changes the colour alpha of the fill and rim children.
+  - Assets in `@Resources/Enemies/AmethystSentinelShield`: `T_AmethystSentinel_Shield` (576x104, 4 cells of 144x104: stand,
+    mid, hold, stun; pivot (0.5, 10/104), the same foot point as the Attack sheet), `T_AmethystSentinel_ShieldFx` (1664x816,
+    46 cells of 208x136, pivot (0.5, 10/136) so the foot points line up: fill and rim layers, 7 create, 10 explode, 3
+    break, 12 melt, 12 star frames), both PPU 75.6, Point filter, uncompressed (identical import settings to the Attack
+    sheet), and the clips `AmethystSentinel_ShieldCast` (0.59 s), `_ShieldHold` (loop), `_ShieldExplode` (1.0 s), `_ShieldBreak`
+    (1.02 s), `_StunHold` (0.84 s loop), `_ShieldRecover` (0.34 s).
+  - Art: the crouch, mid-crouch and limp poses are the approved Guardian art with its parts moved by whole dots (feet
+    and design unchanged: the same 22 colours, crystal layout and core) and the joint seams cleaned with VARCO
+    (EditImage, 3 of 13 generated images were used); the dome, explosion, break, melt and stars are drawn in code on the
+    same 2x2-pixel dot grid (VARCO has no transparent output). Everything stays inside x 1450-1697 and y 103-262 of the
+    stage 10 layout: it never covers the Caterpillar, the Queen, the target arrow or the HP bar (checked by numbers).
+  - Limits: translucent dome colours are blended at runtime, so only the opaque art keeps the exact palette; the
+    time scale stops it (pause, game over), like Idle; no hand-played check; the preview GIFs and the Unity render
+    sheets are in `SentinelShield_VARCO/output/Frames_v1` (outside Assets).
