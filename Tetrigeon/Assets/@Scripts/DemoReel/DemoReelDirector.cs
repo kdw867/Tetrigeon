@@ -10,13 +10,14 @@ using UnityEngine; // 유니티 기본
 // 녹화기는 에디터 어셈블리에만 있어서, 녹화 시작·종료는 이벤트로 Editor/DemoReelRecorder 에 맡긴다
 // 순서: 카운트다운 → 이동·회전·소프트드롭 → 홀드·홀드 불가 → T스핀 더블 → 테트리스 → 홀드 충전 → 한 줄 삭제(수정 파괴)
 //      → 레미 공격 → 몬스터 3종 능력(갉아먹기·보호막·회전 금지, 방해 줄) → 잠긴 미노 회전 실패 → 쌓아서 Top Out → 몬스터 공격·여왕 증식 모션
-public class DemoReelDirector : MonoBehaviour
+public partial class DemoReelDirector : MonoBehaviour // 트레일러 장면은 DemoReelDirector.Trailer.cs
 {
     private const BindingFlags Any = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic; // 비공개 멤버 접근용
     private const float Step = 0.07f; // 이동·회전 한 번 사이 간격 (사람 손 속도)
     private const float MinSeconds = 30f; // 최소 녹화 길이
     private const float MaxSeconds = 36f; // 연출이 늦어져도 여기서 끊음
     private const int UpgradeCount = 9; // 랜덤 미노 강화 횟수
+    private float placeStep = Step; // Place 의 한 걸음 간격 (실전 장면은 더 빠르게)
     public static int Seed = 1; // 랜덤 고정값 (같은 값이면 강화·가방·방해 줄 구멍이 매번 같음)
 
     private enum Mode { HardDrop, SoftDrop, Spin } // 목표 칸까지 가는 방식: 하드드롭 / 한 칸씩 내려 놓기 / 마지막을 회전으로 끼워 넣기
@@ -27,7 +28,7 @@ public class DemoReelDirector : MonoBehaviour
 
     private bool recording; // 녹화 중인지
     private bool topOutHappened; // Top Out 발생 여부
-    private float recordStart; // 녹화 시작 시각
+    private int recordStartFrame; // 녹화 시작 프레임 (녹화 중 한 프레임 = 1/60초, 게임 시간이 멈춰도 영상은 흐름)
     private bool scriptDone; // 연출 순서를 다 마쳤는지
 
     private static readonly FieldInfo CurrentPieceField = typeof(PieceSpawner).GetField("currentPiece", Any); // 조작 중인 미노
@@ -36,19 +37,92 @@ public class DemoReelDirector : MonoBehaviour
 
     private static Piece Current => (Piece)CurrentPieceField.GetValue(PieceSpawner.Instance); // 지금 조작 중인 미노 (없으면 null)
 
+    public const string ScenarioKey = "Tetrigeon.DemoReel.Scenario"; // 녹화 메뉴가 고른 장면 (Reel = 30초 영상, 나머지 = 발표용 짧은 클립)
+    public static string Scenario => UnityEditor.SessionState.GetString(ScenarioKey, "Reel"); // 플레이 진입 뒤에도 유지되는 값
+    private float minSeconds = MinSeconds; // 이번 녹화의 최소 길이 (클립은 0)
+    private float maxSeconds = MaxSeconds; // 이번 녹화의 최대 길이 (트레일러 실전 장면은 더 김)
+
+    // 발표용 짧은 클립: Caterpillar(애벌레 스킬) / QueenGrowth(여왕 증식) / QueenRotLock(여왕 회전 잠금) / TopOut
+    private IEnumerator Clip(string scenario)
+    {
+        CombatManager cm = CombatManager.Instance; // 전투 관리자
+        SetField(cm, "stageNumber", scenario == "Caterpillar" ? 1 : 10); // 애벌레는 단독(스테이지 1), 나머지는 보스전(스테이지 10)
+        Call(cm, "StartStage"); // 정상 스테이지 진입 경로
+        BuildClipBoard(scenario == "TopOut" ? 18 : 4); // Top Out 은 거의 꽉 찬 보드, 나머지는 갉아먹을 블록 몇 줄
+        foreach (Enemy enemy in cm.Enemies) // 이번 클립의 주인공만 능력 사용
+        {
+            bool skill = scenario == "Caterpillar" ? enemy.Tier == EnemyTier.Normal : scenario.StartsWith("Queen") && enemy.Tier == EnemyTier.Boss; // 능력 쓸 적
+            SetField(enemy, "turnsSinceSkill", skill ? enemy.SkillInterval - 1 : 0); // 능력 쓸 적은 이번 턴에, 나머지는 일반 공격
+            if (enemy.Tier == EnemyTier.Boss) SetField(enemy, "queenUsedGrowth", scenario == "QueenRotLock"); // 여왕 능력 종류 (true 면 회전 잠금)
+        }
+        yield return WaitNextPiece(); // 스테이지 시작 카운트다운은 녹화하지 않음
+        if (scenario != "TopOut") SetField(cm, "piecesPlaced", 6); // 다음 고정이 일곱 번째 → 바로 적 턴
+
+        minSeconds = 0f; // 클립은 연출이 끝나면 바로 종료
+        RecordingRequested?.Invoke(); // 녹화 시작
+        recording = true; // 길이 검사 시작
+        recordStartFrame = Time.frameCount; // 길이 측정 기준
+        yield return Wait(0.9f); // 시작 화면 잠깐
+
+        if (scenario == "TopOut")
+        {
+            yield return StackToTopOut(); // 세워 쌓아 스폰 자리를 막음 → 보드 비우기 → HP 감소 → 적 턴
+            yield return WaitNextPiece(); // 적 턴이 끝나고 새 가방 시작
+            yield return Wait(1.2f); // 새 가방 첫 미노가 보이게
+            yield break;
+        }
+
+        yield return Do(Act.Right); yield return Do(Act.Right); yield return Do(Act.Right); // 오른쪽으로 옮겨
+        yield return Drop(); // 일곱 번째 고정 → 몬스터 행동
+        yield return WaitNextPiece(); // 몬스터 행동이 끝나고 다음 미노가 나올 때까지
+        if (scenario == "QueenRotLock") // 회전 잠금은 발동 직후 미노 다음 2개가 잠김
+        {
+            yield return Drop(); // 첫 미노는 정상 → 바로 하드드롭
+            yield return Wait(0.4f); // 봉인 표식이 붙은 미노 등장
+            yield return Do(Act.Cw); yield return Wait(0.25f); yield return Do(Act.Ccw); // 회전 시도가 막힘
+            yield return Wait(1.2f); // 마무리
+        }
+        else yield return Wait(2.0f); // 갉아먹힌 칸·방해 줄 / 증식된 NEXT 가 보이게
+    }
+
+    // 클립용 보드: 아래에서 rows 줄을 칸마다 한 칸씩 비워 채움 (줄 삭제가 일어나지 않게)
+    private static void BuildClipBoard(int rows)
+    {
+        for (int y = 0; y < rows; y++) // 줄마다
+        {
+            int hole = UnityEngine.Random.Range(0, GridManager.Width); // 이 줄의 빈 칸
+            for (int x = 0; x < GridManager.Width; x++) // 칸마다
+                if (x != hole) PlaceBlock(new Vector2Int(x, y), (TetrominoType)UnityEngine.Random.Range(0, 7), UnityEngine.Random.Range(0, 4)); // 무작위 미노 그림
+        }
+    }
+
+    // 고정 블록 하나를 게임과 같은 구성으로 보드에 놓음
+    private static void PlaceBlock(Vector2Int cell, TetrominoType type, int index)
+    {
+        GameObject block = new GameObject("Block"); // 고정 블록과 같은 구성
+        block.transform.SetParent(GridManager.Instance.transform); // 줄 삭제·Top Out 정리가 그대로 적용되도록 그리드 자식으로
+        SpriteRenderer renderer = block.AddComponent<SpriteRenderer>(); // 블록 그림
+        PieceVisuals.ApplyMinoArt(renderer, type, index); // 게임 블록과 같은 아트·수정 판정
+        block.transform.position = GridManager.CellToWorld(cell); // 칸 위치
+        GridManager.Instance.SetCell(cell, block.transform); // 보드에 등록
+    }
+
     private IEnumerator Start()
     {
+        if (Scenario == "T_Title") { yield return TrailerTitle(); scriptDone = true; yield break; } // 타이틀 화면에서 시작하는 장면
         while (CombatManager.Instance == null || PieceSpawner.Instance == null || BagManager.Instance == null || GridManager.Instance == null) yield return null; // 매니저 준비 대기
         while (Current == null) yield return null; // 게임 시작 카운트다운이 끝날 때까지 대기 (녹화 전)
 
-        MuteBgm(); // 효과음만 녹음
         UnityEngine.Random.InitState(Seed); // 다시 녹화해도 같은 영상이 나오게
-        ApplyRandomUpgrades(); // 미노 강화 9회 (랜덤)
+        if (!Scenario.StartsWith("T_") || Scenario.StartsWith("T_Clip_")) ApplyRandomUpgrades(); // 미노 강화 9회 (랜덤, 트레일러 장면은 장면마다 따로)
         PieceSpawner.OnTopOut += HandleTopOut; // Top Out 감지
+        if (Scenario.StartsWith("T_Clip_")) { yield return Clip(Scenario.Substring(7)); scriptDone = true; yield break; } // 트레일러용 1080p 클립
+        if (Scenario.StartsWith("T_")) { yield return Trailer(Scenario); scriptDone = true; yield break; } // 트레일러 전용 장면
+        if (Scenario != "Reel") { yield return Clip(Scenario); scriptDone = true; yield break; } // 발표용 짧은 클립은 따로 진행
 
         RecordingRequested?.Invoke(); // 녹화 시작 (이 프레임부터 영상)
         recording = true; // 길이 검사 시작
-        recordStart = Time.time; // 길이 측정 기준 (녹화 중에는 게임 시간 = 영상 시간)
+        recordStartFrame = Time.frameCount; // 길이 측정 기준 (녹화 중 한 프레임 = 1/60초)
 
         SetField(CombatManager.Instance, "stageNumber", 10); // 스테이지 10으로
         Call(CombatManager.Instance, "StartStage"); // 정상 스테이지 진입 경로로 적·보드·가방·카운트다운 시작
@@ -80,12 +154,14 @@ public class DemoReelDirector : MonoBehaviour
 
     private void Update()
     {
+        MuteMusicSources(); // 장면이 바뀌어도 배경음악은 계속 끔 (음악은 편집에서 따로 깖)
         if (!recording) return; // 녹화 전·후
-        float elapsed = Time.time - recordStart; // 녹화 경과 시간 (영상 길이)
-        if ((scriptDone && elapsed >= MinSeconds) || elapsed >= MaxSeconds) // 30초를 채웠거나 최대 길이 도달
+        float elapsed = (Time.frameCount - recordStartFrame) / 60f; // 녹화 경과 시간 (영상 길이)
+        if ((scriptDone && elapsed >= minSeconds) || elapsed >= maxSeconds) // 30초를 채웠거나 최대 길이 도달
         {
             recording = false; // 한 번만 종료
             Debug.Log($"[DemoReel] 연출 종료 ({elapsed:0.0}초)"); // 영상 길이 기록
+            SaveMarks(); // 트레일러 장면은 사건 시각 기록 저장
             StopRequested?.Invoke(); // 녹화 종료 후 플레이 종료는 에디터 쪽에서
         }
     }
@@ -93,6 +169,7 @@ public class DemoReelDirector : MonoBehaviour
     private void OnDestroy()
     {
         PieceSpawner.OnTopOut -= HandleTopOut; // 정적 이벤트 구독 해제
+        UnhookMarks(); // 사건 기록 구독 해제
         if (recording) StopRequested?.Invoke(); // 중간에 플레이가 꺼져도 파일 마무리
     }
 
@@ -197,7 +274,7 @@ public class DemoReelDirector : MonoBehaviour
             if (arrived) break; // 목표 위치 도달
             if (next == null) { Debug.LogWarning($"[DemoReel] {piece.Type} 목표까지 길이 없음"); break; } // 보드가 예상과 다름
             Perform(piece, next.Value); // 한 걸음 진행
-            yield return Wait(Step); // 사람 손 속도
+            yield return Wait(placeStep); // 사람 손 속도
         }
 
         if (mode == Mode.HardDrop && Current == piece) HardDropMethod.Invoke(PieceSpawner.Instance, null); // 하드드롭 고정
@@ -265,6 +342,7 @@ public class DemoReelDirector : MonoBehaviour
     // ── 준비 ────────────────────────────────────────────────
 
     // 연출용 보드: 0~3줄은 왼쪽 우물(테트리스), 4~5줄은 T스핀 더블 자리, 6줄은 처마 + 마지막 한 줄 삭제용
+    private static float extraCrystalChance; // 추가 수정 칸 확률 (기본 0)
     private static void BuildBoard()
     {
         var filled = new List<Vector2Int>(); // 채울 칸 목록
@@ -283,14 +361,9 @@ public class DemoReelDirector : MonoBehaviour
 
         foreach (Vector2Int cell in filled) // 칸마다 블록 생성
         {
-            bool crystal = crystals.Count > 0 && cell.y == 6 && (cell.x == 2 || cell.x == 8); // 마지막 한 줄 삭제 줄에만 수정 2칸 (많으면 관통 피해가 커져 첫 턴에 보스까지 죽음)
+            bool crystal = crystals.Count > 0 && ((cell.y == 6 && (cell.x == 2 || cell.x == 8)) || UnityEngine.Random.value < extraCrystalChance); // 트레일러 강화 장면은 수정 칸을 더 뿌림. 마지막 한 줄 삭제 줄에만 수정 2칸 (많으면 관통 피해가 커져 첫 턴에 보스까지 죽음)
             var (type, index) = crystal ? crystals[UnityEngine.Random.Range(0, crystals.Count)] : plain[UnityEngine.Random.Range(0, plain.Count)]; // 그림 고르기
-            GameObject block = new GameObject("Block"); // 고정 블록과 같은 구성
-            block.transform.SetParent(GridManager.Instance.transform); // 줄 삭제·Top Out 정리가 그대로 적용되도록 그리드 자식으로
-            SpriteRenderer renderer = block.AddComponent<SpriteRenderer>(); // 블록 그림
-            PieceVisuals.ApplyMinoArt(renderer, type, index); // 게임 블록과 같은 아트·수정 판정
-            block.transform.position = GridManager.CellToWorld(cell); // 칸 위치
-            GridManager.Instance.SetCell(cell, block.transform); // 보드에 등록
+            PlaceBlock(cell, type, index); // 보드에 블록 놓기
         }
     }
 
@@ -316,10 +389,11 @@ public class DemoReelDirector : MonoBehaviour
         }
     }
 
-    private static void MuteBgm()
+    // 배경음악 끄기 (효과음만 녹음). 씬이 바뀌어 새로 생긴 BGM도 잡도록 10프레임마다 확인
+    private static void MuteMusicSources()
     {
-        foreach (AudioSource source in CombatManager.Instance.GetComponentsInChildren<AudioSource>(true)) // BGM 프리팹은 CombatManager 자식으로 생성됨
-            if (source.clip != null && source.clip.name.StartsWith("BGM")) source.mute = true; // BGM만 음소거
+        if (Time.frameCount % 10 != 0) return; // 10프레임마다 한 번만
+        foreach (MusicVolume music in FindObjectsByType<MusicVolume>(FindObjectsSortMode.None)) music.GetComponent<AudioSource>().mute = true; // BGM(P_GameplayBgm)만 음소거
     }
 
     // ── 공통 ────────────────────────────────────────────────
@@ -330,22 +404,28 @@ public class DemoReelDirector : MonoBehaviour
         Piece dropped = Current; // 떨어뜨릴 미노
         HardDropMethod.Invoke(PieceSpawner.Instance, null); // 하드드롭
         while (Current == dropped && dropped != null) yield return null; // 고정될 때까지
-        yield return new WaitForSeconds(0.12f); // 착지 연출 간격
+        yield return Wait(0.12f); // 착지 연출 간격
     }
 
     // 조작할 미노가 나올 때까지 대기 (카운트다운·정산 연출·Top Out 중에는 미노가 없음. 이미 나와 있으면 바로 진행)
     private static IEnumerator WaitNextPiece()
     {
         while (Current == null) yield return null; // 미노 등장 대기
-        yield return new WaitForSeconds(0.2f); // 등장 직후 잠깐
+        yield return Wait(0.2f); // 등장 직후 잠깐
     }
 
-    private static WaitForSeconds Wait(float seconds) => new WaitForSeconds(seconds); // 게임 시간 기준 대기
+    // 프레임 수로 대기: 녹화 중에는 한 프레임 = 1/60초라 영상 시간과 같고, 보상 화면처럼 게임 시간이 멈춰도 흐름
+    private static IEnumerator Wait(float seconds)
+    {
+        int end = Time.frameCount + Mathf.CeilToInt(seconds * 60f); // 끝 프레임
+        while (Time.frameCount < end) yield return null; // 한 프레임씩
+    }
 
     // 장면 확인용 스크린샷 (영상 옆 shots 폴더, 같은 이름은 덮어씀)
     private static void Shot(string name)
     {
-        string folder = Path.GetFullPath(Path.Combine(Application.dataPath, "..", "..", "EXTRA", "SoundRef_Video", "shots")); // 프로젝트 밖 작업 폴더 (EXTRA 아래)
+        if (Scenario != "Reel") return; // 짧은 클립은 스크린샷 없음
+        string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "EXTRA", "SoundRef_Video", "shots"); // 바탕화면 EXTRA 작업 폴더
         Directory.CreateDirectory(folder); // 없으면 만듦
         ScreenCapture.CaptureScreenshot(Path.Combine(folder, name + ".png")); // 이번 프레임이 그려진 뒤 저장
     }
