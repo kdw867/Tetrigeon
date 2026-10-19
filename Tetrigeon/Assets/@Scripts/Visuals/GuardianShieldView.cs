@@ -65,6 +65,7 @@ public class GuardianShieldView : MonoBehaviour
         {
             shieldUp = false; // 보호막이 폭발로 사라짐
             animator.SetTrigger(ExplodeTrigger); // 불투명 → 부풀어 오름 → 조각과 빛으로 퍼짐 → 기본 자세로 복귀
+            GameSound.Play("ShieldExplode");
             enemy.ReportMotion(ExplodeSeconds); // 턴 연출이 이 모션이 끝날 때까지 기다림
         }
     }
@@ -81,6 +82,7 @@ public class GuardianShieldView : MonoBehaviour
                 shieldUp = false; // 보호막이 녹아서 사라짐
                 stunned = true; // 이어서 스턴 자세
                 animator.SetTrigger(BreakTrigger); // 중간 파손 → 녹아내림 → 힘 빠진 자세 + 별
+                GameSound.Play("ShieldBreak");
                 return;
             }
             ApplyDensity(); // 충전 진행도에 맞게 보호막을 진하게

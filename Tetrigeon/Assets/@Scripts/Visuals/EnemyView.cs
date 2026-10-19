@@ -98,6 +98,12 @@ public class EnemyView : MonoBehaviour
         else if (enemy.Tier == EnemyTier.Boss && kind == EnemyActionKind.BasicAttack) { animator = bossIdleAnimator; seconds = QueenMotionSeconds; } // 여왕: 체력 공격(일반 공격)일 때만
         if (animator == null || !animator.gameObject.activeInHierarchy) return; // 모션이 없거나 숨겨진 상태(사망 등)에서는 재생하지 않음
         animator.SetTrigger(trigger); // Idle에서 공격으로 넘어가고, 끝나면 스스로 Idle로 돌아옴
+        if (enemy.Tier == EnemyTier.Boss)
+        {
+            if (kind == EnemyActionKind.BasicAttack) GameSound.Play("QueenAttack");
+            else if (kind == EnemyActionKind.QueenGrowth) GameSound.Play("QueenGrowth");
+            else if (kind == EnemyActionKind.QueenRotationLock) GameSound.Play("RotationLock");
+        }
         enemy.ReportMotion(seconds); // 모션을 실제로 재생한 때만 길이를 알림 (턴 연출이 모션이 끝날 때까지 기다림)
     }
 
@@ -147,10 +153,8 @@ public class EnemyView : MonoBehaviour
         targetMarker.gameObject.SetActive(isTarget && !dead); // 살아있는 타겟에만 화살표 표시
         if (dead) return; // 사망한 적은 사망 이미지 외에 갱신할 표시가 없음
 
-        // 적이 붙어 있어도 옆 적과 겹치지 않게 줄을 나눠 표시한다
-        string status = damageReductionPercent > 0 ? $"피해 -{damageReductionPercent}%" : ""; // 호위가 살아있어 피해가 줄어드는 중
-        if (enemy.Shield > 0) status += $"\n보호막 {enemy.Shield}"; // 수호자 보호막 남은 양
-        if (enemy.ChargeActionsLeft > 0) status += $"\n강공격 {enemy.ChargeActionsLeft}"; // 강공격까지 남은 수호자 행동 수
+        // 보호막·강공격·피해 경감은 전투 효과만 유지하고 하단 글자는 표시하지 않는다.
+        string status = "";
         if (enemy.IsStunned) status += "\n스턴"; // 보호막이 깨져 행동을 쉼 (쉰 뒤 다음 행동 전까지 표시)
 
         hpBar.SetHp(enemy.Hp, enemy.MaxHp); // 체력은 막대와 가운데 숫자로

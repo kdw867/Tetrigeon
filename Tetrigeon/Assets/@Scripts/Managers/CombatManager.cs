@@ -68,6 +68,11 @@ public class CombatManager : MonoBehaviour
     private readonly int[] effectCounts = new int[7]; // 이번 가방의 강화 종류별 발동 횟수
     private readonly int[] effectTotals = new int[7]; // 종류별 정산 예정 효과량 합계
     public int NormalAttackDamage => PendingDamage - effectTotals[(int)TetrominoType.L]; // 치명타 전체 피해와 일반 공격을 중복 없이 분리
+    // 기본·치명타·관통·폭발 피해 합계 (대상 수와 피해 감소 적용 전). 치명타는 PendingDamage에 이미 포함된다.
+    // 폭발은 인접 적에게 주는 피해도 포함하며, 빙결·독·회복·보호막은 제외한다.
+    public int TotalAttackDamage => PendingDamage
+        + effectTotals[(int)TetrominoType.I]
+        + effectTotals[(int)TetrominoType.Z];
     public int GetEffectCount(TetrominoType type) => effectCounts[(int)type]; // UI용 발동 횟수
     public int GetEffectTotal(TetrominoType type) => effectTotals[(int)type]; // UI용 합계
 
@@ -277,6 +282,7 @@ public class CombatManager : MonoBehaviour
         {
             if (enemy.IsAlive || enemy.Tier == EnemyTier.Boss) continue; // 살아있는 적과 보스 자리는 대상이 아님
             enemy.Init(EnemyTier.Normal); // 죽은 자리를 일반 몹으로 되살림 (체력·상태이상·스킬 카운터 초기화)
+            GameSound.Play("Summon");
             return;
         }
 
@@ -284,6 +290,7 @@ public class CombatManager : MonoBehaviour
         {
             if (!enemy.IsAlive || enemy.Tier != EnemyTier.Normal) continue; // 빈자리가 없으면 살아있는 일반 몹을 보강
             enemy.RestoreHp(); // 상태이상은 유지한 채 체력만 최대로
+            GameSound.Play("Summon");
             return;
         }
     }
@@ -581,7 +588,9 @@ public class CombatManager : MonoBehaviour
 
             if (hpHit > 0)
             {
-                PlayerHp -= AbsorbWithShield(hpHit); // 보호막이 있으면 먼저 막아주고 남은 피해만 체력에 적용
+                int hpDamage = AbsorbWithShield(hpHit); // 보호막이 흡수한 뒤 실제 체력 피해
+                PlayerHp -= hpDamage;
+                if (hpDamage > 0) GameSound.PlayPlayerHit(enemy.Tier); // 공격 모션 종료 후 실제 피격 순간 (치명상도 재생)
                 if (PlayerHp <= 0)
                 {
                     PlayerHp = 0;

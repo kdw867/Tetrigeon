@@ -6,6 +6,12 @@ public class BoardActionAudio : MonoBehaviour // 보드 조작 효과음 전용
     [SerializeField] private AudioClip lockClip, hardDropClip, clearClip, clearFourClip; // 고정과 삭제 소리
     [SerializeField] private AudioClip holdClip, holdUnavailableClip, holdRechargeClip; // 홀드 소리
 
+    private void Update()
+    {
+        float volume = GameSettings.SfxVolume;
+        actionSource.volume = clearSource.volume = rechargeSource.volume = volume;
+    }
+
     private void OnEnable() // 실제 처리 알림 구독
     {
         PieceSpawner.OnLandingAudio += PlayLanding; // 고정과 줄 삭제
@@ -37,6 +43,8 @@ public class BoardActionAudio : MonoBehaviour // 보드 조작 효과음 전용
 
     private static void Play(AudioSource source, AudioClip clip) // 채널별 한 음성만 사용
     {
+        if (source == null || clip == null) return;
+        source.volume = GameSettings.SfxVolume; // 공용 효과음과 같은 음량 기준 적용
         source.clip = clip; // 해당 상황 클립 지정
         source.Play(); // 짧은 효과음 재생
     }

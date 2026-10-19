@@ -46,7 +46,7 @@ public static class DemoReelRecorder
 
     private static void StartRecording()
     {
-        string folder = Path.GetFullPath(Path.Combine(Application.dataPath, "..", "..", "SoundRef_Video")); // 프로젝트 밖 작업 폴더
+        string folder = Path.GetFullPath(Path.Combine(Application.dataPath, "..", "..", "EXTRA", "SoundRef_Video")); // 프로젝트 밖 작업 폴더 (EXTRA 아래)
         Directory.CreateDirectory(folder); // 없으면 만듦
 
         var movie = ScriptableObject.CreateInstance<MovieRecorderSettings>(); // MP4 녹화 설정

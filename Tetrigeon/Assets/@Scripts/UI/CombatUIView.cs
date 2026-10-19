@@ -5,7 +5,7 @@ public class CombatUIView : MonoBehaviour
 {
     [SerializeField] private HpBarView playerHpBar; // 레미 체력 막대 (숫자와 방패 줄 포함)
     [SerializeField] private Transform playerBarAnchor; // 레미 발 아래 월드 위치 (막대가 이 점을 따라감)
-    [SerializeField] private TextMesh turnText; // 이번 턴 일반 공격 피해 "n DMG" (피해 아이콘 오른쪽)
+    [SerializeField] private TextMesh turnText; // 이번 턴 기본·치명타·관통·폭발 피해 "n DMG" (피해 아이콘 오른쪽)
     [SerializeField] private SpriteRenderer damageIcon; // 누적 피해 숫자 앞에 붙는 기본 피해 아이콘
     [SerializeField] private SpriteRenderer[] runeRenderers; // 남은 조각 수를 보여줄 룬 7개 (화면 왼쪽부터 01~07)
     [SerializeField] private Sprite[] runeOnSprites; // 룬별 켜진 이미지 (runeRenderers와 같은 순서)
@@ -48,7 +48,7 @@ public class CombatUIView : MonoBehaviour
         playerHpBar.SetShield(combat.PlayerShield); // 보호막이 있을 때만 방패 줄 표시
         playerHpBar.PlaceAtWorld(playerBarAnchor.position); // 해상도가 달라져도 레미 발 아래에 맞춤
 
-        turnText.text = $"{combat.NormalAttackDamage} DMG"; // 일반 공격 피해임을 단위로 표시
+        turnText.text = $"{combat.TotalAttackDamage} DMG"; // 기본·치명타·관통·폭발 피해 합산
         UpdateEffectDisplay(combat); // 현재 가방에 발동한 효과만 표시
         PlaceDamageGroup(); // 자릿수가 바뀌어도 아이콘과 숫자가 한 묶음으로 가운데 오게 다시 배치
 

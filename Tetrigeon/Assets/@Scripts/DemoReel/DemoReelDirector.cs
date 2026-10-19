@@ -345,7 +345,7 @@ public class DemoReelDirector : MonoBehaviour
     // 장면 확인용 스크린샷 (영상 옆 shots 폴더, 같은 이름은 덮어씀)
     private static void Shot(string name)
     {
-        string folder = Path.GetFullPath(Path.Combine(Application.dataPath, "..", "..", "SoundRef_Video", "shots")); // 프로젝트 밖 작업 폴더
+        string folder = Path.GetFullPath(Path.Combine(Application.dataPath, "..", "..", "EXTRA", "SoundRef_Video", "shots")); // 프로젝트 밖 작업 폴더 (EXTRA 아래)
         Directory.CreateDirectory(folder); // 없으면 만듦
         ScreenCapture.CaptureScreenshot(Path.Combine(folder, name + ".png")); // 이번 프레임이 그려진 뒤 저장
     }

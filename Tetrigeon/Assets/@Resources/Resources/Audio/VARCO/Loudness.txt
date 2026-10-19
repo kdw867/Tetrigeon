@@ -1,0 +1,14 @@
+Active 20ms RMS matched to -23.94 dBFS; peak ceiling -1 dBFS. Originals preserved in Sound_VARCO.
+ButtonHover.wav: gain 1.11 dB
+ButtonSelect.wav: gain -2.66 dB
+CrystalBreak.wav: gain -6.26 dB
+HardDrop.wav: gain -5.82 dB
+LemyAttack.wav: gain -9.48 dB
+Lock.wav: gain 1.32 dB
+QueenAttack.wav: gain -2.32 dB
+QueenGrowth.wav: gain 2.37 dB
+RotationLock.wav: gain -10.62 dB
+ShieldBreak.wav: gain -11.67 dB
+ShieldExplode.wav: gain -13.88 dB
+Summon.wav: gain -6.89 dB
+TSpin.wav: gain 3.79 dB

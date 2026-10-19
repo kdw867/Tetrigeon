@@ -50,7 +50,7 @@ public class OptionMenu : MonoBehaviour
         BindTimingInputs(dcdMsInput, dcdFramesInput, OnDcdChanged); // DCD 입력 확정 연결
         RefreshSensitivityTexts(); // 현재값 문구 표시
 
-        AudioListener.volume = GameSettings.MusicVolume; // 저장된 음량을 실제 출력에 적용
+        AudioListener.volume = 1f; // 전체 출력은 고정하고 BGM/SFX 소스별로 음량 적용
     }
 
     public void Open() { ShowOnly(optionRoot); } // 설정 분류 창 열기
@@ -130,8 +130,8 @@ public class OptionMenu : MonoBehaviour
         frames.SetTextWithoutNotify(value.ToString("F1", System.Globalization.CultureInfo.InvariantCulture)); // 프레임 표시
     }
 
-    private void OnMusicVolumeChanged(float value) { GameSettings.MusicVolume = value; AudioListener.volume = value; } // 배경음악 음량 저장 및 적용
-    private void OnSfxVolumeChanged(float value) { GameSettings.SfxVolume = value; } // ponytail: 효과음 재생 붙으면 그때 연결
+    private void OnMusicVolumeChanged(float value) { GameSettings.MusicVolume = value; } // BGM 전용 음량
+    private void OnSfxVolumeChanged(float value) { GameSettings.SfxVolume = value; } // 모든 효과음 전용 음량
 
     // 지정한 설정 창 하나만 켜고 나머지는 끔 (null이면 모두 끔)
     private void ShowOnly(GameObject target)

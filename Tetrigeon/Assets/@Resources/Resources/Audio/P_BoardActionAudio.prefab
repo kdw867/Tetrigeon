@@ -50,8 +50,8 @@ MonoBehaviour:
   actionSource: {fileID: 4213999876362113072}
   clearSource: {fileID: 678078003977255459}
   rechargeSource: {fileID: 9087644285204973751}
-  lockClip: {fileID: 8300000, guid: 8110c1d19e59d014781871e14ea915b2, type: 3}
-  hardDropClip: {fileID: 8300000, guid: d194770a12062fe4bb60588e10b608d3, type: 3}
+  lockClip: {fileID: 8300000, guid: 290faec01c42eb14b8acb16513fdf04b, type: 3}
+  hardDropClip: {fileID: 8300000, guid: c8426c910166f1943ac201d734daf9fb, type: 3}
   clearClip: {fileID: 8300000, guid: 399875a5ab3477d4f9e5d90e115e47f1, type: 3}
   clearFourClip: {fileID: 8300000, guid: 6ac23db55ca5d1c438b473173c5d2973, type: 3}
   holdClip: {fileID: 8300000, guid: 0340b4d001da2d44193a7222a5ac74c0, type: 3}

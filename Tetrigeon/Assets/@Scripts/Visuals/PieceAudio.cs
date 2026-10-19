@@ -17,7 +17,10 @@ public class PieceAudio : MonoBehaviour
     {
         piece = GetComponent<Piece>(); // 미노 참조 캐시
         source = GetComponent<AudioSource>(); // 오디오 참조 캐시
+        source.volume = GameSettings.SfxVolume;
     }
+
+    private void Update() { source.volume = GameSettings.SfxVolume; }
 
     private void OnEnable()
     {
@@ -58,6 +61,7 @@ public class PieceAudio : MonoBehaviour
     private void Play(AudioClip clip)
     {
         if (clip == null) return; // 미지정 클립은 재생하지 않음
+        source.volume = GameSettings.SfxVolume;
         source.clip = clip; // 프리팹에 연결된 음원 사용
         source.Play(); // 한 소스에서 재시작하여 소리 누적 방지
     }
